@@ -1,0 +1,27 @@
+/***************************************************************  -*-C-*-  ***/
+%{
+#if HAVE_GAME
+#include "addons/game/parser/game_symbols.h"
+#include "addons/game/game.h"
+#endif
+
+  /* below vars are used if input file contains game definition */
+  static node_ptr game_parser_spec_list = Nil;
+  static node_ptr game_parser_player_1 = Nil;
+  static node_ptr game_parser_player_2 = Nil;
+%}
+
+%nonassoc <lineno> TOK_GAME TOK_PLAYER_1 TOK_PLAYER_2
+%nonassoc <lineno> TOK_REACHTARGET TOK_AVOIDTARGET
+%nonassoc <lineno> TOK_REACHDEADLOCK TOK_AVOIDDEADLOCK
+%nonassoc <lineno> TOK_BUCHIGAME TOK_LTLGAME TOK_GENREACTIVITY
+
+%type <node> simple_list_expression
+
+%type <node> game_module_list
+
+%type <node> game_definition
+%type <node> game_body game_body_element player_body player_body_element
+%type <lineno> player_num
+%type <node> reachtarget avoidtarget reachdeadlock avoiddeadlock
+%type <node> buchigame ltlgame genreactivity

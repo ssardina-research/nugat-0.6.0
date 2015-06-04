@@ -1,0 +1,148 @@
+diff -Naur Lily-1.0.2/Buechi.pm Lily-1.0.2_ratsy/Buechi.pm
+--- Lily-1.0.2/Buechi.pm	2008-06-19 11:47:52.000000000 +0200
++++ Lily-1.0.2_ratsy/Buechi.pm	2010-05-13 02:11:07.000000000 +0200
+@@ -178,7 +178,6 @@
+ 	}
+     }
+ 
+-    print $self->Stats, "\n";
+ #    die;
+     # Build SCC quotient graph to be used in subsequent pruning steps.
+     my $quotient = $self->Quotient($self->SCC);
+diff -Naur Lily-1.0.2/lily.pl Lily-1.0.2_ratsy/lily.pl
+--- Lily-1.0.2/lily.pl	2008-06-19 11:47:52.000000000 +0200
++++ Lily-1.0.2_ratsy/lily.pl	2010-05-13 02:07:44.000000000 +0200
+@@ -9,6 +9,16 @@
+ # by Roderick Bloem <roderick.bloem@colorado.edu> and
+ # Barbara Jobstmann <bjobst@ist.tugraz.at
+ 
++# Include program location in module search path. From perlfaq8.
++BEGIN {
++    use Cwd qw(abs_path);
++    use File::Basename qw(dirname);
++
++    my $path   = abs_path( $0 );
++    our $directory = dirname( $path );
++}
++use lib $directory;
++
+ use Sopen;
+ use LTL;
+ use LTL2AUT;
+@@ -84,7 +94,6 @@
+ 	    $ltlfile =~ s/\.psl/\.ltl/;
+ 	    $sugar = 1;
+ 	} else {
+-	    print "Read LTL file.\n";
+ 	    readLTLOverSeveralLines($_,\@formulae, \@formulaeAssume);
+ 	}
+     } elsif ($ARGV[0] eq "-auto") {
+@@ -191,19 +200,6 @@
+ die usage() if ($mc == 1 and $synthesis == 0) or
+   (keys(%partition) == 0 and $synthesis == 1);
+   
+-# Open output files
+-if ($synthesis == 0) {
+-    if ($automaton eq "") {
+-	open(PARSE, ">$prefix" . "-parse.dot");
+-	open(BUECHIAL, ">$prefix" . "-buechial.dot");
+-	open(L2A, ">$prefix" . "-buechial.l2a");
+-    }
+-    open(SCC, ">$prefix" . "-scc.dot");
+-    open(BUECHI, ">$prefix" . "-buechi.dot");
+-    open(COMPBUECHI, ">$prefix" . "-compbuechi.dot") if ($complementA);
+-    open(MONITOR, ">$monitorFile") if $monitorFile ne "";
+-}
+-
+ if ($synthesis) {
+     my $formulaAssume = "";
+     my $formula = "";
+@@ -369,7 +365,6 @@
+     my $normalized = $parsetree->Normalize;
+     $normalized = $normalized->Simplify if $simplify;
+     my $dot = $normalized->ToDot($parsetree->ToString);
+-    print PARSE $dot;
+     print $normalized->ToString, "\n";
+     my $result = LTL2AUT->new(formula => $normalized, method => $method);
+     $result->Optimize($verb) if $optimize;
+@@ -384,39 +379,34 @@
+     }
+     $result->MakeComplete if $complete;
+ #    print $result->ToString;
+-    print "Stats Buechi:   ", $result->Stats, "\n";
+ 
+     if ($project) {
+ 	print "Project to inputs, remove outputs=".$projectVars->ToString,"\n";
+ 	$result->Project($projectVars);
+ 	$result->Optimize($verb) if $optimize;
+-	print "Stats Buechi:   ", $result->Stats, "\n";
+     }
+ 
+     if ($cc && $result->{fair}->Size > 1) {
+-	print "Apply counting construction\n";
+ 	$result = $result->CountingConstruction;
+ 	$result->Optimize($verb) if $optimize;
+-	print "Stats Buechi:   ", $result->Stats, "\n";
++	print $result->ToString;
++    }
++    else {
++	print $result->ToString;
+     }
+-    print BUECHI $result->ToDot($formula);
++    print "Stats: ", $result->Stats, "\n";
++    goto EXIT;
+ 
+     if ($complementA) {
+ 	my $compResult = $result->Complement($verb);
+-	print COMPBUECHI $compResult->ToDot("comp");
+     }
+     if ($monitorFile ne "") {
+-	print MONITOR $result->ToVerilogMonitor;
+     }
+     my $quotient = $result->Quotient($result->SCC);
+     print "SCC quotient graph:\n", $quotient->ToString if $verb > 2;
+-    print SCC $quotient->ToDot($formula);
+     my $buechial = BuechiAL->fromBuechi($result);
+     $buechial->DirectSimulationMinimization if $optimize;
+     $buechial->FairSimulationMinimization if $optimize;
+-    print "Stats BuechiAL: ", $buechial->Stats, "\n";
+-    print BUECHIAL $buechial->ToDot($formula);
+-    print L2A $buechial->ToString($formula);
+ }
+ if ($automaton ne "") {
+     my $moddate = sopen($automaton,\*AUTOMATON);
+@@ -434,33 +424,22 @@
+ 
+     if ($complementA) {
+ 	my $compResult = $result->Complement($verb);
+-	print COMPBUECHI $compResult->ToDot("comp");
+     }
+     print $result->ToString;
+-    print BUECHI $result->ToDot($automaton);
+     if ($monitorFile ne "") {
+-	print MONITOR $result->ToVerilogMonitor;
+     }
+     my $quotient = $result->Quotient($result->SCC);
+     print "SCC quotient graph:\n", $quotient->ToString if $verb > 2;
+-    print SCC $quotient->ToDot($automaton);
+     print "Stats: ", $result->Stats, "\n";
+ }
+ 
+ EXIT:
+-close PARSE;
+-close BUECHI;
+-close BUECHIAL;
+-close L2A;
+-close COMPBUECHI;
+-close SCC;
+-close MONITOR if $monitorFile ne "";
+ my $endTime = (times)[0];
+ printf "NBW time: %.2f seconds\n",
+   $nbwTime - $startTime if ($nbwTime > $startTime);
+ printf "Synthesis time: %.2f seconds\n",
+   $synTime - $nbwTime if ($synTime>$nbwTime);
+-printf "Total time: %.2f seconds\n", $endTime - $startTime;
++printf "CPU time: %.2f seconds\n", $endTime - $startTime;
+ 
+ exit(0);
+ 

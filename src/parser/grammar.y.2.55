@@ -1,0 +1,251 @@
+/***************************************************************  -*-C-*-  ***/
+
+game_begin    : {
+  if (PARSE_MODULES != parse_mode_flag) {
+    yyerror("unexpected MODULE definition encountered during parsing");
+    YYABORT;
+  }
+#if HAVE_GAME
+  if (opt_game_game(OptsHandler_get_instance())) {
+    Game_Mode_Exit();
+  }
+  game_parser_spec_list = Nil;
+  game_parser_player_1 = Nil;
+  game_parser_player_2 = Nil;
+#endif
+}
+               game_module_list
+                {
+#if HAVE_GAME
+                  if (!opt_game_game(OptsHandler_get_instance())) {
+                    /*this is a usual SMV file*/
+                    parsed_tree = $2;
+                  }
+                  else {
+                    /* this is a game (realizability problem) .
+                       Return a Game with spec list on the left and a
+                       module list on the right. This module list
+                       contains two special modules (with names
+                       PLAYER_1 and PLAYER_2) created from player
+                       declarations.
+                    */
+                    parsed_tree = new_node(GAME,
+                                           game_parser_spec_list,
+                                           cons(game_parser_player_1,
+                                                cons(game_parser_player_2, 
+                                                     $2)));
+                  }
+#else /* no GAME */
+                  parsed_tree = $2;            
+#endif
+                }
+              | {
+                  if (PARSE_COMMAND != parse_mode_flag) {
+                    yyerror("unexpected command encountered during parsing");
+                    YYABORT;
+                  }
+                }
+               command {parsed_tree = $2;}
+              | {
+                  if (PARSE_LTL_EXPR != parse_mode_flag){
+                    yyerror("unexpected expression encountered during parsing");
+                    YYABORT;
+                  }
+                }
+               ltl_expression  {parsed_tree = $2;}
+              ;
+
+/* ------------------------------------------------------------------------ */
+/* ----------------------------  TYPES ------------------------------------ */
+/* ------------------------------------------------------------------------ */
+
+simple_list_expression
+              : simple_expression {$$ = cons($1,Nil);}
+              | simple_list_expression TOK_COMMA simple_expression {$$ = cons($3, $1);}
+              ;
+
+/* ------------------------------------------------------------------------ */
+/* ---------------------------- DECLARATIONS  ----------------------------- */
+/* ------------------------------------------------------------------------ */
+
+/*
+ An NuGaT program is a repetition of modules. Also there can be one
+ game definition. Each module has a signature and a body. Game
+ definition constructs are passed through variables
+ game_parser_spec_list, game_parser_player_1 and game_parser_player_2
+ and not returned by this rule.
+*/
+game_module_list
+             : module {$$ = cons($1, Nil);}
+             | game_definition {$$ = Nil;}
+             | module_list module {$$ = cons($2, $1);}
+             | module_list game_definition {$$ = $1;}
+             ;
+
+/* A game definition consists of GAME keyword, definitions of its two
+   players and a list of usual and game specifications.
+   NOTE: this rule returns value not by usual way
+   but through variables game_parser_spec_list,
+   game_parser_player_1 and game_parser_player_2.
+*/
+game_definition
+             : TOK_GAME game_body
+                     {
+#if HAVE_GAME
+                       /* check that the game is not redeclared */
+                       if (opt_game_game(OptsHandler_get_instance())) {
+                         yyerror_lined("redefinition of a GAME", $1);
+                       }
+                       else {
+                         Game_Mode_Enter();
+                       }
+#else
+                       yyerror_lined("GAME declaration cannot be processes "
+                                     "because GAME package is not set up\n"
+                                     "Check --enable-addons=game option of "
+                                     "the configure script\n", $1);
+                       YYABORT;
+#endif
+                       game_parser_spec_list = $2;
+                       $$ = Nil;
+                     }
+             ;
+
+game_body
+             :       {$$=Nil;}
+             | game_body_element game_body
+                     {if (Nil != $1) $$ = cons($1,$2); else $$ = $2;}
+             ;
+
+/* a GAME definition consists of both players definitions,
+   usual specifications and game specifications.
+*/
+game_body_element
+             : TOK_PLAYER_1 player_body
+                     {
+                       /* a player definition is converted to a module
+                          definitino with a special name. This is done
+                          to simplify the further flattening
+                       */
+                       if (game_parser_player_1 != Nil) {
+                         yyerror_lined("redefinition of a PLAYER_1", $1);
+                         YYABORT;
+                       }
+                       game_parser_player_1 = new_lined_node(MODULE,
+                           new_node(MODTYPE,
+                             new_node(ATOM,(node_ptr)find_string("PLAYER_1"),
+                                      Nil), Nil),  $2, $1);
+                       $$=Nil;
+                     }
+             | TOK_PLAYER_2 player_body
+                     {
+                       /* a player definition is converted to a module
+                          definitino with a special name. This is done
+                          to simplify the further flattening
+                       */
+                       if (game_parser_player_2 != Nil) {
+                         yyerror_lined("redefinition of a PLAYER_2", $1);
+                         YYABORT;
+                       }
+                       game_parser_player_2 = new_lined_node(MODULE,
+                           new_node(MODTYPE,
+                             new_node(ATOM,(node_ptr)find_string("PLAYER_2"),
+                                      Nil), Nil), $2, $1);
+                       $$=Nil;
+                     }
+// not implemented    | invarspec
+// not implemented    | ctlspec
+// not implemented    | ltlspec
+// not implemented    | pslspec
+// not implemented    | compute
+             | reachtarget
+             | avoidtarget
+             | reachdeadlock
+             | avoiddeadlock
+             | buchigame
+             | ltlgame
+             | genreactivity
+             ;
+
+/* a player's body is the same as module's body except the player
+   cannot have ISA declaration and specifications
+*/
+player_body  : { $$ = Nil; }
+             | player_body player_body_element{ $$ = cons($2, $1); }
+             ;
+
+player_body_element
+             : var
+             | frozen_var
+// not implemented : | input_var
+             | assign
+             | init
+             | invar
+             | trans
+             | define_decls
+// not implemented :    | fairness
+// not implemented :    | justice
+// not implemented :    | compassion
+             ;
+
+player_num    : TOK_PLAYER_1 {$$=1;}
+              | TOK_PLAYER_2 {$$=2;}
+              ;
+reachtarget   : TOK_REACHTARGET player_num simple_expression optsemi
+                       {
+#if HAVE_GAME
+                         $$ = new_lined_node(REACHTARGET, NODE_FROM_INT($2), $3, $1);
+#endif
+                       }
+              ;
+avoidtarget   : TOK_AVOIDTARGET player_num simple_expression optsemi
+                       {
+#if HAVE_GAME
+                         $$ = new_lined_node(AVOIDTARGET, NODE_FROM_INT($2), $3, $1);
+#endif
+                       }
+              ;
+reachdeadlock : TOK_REACHDEADLOCK player_num optsemi
+                       {
+#if HAVE_GAME
+                         $$ = new_lined_node(REACHDEADLOCK, NODE_FROM_INT($2), Nil, $1);
+#endif
+                       }
+              ;
+avoiddeadlock : TOK_AVOIDDEADLOCK player_num optsemi
+                       {
+#if HAVE_GAME
+                         $$ = new_lined_node(AVOIDDEADLOCK, NODE_FROM_INT($2), Nil, $1);
+#endif
+}
+              ;
+buchigame     : TOK_BUCHIGAME player_num
+                TOK_LP simple_list_expression TOK_RP optsemi
+                       {
+#if HAVE_GAME
+                         $$ = new_lined_node(BUCHIGAME, NODE_FROM_INT($2),
+                                             new_lined_node(GAME_EXP_LIST,
+                                                            reverse($4), Nil, $3),
+                                             $1);
+#endif
+}
+              ;
+ltlgame       : TOK_LTLGAME player_num ltl_expression optsemi
+                       {
+#if HAVE_GAME
+                         $$ = new_lined_node(LTLGAME, NODE_FROM_INT($2), $3, $1);
+#endif
+                       }
+              ;
+genreactivity : TOK_GENREACTIVITY player_num
+                TOK_LP simple_list_expression TOK_RP TOK_IMPLIES
+                TOK_LP simple_list_expression TOK_RP optsemi
+                       {
+#if HAVE_GAME
+                         $$ = new_lined_node(GENREACTIVITY, NODE_FROM_INT($2),
+                                             new_lined_node(GAME_TWO_EXP_LISTS,
+                                                            reverse($4), reverse($8), $6),
+                                             $1);
+#endif
+                       }
+              ;

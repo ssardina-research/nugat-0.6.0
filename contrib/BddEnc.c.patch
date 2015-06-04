@@ -1,0 +1,258 @@
+--- BddEnc.c	2010-05-14 20:14:43.000000000 +0200
++++ BddEnc.c.grouphack	2010-05-14 20:32:53.000000000 +0200
+@@ -146,6 +146,12 @@
+ 
+ #define DEBUG_GROUPS 0
+ 
++#define HACK_GROUPS_OF_FIXED_SIZE 1
++
++#if HACK_GROUPS_OF_FIXED_SIZE
++#warning "RC: HACK for having groups of fixed size two is enabled"
++#endif
++
+ 
+ /**AutomaticStart*************************************************************/
+ 
+@@ -3155,6 +3161,7 @@
+           giter = ListIter_get_next(giter)) {
+ 
+         block = (dd_block*) NodeList_get_elem_at(grps, giter);
++#if !HACK_GROUPS_OF_FIXED_SIZE
+ 
+         if (opt_verbose_level_gt(OptsHandler_get_instance(), 5)) {
+           fprintf(nusmv_stderr, "Freeing block: low=%d, idx=%d, len=%d\n",
+@@ -3170,6 +3177,7 @@
+                   "------> WARNING!!! Could not remove block low=%d, idx=%d, len=%d\n",
+                   block->low, block->index, block->size);
+         }
++#endif
+       }
+ 
+       /*
+@@ -3240,8 +3248,10 @@
+          corresponding layer, as to remove them when the layer is
+          removed. */
+       if (size > 0) {
++#if !HACK_GROUPS_OF_FIXED_SIZE
+         bdd_enc_begin_var_block(self, low_index, size);
+         bdd_enc_end_var_block(self, current_layer);
++#endif
+       }
+     }
+   }
+@@ -3642,7 +3652,11 @@
+           group_size += 2;
+         }
+         else {
++#if HACK_GROUPS_OF_FIXED_SIZE
++          group_size += 2; /* input or frozen var */
++#else
+           group_size += 1; /* input or frozen var */
++#endif
+         }
+       }
+ 
+@@ -3657,12 +3671,18 @@
+           indices = bdd_enc_reserve_consecutive_vars(self, group_size, 2);
+         }
+         else {
++#if HACK_GROUPS_OF_FIXED_SIZE
++          indices = bdd_enc_reserve_consecutive_vars(self, group_size, 2);
++#else
+           indices = bdd_enc_reserve_consecutive_vars(self, group_size, 1);
++#endif
+         }
+ 
+         /* asks for the block, then creates variables grouping them if
+            required */
++#if !HACK_GROUPS_OF_FIXED_SIZE
+         bdd_enc_begin_var_block(self, array_fetch(int, indices, 0), group_size);
++#endif
+ 
+         idx = 0;
+         gr_iter = NodeList_get_first_iter(group);
+@@ -3680,6 +3700,28 @@
+           else if (SymbTable_is_symbol_input_var(symbTable, name)) {
+             int cindex = array_fetch(int, indices, idx++);
+             bdd_enc_add_input_var(self, name, cindex);
++#if HACK_GROUPS_OF_FIXED_SIZE
++            { /* creates an extra variable to keep group alignment (hack) */
++              int nindex = array_fetch(int, indices, idx++);
++              add_ptr dummy = add_new_var_with_index(self->dd, nindex);
++
++              if (opt_verbose_level_gt(OptsHandler_get_instance(), 3)) {
++                fprintf(nusmv_stderr, "BddEnc: introduced dummy ADD input "\
++                        "var index %d for variable '",
++                        nindex);
++                print_node(nusmv_stderr, name);
++                fprintf(nusmv_stderr, "' at index %d\n", cindex);
++              }
++
++              if (block_layer != SYMB_LAYER(NULL)) {
++                bdd_enc_begin_var_block(self, cindex, 2);
++                bdd_enc_end_var_block(self, block_layer);
++              }
++              /* warning: the new dummy extra variable is not
++                 destroyed here, but will be freed later when the
++                 layer is removed */
++            }
++#endif
+           }
+ 
+           /* frozen variable */
+@@ -3687,13 +3729,38 @@
+             nusmv_assert(SymbTable_is_symbol_frozen_var(symbTable, name));
+             int cindex = array_fetch(int, indices, idx++);
+             bdd_enc_add_frozen_var(self, name, cindex);
++
++#if HACK_GROUPS_OF_FIXED_SIZE
++            { /* creates an extra variable to keep group alignment (hack) */
++              int nindex = array_fetch(int, indices, idx++);
++              add_ptr dummy = add_new_var_with_index(self->dd, nindex);
++
++              if (opt_verbose_level_gt(OptsHandler_get_instance(), 3)) {
++                fprintf(nusmv_stderr, "BddEnc: introduced dummy ADD frozen "\
++                        "var index %d for variable '",
++                        nindex);
++                print_node(nusmv_stderr, name);
++                fprintf(nusmv_stderr, "' at index %d\n", cindex);
++              }
++
++              if (block_layer != SYMB_LAYER(NULL)) {
++                bdd_enc_begin_var_block(self, cindex, 2);
++                bdd_enc_end_var_block(self, block_layer);
++              }
++              /* warning: the new dummy extra variable is not
++                 destroyed here, but will be freed later when the
++                 layer is removed */
++            }
++#endif
+           }
+ 
+           gr_iter = ListIter_get_next(gr_iter);
+         } /* group vars loop */
+ 
+         /* commits the block, passes always the 'scalar' layer */
++#if !HACK_GROUPS_OF_FIXED_SIZE
+         bdd_enc_end_var_block(self, block_layer);
++#endif
+         array_free(indices);
+       }
+     } /* for groups */
+@@ -3784,6 +3851,7 @@
+       iter = NodeList_get_first_iter(groups);
+       while (!ListIter_is_end(iter)) {
+         dd_block* block = (dd_block*) NodeList_get_elem_at(groups, iter);
++#if !HACK_GROUPS_OF_FIXED_SIZE
+         if (dd_free_var_block(self->dd, block) != 0) {
+           /*
+            * This condition is not due to an error, simply the group
+@@ -3794,6 +3862,7 @@
+                   "------> WARNING!!! Could not remove block low=%d, idx=%d, len=%d\n",
+                   block->low, block->index, block->size);
+         }
++#endif
+         iter = ListIter_get_next(iter);
+       }
+ 
+@@ -3839,6 +3908,29 @@
+         fprintf(nusmv_stderr, " (index = %d)\n",
+                 BddEnc_get_var_index_from_name(self, name));
+       }
++#if HACK_GROUPS_OF_FIXED_SIZE
++      if (!SymbTable_is_symbol_state_var(BASE_ENC(self)->symb_table, name)) {
++        /* For input and frozen variables, removes dummy artificial
++           ADD variable introduced to keep groups aligned */
++        int idx = BddEnc_get_var_index_from_name(self, name) + 1;
++        /* here a trick is used. We know index alreay exists, so we
++           retrieve the corresponding variable, and then we unref
++           it twice, as add_new_var_with_index references the
++           returned add */
++        add_ptr add = add_new_var_with_index(self->dd, idx);
++        add_free(self->dd, add); /* this is for local call to
++                                    add_new_var_with_index */
++        add_free(self->dd, add); /* this is to free the variable
++                                    allocated when committing the
++                                    layer */
++        if (opt_verbose_level_gt(OptsHandler_get_instance(), 3)) {
++          fprintf(nusmv_stderr, "BddEnc: removed dummy ADD "  \
++                  "var index %d for variable '", idx);
++          print_node(nusmv_stderr, name);
++          fprintf(nusmv_stderr, "' at index %d\n", idx-1);
++        }
++      }
++#endif
+       bdd_enc_remove_var(self, name);
+       iter = ListIter_get_next(iter);
+     }
+@@ -3951,6 +4043,18 @@
+         NodeList_append(used_indices, NODE_FROM_INT(nidx));
+       }
+     }
++
++#if HACK_GROUPS_OF_FIXED_SIZE
++    if (SymbTable_is_symbol_input_var(BASE_ENC(self)->symb_table, name) ||
++        SymbTable_is_symbol_frozen_var(BASE_ENC(self)->symb_table, name)) {
++      /* frozen and input need level for dummy variables */
++      int nidx = idx + 1;
++      if (level != dd_get_level_at_index(self->dd, nidx)) changed = true;
++      array_insert(int, self->level2index, level++, nidx);
++      NodeList_append(used_indices, NODE_FROM_INT(nidx));
++    }
++#endif
++
+   } /* loop over vars */
+ 
+   if (level < tot_vars_num) {
+@@ -4020,8 +4124,15 @@
+     }
+   } /* end of verbose info */
+ 
++#if HACK_GROUPS_OF_FIXED_SIZE
++  if (res != 1) {
++    fprintf(nusmv_stderr,
++            "(CEGAR) warning: Detected a problem during bdd reordering\n"
++            "(CEGAR) warning: (known problem currently without a solution)\n");
++  }
++#else
+   nusmv_assert(res == 1); /* success? */
+-
++#endif
+   /* adds a forced reordering count as cudd does not count it */
+   /* if (changed) self->curr_reorderings -= 1; */
+ }
+@@ -5740,6 +5851,7 @@
+       insert_assoc(self->layer2groups, (node_ptr) layer, (node_ptr) blocks);
+     }
+ 
++#if !HACK_GROUPS_OF_FIXED_SIZE
+     /* block creation, and keeps track of the created block, to
+        dissolve it when the layer will be removed */
+     CATCH {
+@@ -5758,6 +5870,26 @@
+               self->block_size, self->block_index,
+               self->block_size + self->block_index - 1);
+     }
++#else
++    /* block creation, and keeps track of the created block, to
++       dissolve it when the layer will be removed */
++    CATCH {
++      block = dd_new_var_block(self->dd, self->block_index, self->block_size);
++    }
++    FAIL {
++      bdd_enc_unlock_reordering(self);
++      internal_error("bdd_enc_end_var_block: Failure during variable block construction\n");
++    }
++
++    NodeList_append(blocks, (node_ptr) block);
++
++    if (opt_verbose_level_gt(OptsHandler_get_instance(), 4)) {
++      fprintf(nusmv_stderr, "BddEnc: created a block of %zd variables " \
++              "from index %d to index %zd\n",
++              self->block_size, self->block_index,
++              self->block_size + self->block_index - 1);
++    }
++#endif
+   }
+ 
+   if (self->curr_block_num == 0) bdd_enc_unlock_reordering(self);

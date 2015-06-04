@@ -1,0 +1,74 @@
+cmake_minimum_required(VERSION 3.2)
+project(NuGaT_0_54)
+include_directories("/home/nitin/Tools/mc/NuSMV-2.5.4/nusmv")
+include_directories("/home/nitin/Tools/mc/NuSMV-2.5.4/nusmv/src")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+
+set(SOURCE_FILES
+    src/addons/game/fsm/GameBddFsm.c
+    src/addons/game/fsm/GameBddFsm.h
+    src/addons/game/fsm/GameBeFsm.c
+    src/addons/game/fsm/GameBeFsm.h
+    src/addons/game/fsm/GameSexpFsm.c
+    src/addons/game/fsm/GameSexpFsm.h
+    src/addons/game/parser/game_symbols.h
+    src/addons/game/walkers/CheckerGame.c
+    src/addons/game/walkers/CheckerGame.h
+    src/addons/game/walkers/CheckerGame_private.h
+    src/addons/game/walkers/PrinterGame.c
+    src/addons/game/walkers/PrinterGame.h
+    src/addons/game/walkers/PrinterGame_private.h
+    src/addons/game/walkers/PrinterSexpGame.c
+    src/addons/game/walkers/PrinterSexpGame.h
+    src/addons/game/walkers/PrinterSexpGame_private.h
+    src/addons/game/game.h
+    src/addons/game/gameBuildModel.c
+    src/addons/game/gameCheckGenReactivityBuchiSpec.c
+    src/addons/game/gameCheckLTLSF07.c
+    src/addons/game/gameCheckLTLSF07_gba.c
+    src/addons/game/gameCheckLTLSF07_gba.h
+    src/addons/game/gameCheckLTLSF07_gba_wring.c
+    src/addons/game/gameCheckLTLSF07_gba_wring.h
+    src/addons/game/gameCheckReachAvoidSpec.c
+    src/addons/game/gameCmd.c
+    src/addons/game/gameCmd.h
+    src/addons/game/gameFlatten.c
+    src/addons/game/gameGeneral.c
+    src/addons/game/GameHierarchy.c
+    src/addons/game/GameHierarchy.h
+    src/addons/game/gameInt.h
+    src/addons/game/gameOpt.c
+    src/addons/game/gamePkg.c
+    src/addons/game/GamePlayer.c
+    src/addons/game/GamePlayer.h
+    src/addons/game/gameReqToGame.c
+    src/addons/game/GameStrategy.c
+    src/addons/game/GameStrategy.h
+    src/addons/game/gameUnrealCore.c
+    src/addons/game/gameVarEncoding.c
+    src/addons/game/gameWriteModel.c
+    src/addons/game/gameXmlReader.c
+    src/addons/game/PropDbGame.c
+    src/addons/game/PropDbGame.h
+    src/addons/game/PropDbGame_private.h
+    src/addons/game/PropGame.c
+    src/addons/game/PropGame.h
+    src/addons/game/PropGame_private.h
+    src/addons/game/TypeCheckerGame.c
+    src/addons/game/TypeCheckerGame.h
+    src/addons/addons.h
+    src/addons/addonsPkg.c
+    src/parser/grammar.y.1.55
+    src/parser/grammar.y.2.55
+    src/parser/input.l.2.55
+    src/parser/Makefile.am
+    src/parser/Makefile.in
+    src/smgame/smgameCmd.c
+    src/smgame/smgameDummyMac.c
+    src/smgame/smgameInit.c
+    src/smgame/smgameInt.h
+    src/smgame/smgameMain.c
+    src/smgame/smgameMisc.c
+    src/smgame/smgameVers.c)
+
+add_executable(NuGaT_0_54 ${SOURCE_FILES})

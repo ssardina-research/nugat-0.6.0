@@ -1,0 +1,46 @@
+MODULE b
+VAR
+  v: boolean;
+
+GAME
+
+PLAYER_1
+VAR
+  i0: b;
+  i1: boolean;
+INIT
+  i0.v
+TRANS
+  i1 -> !next(i1)
+TRANS
+  !i1 -> next(i1)
+
+PLAYER_2
+VAR
+  o0: b;
+  o1: boolean;
+TRANS
+  o0.v <-> i0.v
+TRANS
+  o1 <-> i1
+
+-- realizable
+REACHTARGET PLAYER_1 o0.v
+
+-- unrealizable
+AVOIDTARGET PLAYER_2 o0.v
+
+-- unrealizable
+REACHDEADLOCK PLAYER_1
+
+-- realizable
+AVOIDDEADLOCK PLAYER_2
+
+-- realizable
+BUCHIGAME PLAYER_2 (i1, o1)
+
+-- unrealizable
+LTLGAME PLAYER_1 F G i1
+
+-- realizable
+GENREACTIVITY PLAYER_2 (i0.v)->(o0.v, i1)
