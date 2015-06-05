@@ -1,5 +1,6 @@
 /***************************************************************  -*-C-*-  ***/
 %{
+#include "config.h"
 #if HAVE_GAME
 #include "addons/game/parser/game_symbols.h"
 #include "addons/game/game.h"
