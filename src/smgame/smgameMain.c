@@ -50,10 +50,12 @@
 #include "cinit/cinit.h" //#include "sm/sm.h"
 #include "utils/utils.h"
 #include "../addons/addons.h"
-
+#include "smgameInt.h"
 #include <stdio.h>
+#include "../addons/game/gameInt.h"
 #include <stdlib.h>
 #include <sys/stat.h>
+#include "printStrategy.h"
 
 static char rcsid[] UTIL_UNUSED = "$Id: smMain.c,v 1.28.2.14.2.5.2.31.4.32 2010-02-23 13:38:37 nusmv Exp $";
 
@@ -73,6 +75,7 @@ EXTERN FILE* nusmv_stderr;
 EXTERN FILE* nusmv_stdout;
 EXTERN DdManager* dd_manager;
 
+EXTERN GameParams gameParams;
 
 /**AutomaticStart*************************************************************/
 
@@ -106,6 +109,7 @@ static void sm_ParseLineOptions ARGS((int argc, char ** argv,
 int main(int  argc, char ** argv)
 {
   int status = 0;
+
   boolean requires_shutdown = true;
   FP_V_V iq_fns[][2] = {{NuGaTAddons_Init, NuGaTAddons_Quit}};
 
@@ -204,85 +208,6 @@ int main(int  argc, char ** argv)
 
   exit(status);
 }
-
-int main2(int argc, char ** argv)
-{
-  int status = 0;
-  int quit_flag;
-  quit_flag = 0;
-
-  Smgame_Init();
-
-  sm_ParseLineOptions(argc, argv, OptsHandler_get_instance());
-  if (!opt_batch(OptsHandler_get_instance())) { /* interactive mode */
-    /* Initiliazes the commands to handle with options. */
-    init_options_cmd();
-    BannerPrint(nusmv_stdout);
-    if (!opt_ignore_init_file(OptsHandler_get_instance())) {
-      (void) CInit_NusmvrcSource();
-    }
-    if (NuSMV_CMD_LINE != NULL) {
-      /* Before entering interactive mode, check if command file
-         actually exists and is readable. Failing to do so causes
-         NuGaT to hang if source is not readable.
-      */
-      struct stat cmd_line;
-      if (0 == stat(NuSMV_CMD_LINE, &cmd_line)) {
-        char* command = ALLOC(char,
-                              strlen(NuSMV_CMD_LINE) + strlen("source ") + 1);
-        sprintf(command, "source %s", NuSMV_CMD_LINE);
-        quit_flag = Cmd_CommandExecute(command);
-        FREE(command);
-      }
-      else {
-        fprintf(nusmv_stderr, "No such file or directory. Exiting...\n");
-        quit_flag = -1; /* require immediate quit */
-      }
-      FREE(NuSMV_CMD_LINE);
-      NuSMV_CMD_LINE=(char*)NULL;
-    }
-    while (quit_flag >= 0) {
-      quit_flag = Cmd_CommandExecute("source -ip -");
-    }
-    status = 0;
-  }
-  else { /* batch mode */
-    /* In the batch mode we dont want to read the ~/.nusmvrc file. */
-    /* The system has to behave as the original NuGaT */
-    /*   if (!opt_ignore_init_file(OptsHandler_get_instance())) { */
-    /*       (void) Sm_NusmvrcSource(); */
-    /*     } */
-    BannerPrint(nusmv_stdout);
-    if (opt_verbose_level_gt(OptsHandler_get_instance(), 0)) {
-      fprintf(nusmv_stdout, "Starting the batch interaction.\n");
-    }
-    Smgame_BatchMain();
-  }
-
-  /* Value of "quit_flag" is determined by the "quit" command */
-  if (quit_flag == -1 || quit_flag == -2 || quit_flag == -4) {
-    status = 0;
-  }
-  if (quit_flag == -2) {
-    /*    Hrc_ManagerFree(globalHmgr); */
-    Smgame_End();
-  }
-  else if (quit_flag == -3) {
-    /* Script failed and on_failure_script_quits is set */
-    /*    Hrc_ManagerFree(globalHmgr); */
-    Smgame_End();
-    status = -1;
-  }
-  else if (quit_flag == -4) {
-    /* exits quickly and silently */
-  }
-  else {
-    Smgame_End();
-  }
-
-  exit(status);
-}
-
 
 
 /*---------------------------------------------------------------------------*/
@@ -1004,6 +929,19 @@ static void sm_ParseLineOptions(int argc, char ** argv, OptsHandler_ptr options)
     else if(strcmp(*argv, "-dp") == 0){
       argv++; argc--;
       fprintf(stderr, "WARNING: Disjunctive partitioning is no longer supported.\n");
+      continue;
+    }
+      /* printing strategy options */
+    else if(strcmp(*argv, "-e") == 0){
+      argv++; argc--;
+      /* -e implies -s */
+      gameParams.strategy_printout = 1;
+      gameParams.indented_printout = 1;
+      continue;
+    }
+    else if(strcmp(*argv, "-s") == 0){
+      argv++; argc--;
+      gameParams.strategy_printout = 1;
       continue;
     }
     else if (argc == 1 && (**argv) != '-'){

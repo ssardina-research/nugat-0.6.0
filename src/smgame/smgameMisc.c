@@ -52,6 +52,7 @@
 #include "utils/utils.h"
 #include "utils/error.h"
 #include "config.h"
+#include "../addons/game/gameInt.h"
 #if HAVE_GAME
 #include "addons/game/game.h"
 #include "addons/game/PropGame.h"
@@ -126,6 +127,7 @@ void Smgame_BatchMain()
   /*  4: Builds the flat FSMs                           */
   /* ================================================== */
   if (Cmd_CommandExecute("build_flat_model")) nusmv_exit(1);
+
 
 
   /* --------------------------------------------------- */
@@ -376,6 +378,7 @@ void Smgame_BatchMain()
     if (Cmd_CommandExecute(command)) nusmv_exit(1);
   }
   else {
+
     /* Evaluates the Specifications */
     if (!opt_ignore_spec(oh)) {
       PropDb_verify_all_type(PropPkg_get_prop_database(), Prop_Ctl);
@@ -406,6 +409,7 @@ void Smgame_BatchMain()
        This code is actually used only if there is a game definition
        containing game specifications.
     */
+
     PropDb_verify_all_type(PropPkg_get_prop_database(), PropGame_ReachTarget);
     PropDb_verify_all_type(PropPkg_get_prop_database(), PropGame_AvoidTarget);
     PropDb_verify_all_type(PropPkg_get_prop_database(), PropGame_ReachDeadlock);

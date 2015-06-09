@@ -55,11 +55,12 @@
 #include "utils/utils.h"
 #include "utils/utils_io.h"
 #include "utils/object.h"
-
+#include "../../smgame/printStrategy.h"
 #include <stdio.h>
 
 static char rcsid[] UTIL_UNUSED = "$Id$";
 
+EXTERN GameParams gameParams;
 /*---------------------------------------------------------------------------*/
 /* Constant declarations                                                     */
 /*---------------------------------------------------------------------------*/
@@ -639,29 +640,29 @@ void prop_game_verify(PropGame_ptr self)
   if (Prop_get_status(PROP(self)) == Prop_Unchecked)  {
     switch (Prop_get_type(PROP(self))) {
     case PropGame_ReachTarget:
-      Game_CheckReachTargetSpec(self, NULL);
+      Game_CheckReachTargetSpec(self, &gameParams);
       break;
     case PropGame_AvoidTarget:
-      Game_CheckAvoidTargetSpec(self, NULL);
+      Game_CheckAvoidTargetSpec(self, &gameParams);
       break;
     case PropGame_ReachDeadlock:
-      Game_CheckReachDeadlockSpec(self, NULL);
+      Game_CheckReachDeadlockSpec(self, &gameParams);
       break;
     case PropGame_AvoidDeadlock:
-      Game_CheckAvoidDeadlockSpec(self, NULL);
+      Game_CheckAvoidDeadlockSpec(self, &gameParams);
       break;
     case PropGame_BuchiGame:
-      Game_CheckBuchiGameSpec(self, NULL);
+      Game_CheckBuchiGameSpec(self, &gameParams);
       break;
     case PropGame_LtlGame:
       Game_CheckLtlGameSpecSF07(self,
-                                NULL,
+                                &gameParams,
                                 DEFAULT_GAME_CHECK_LTL_GAME_SPEC_SF07_KMIN,
                                 DEFAULT_GAME_CHECK_LTL_GAME_SPEC_SF07_KMAX,
                                 DEFAULT_GAME_CHECK_LTL_GAME_SPEC_SF07_W);
       break;
     case PropGame_GenReactivity:
-      Game_CheckGenReactivitySpec(self, NULL);
+      Game_CheckGenReactivitySpec(self, &gameParams);
       break;
     default: nusmv_assert(false); /* invalid type */
     }
