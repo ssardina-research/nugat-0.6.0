@@ -51,7 +51,7 @@
 #define HAVE_LIBM 1
 
 /* Uses the private readline */
-#define HAVE_LIBREADLINE 0
+#define HAVE_LIBREADLINE 1
 
 /* Define to 1 if you have the <limits.h> header file. */
 #define HAVE_LIMITS_H 1
@@ -220,13 +220,13 @@
 #define PACKAGE_BUGREPORT "nugat@list.fbk.eu"
 
 /* Build date */
-#define PACKAGE_BUILD_DATE "Thu Jun  4 10:34:42 UTC 2015"
+#define PACKAGE_BUILD_DATE "Mon Jun  8 08:40:50 UTC 2015"
 
 /* Define to the full name of this package. */
 #define PACKAGE_NAME "NuGaT"
 
 /* Define to the full name and version of this package. */
-#define PACKAGE_STRING "NuGaT 0.5.0"
+#define PACKAGE_STRING "NuGaT 0.5.4"
 
 /* Define to the one symbol short name of this package. */
 #define PACKAGE_TARNAME "nugat"
@@ -235,7 +235,7 @@
 #define PACKAGE_URL ""
 
 /* Define to the version of this package. */
-#define PACKAGE_VERSION "0.5.0"
+#define PACKAGE_VERSION "0.5.4"
 
 /* Preprocessor call string */
 #define PROG_CPP /usr/bin/gcc-4.7 -E -x c
@@ -259,7 +259,7 @@
 #define STDC_HEADERS 1
 
 /* Version number of package */
-#define VERSION "0.5.0"
+#define VERSION "0.5.4"
 
 /* Define to 1 if `lex' declares `yytext' as a `char *' by default, not a
    `char[]'. */

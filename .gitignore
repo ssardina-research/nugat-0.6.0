@@ -163,3 +163,4 @@ Makefile
 config.status
 config.log
 .idea/
+/NuGaT

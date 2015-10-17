@@ -1,16 +1,5 @@
-----------------------------------------------------------------------
-NuGAT is a game solver on top of NuSMV model checker
+This is version 0.5.0 of NuGaT.
 
-This is version 0.5.4 of NuGaT.
-
-Done by Nitin Yadav (<kyadav.nitin@gmail.com>) and Sebastian Sardina (ssardina@gmail.com) @ 2015
-
-
-VERSION TRACKING:
-
-0.5.4 (June 2015): ported NuGAT to NuGAT 2.5.4 (see MIGRATION-0.5.4)
-0.5.0: from from http://es.fbk.eu/technologies/nugat-game-solver
-       (only works with NuSMV 2.5.0; does not compile with newer versions)
 ----------------------------------------------------------------------
 
 NuGaT is a game solver built on top of the NuSMV model checker.
