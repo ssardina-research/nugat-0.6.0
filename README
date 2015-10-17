@@ -3,7 +3,8 @@ NuGAT is a game solver on top of NuSMV model checker
 
 This is version 0.5.4 of NuGaT.
 
-Done by Nitin Yadav (<kyadav.nitin@gmail.com>) and Sebastian Sardina (ssardina@gmail.com) @ 2015
+by Nitin Yadav (<kyadav.nitin@gmail.com>) and 
+Sebastian Sardina (ssardina@gmail.com) @ 2015
 
 
 VERSION TRACKING:
@@ -15,14 +16,11 @@ VERSION TRACKING:
 
 NuGaT is a game solver built on top of the NuSMV model checker.
 
-This is a first release and should be considered simply as a current
-snapshot of an ongoing development. We make no guarantees about
-commands, features, or interfaces being the same or even available in
-potential future versions.
+This is the release based on the original 0.5.0 version so as to make
+it compatible with the latest NuSMV 2.5.4 which introduced many changes.
 
-Please contact <nugat-users@list.fbk.eu> for further information on
-NuGaT. Please contact <nugat@list.fbk.eu> for getting in touch with
-the NuGaT development staff.
+We make no guarantees about commands, features, or interfaces being the 
+same or even available in potential future versions.
 
 
 ===========
@@ -41,12 +39,10 @@ the NuGaT development staff.
 1. COPYRIGHT
 ============
 
-NuGaT version 0.5.0 is licensed under the GNU Lesser General Public
+NuGaT version is licensed under the GNU Lesser General Public
 License (LGPL in short) as published by the Free Software Foundation;
 either version 2.1 of the License, or (at your option) any later
 version. File LGPL-2.1 contains a copy of the License.
-
-For license information on NuSMV see the NuSMV README.
 
 For license information on Lily see its documentation.
 
@@ -91,6 +87,9 @@ The GNU Lesser General Public License home page:
 NuGaT uses NuSMV 2.5 as its backend. Hence, in order to build and use
 NuGaT you should first obtain and build NuSMV 2.5. For this we refer
 to the NuSMV 2.5 documentation.
+
+We refer to INSTALL for detail instructions for 0.5.4. What follows are
+the original instructions for 0.5.0:
 
 Below we assume that your have successfully compiled NuSMV 2.5. We
 further denote the full path of the "nusmv" directory of that
