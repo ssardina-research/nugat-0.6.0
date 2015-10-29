@@ -164,4 +164,3 @@ config.status
 config.log
 .idea/
 /NuGaT
-/NuSMV*
