@@ -1,0 +1,161 @@
+================================================================================
+MIGRATION FROM NuGAT 0.5.0 (NuSMV 2.5.0)to NuGAT 0.5.4 (NuGAT 2.5.4)
+
+June 2015
+
+Sebastian Sardina - ssardina@gmail.com 
+Nitin Yadav - nitin.yadav@rmit.edu.au
+================================================================================
+
+1. NuSMV-2.5.4 requires nusmv-config.h that is placed outside its src directory.
+   Hence, all makefiles(.am and .in) in NuGAT need to be updated:
+   CHANGE: replace "INCLUDES = -I$(top_srcdir)/src -I$(CUDD_DIR)/include -I$(NUSMV_DIR)/src" with
+   "INCLUDES = -I$(top_srcdir)/src -I$(CUDD_DIR)/include -I$(NUSMV_DIR)/src -I$(NUSMV_DIR)"
+
+    Affected files: all Makefile.am and Makefile.in
+
+2. NuSMV-2.5.4 no longer has the method SymbLayer_get_all_symbols(layer).
+   Instead one has to retrieve symbols using iterators.
+   For example, in NuSMV-2.5.0, file BddEnc.c (lines 3941-3947):
+     /* cleans up all symbols into the scalar and boolean layer */
+     BddEncCache_clean_evaluation_about(self->cache,
+                                        SymbLayer_get_all_symbols(layers[0]));
+     if (SYMB_LAYER(NULL) != layers[1]) {
+       BddEncCache_clean_evaluation_about(self->cache,
+                                          SymbLayer_get_all_symbols(layers[1]));
+     }
+
+   have been replaced by the following in NuSMV-2.5.4 (lines 4111-4131):
+   /* cleans up all symbols into the scalar and boolean layer */
+     {
+       SymbLayerIter iter;
+       NodeList_ptr syms;
+
+       SymbLayer_gen_iter(layers[0], &iter, STT_ALL);
+       syms = SymbLayer_iter_to_list(layers[0], iter);
+
+       BddEncCache_clean_evaluation_about(self->cache, syms);
+
+       NodeList_destroy(syms);
+
+       if (SYMB_LAYER(NULL) != layers[1]) {
+         SymbLayer_gen_iter(layers[1], &iter, STT_ALL);
+         syms = SymbLayer_iter_to_list(layers[1], iter);
+
+         BddEncCache_clean_evaluation_about(self->cache, syms);
+
+         NodeList_destroy(syms);
+       }
+     }
+
+   The signature of the function BddEncCache_clean_evaluation_about is same in both NuSMV-2.5.0 and NuSMV-2.5.4.
+   Hence, one can deduce that variable syms and SymbLayer_get_all_symbols(layer) are same.
+   Note: STT_ALL captures all variables in the symbol table (see src/compile/symb_table/SymbTable.h)
+
+   Affected files:
+   - src/addons/game/gameGeneral.c (lines 231,234).
+   - src/addons/game/gameBuildModel.c (lines 217,218).
+   - src/addons/game/gameCheckLTLSF07.c (lines 938,2275,2277,2381,2383)
+
+3. In NuSMV-2.5.4, functions bdd_zero, bdd_one (seems to) have  been replaced by bdd_false and bdd_true.
+   Similarly for bdd_is_zero, bdd_is_one, etc.
+
+   Affected files for bdd_zero:
+   - src/addons/game/GameCheckGenReactivityBuchiSpec.c (lines 607, 654, 1030, 1104, 1145, 1149, 1342, 1463, 1545)
+   - src/addons/game/gameCheckReachAvoidSpec.d (lines 345, 461, 569)
+   - src/addons/game/GameStrategy.c (lines 520, 616, 628, 657, 669, 708)
+
+   Affected files for bdd_one:
+   - src/addons/game/gameBuildModel.c (line 307)
+   - src/addons/game/gameCheckGenReactivityBuchiSpec.c (line 676)
+   - src/addons/game/gameCheckLTLSF07.c (line 1793)
+   - src/addons/game/gameUnrealCore.c (lines 2009, 2454)
+   - src/addons/game/fsm/GameBddFsm.c (line 1367)
+
+   Affected files for bdd_is_zero:
+   - src/addons/game/gameCheckGenReactivityBuchiSpec.c (lines 641, 694, 699, 1311, 1315, 1322, 1328)
+   - src/addons/game/gameCheckReachAvoidSpec.c (lines 378, 382, 389)
+   - src/addons/game/gameUnrealCore.c (lines 1940, 2007)
+
+   Affected files for bdd_is_one:
+   - src/addons/game/gameCheckGenReactivityBuchiSpec.c (line 658)
+   - src/addons/game/gameUnrealCore.c (lines 1822, 1939)
+   - src/addons/game/fsm/GameBddFsm.c (lines 173, 174)
+
+   Affected files for bdd_isnot_zero:
+   - src/addons/game/gameCheckGenReactivityBuchiSpec.c (lines 747, 941, 1468)
+   - src/addons/game/GameStrategy.c (line 667)
+   - src/addons/game/fsm/GameBddFsm.c (line 1126)
+
+4. In NuSMV-2.5.4, functions Prop_print and Prop_print_db have an extra argument of type Prop_PrintFmt.
+   Prop_PrintFmt specifies the print format and is defined in src/prop/Prop.h (line 128).
+   The following formats are defined:
+   enum _Prop_PrintFmt {
+     PROP_PRINT_FMT_FORMULA,
+     PROP_PRINT_FMT_FORMULA_TRUNC,
+     PROP_PRINT_FMT_INDEX,
+     PROP_PRINT_FMT_NAME,
+     PROP_PRINT_FMT_DEFAULT = PROP_PRINT_FMT_FORMULA
+   };
+   We add PROP_PRINT_FMT_FORMULA as the third argument in Prop_print and Prop_print_db.
+
+   Affected files:
+   - src/addons/game/gameCheckLTLSF07.c (lines 432, 487, 2059)
+   - src/addons/game/gameGeneral.c (line 371)
+   - src/addons/game/PropDbGame.c (lines 306, 598)
+   /*- src/addons/game/PropGame.c (lines 459, 460)*/
+
+5. In NuSMV-2.5.4 print_db method in src/prop/Prop_private.h has been replaced by print_db_tabular and print_db_xml.
+   Hence, in file src/addons/game/PropGame.c we replace print_db with print_db_tabular at line 460.
+
+6.1 The main package header for NuSMV has changed from sm/sm.h to cinit/cinit.h.
+   Hence, #include "sm/sm.h" needs to be replaced by #include "cinit/cinit.h", #include "cinit/cinitInt.h" in src/smgame/smgameInit.c line 45. and src/smgame/smgameMain.c line 50.
+
+6.2 The dependencies on sm/smCmd.lo, sm/smInit.lo, sm/smMisc.lo, sm/smVers.lo should be changed to their cinit equivalent parts in
+    Makefile.am and Makefile.in in directory src/smgame
+
+6.3 In NuSMV-2.5.4 src/bmc/bmcConv.c depends on certain functions found in src/rbc/rbc.h.
+    These are compiled separately into a library, hence, we need to add $(NUSMV_DIR)/librbcdag.la in makefiles
+    as dependency along with libnusmvcore.la.
+    IMPORTANT: librbcdag.la is not produced in NuSMV compilation, rather it is generated in /opt/lib/NuSMV-2.5.4 directory on installation.
+
+6.4 Sm_Reset has been replaced by CInit_reset_first and CInit_reset_last in src/smgame/smgameInit.c line 84.
+
+6.5 Sm_Init has been replaced by CInit_init in src/smgame/smgameInit.c line 117.
+
+6.6 Sm_End has been replaced by CInit_end in src/smgame/smgameInit.c line 139.
+
+6.7 Sm_NusmvrcSource replaced by CInit_NusmvrcSource in src/smgame/smgameMain.c line 119.
+
+6.8 Sm_NuSMVObtainLibrary replaced by CInit_NuSMVObtainLibrary in src/smgame/smgameMain.c line 242.
+
+6.9 Sm_BannerPrint_nusmv_library replaced by CInit_BannerPrint_nusmv_library in  src/smgame/smgameMain.c line 371.
+
+6.7 Sm_BannerPrint_cudd replaced by CInit_BannerPrint_cudd in  src/smgame/smgameMain.c line 374.
+
+6.8 unset_enable_bdd_cache replaced by unset_enable_sexp2bdd_caching in src/smgame/smgameMain.c line 696.
+
+7. Files related to manipulation of well formed formulae routines have moved from folder bmc to wff.
+   Hence, #include "bmc/bmcWff.h" needs to be replaced bt #include "wff/wff.h", #include "wff/w2w/w2w.h", #include "wff/w2w/w2wInt.h"
+   in src/addons/game/gameCheckLTLSF07.c. The functions Bmc_Wff_MkNnf has been replaced by Wff2Nnf. Similarly, bmc_init_wff2nnf_hash and
+   bmc_quit_wff2nnf_hash have been replaced by w2w_init_wff2nnf and w2w_quit_wff2nnf.
+
+8. SymbLayer_get_all_vars is no longer available in NuSMV-2.5.4. To get all vars one has to use iterator (see nusmv source src/compile/compileCmd.c lines 3170.
+   For example, SymbLayer_gen_iter(layer, &iter, STT_VAR);vars = SymbLayer_iter_to_set(layer, iter);
+   Affected files:
+   -src/addons/gameBuildModel.c lines 122, 124
+   -src/addons/gameFlatten.c lines 347
+   -src/addons/gameUnrealCore.c lines 1018, 1020
+
+   Similarly, iterators need to be used for symbol table (see modified code in src/addons/game/gameCheckLTLSF07.c line 1798)
+
+9. file src/game/gameFlatten.c uses SymbLayer_get_all_vars to get a NodeList_ptr. In NuSMV-2.5.4 SymbLayer_iter_to_list returns a NodeList_ptr.
+   Hence, we use iterator in conjunction with this function.
+
+10. in src/game/addons/walkers/CheckerGame.c changed SymbType_is_boolean_enum to SymbType_is_boolean at line 251.
+
+
+
+================================================================================
+EOF
+================================================================================
