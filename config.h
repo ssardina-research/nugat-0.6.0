@@ -220,7 +220,7 @@
 #define PACKAGE_BUGREPORT "nugat@list.fbk.eu"
 
 /* Build date */
-#define PACKAGE_BUILD_DATE "Mon Jun  8 08:40:50 UTC 2015"
+#define PACKAGE_BUILD_DATE "Thu Oct 29 05:12:26 UTC 2015"
 
 /* Define to the full name of this package. */
 #define PACKAGE_NAME "NuGaT"
@@ -238,7 +238,7 @@
 #define PACKAGE_VERSION "0.5.4"
 
 /* Preprocessor call string */
-#define PROG_CPP /usr/bin/gcc-4.7 -E -x c
+#define PROG_CPP gcc -E -x c
 
 /* Define as the return type of signal handlers (`int' or `void'). */
 #define RETSIGTYPE void

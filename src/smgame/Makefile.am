@@ -35,7 +35,7 @@ AUTOMAKE_OPTIONS = subdir-objects
 CUDD_DIR = $(cudd_dir)
 NUSMV_DIR = $(nusmv_dir)
 
-INCLUDES = -I$(top_srcdir)/src -I$(CUDD_DIR)/include -I$(NUSMV_DIR)/src -I$(NUSMV_DIR)
+INCLUDES = -I$(top_srcdir)/src -I$(CUDD_DIR)/include -I$(NUSMV_DIR)/code/nusmv/core -I$(NUSMV_DIR)
 
 
 AM_CPPFLAGS = -DDATADIR=\"$(datadir)\" @CPPFLAGS@
@@ -53,8 +53,8 @@ smgame_HEADERS =
 
 noinst_LTLIBRARIES = libsmgame.la
 libsmgame_la_SOURCES = $(PKG_SOURCES)
-libsmgame_la_LIBADD = $(NUSMV_DIR)/src/cinit/cinitCmd.lo \
-                      $(NUSMV_DIR)/src/cinit/cinitInit.lo \
-                      $(NUSMV_DIR)/src/cinit/cinitMisc.lo \
-                      $(NUSMV_DIR)/src/cinit/cinitVers.lo \
-                      $(NUSMV_DIR)/src/cinit/cinitData.lo
+libsmgame_la_LIBADD = $(NUSMV_DIR)/code/nusmv/core/cinit/cinitCmd.lo \
+                      $(NUSMV_DIR)/code/nusmv/core/cinit/cinitInit.lo \
+                      $(NUSMV_DIR)/code/nusmv/core/cinit/cinitMisc.lo \
+                      $(NUSMV_DIR)/code/nusmv/core/cinit/cinitVers.lo \
+                      $(NUSMV_DIR)/code/nusmv/core/cinit/cinitData.lo

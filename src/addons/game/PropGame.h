@@ -52,7 +52,7 @@
 #include "fsm/GameBddFsm.h"
 #include "fsm/GameBeFsm.h"
 
-#include "fsm/sexp/Expr.h"
+//#include "fsm/sexp/Expr.h" // not exist in NuSMV 2.6.0
 #include "prop/Prop.h"
 #include "utils/utils.h"
 #include "utils/ustring.h"

@@ -33,10 +33,10 @@
 
 CUDD_DIR = $(cudd_dir)
 NUSMV_DIR = $(nusmv_dir)
-NUSMV_PARSER = $(NUSMV_DIR)/src/parser
+NUSMV_PARSER = $(NUSMV_DIR)/code/nusmv/core/parser
 
 INCLUDES = -I$(top_srcdir)/src -I$(top_builddir)/src -I$(CUDD_DIR)/include \
-	   -I$(NUSMV_DIR)/src -I$(NUSMV_DIR)
+	   -I$(NUSMV_DIR)/code/nusmv/core -I$(NUSMV_DIR)
 
 GRAMMAR_START = game_begin # initial nugat grammar non-terminal symbol
 

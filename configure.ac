@@ -6,6 +6,7 @@ AC_PREREQ(2.57)
 AC_INIT(NuGaT, 0.5.0, nugat@list.fbk.eu)
 
 # local configuration
+nusmv_config_dir=nusmv-config
 nusmv_pkg=nusmv-2.pc
 
 # where to look for install.sh and other helpers
@@ -207,7 +208,7 @@ for d in $nusmv_dir; do
 done
 AC_MSG_RESULT(ok)
 AC_MSG_CHECKING(Configured files)
-for f in $nusmv_dir/$nusmv_pkg $nusmv_dir/libnusmv.la; do
+for f in $nusmv_config_dir/$nusmv_pkg; do
   if ! test -f $f; then
       AC_MSG_ERROR(File $f not found. See configure option --with-nusmv-dir)
   fi
@@ -220,7 +221,7 @@ if test x$PKG_CONFIG = xno ; then
   AC_MSG_ERROR([*** pkg-config not found. See http://www.freedesktop.org/software/pkgconfig/])
 fi
 
-cuddname=`$PKG_CONFIG --variable=cuddname $nusmv_dir/$nusmv_pkg`
+cuddname=`$PKG_CONFIG --variable=cuddname $nusmv_config_dir/$nusmv_pkg`
 AC_SUBST(cuddname)
 
 # cudd dir:
@@ -313,7 +314,7 @@ AC_SUBST(HAVE_LIBEXPAT)
 # Hopefully this will be no longer needed in the future
 
 # Sat solvers?
-have_sat_solvers=`$PKG_CONFIG --variable=sat_available $nusmv_dir/$nusmv_pkg`
+have_sat_solvers=`$PKG_CONFIG --variable=sat_available $nusmv_config_dir/$nusmv_pkg`
 if test "x$have_sat_solvers" = "xyes"; then
    AC_DEFINE(HAVE_SAT_SOLVER, 1, Have at least one sat solver)
 else 
@@ -321,7 +322,7 @@ else
 fi
 
 # zchaff?
-have_solver_zchaff=$(grep -c "define HAVE_SOLVER_ZCHAFF 1" $nusmv_dir/config.h)
+have_solver_zchaff=$(grep -c "define HAVE_SOLVER_ZCHAFF 1" $nusmv_dir/build/nusmv-config.h)
 if test "x$have_solver_zchaff" = "x1"; then
    AC_DEFINE(HAVE_SOLVER_ZCHAFF, 1, Have zchaff)
 else 
@@ -329,7 +330,7 @@ else
 fi
 
 # minisat?
-have_solver_minisat=$(grep -c "define HAVE_SOLVER_MINISAT 1" $nusmv_dir/config.h)
+have_solver_minisat=$(grep -c "define HAVE_SOLVER_MINISAT 1" $nusmv_dir/build/nusmv-config.h)
 if test "x$have_solver_minisat" = "x1"; then
    AC_DEFINE(HAVE_SOLVER_MINISAT, 1, Have minisat)
 else 

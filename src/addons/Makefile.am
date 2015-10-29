@@ -53,7 +53,7 @@ CUDD_DIR = $(cudd_dir)
 NUSMV_DIR = $(nusmv_dir)
 
 
-INCLUDES = -I$(top_srcdir)/src -I$(CUDD_DIR)/include -I$(NUSMV_DIR)/src -I$(NUSMV_DIR)
+INCLUDES = -I$(top_srcdir)/src -I$(CUDD_DIR)/include -I$(NUSMV_DIR)/code/nusmv/core -I$(NUSMV_DIR)
 
 PKG_SOURCES = addonsPkg.c
 addonsdir = $(includedir)/nusmv/addons
