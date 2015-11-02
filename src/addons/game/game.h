@@ -204,7 +204,7 @@ EXTERN int Game_RatFileToGame ARGS((const char* filename));
 
 /* Game Options */
 
-EXTERN boolean opt_game_game ARGS((OptsHandler_ptr));
+EXTERN boolean opt_game_game ARGS((int));
 EXTERN void    set_game_game ARGS((OptsHandler_ptr));
 EXTERN void    unset_game_game ARGS((OptsHandler_ptr));
 EXTERN void    set_game_print_strategy ARGS((OptsHandler_ptr opt));

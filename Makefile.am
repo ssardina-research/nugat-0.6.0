@@ -34,7 +34,7 @@ CUDD_DIR = $(cudd_dir)
 NUSMV_DIR = $(nusmv_dir)
 
 
-INCLUDES = -I$(top_srcdir)/src -I$(CUDD_DIR)/include -I$(NUSMV_DIR)/code/nusmv/core -I$(NUSMV_DIR)
+INCLUDES = -I$(top_srcdir)/src -I$(CUDD_DIR)/include -I$(NUSMV_DIR)/code/nusmv/core -I$(NUSMV_DIR)/code/nusmv/shell -I$(NUSMV_DIR)/code/nusmv -I$(NUSMV_DIR)/code -I$(NUSMV_DIR)
 
 SUBDIRS = contrib examples src test
 
@@ -50,7 +50,7 @@ lib_LTLIBRARIES = libnugat.la
 # ----------------------------------------------------------------------
 # The NuGaT executable
 NuGaT_SOURCES = $(top_srcdir)/src/smgame/smgameMain.c
-NuGaT_LDADD = libnugat.la $(NUSMV_DIR)/libnusmvcore.la $(NUSMV_DIR)/librbcdag.la
+NuGaT_LDADD = libnugat.la #(NUSMV_DIR)/libnusmvcore.la $(NUSMV_DIR)/librbcdag.la NOT EXISTS
 # ----------------------------------------------------------------------
 
 # lib for external linking:

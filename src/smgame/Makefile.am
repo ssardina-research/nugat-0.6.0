@@ -35,7 +35,7 @@ AUTOMAKE_OPTIONS = subdir-objects
 CUDD_DIR = $(cudd_dir)
 NUSMV_DIR = $(nusmv_dir)
 
-INCLUDES = -I$(top_srcdir)/src -I$(CUDD_DIR)/include -I$(NUSMV_DIR)/code/nusmv/core -I$(NUSMV_DIR)
+INCLUDES = -I$(top_srcdir)/src -I$(CUDD_DIR)/include -I$(NUSMV_DIR)/code/nusmv/core -I$(NUSMV_DIR)/code/nusmv/shell -I$(NUSMV_DIR)/code/nusmv -I$(NUSMV_DIR)/code -I$(NUSMV_DIR)/build -I$(NUSMV_DIR)
 
 
 AM_CPPFLAGS = -DDATADIR=\"$(datadir)\" @CPPFLAGS@

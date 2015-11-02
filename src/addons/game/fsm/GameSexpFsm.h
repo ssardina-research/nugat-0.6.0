@@ -44,6 +44,21 @@
 #ifndef __GAME_SEXP_FSM_H__
 #define __GAME_SEXP_FSM_H__
 
+# ifndef EXTERN
+#   ifdef __cplusplus
+#	define EXTERN extern "C"
+#   else
+#	define EXTERN extern
+#   endif
+# endif
+# ifndef ARGS
+#   if defined(__STDC__) || defined(__cplusplus) || defined(_MSC_VER)
+#	define ARGS(protos)	protos		/* ANSI C */
+#   else /* !(__STDC__ || __cplusplus || defined(_MSC_VER)) */
+#	define ARGS(protos)	()		/* K&R C */
+#   endif /* !(__STDC__ || __cplusplus || defined(_MSC_VER)) */
+# endif
+
 #if HAVE_CONFIG_H
 #include "config.h"
 #endif

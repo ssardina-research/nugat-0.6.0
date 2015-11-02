@@ -231,7 +231,7 @@ then please apply the patch provided in NuGaT-0.5.0/contrib to
 $(nusmv_dir)/nusmv/src/enc/bdd/BddEnc.c and recompile first NuSMV and
 then NuGaT:
 
-        % cd $(nusmv_dir)/src/enc/bdd/
+        % cd $(NUSMV_DIR)/code/nusmv/core/enc/bdd/
         % patch BddEnc.c < $(nugat_dir)/contrib/BddEnc.c.patch
         % cd ../../..
         % make
