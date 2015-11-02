@@ -1,7 +1,10 @@
 cmake_minimum_required(VERSION 3.2)
-project(NuGaT_0_54)
-include_directories("/home/nitin/Tools/mc/NuSMV-2.5.4/nusmv")
-include_directories("/home/nitin/Tools/mc/NuSMV-2.5.4/nusmv/src")
+project(NuGaT_0_60)
+include_directories("/home/lorenzo/Documents/software/ClionProjects/NuSMV-2.6.0/NuSMV")
+include_directories("/home/lorenzo/Documents/software/ClionProjects/NuSMV-2.6.0/NuSMV/build")
+include_directories("/home/lorenzo/Documents/software/ClionProjects/NuSMV-2.6.0/NuSMV/code")
+include_directories("/home/lorenzo/Documents/software/ClionProjects/NuSMV-2.6.0/NuSMV/code/nusmv/core")
+include_directories("/home/lorenzo/Documents/software/ClionProjects/NuSMV-2.6.0/NuSMV/code/nusmv/shell")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
 set(SOURCE_FILES
@@ -71,4 +74,4 @@ set(SOURCE_FILES
     src/smgame/smgameMisc.c
     src/smgame/smgameVers.c)
 
-add_executable(NuGaT_0_54 ${SOURCE_FILES})
+add_executable(NuGaT_0_60 ${SOURCE_FILES})
