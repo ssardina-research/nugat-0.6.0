@@ -1,3 +1,0 @@
-/home/nitin/Tools/mc/NuGAT/NuGaT-0.5.4/src/parser/grammar.y: warning: 6 shift/reduce conflicts [-Wconflicts-sr]
-gameCheckLTLSF07_gba_wring.c: In function ‘game_sf07_gba_wring_get_next_line’:
-gameCheckLTLSF07_gba_wring.c:1321:10: warning: ignoring return value of ‘fgets’, declared with attribute warn_unused_result [-Wunused-result]
