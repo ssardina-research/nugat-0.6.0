@@ -103,13 +103,13 @@ void Game_BeforeCheckingSpec(PropGame_ptr prop)
 
   PROP_GAME_CHECK_INSTANCE(prop);
 
-  if (opt_verbose_level_gt(OptsHandler_get_instance(), 0)) {
+  if (opt_verbose_level_gt(OptsHandler_create(), 0)) {
     fprintf(nusmv_stderr, "computing ");
     game_print_prop_exp(nusmv_stderr, prop);
     fprintf(nusmv_stderr, "\n");
   }
 
-  if (opt_cone_of_influence(OptsHandler_get_instance()) == true) {
+  if (opt_cone_of_influence(OptsHandler_create()) == true) {
     /*
        The goal states also include opponent deadlock states =>
        variables from deadlock states should also be considered in the
@@ -199,7 +199,7 @@ void Game_AfterCheckingSpec(PropGame_ptr prop,
 
   /* print a strategy for a player or an opponent */
   if (((has_params && params->strategy_printout)
-       || opt_game_print_strategy(OptsHandler_get_instance())) &&
+       || opt_game_print_strategy(OptsHandler_create())) &&
       ((status == GAME_REALIZABLE) ||
        (status == GAME_UNREALIZABLE))) {
 

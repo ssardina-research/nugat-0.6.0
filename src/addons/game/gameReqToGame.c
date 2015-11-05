@@ -318,21 +318,21 @@ boolean Game_PropertyToGame(node_ptr* inputVars,
 
     /* Check if both reqs are Nil => create an avoid-deadlock game. */
     if (Nil == req_1 && Nil == req_2) {
-      *property = new_node(AVOIDDEADLOCK, NODE_FROM_INT(2), Nil);
+      *property = new_node(0,AVOIDDEADLOCK, NODE_FROM_INT(2), Nil);
       success = true;
     }
     /* Check if this is a reachability game. */
     if ((!success) &&
         (Nil == req_1 && Nil != req_2 && OP_FUTURE == node_get_type(req_2) &&
          PURE_PROPOSITIONAL == game_get_expression_kind(car(req_2)))) {
-      *property = new_node(REACHTARGET, NODE_FROM_INT(2), car(req_2));
+      *property = new_node(0,REACHTARGET, NODE_FROM_INT(2), car(req_2));
       success = true;
     }
     /* Check if this is an avoidance game. */
     if ((!success) &&
         (Nil == req_2 && Nil != req_1 && OP_FUTURE == node_get_type(req_1) &&
          PURE_PROPOSITIONAL == game_get_expression_kind(car(req_1)))) {
-      *property = new_node(REACHTARGET, NODE_FROM_INT(1), car(req_1));
+      *property = new_node(0,REACHTARGET, NODE_FROM_INT(1), car(req_1));
       success = true;
     }
     /* Check if this is a buchi or gen-reactivity game. */
@@ -344,34 +344,34 @@ boolean Game_PropertyToGame(node_ptr* inputVars,
 
       if (req_1 != Nil) {
         if (node_get_type(req_1) != AND) { /* just one element */
-          req_1 = new_lined_node(CONS, req_1, Nil, node_get_lineno(req_1));
+          req_1 = new_lined_node(0,CONS, req_1, Nil, node_get_lineno(req_1));
         }
         else { /* AND-list to CONS-list conversions */
           for (iter = req_1; node_get_type(cdr(iter)) == AND; iter = cdr(iter)) {
             node_set_type(iter, CONS);
           }
           node_set_type(iter, CONS);
-          node_node_setcdr(iter, cons(cdr(iter), Nil));
+          node_node_setcdr(iter, cons(0,cdr(iter), Nil));
         }
       }
 
       if (req_2 != Nil) {
         if (node_get_type(req_2) != AND) { /* just one element */
-          req_2 = new_lined_node(CONS, req_2, Nil, node_get_lineno(req_2));
+          req_2 = new_lined_node(0,CONS, req_2, Nil, node_get_lineno(req_2));
         }
         else { /* AND-list to CONS-list conversions */
           for (iter = req_2; node_get_type(cdr(iter)) == AND; iter = cdr(iter)) {
             node_set_type(iter, CONS);
           }
           node_set_type(iter, CONS);
-          node_node_setcdr(iter, cons(cdr(iter), Nil));
+          node_node_setcdr(iter, cons(0,cdr(iter), Nil));
         }
       }
       /* Here req 2 must be not Nil. Create dummy requirement: "G F true". */
       if (Nil == req_2) {
-        req_2 = cons(new_node(OP_GLOBAL,
-                              new_node(OP_FUTURE,
-                                       new_node(TRUEEXP, Nil, Nil),
+        req_2 = cons(0,new_node(0,OP_GLOBAL,
+                              new_node(0,OP_FUTURE,
+                                       new_node(0,TRUEEXP, Nil, Nil),
                                        Nil),
                               Nil),
                      Nil);
@@ -414,12 +414,12 @@ boolean Game_PropertyToGame(node_ptr* inputVars,
       /* Create the property, buchi or gen-reactivity. */
       if (success) {
         if (Nil == req_1) {
-          *property = new_node(BUCHIGAME, NODE_FROM_INT(2),
-                               new_node(GAME_EXP_LIST, req_2, Nil));
+          *property = new_node(0,BUCHIGAME, (2),
+                               new_node(0,GAME_EXP_LIST, req_2, Nil));
         }
         else {
-          *property = new_node(GENREACTIVITY, NODE_FROM_INT(2),
-                               new_node(GAME_TWO_EXP_LISTS, req_1, req_2));
+          *property = new_node(0,GENREACTIVITY, (2),
+                               new_node(0,GAME_TWO_EXP_LISTS, req_1, req_2));
         }
       }
 
@@ -439,7 +439,7 @@ boolean Game_PropertyToGame(node_ptr* inputVars,
 
       /* Terminate AND chains with TRUEEXP. */
       if (exp_1_orig == Nil) {
-        exp_1_orig = find_node(TRUEEXP, Nil, Nil);
+        exp_1_orig = find_node(0,TRUEEXP, Nil, Nil);
       } else {
         node_ptr iter = exp_1_orig;
         if (node_get_type(iter) == AND) {
@@ -450,7 +450,7 @@ boolean Game_PropertyToGame(node_ptr* inputVars,
         }
       }
       if (exp_2_orig == Nil) {
-        exp_2_orig = find_node(TRUEEXP, Nil, Nil);
+        exp_2_orig = find_node(0,TRUEEXP, Nil, Nil);
       } else {
         node_ptr iter = exp_2_orig;
         if (node_get_type(iter) == AND) {
@@ -461,9 +461,9 @@ boolean Game_PropertyToGame(node_ptr* inputVars,
         }
       }
 
-      *property = new_node(LTLGAME,
-                           NODE_FROM_INT(2),
-                           new_node(IMPLIES,
+      *property = new_node(0,LTLGAME,
+                           (2),
+                           new_node(0,IMPLIES,
                                     exp_1_orig,
                                     exp_2_orig));
     }
@@ -498,7 +498,7 @@ static node_ptr game_and_exp(node_ptr exp1, node_ptr exp2)
 {
   if (Nil == exp1) return exp2;
   if (Nil == exp2) return exp1;
-  return new_lined_node(AND, exp1, exp2, node_get_lineno(exp2));
+  return new_lined_node(0,AND, exp1, exp2, node_get_lineno(exp2));
 }
 
 /**Function********************************************************************
@@ -519,12 +519,12 @@ static void game_fill_in_var_hash_table(node_ptr inVarList, node_ptr outVarList)
 
   for (iter = inVarList; iter != Nil; iter = cdr(iter)) {
     nusmv_assert(CONS == node_get_type(iter)); /* this is a list */
-    insert_assoc(nameToType, find_atom(car(car(iter))), cdr(car(iter)));
+    insert_assoc(nameToType, find_atom(0,car(car(iter))), cdr(car(iter)));
   }
 
   for (iter = outVarList; iter != Nil; iter = cdr(iter)) {
     nusmv_assert(CONS == node_get_type(iter)); /* this is a list */
-    insert_assoc(nameToType, find_atom(car(car(iter))), cdr(car(iter)));
+    insert_assoc(nameToType, find_atom(0,car(car(iter))), cdr(car(iter)));
   }
 }
 
@@ -548,7 +548,7 @@ static node_ptr game_create_unique_name(void)
 
   do {
     sprintf(buffer, "_un_%i", ++i);
-    res = find_node(ATOM, (node_ptr) find_string(buffer), Nil);
+    res = find_node(0,ATOM, (node_ptr) find_string(buffer), Nil);
   } while(Nil != find_assoc(nameToType, res));
 
   return res;
@@ -573,7 +573,7 @@ static node_ptr game_create_new_var(node_ptr* list, node_ptr type)
 
   name = game_create_unique_name(); /* name is already find_atom-ed */
   insert_assoc(nameToType, name, type);
-  *list = cons(new_node(COLON, name, type), *list);
+  *list = cons(0,new_node(0,COLON, name, type), *list);
 
   return name;
 }
@@ -1014,7 +1014,7 @@ static node_ptr game_normalize_syntactically(node_ptr exp, boolean negated)
 
     oprd1 = game_normalize_syntactically(oprd1, negated);
     oprd2 = game_normalize_syntactically(oprd2, negated);
-    exp = new_lined_node(type, oprd1, oprd2, line);
+    exp = new_lined_node(0,type, oprd1, oprd2, line);
 
     /* make a list from the tree (for OR NEXTs have to be pushed up also) */
     if (AND == type && node_get_type(oprd1) == AND) {
@@ -1026,7 +1026,7 @@ static node_ptr game_normalize_syntactically(node_ptr exp, boolean negated)
     return exp;
 
   case IMPLIES: /* a -> b ==> !a OR b */
-    exp = new_lined_node(OR, new_lined_node(NOT, oprd1, Nil, line), oprd2, line);
+    exp = new_lined_node(0,OR, new_lined_node(0,NOT, oprd1, Nil, line), oprd2, line);
     return game_normalize_syntactically(exp, negated);
 
   /* --- ternary propositional --- */
@@ -1038,16 +1038,16 @@ static node_ptr game_normalize_syntactically(node_ptr exp, boolean negated)
                                                          never
                                                          negated */
     then = game_normalize_syntactically(then, negated);
-    oprd1 = new_lined_node(COLON, cond, then, line);
+    oprd1 = new_lined_node(0,COLON, cond, then, line);
     oprd2 = game_normalize_syntactically(oprd2, negated);
-    exp = new_lined_node(CASE, oprd1, oprd2, line);
+    exp = new_lined_node(0,CASE, oprd1, oprd2, line);
     return exp;
   }
 
   /* --- unary LTL --- */
   case OP_NEXT:
     oprd1 = game_normalize_syntactically(oprd1, negated);
-    exp = new_lined_node(NEXT, oprd1, Nil, line);
+    exp = new_lined_node(0,NEXT, oprd1, Nil, line);
 
     /* X (a AND b)  ==> (X a) AND (X b)
        Note that AND is a list (after normalization).
@@ -1055,11 +1055,11 @@ static node_ptr game_normalize_syntactically(node_ptr exp, boolean negated)
     if (AND == node_get_type(oprd1)) {
       node_ptr iter;
       for (iter = oprd1; node_get_type(cdr(iter)) == AND; iter = cdr(iter)) {
-        node_node_setcar(iter, new_lined_node(NEXT, car(iter), Nil, line));
+        node_node_setcar(iter, new_lined_node(0,NEXT, car(iter), Nil, line));
       }
       /* last two elements */
-      node_node_setcar(iter, new_lined_node(NEXT, car(iter), Nil, line));
-      node_node_setcdr(iter, new_lined_node(NEXT, cdr(iter), Nil, line));
+      node_node_setcar(iter, new_lined_node(0,NEXT, car(iter), Nil, line));
+      node_node_setcdr(iter, new_lined_node(0,NEXT, cdr(iter), Nil, line));
 
       exp = oprd1;
     }
@@ -1073,8 +1073,8 @@ static node_ptr game_normalize_syntactically(node_ptr exp, boolean negated)
     }
     /* F X a ==> X F a, G X a ==> X G a */
     else if (node_get_type(oprd1) == OP_NEXT) {
-      exp = new_lined_node(OP_NEXT,
-                           new_lined_node(type, car(oprd1), Nil, line),
+      exp = new_lined_node(0,OP_NEXT,
+                           new_lined_node(0,type, car(oprd1), Nil, line),
                            Nil,
                            node_get_lineno(oprd1));
       return game_normalize_syntactically(exp, negated);
@@ -1097,7 +1097,7 @@ static node_ptr game_normalize_syntactically(node_ptr exp, boolean negated)
     if (oprd2 != Nil) {
       oprd2 = game_normalize_syntactically(oprd2, negated);
     }
-    exp = new_lined_node(type, oprd1, oprd2, line);
+    exp = new_lined_node(0,type, oprd1, oprd2, line);
 
     /* G (a AND b) ==> (G a) AND (G b)
        Note that AND is a list (after normalization).
@@ -1108,17 +1108,17 @@ static node_ptr game_normalize_syntactically(node_ptr exp, boolean negated)
         if (OP_GLOBAL != node_get_type(car(iter))) {
           /* no need to apply G twice */
           node_node_setcar(iter,
-                           new_lined_node(OP_GLOBAL, car(iter), Nil, line));
+                           new_lined_node(0,OP_GLOBAL, car(iter), Nil, line));
         }
       }
       /* the last two elements */
       if (OP_GLOBAL != node_get_type(car(iter))) {
         /* no need to apply G twice */
-        node_node_setcar(iter, new_lined_node(OP_GLOBAL, car(iter), Nil, line));
+        node_node_setcar(iter, new_lined_node(0,OP_GLOBAL, car(iter), Nil, line));
       }
       if (OP_GLOBAL != node_get_type(cdr(iter))) {
         /* no need to apply G twice */
-        node_node_setcdr(iter, new_lined_node(OP_GLOBAL, cdr(iter), Nil, line));
+        node_node_setcdr(iter, new_lined_node(0,OP_GLOBAL, cdr(iter), Nil, line));
       }
 
       exp = oprd1;
@@ -1147,7 +1147,7 @@ static node_ptr game_normalize_syntactically(node_ptr exp, boolean negated)
   case ATOM:
   case SELF:
   case ARRAY:
-    if (negated) exp = new_lined_node(NOT, exp, Nil, line);
+    if (negated) exp = new_lined_node(0,NOT, exp, Nil, line);
     return exp;
 
   /* --- unary --- */
@@ -1157,8 +1157,8 @@ static node_ptr game_normalize_syntactically(node_ptr exp, boolean negated)
   case CAST_SIGNED:
   case UMINUS:
     oprd1 = game_normalize_syntactically(oprd1, false);
-    exp = new_lined_node(type, oprd1, Nil, line);
-    if (negated) exp = new_lined_node(NOT, exp, Nil, line);
+    exp = new_lined_node(0,type, oprd1, Nil, line);
+    if (negated) exp = new_lined_node(0,NOT, exp, Nil, line);
     return exp;
 
   /* --- binary --- */
@@ -1197,14 +1197,14 @@ static node_ptr game_normalize_syntactically(node_ptr exp, boolean negated)
   case GE:
     oprd1 = game_normalize_syntactically(oprd1, false);
     oprd2 = game_normalize_syntactically(oprd2, false);
-    exp = new_lined_node(type, oprd1, oprd2, line);
-    if (negated) exp = new_lined_node(NOT, exp, Nil, line);
+    exp = new_lined_node(0,type, oprd1, oprd2, line);
+    if (negated) exp = new_lined_node(0,NOT, exp, Nil, line);
 
     /* (X a) OP (X b) ==> X (a OP B) where OP is one of above */
     if (node_get_type(oprd1) == NEXT && node_get_type(oprd2) == NEXT) {
       node_node_setcar(exp, car(oprd1));
       node_node_setcdr(exp, car(oprd2));
-      exp = new_lined_node(NEXT, exp, Nil, line);
+      exp = new_lined_node(0,NEXT, exp, Nil, line);
     }
     return exp;
 
@@ -1218,11 +1218,11 @@ static node_ptr game_normalize_syntactically(node_ptr exp, boolean negated)
     oprd1 = game_normalize_syntactically(oprd1, false);
     high = game_normalize_syntactically(high, false);
     low = game_normalize_syntactically(low, false);
-    exp = new_lined_node(type,
+    exp = new_lined_node(0,type,
                          oprd1,
-                         new_lined_node(COLON, high, low, line),
+                         new_lined_node(0,COLON, high, low, line),
                          line);
-    if (negated) exp = new_lined_node(NOT, exp, Nil, line);
+    if (negated) exp = new_lined_node(0,NOT, exp, Nil, line);
     return exp;
   }
 
@@ -1463,17 +1463,17 @@ exp_kind game_property_to_game(node_ptr* exp,
       yylineno = line; /* All newly created nodes will have this line info. */
 
       res = car(car(*exp));
-      newVar = game_create_new_var(varList, new_node(BOOLEAN, Nil, Nil));
+      newVar = game_create_new_var(varList, new_node(0,BOOLEAN, Nil, Nil));
       *exp = newVar;
-      *trans = game_and_exp(new_node(IMPLIES,
+      *trans = game_and_exp(new_node(0,IMPLIES,
                                      newVar,
-                                     new_node(NEXT, newVar, Nil)),
+                                     new_node(0,NEXT, newVar, Nil)),
                             *trans);
-      *reqs = game_and_exp(new_node(OP_GLOBAL,
-                                    new_node(OP_FUTURE,
-                                             new_node(OR,
+      *reqs = game_and_exp(new_node(0,OP_GLOBAL,
+                                    new_node(0,OP_FUTURE,
+                                             new_node(0,OR,
                                                       res,
-                                                      new_node(NOT,
+                                                      new_node(0,NOT,
                                                                newVar,
                                                                Nil)),
                                              Nil),
@@ -1503,7 +1503,7 @@ exp_kind game_property_to_game(node_ptr* exp,
          => INIT += res, TRANS += next(res) */
       if (PURE_PROPOSITIONAL == kind) {
         *init = game_and_exp(res, *init);
-        *trans = game_and_exp(new_node(NEXT, res, Nil), *trans);
+        *trans = game_and_exp(new_node(0,NEXT, res, Nil), *trans);
       }
       /* subexpression is with next => TRANS += res */
       else if (ONCE_NEXT == kind) {
@@ -1529,11 +1529,11 @@ exp_kind game_property_to_game(node_ptr* exp,
       */
       if (PURE_PROPOSITIONAL == kind) {
         node_ptr newVar = game_create_new_var(varList,
-                                              new_node(BOOLEAN, Nil, Nil));
-        res = new_node(AND, newVar, res);
+                                              new_node(0,BOOLEAN, Nil, Nil));
+        res = new_node(0,AND, newVar, res);
         *exp = res;
-        res = new_node(NEXT, res, Nil);
-        *trans = game_and_exp(new_node(IMPLIES, newVar, res), *trans);
+        res = new_node(0,NEXT, res, Nil);
+        *trans = game_and_exp(new_node(0,IMPLIES, newVar, res), *trans);
         return PURE_PROPOSITIONAL;
       }
       /* subexpression is with one next =>
@@ -1545,10 +1545,10 @@ exp_kind game_property_to_game(node_ptr* exp,
       */
       else if (ONCE_NEXT == kind) {
         node_ptr newVar = game_create_new_var(varList,
-                                              new_node(BOOLEAN, Nil, Nil));
+                                              new_node(0,BOOLEAN, Nil, Nil));
         *exp = newVar;
-        res = new_node(AND, new_node(NEXT, newVar, Nil), res);
-        *trans = game_and_exp(new_node(IMPLIES, newVar, res), *trans);
+        res = new_node(0,AND, new_node(0,NEXT, newVar, Nil), res);
+        *trans = game_and_exp(new_node(0,IMPLIES, newVar, res), *trans);
         return PURE_PROPOSITIONAL;
       }
       /* a complex temporal subexpression => return it as it is */
@@ -1590,14 +1590,14 @@ exp_kind game_property_to_game(node_ptr* exp,
       */
       if (PURE_PROPOSITIONAL == kind) {
         node_ptr newVar = game_create_new_var(varList,
-                                              new_node(BOOLEAN, Nil, Nil));
-        res = new_node(OR, newVar, res);
+                                              new_node(0,BOOLEAN, Nil, Nil));
+        res = new_node(0,OR, newVar, res);
         *init = game_and_exp(res, *init);
-        res = new_node(NEXT, res, Nil);
-        *trans = game_and_exp(new_node(IMPLIES, newVar, res), *trans);
-        *reqs = game_and_exp(new_node(OP_GLOBAL,
-                                      new_node(OP_FUTURE,
-                                               new_node(NOT,
+        res = new_node(0,NEXT, res, Nil);
+        *trans = game_and_exp(new_node(0,IMPLIES, newVar, res), *trans);
+        *reqs = game_and_exp(new_node(0,OP_GLOBAL,
+                                      new_node(0,OP_FUTURE,
+                                               new_node(0,NOT,
                                                         newVar,
                                                         Nil),
                                                Nil),
@@ -1629,14 +1629,14 @@ exp_kind game_property_to_game(node_ptr* exp,
       */
       if (PURE_PROPOSITIONAL == kind) {
         node_ptr newVar = game_create_new_var(varList,
-                                              new_node(BOOLEAN, Nil, Nil));
-        res = new_node(OR, newVar, res);
+                                              new_node(0,BOOLEAN, Nil, Nil));
+        res = new_node(0,OR, newVar, res);
         *exp = res;
-        res = new_node(NEXT, res, Nil);
-        *trans = game_and_exp(new_node(IMPLIES, newVar, res), *trans);
-        *reqs = game_and_exp(new_node(OP_GLOBAL,
-                                      new_node(OP_FUTURE,
-                                               new_node(NOT,
+        res = new_node(0,NEXT, res, Nil);
+        *trans = game_and_exp(new_node(0,IMPLIES, newVar, res), *trans);
+        *reqs = game_and_exp(new_node(0,OP_GLOBAL,
+                                      new_node(0,OP_FUTURE,
+                                               new_node(0,NOT,
                                                         newVar,
                                                         Nil),
                                                Nil),
@@ -1703,8 +1703,8 @@ exp_kind game_property_to_game(node_ptr* exp,
       */
       /* only booleans are expected here */
       node_ptr newVar = game_create_new_var(varList,
-                                            new_node(BOOLEAN, Nil, Nil));
-      *trans = game_and_exp(new_node(IMPLIES, newVar, res), *trans);
+                                            new_node(0,BOOLEAN, Nil, Nil));
+      *trans = game_and_exp(new_node(0,IMPLIES, newVar, res), *trans);
       node_node_setcar((*exp), newVar);
       break; /* Check for being top-level. The kind remains ONCE_NEXT. */
     }
@@ -1744,16 +1744,16 @@ exp_kind game_property_to_game(node_ptr* exp,
          REQS += G F !n
          Here n means: exp must be satisfied in the next state.
       */
-      newVar = game_create_new_var(varList, new_node(BOOLEAN, Nil, Nil));
-      res = new_node(OR, exp2, new_node(AND, exp1, newVar));
+      newVar = game_create_new_var(varList, new_node(0,BOOLEAN, Nil, Nil));
+      res = new_node(0,OR, exp2, new_node(0,AND, exp1, newVar));
       *exp = res;
-      *trans = game_and_exp(new_node(IMPLIES,
+      *trans = game_and_exp(new_node(0,IMPLIES,
                                      newVar,
-                                     new_node(NEXT, res, Nil)),
+                                     new_node(0,NEXT, res, Nil)),
                             *trans);
-      *reqs = game_and_exp(new_node(OP_GLOBAL,
-                                    new_node(OP_FUTURE,
-                                             new_node(NOT,
+      *reqs = game_and_exp(new_node(0,OP_GLOBAL,
+                                    new_node(0,OP_FUTURE,
+                                             new_node(0,NOT,
                                                       newVar,
                                                       Nil),
                                              Nil),
@@ -1791,11 +1791,11 @@ exp_kind game_property_to_game(node_ptr* exp,
          Here n means: a occurs in the current state or the whole exp
          must be true in the next state.
       */
-      newVar = game_create_new_var(varList, new_node(BOOLEAN, Nil, Nil));
-      res = new_node(AND, exp2, newVar);
+      newVar = game_create_new_var(varList, new_node(0,BOOLEAN, Nil, Nil));
+      res = new_node(0,AND, exp2, newVar);
       *exp = res;
-      res = new_node(OR, exp1, new_node(NEXT, res, Nil));
-      *trans = game_and_exp(new_node(IMPLIES, newVar, res), *trans);
+      res = new_node(0,OR, exp1, new_node(0,NEXT, res, Nil));
+      *trans = game_and_exp(new_node(0,IMPLIES, newVar, res), *trans);
       kind = PURE_PROPOSITIONAL;
       break; /* Check for being top-level */
     }
@@ -1853,9 +1853,9 @@ exp_kind game_property_to_game(node_ptr* exp,
       {
         /* create a new var v,  INIT += v, TRANS += v -> exp */
         node_ptr newVar = game_create_new_var(varList,
-                                              new_node(BOOLEAN, Nil, Nil));
+                                              new_node(0,BOOLEAN, Nil, Nil));
         *init = game_and_exp(newVar, *init);
-        *trans = game_and_exp(new_lined_node(IMPLIES,
+        *trans = game_and_exp(new_lined_node(0,IMPLIES,
                                              newVar,
                                              *exp,
                                              line),

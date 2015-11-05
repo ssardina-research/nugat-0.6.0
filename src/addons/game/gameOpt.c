@@ -87,7 +87,7 @@ static boolean game_opt_check_initial_condition ARGS((OptsHandler_ptr opt,
 ******************************************************************************/
 void Game_init_opt()
 {
-  OptsHandler_ptr opt = OptsHandler_get_instance();
+  OptsHandler_ptr opt = OptsHandler_create();
   boolean res = true;
   boolean options_registered;
 

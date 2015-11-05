@@ -398,7 +398,7 @@ void Game_SF07_gba_wring_destroy(Game_SF07_gba_wring_ptr self)
   /* Don't close input_file: supposed to be closed already. */
   if (self->input_file_name != (char*) NULL) {
     /* Try to remove input file if required. */
-    if ((!opt_game_sf07_gba_wring_input_keep(OptsHandler_get_instance())) &&
+    if ((!opt_game_sf07_gba_wring_input_keep(OptsHandler_create())) &&
         remove(self->input_file_name) == -1) {
       fprintf(nusmv_stderr,
               "Warning: error deleting file %s (errno = %d).\n",
@@ -413,7 +413,7 @@ void Game_SF07_gba_wring_destroy(Game_SF07_gba_wring_ptr self)
   /* Don't close output_file: supposed to be closed already. */
   if (self->output_file_name != (char*) NULL) {
     /* Try to remove output file if required. */
-    if ((!opt_game_sf07_gba_wring_output_keep(OptsHandler_get_instance())) &&
+    if ((!opt_game_sf07_gba_wring_output_keep(OptsHandler_create())) &&
         remove(self->output_file_name) == -1) {
       fprintf(nusmv_stderr,
               "Warning: error deleting file %s (errno = %d).\n",
@@ -481,9 +481,9 @@ void Game_SF07_gba_wring_set_binary_file_name(Game_SF07_gba_wring_ptr self,
 
   if (binary_file_name != (char*) NULL) {
     tmp = binary_file_name;
-  } else if (get_game_sf07_gba_wring_binary(OptsHandler_get_instance()) !=
+  } else if (get_game_sf07_gba_wring_binary(OptsHandler_create()) !=
              NULL) {
-    tmp = get_game_sf07_gba_wring_binary(OptsHandler_get_instance());
+    tmp = get_game_sf07_gba_wring_binary(OptsHandler_create());
   } else {
     fprintf(nusmv_stderr,
             "Warning: option game_sf07_gba_wring_binary was NULL, reverting "
@@ -529,10 +529,10 @@ void Game_SF07_gba_wring_set_input_file_name(Game_SF07_gba_wring_ptr self,
     char* input_dir;
     char* input_templ;
 
-    input_dir = get_game_sf07_gba_wring_input_dir(OptsHandler_get_instance());
+    input_dir = get_game_sf07_gba_wring_input_dir(OptsHandler_create());
     /* input_dir may be NULL */
     input_templ =
-      get_game_sf07_gba_wring_input_templ(OptsHandler_get_instance());
+      get_game_sf07_gba_wring_input_templ(OptsHandler_create());
     if (input_templ == (char*) NULL) {
       fprintf(nusmv_stderr,
               "Warning: option game_sf07_gba_wring_input_templ was NULL, "
@@ -590,10 +590,10 @@ void Game_SF07_gba_wring_set_output_file_name(Game_SF07_gba_wring_ptr self,
     char* output_dir;
     char* output_templ;
 
-    output_dir = get_game_sf07_gba_wring_output_dir(OptsHandler_get_instance());
+    output_dir = get_game_sf07_gba_wring_output_dir(OptsHandler_create());
     /* output_dir may be NULL */
     output_templ =
-      get_game_sf07_gba_wring_output_templ(OptsHandler_get_instance());
+      get_game_sf07_gba_wring_output_templ(OptsHandler_create());
     if (output_templ == (char*) NULL) {
       fprintf(nusmv_stderr,
               "Warning: option game_sf07_gba_wring_output_templ was NULL, "
@@ -764,7 +764,7 @@ int Game_SF07_gba_wring_execute(Game_SF07_gba_wring_ptr self)
     len_cmdline += strlen(self->input_file_name);
     Slist_push(args, (void*) " -ltl ");
     len_cmdline += strlen(" -ltl ");
-    if (opt_game_sf07_gba_wring_has_cc(OptsHandler_get_instance())) {
+    if (opt_game_sf07_gba_wring_has_cc(OptsHandler_create())) {
       Slist_push(args, (void*) " -cc");
       len_cmdline += strlen(" -cc");
     }
@@ -784,11 +784,11 @@ int Game_SF07_gba_wring_execute(Game_SF07_gba_wring_ptr self)
     Slist_destroy(args);
   }
 
-  if (opt_verbose_level_ge(OptsHandler_get_instance(), 3)) {
+  if (opt_verbose_level_ge(OptsHandler_create(), 3)) {
     fprintf(nusmv_stderr, "Executing %s\n", cmdline);
   }
   status = system(cmdline);
-  if (opt_verbose_level_ge(OptsHandler_get_instance(), 3)) {
+  if (opt_verbose_level_ge(OptsHandler_create(), 3)) {
     fprintf(nusmv_stderr,
             "Done executing %s. Return value: %d.\n",
             cmdline,

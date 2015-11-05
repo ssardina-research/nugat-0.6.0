@@ -136,7 +136,7 @@ boolean TypeCheckerGame_check_property(TypeChecker_ptr self,
 
   isOK = TypeChecker_is_specification_wellformed(self, exp);
 
-  if (opt_verbose_level_gt(OptsHandler_get_instance(), 3)) {
+  if (opt_verbose_level_gt(OptsHandler_create(), 3)) {
     if (isOK) {
       /* the property is not yet inserted to database => there is no index */
       fprintf(nusmv_stderr, "Successful type-checking of a property\n");

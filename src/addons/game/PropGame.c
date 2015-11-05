@@ -635,7 +635,7 @@ void prop_game_verify(PropGame_ptr self)
   PROP_GAME_CHECK_INSTANCE(self);
   nusmv_assert(PropGame_type_is_game(Prop_get_type(PROP(self))));
   /* the input file contains game */
-  nusmv_assert(opt_game_game(OptsHandler_get_instance()));
+  nusmv_assert(opt_game_game(OptsHandler_create()));
 
   if (Prop_get_status(PROP(self)) == Prop_Unchecked)  {
     switch (Prop_get_type(PROP(self))) {

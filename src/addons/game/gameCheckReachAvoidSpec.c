@@ -116,7 +116,7 @@ void Game_CheckReachTargetSpec(PropGame_ptr prop, gameParams_ptr params)
   strategy = GAME_STRATEGY(NULL);
   construct_strategy = (((params != (gameParams_ptr) NULL) &&
                          params->strategy_printout) ||
-                        opt_game_print_strategy(OptsHandler_get_instance()));
+                        opt_game_print_strategy(OptsHandler_create()));
   Game_BeforeCheckingSpec(prop);
 
   /* the checking itself */
@@ -157,7 +157,7 @@ void Game_CheckAvoidTargetSpec(PropGame_ptr prop, gameParams_ptr params)
   strategy = GAME_STRATEGY(NULL);
   construct_strategy = (((params != (gameParams_ptr) NULL) &&
                          params->strategy_printout) ||
-                        opt_game_print_strategy(OptsHandler_get_instance()));
+                        opt_game_print_strategy(OptsHandler_create()));
   Game_BeforeCheckingSpec(prop);
 
   /* the checking itself */
@@ -200,7 +200,7 @@ void Game_CheckReachDeadlockSpec(PropGame_ptr prop, gameParams_ptr params)
   strategy = GAME_STRATEGY(NULL);
   construct_strategy = (((params != (gameParams_ptr) NULL) &&
                          params->strategy_printout) ||
-                        opt_game_print_strategy(OptsHandler_get_instance()));
+                        opt_game_print_strategy(OptsHandler_create()));
   Game_BeforeCheckingSpec(prop);
 
   /* the checking itself */
@@ -243,7 +243,7 @@ void Game_CheckAvoidDeadlockSpec(PropGame_ptr prop, gameParams_ptr params)
   strategy = GAME_STRATEGY(NULL);
   construct_strategy = (((params != (gameParams_ptr) NULL) &&
                          params->strategy_printout) ||
-                        opt_game_print_strategy(OptsHandler_get_instance()));
+                        opt_game_print_strategy(OptsHandler_create()));
   Game_BeforeCheckingSpec(prop);
 
   /* the checking itself */
@@ -298,7 +298,7 @@ Game_RealizabilityStatus Game_UseStrongReachabilityAlgorithm(PropGame_ptr prop,
   GameBddFsm_ptr fsm = PropGame_get_game_bdd_fsm(prop);
   BddEnc_ptr enc = Enc_get_bdd_encoding();
   DdManager* dd_manager = BddEnc_get_dd_manager(enc);
-  OptsHandler_ptr oh = OptsHandler_get_instance();
+  OptsHandler_ptr oh = OptsHandler_create();
 
   PROP_GAME_CHECK_INSTANCE(prop);
   nusmv_assert(PropGame_ReachTarget == Prop_get_type(PROP(prop)) ||
@@ -363,7 +363,7 @@ Game_RealizabilityStatus Game_UseStrongReachabilityAlgorithm(PropGame_ptr prop,
   }
 
   allReachStates = bdd_dup(originalTarget);
-  reachStateList = cons((node_ptr)bdd_dup(originalTarget), Nil);
+  reachStateList = cons(0,(node_ptr)bdd_dup(originalTarget), Nil);
 
   /* check whether the target can be reached at the initial state */
   isTargetReached = GameBddFsm_can_player_satisfy(fsm, init_1, init_2,
@@ -433,7 +433,7 @@ Game_RealizabilityStatus Game_UseStrongReachabilityAlgorithm(PropGame_ptr prop,
     }
 
     /* add to the list of reach states sets */
-    reachStateList = cons((node_ptr)bdd_dup(allReachStates), reachStateList);
+    reachStateList = cons(0,(node_ptr)bdd_dup(allReachStates), reachStateList);
     pathLength++;
 
     bdd_free(dd_manager, preImage);
@@ -481,7 +481,7 @@ Game_RealizabilityStatus Game_UseStrongReachabilityAlgorithm(PropGame_ptr prop,
         bdd_ptr not_prev = bdd_not(dd_manager, (bdd_ptr)car(cdr(iter)));
         bdd_ptr and = bdd_and(dd_manager, (bdd_ptr)car(iter), not_prev);
         bdd_free(dd_manager, not_prev);
-        diffReachStateList = cons((node_ptr)and, diffReachStateList);
+        diffReachStateList = cons(0,(node_ptr)and, diffReachStateList);
       }
       diffReachStateList = reverse(diffReachStateList);
 
@@ -600,7 +600,7 @@ Game_RealizabilityStatus Game_UseStrongReachabilityAlgorithm(PropGame_ptr prop,
   while (reachStateList != Nil) {
     node_ptr n = cdr(reachStateList);
     bdd_free(dd_manager, (bdd_ptr)car(reachStateList));
-    free_node(reachStateList);
+    free_node(0,reachStateList);
     reachStateList = n;
   }
 

@@ -145,7 +145,7 @@ int Game_CommandFlattenHierarchy(void)
   SymbTable_ptr st = Compile_get_global_symb_table();
   int propErr;
 
-  if (opt_verbose_level_gt(OptsHandler_get_instance(), 0)) {
+  if (opt_verbose_level_gt(OptsHandler_create(), 0)) {
     fprintf(nusmv_stderr, "Flattening hierarchy...\n");
   }
 
@@ -213,21 +213,21 @@ int Game_CommandFlattenHierarchy(void)
 
   /* Disable static order heuristics (see warning in
      nusmv/src/enc/enc.c::Enc_init_bdd_encoding). */
-  set_bdd_static_order_heuristics(OptsHandler_get_instance(),
+  set_bdd_static_order_heuristics(OptsHandler_create(),
                                   BDD_STATIC_ORDER_HEURISTICS_NONE);
 
-  if (opt_use_coi_size_sorting(OptsHandler_get_instance())) {
+  if (opt_use_coi_size_sorting(OptsHandler_create())) {
     fprintf(nusmv_stderr,
             "*** WARNING: "
             "Game addon does not support properties COI size sorting.  ***\n");
     fprintf(nusmv_stderr,
             "*** WARNING: "
             "Properties COI size sorting will be disabled.             ***\n");
-    unset_use_coi_size_sorting(OptsHandler_get_instance());
+    unset_use_coi_size_sorting(OptsHandler_create());
   }
 
   cmp_struct_set_flatten_hrc(cmps);
-  if (opt_verbose_level_gt(OptsHandler_get_instance(), 0)) {
+  if (opt_verbose_level_gt(OptsHandler_create(), 0)) {
     fprintf(nusmv_stderr, "...done\n");
   }
 
@@ -369,19 +369,19 @@ game_flatten_game_hierarchy(SymbTable_ptr symbol_table,
 
     switch (node_get_type(spec)) {
     case SPEC:
-      ctlspec = cons(find_node(CONTEXT, Nil, car(spec)), ctlspec);
+      ctlspec = cons(0,find_node(CONTEXT, Nil, car(spec)), ctlspec);
       break;
     case LTLSPEC:
-      ltlspec = cons(find_node(CONTEXT, Nil, car(spec)), ltlspec);
+      ltlspec = cons(0,find_node(CONTEXT, Nil, car(spec)), ltlspec);
       break;
     case INVARSPEC:
-      invarspec = cons(find_node(CONTEXT, Nil, car(spec)), invarspec);
+      invarspec = cons(0,find_node(CONTEXT, Nil, car(spec)), invarspec);
       break;
     case PSLSPEC:
-      pslspec = cons(PslNode_new_context(PSL_NULL, car(spec)), pslspec);
+      pslspec = cons(0,PslNode_new_context(PSL_NULL, car(spec)), pslspec);
       break;
     case COMPUTE:
-      compute = cons(find_node(CONTEXT, Nil, car(spec)), compute);
+      compute = cons(0,find_node(CONTEXT, Nil, car(spec)), compute);
       break;
 
     /* The true game spec is dealt below, outside of switch statement. */
@@ -402,12 +402,12 @@ game_flatten_game_hierarchy(SymbTable_ptr symbol_table,
        child is the body of spec.
     */
     if (list != (node_ptr*) NULL) {
-      spec = find_node(GAME_SPEC_WRAPPER,
-                       sym_intern((PTR_TO_INT(car(spec)) == 1 ?
+      spec = find_node(0,GAME_SPEC_WRAPPER,
+                       sym_intern(0,((car(spec)) == 1 ?
                                    PLAYER_NAME_1 :
                                    PLAYER_NAME_2)),
                        cdr(spec));
-      *list = cons(spec, *list);
+      *list = cons(0,spec, *list);
     }
   } /* for */
 
@@ -499,7 +499,7 @@ static void game_check_first_player(SymbTable_ptr st,
                                 false);
   /* check assign. "map" is used to get rid of processes names */
   game_check_first_player_recur(st,
-                                map(cdr, FlatHierarchy_get_assign(player_1)),
+                                map(0,cdr, FlatHierarchy_get_assign(player_1)),
                                 vars,
                                 false,
                                 false);

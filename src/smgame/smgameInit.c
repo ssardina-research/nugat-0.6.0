@@ -73,26 +73,26 @@ EXTERN FILE* nusmv_stderr;
 ******************************************************************************/
 void Smgame_Reset()
 {
-  if (opt_verbose_level_gt(OptsHandler_get_instance(), 1)) {
+  if (opt_verbose_level_gt(OptsHandler_create(), 1)) {
     fprintf(nusmv_stderr, "Shutting down the game part...\n");
   }
   NuGaTAddons_Quit();
-  if (opt_verbose_level_gt(OptsHandler_get_instance(), 2)) {
+  if (opt_verbose_level_gt(OptsHandler_create(), 2)) {
     fprintf(nusmv_stderr, "Done\n");
   }
 
   CInit_reset_first();
   CInit_reset_last();
 
-  if (opt_verbose_level_gt(OptsHandler_get_instance(), 1)) {
+  if (opt_verbose_level_gt(OptsHandler_create(), 1)) {
     fprintf(nusmv_stderr, "Starting the game part...\n");
   }
   NuGaTAddons_Init();
-  if (opt_verbose_level_gt(OptsHandler_get_instance(), 2)) {
+  if (opt_verbose_level_gt(OptsHandler_create(), 2)) {
     fprintf(nusmv_stderr, "Done\n");
   }
 
-  if (opt_verbose_level_gt(OptsHandler_get_instance(), 1)) {
+  if (opt_verbose_level_gt(OptsHandler_create(), 1)) {
     fprintf(nusmv_stderr, "The game part is now up and ready\n");
   }
 }
@@ -116,7 +116,7 @@ void Smgame_Reset()
 void Smgame_Init()
 {
   //CInit_init(); //this is already called by NuSMVCore init
-  set_pgm_name(OptsHandler_get_instance(), PACKAGE_NAME);
+  set_pgm_name(OptsHandler_create(), PACKAGE_NAME);
   //NuGaTAddons_Init();
   Smgame_AddCmd();
 }

@@ -134,14 +134,14 @@ int main(int  argc, char ** argv)
   int quit_flag;
   quit_flag = 0;
 
-  sm_ParseLineOptions(argc, argv, OptsHandler_get_instance());
+  sm_ParseLineOptions(argc, argv, OptsHandler_create());
 
-  if (!opt_batch(OptsHandler_get_instance())) { /* interactive mode */
+  if (!opt_batch(OptsHandler_create())) { /* interactive mode */
     /* Initiliazes the commands to handle with options. */
 
     init_options_cmd();
     BannerPrint(nusmv_stdout);
-    if (!opt_ignore_init_file(OptsHandler_get_instance())) {
+    if (!opt_ignore_init_file(OptsHandler_create())) {
       (void) CInit_NusmvrcSource();
     }
     if (NuSMV_CMD_LINE != NULL) {
@@ -172,13 +172,13 @@ int main(int  argc, char ** argv)
   else { /* batch mode */
     /* In the batch mode we dont want to read the ~/.nusmvrc file. */
     /* The system has to behave as the original NuGaT */
-    /*   if (!opt_ignore_init_file(OptsHandler_get_instance())) { */
+    /*   if (!opt_ignore_init_file(OptsHandler_create())) { */
     /*       (void) Sm_NusmvrcSource(); */
     /*     } */
 
     BannerPrint(nusmv_stdout);
 
-    if (opt_verbose_level_gt(OptsHandler_get_instance(), 0)) {
+    if (opt_verbose_level_gt(OptsHandler_create(), 0)) {
       fprintf(nusmv_stdout, "Starting the batch interaction.\n");
     }
 
@@ -382,7 +382,7 @@ static void UsagePrint(char * program, char * unknown_option)
 static void BannerPrint(FILE * file)
 {
   /* Do not print the NuGaT banner if in quiet mode.. */
-  if (opt_get_quiet_mode(OptsHandler_get_instance())) return;
+  if (opt_get_quiet_mode(OptsHandler_create())) return;
 
   fprintf(file, "*** This is %s\n", Smgame_NuGaTReadVersion());
 # ifdef LINKED_ADDONS

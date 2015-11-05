@@ -19,7 +19,7 @@
          block = (dd_block*) NodeList_get_elem_at(grps, giter);
 +#if !HACK_GROUPS_OF_FIXED_SIZE
  
-         if (opt_verbose_level_gt(OptsHandler_get_instance(), 5)) {
+         if (opt_verbose_level_gt(OptsHandler_create(), 5)) {
            fprintf(nusmv_stderr, "Freeing block: low=%d, idx=%d, len=%d\n",
 @@ -3170,6 +3177,7 @@
                    "------> WARNING!!! Could not remove block low=%d, idx=%d, len=%d\n",
@@ -80,7 +80,7 @@
 +              int nindex = array_fetch(int, indices, idx++);
 +              add_ptr dummy = add_new_var_with_index(self->dd, nindex);
 +
-+              if (opt_verbose_level_gt(OptsHandler_get_instance(), 3)) {
++              if (opt_verbose_level_gt(OptsHandler_create(), 3)) {
 +                fprintf(nusmv_stderr, "BddEnc: introduced dummy ADD input "\
 +                        "var index %d for variable '",
 +                        nindex);
@@ -110,7 +110,7 @@
 +              int nindex = array_fetch(int, indices, idx++);
 +              add_ptr dummy = add_new_var_with_index(self->dd, nindex);
 +
-+              if (opt_verbose_level_gt(OptsHandler_get_instance(), 3)) {
++              if (opt_verbose_level_gt(OptsHandler_create(), 3)) {
 +                fprintf(nusmv_stderr, "BddEnc: introduced dummy ADD frozen "\
 +                        "var index %d for variable '",
 +                        nindex);
@@ -174,7 +174,7 @@
 +        add_free(self->dd, add); /* this is to free the variable
 +                                    allocated when committing the
 +                                    layer */
-+        if (opt_verbose_level_gt(OptsHandler_get_instance(), 3)) {
++        if (opt_verbose_level_gt(OptsHandler_create(), 3)) {
 +          fprintf(nusmv_stderr, "BddEnc: removed dummy ADD "  \
 +                  "var index %d for variable '", idx);
 +          print_node(nusmv_stderr, name);
@@ -246,7 +246,7 @@
 +
 +    NodeList_append(blocks, (node_ptr) block);
 +
-+    if (opt_verbose_level_gt(OptsHandler_get_instance(), 4)) {
++    if (opt_verbose_level_gt(OptsHandler_create(), 4)) {
 +      fprintf(nusmv_stderr, "BddEnc: created a block of %zd variables " \
 +              "from index %d to index %zd\n",
 +              self->block_size, self->block_index,

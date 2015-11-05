@@ -422,13 +422,13 @@ void Game_CheckLtlGameSpecSF07(PropGame_ptr prop,
                (w == GAME_WHO_ANTAGONIST) ||
                (w == GAME_WHO_PLAYER_1) ||
                (w == GAME_WHO_PLAYER_2));
-  nusmv_assert(opt_game_game_initial_condition(OptsHandler_get_instance()) ==
+  nusmv_assert(opt_game_game_initial_condition(OptsHandler_create()) ==
                'N');
 
   cls = Game_SF07_StructCheckLTLGameSF07_create(prop, params, kmin, kmax, w);
 
   /* As in gameGeneral.c::Game_BeforeCheckingSpec. */
-  if (opt_verbose_level_ge(OptsHandler_get_instance(), 1)) {
+  if (opt_verbose_level_ge(OptsHandler_create(), 1)) {
     fprintf(nusmv_stderr, "computing ");
     fprintf(nusmv_stderr, " ");
     Prop_print(PROP(cls->prop), nusmv_stderr, PROP_PRINT_FMT_FORMULA);
@@ -436,7 +436,7 @@ void Game_CheckLtlGameSpecSF07(PropGame_ptr prop,
   }
 
   /* Some additional info. */
-  if (opt_verbose_level_ge(OptsHandler_get_instance(), 2)) {
+  if (opt_verbose_level_ge(OptsHandler_create(), 2)) {
     fprintf(nusmv_stderr,
        "\nwith Game_CheckLtlGameSpecSF07 using kmin = %d, kmax = %d, w = %s.\n",
             cls->kmin,
@@ -507,11 +507,11 @@ void Game_CheckLtlGameSpecSF07(PropGame_ptr prop,
 
   /* Print strategy. */
   if ((((cls->params != (gameParams_ptr) NULL) && params->strategy_printout) ||
-      opt_game_print_strategy(OptsHandler_get_instance())) &&
+      opt_game_print_strategy(OptsHandler_create())) &&
       ((Prop_get_status(PROP(cls->prop)) == Prop_True) ||
        (Prop_get_status(PROP(cls->prop)) == Prop_False)))
   {
-    if (get_game_sf07_strategy_printing_mode(OptsHandler_get_instance()) ==
+    if (get_game_sf07_strategy_printing_mode(OptsHandler_create()) ==
         GAME_SF07_STRATEGY_PRINTING_MODE_SEXP) {
       Game_SF07_StructCheckLTLGameSF07_print_strategy_monitor_sexp(cls);
     } else {
@@ -836,7 +836,7 @@ static void Game_SF07_StructCheckLTLGameSF07_run_iteration
                                                     curr_player,
                                                     ltlgame_sf07_unique_number);
 
-  if (opt_verbose_level_ge(OptsHandler_get_instance(), 2)) {
+  if (opt_verbose_level_ge(OptsHandler_create(), 2)) {
     fprintf(nusmv_stderr,
             "\nGame_CheckLtlGameSpecSF07: performing iteration with curr_k = "
             "%d, curr_player = %d.\n\n",
@@ -865,7 +865,7 @@ static void Game_SF07_StructCheckLTLGameSF07_run_iteration
     nusmv_exit(1);
   }
 
-  if (opt_verbose_level_ge(OptsHandler_get_instance(), 2)) {
+  if (opt_verbose_level_ge(OptsHandler_create(), 2)) {
     fprintf(nusmv_stderr,
             "\nGame_CheckLtlGameSpecSF07: finished iteration. Sub game is %s.\n",
             ((self->curr_goal_realizability == GAME_REALIZABLE) ?
@@ -959,7 +959,7 @@ static void Game_SF07_StructCheckLTLGameSF07_construct_ba
     nnfed = Wff2Nnf(booleanized);
 
     /* Log result. */
-    if (opt_verbose_level_ge(OptsHandler_get_instance(), 4)) {
+    if (opt_verbose_level_ge(OptsHandler_create(), 4)) {
       fprintf(nusmv_stderr,
               "\nGame_SF07_StructCheckLTLGameSF07_construct_ba: booleanized, "
               "nnfed formula is:\n");
@@ -1150,17 +1150,17 @@ static void Game_SF07_StructCheckLTLGameSF07_construct_monitor_sexp
     monitor = append(monitor, trans_statements);
     monitor = append(monitor, init_statements);
     if (var_decls != Nil) {
-      monitor = new_node(CONS, var_decls, monitor);
+      monitor = new_node(0,CONS, var_decls, monitor);
     }
-    monitor = new_node(MODULE,
-                       new_node(MODTYPE,
-                                new_node(ATOM,
+    monitor = new_node(0,MODULE,
+                       new_node(0,MODTYPE,
+                                new_node(0,ATOM,
                                          (node_ptr) find_string(module_name),
                                          Nil),
                                 Nil),
                        monitor);
 
-    if (opt_verbose_level_ge(OptsHandler_get_instance(), 4)) {
+    if (opt_verbose_level_ge(OptsHandler_create(), 4)) {
       fprintf(nusmv_stderr,
               "\nGame_SF07_StructCheckLTLGameSF07_construct_monitor_sexp: "
               "player 2 monitor is:\n");
@@ -1193,15 +1193,15 @@ static void Game_SF07_StructCheckLTLGameSF07_construct_monitor_sexp
             self->curr_unique_number);
 
     /* Construct empty module. */
-    monitor = new_node(MODULE,
-                       new_node(MODTYPE,
-                                new_node(ATOM,
+    monitor = new_node(0,MODULE,
+                       new_node(0,MODTYPE,
+                                new_node(0,ATOM,
                                          (node_ptr) find_string(module_name),
                                          Nil),
                                 Nil),
                        Nil);
 
-    if (opt_verbose_level_ge(OptsHandler_get_instance(), 4)) {
+    if (opt_verbose_level_ge(OptsHandler_create(), 4)) {
       fprintf(nusmv_stderr,
               "\nGame_SF07_StructCheckLTLGameSF07_construct_monitor_sexp: "
               "player 1 monitor is:\n");
@@ -1262,7 +1262,7 @@ static node_ptr Game_SF07_StructCheckLTLGameSF07_construct_monitor_var_decls
   states = Game_SF07_gba_get_states(ba);
   var_decls = Nil;
 
-  var_type = find_node(TWODOTS,
+  var_type = find_node(0,TWODOTS,
                        find_node_number(-1),
                        find_node_number(self->curr_k));
 
@@ -1276,12 +1276,12 @@ static node_ptr Game_SF07_StructCheckLTLGameSF07_construct_monitor_var_decls
     state = GAME_SF07_GBA_STATE(Siter_element(s_iter));
     state_var_name =
       Game_SF07_StructCheckLTLGameSF07_gba_state_to_var_name(self, state);
-    var_decl = new_node(COLON, state_var_name, var_type);
-    var_decls = new_node(CONS, var_decl, var_decls);
+    var_decl = new_node(0,COLON, state_var_name, var_type);
+    var_decls = new_node(0,CONS, var_decl, var_decls);
   }
 
   if (var_decls != Nil) {
-    res = new_node(VAR, reverse(var_decls), Nil);
+    res = new_node(0,VAR, reverse(var_decls), Nil);
   } else {
     res = Nil;
   }
@@ -1360,7 +1360,7 @@ Game_SF07_StructCheckLTLGameSF07_construct_monitor_init_statements
       Game_SF07_StructCheckLTLGameSF07_gba_state_to_var_name(self, state);
 
     if (!Game_SF07_gba_is_state_initial(ba, state)) {
-      init_statement = new_node(INIT,
+      init_statement = new_node(0,INIT,
                                 find_node(EQUAL,
                                           state_var_name,
                                           find_node_number(-1)),
@@ -1380,26 +1380,26 @@ Game_SF07_StructCheckLTLGameSF07_construct_monitor_init_statements
         inv_true_init_value = 1;
       }
 
-      inv_false = find_node(IFF,
-                            find_node(NOT,
+      inv_false = find_node(0,IFF,
+                            find_node(0,NOT,
                                       label,
                                       Nil),
-                            find_node(EQUAL,
+                            find_node(0,EQUAL,
                                       state_var_name,
                                       find_node_number(-1)));
-      inv_true = find_node(IFF,
+      inv_true = find_node(0,IFF,
                            label,
-                           find_node(EQUAL,
+                           find_node(0,EQUAL,
                                      state_var_name,
                                      find_node_number(inv_true_init_value)));
-      init_statement = new_node(INIT,
-                                find_node(AND,
+      init_statement = new_node(0,INIT,
+                                find_node(0,AND,
                                           inv_false,
                                           inv_true),
                                 Nil);
     }
 
-    init_statements = new_node(CONS, init_statement, init_statements);
+    init_statements = new_node(0,CONS, init_statement, init_statements);
   }
 
   res = reverse(init_statements);
@@ -1540,7 +1540,7 @@ Game_SF07_StructCheckLTLGameSF07_construct_monitor_trans_statements
       node_ptr i_conjuncts;
       node_ptr i_trans;
 
-      i_lhs = find_node(EQUAL,
+      i_lhs = find_node(0,EQUAL,
                         state_var_name,
                         find_node_number(i));
 
@@ -1560,11 +1560,11 @@ Game_SF07_StructCheckLTLGameSF07_construct_monitor_trans_statements
         target_state_var_name =
           Game_SF07_StructCheckLTLGameSF07_gba_state_to_var_name(self,
                                                                  target_state);
-        next_of_target_state_var_name = find_node(NEXT,
+        next_of_target_state_var_name = find_node(0,NEXT,
                                                   target_state_var_name,
                                                   Nil);
         target_state_label = Game_SF07_gba_state_get_label(target_state);
-        next_of_target_state_label = find_node(NEXT,
+        next_of_target_state_label = find_node(0,NEXT,
                                                target_state_label,
                                                Nil);
 
@@ -1578,28 +1578,28 @@ Game_SF07_StructCheckLTLGameSF07_construct_monitor_trans_statements
         } else {
           rhs_type = EQUAL;
         }
-        rhs = find_node(rhs_type,
+        rhs = find_node(0,rhs_type,
                         next_of_target_state_var_name,
                         find_node_number(i));
-        i_conjuncts = find_node(AND,
+        i_conjuncts = find_node(0,AND,
                                 i_conjuncts,
-                                find_node(IMPLIES,
+                                find_node(0,IMPLIES,
                                           next_of_target_state_label,
                                           rhs));
       }
 
-      i_trans = new_node(TRANS,
+      i_trans = new_node(0,TRANS,
                          find_node(IMPLIES,
                                    i_lhs,
                                    i_conjuncts),
                          Nil);
 
-      trans_statements = new_node(CONS, i_trans, trans_statements);
+      trans_statements = new_node(0,CONS, i_trans, trans_statements);
     }
 
     /* handle incoming transitions */
     state_label = Game_SF07_gba_state_get_label(state);
-    next_of_state_label = find_node(NEXT, state_label, Nil);
+    next_of_state_label = find_node(0,NEXT, state_label, Nil);
     transitions = Game_SF07_gba_state_get_incoming(state);
     for (i = 0; i <= self->curr_k; i++) {
       Siter t_iter;
@@ -1607,8 +1607,8 @@ Game_SF07_StructCheckLTLGameSF07_construct_monitor_trans_statements
       node_ptr i_rhs;
       node_ptr i_trans;
 
-      i_lhs = find_node(EQUAL,
-                        find_node(NEXT,
+      i_lhs = find_node(0,EQUAL,
+                        find_node(0,NEXT,
                                   state_var_name,
                                   Nil),
                         find_node_number(i));
@@ -1620,8 +1620,8 @@ Game_SF07_StructCheckLTLGameSF07_construct_monitor_trans_statements
         node_ptr i_conjuncts;
         node_ptr i_disjuncts;
 
-        i_conjuncts = find_node(TRUEEXP, Nil, Nil);
-        i_disjuncts = find_node(FALSEEXP, Nil, Nil);
+        i_conjuncts = find_node(0,TRUEEXP, Nil, Nil);
+        i_disjuncts = find_node(0,FALSEEXP, Nil, Nil);
         SLIST_FOREACH(transitions, t_iter) {
           Game_SF07_gba_transition_ptr transition;
           Game_SF07_gba_state_ptr source_state;
@@ -1658,37 +1658,37 @@ Game_SF07_StructCheckLTLGameSF07_construct_monitor_trans_statements
             i_disj_value = i - 1;
           }
 
-          i_conjunct = find_node(i_conj_type,
+          i_conjunct = find_node(0,i_conj_type,
                                  source_state_var_name,
                                  find_node_number(i));
-          i_conjuncts = find_node(AND,
+          i_conjuncts = find_node(0,AND,
                                   i_conjuncts,
                                   i_conjunct);
 
-          i_disjunct = find_node(i_disj_type,
+          i_disjunct = find_node(0,i_disj_type,
                                  source_state_var_name,
                                  find_node_number(i_disj_value));
-          i_disjuncts = find_node(OR,
+          i_disjuncts = find_node(0,OR,
                                   i_disjuncts,
                                   i_disjunct);
 
-          i_rhs = find_node(AND,
+          i_rhs = find_node(0,AND,
                             next_of_state_label,
-                            find_node(AND,
+                            find_node(0,AND,
                                       i_conjuncts,
                                       i_disjuncts));
         }
       } else {
-        i_rhs = find_node(FALSEEXP, Nil, Nil);
+        i_rhs = find_node(0,FALSEEXP, Nil, Nil);
       }
 
-      i_trans = new_node(TRANS,
-                         find_node(IMPLIES,
+      i_trans = new_node(0,TRANS,
+                         find_node(0,IMPLIES,
                                    i_lhs,
                                    i_rhs),
                          Nil);
 
-      trans_statements = new_node(CONS, i_trans, trans_statements);
+      trans_statements = new_node(0,CONS, i_trans, trans_statements);
     }
   }
 
@@ -2046,10 +2046,10 @@ static void Game_SF07_StructCheckLTLGameSF07_check
   /* Should a strategy be constructed? */
   construct_strategy = (((self->params != (gameParams_ptr) NULL) &&
                          (self->params)->strategy_printout) ||
-                        opt_game_print_strategy(OptsHandler_get_instance()));
+                        opt_game_print_strategy(OptsHandler_create()));
 
   /* Construct property. */
-  expr = find_node(GAME_SPEC_WRAPPER,
+  expr = find_node(0,GAME_SPEC_WRAPPER,
                    sym_intern(PTR_TO_INT(car(self->curr_goal)) == 1 ?
                               PLAYER_NAME_1 :
                               PLAYER_NAME_2),
@@ -2058,7 +2058,7 @@ static void Game_SF07_StructCheckLTLGameSF07_check
   PropGame_set_game_bdd_fsm(prop, self->curr_product_game_bdd_fsm);
 
   /* Log property. */
-  if (opt_verbose_level_ge(OptsHandler_get_instance(), 4)) {
+  if (opt_verbose_level_ge(OptsHandler_create(), 4)) {
     fprintf(nusmv_stderr,
             "\nGame_SF07_StructCheckLTLGameSF07_check: sub game goal is:\n");
     Prop_print(PROP(prop), nusmv_stderr, PROP_PRINT_FMT_FORMULA);
@@ -2123,7 +2123,7 @@ static node_ptr Game_SF07_StructCheckLTLGameSF07_gba_state_to_var_name
           self->curr_unique_number,
           state_id_s);
 
-  res = find_node(ATOM,
+  res = find_node(0,ATOM,
                   (node_ptr) find_string(res_s),
                   Nil);
 
@@ -2147,9 +2147,9 @@ static node_ptr Game_SF07_StructCheckLTLGameSF07_gba_state_to_var_name
 static node_ptr find_node_number(int n)
 {
   if (n < 0) {
-    return find_node(UMINUS, find_node(NUMBER, NODE_FROM_INT(-n), Nil), Nil);
+    return find_node(0,UMINUS, find_node(0,NUMBER, NODE_FROM_INT(-n), Nil), Nil);
   } else {
-    return find_node(NUMBER, NODE_FROM_INT(n), Nil);
+    return find_node(0,NUMBER, NODE_FROM_INT(n), Nil);
   }
 
   nusmv_assert(false);
@@ -2271,7 +2271,7 @@ static void Game_SF07_StructCheckLTLGameSF07_print_strategy_monitor_sexp
   GAME_STRATEGY_CHECK_INSTANCE(self->strategy);
   {
     Game_SF07_StrategyPrintingMode m;
-    m = get_game_sf07_strategy_printing_mode(OptsHandler_get_instance());
+    m = get_game_sf07_strategy_printing_mode(OptsHandler_create());
     nusmv_assert(m == GAME_SF07_STRATEGY_PRINTING_MODE_SEXP);
   }
 
@@ -2383,7 +2383,7 @@ static void Game_SF07_StructCheckLTLGameSF07_print_strategy_monitor_bdd
   GAME_STRATEGY_CHECK_INSTANCE(self->strategy);
   {
     Game_SF07_StrategyPrintingMode m;
-    m = get_game_sf07_strategy_printing_mode(OptsHandler_get_instance());
+    m = get_game_sf07_strategy_printing_mode(OptsHandler_create());
     nusmv_assert((m == GAME_SF07_STRATEGY_PRINTING_MODE_BDD_SEPARATE) ||
                  (m == GAME_SF07_STRATEGY_PRINTING_MODE_BDD_CONJOINED));
   }
@@ -2490,7 +2490,7 @@ static void Game_SF07_StructCheckLTLGameSF07_print_strategy_monitor_bdd
       bdd_or_accumulate(self->dd_manager, &init_bdd, tmp);
       bdd_free(self->dd_manager, tmp);
 
-      if (get_game_sf07_strategy_printing_mode(OptsHandler_get_instance()) ==
+      if (get_game_sf07_strategy_printing_mode(OptsHandler_create()) ==
           GAME_SF07_STRATEGY_PRINTING_MODE_BDD_CONJOINED) {
         bdd_and_accumulate(self->dd_manager,
                            &init_bdd,
@@ -2509,7 +2509,7 @@ static void Game_SF07_StructCheckLTLGameSF07_print_strategy_monitor_bdd
                            do_indentation,
                            strlen(init_str),
                            out);
-      if (get_game_sf07_strategy_printing_mode(OptsHandler_get_instance()) ==
+      if (get_game_sf07_strategy_printing_mode(OptsHandler_create()) ==
           GAME_SF07_STRATEGY_PRINTING_MODE_BDD_SEPARATE) {
         fprintf(out, "%s", init_str);
         BddEnc_print_bdd_wff(self->bdd_enc,
@@ -2537,7 +2537,7 @@ static void Game_SF07_StructCheckLTLGameSF07_print_strategy_monitor_bdd
       bdd_or_accumulate(self->dd_manager, &trans_bdd, tmp);
       bdd_free(self->dd_manager, tmp);
 
-      if (get_game_sf07_strategy_printing_mode(OptsHandler_get_instance()) ==
+      if (get_game_sf07_strategy_printing_mode(OptsHandler_create()) ==
           GAME_SF07_STRATEGY_PRINTING_MODE_BDD_CONJOINED) {
         bdd_and_accumulate(self->dd_manager,
                            &trans_bdd,
@@ -2556,7 +2556,7 @@ static void Game_SF07_StructCheckLTLGameSF07_print_strategy_monitor_bdd
                            do_indentation,
                            strlen(trans_str),
                            out);
-      if (get_game_sf07_strategy_printing_mode(OptsHandler_get_instance()) ==
+      if (get_game_sf07_strategy_printing_mode(OptsHandler_create()) ==
           GAME_SF07_STRATEGY_PRINTING_MODE_BDD_SEPARATE) {
         fprintf(out, "%s", trans_str);
         BddEnc_print_bdd_wff(self->bdd_enc,
@@ -2615,9 +2615,9 @@ static node_ptr Game_SF07_StructCheckLTLGameSF07_copy_node(node_ptr node) {
     case ATOM:
     case NUMBER:
       nusmv_assert(rhs == Nil);
-      return new_lined_node(type, lhs, rhs, lineno);
+      return new_lined_node(0,type, lhs, rhs, lineno);
     case BIT:
-      return new_lined_node(type,
+      return new_lined_node(0,type,
                             Game_SF07_StructCheckLTLGameSF07_copy_node(lhs),
                             rhs,
                             lineno);
@@ -2646,7 +2646,7 @@ static node_ptr Game_SF07_StructCheckLTLGameSF07_copy_node(node_ptr node) {
     case TWODOTS:
     case UMINUS:
     case VAR:
-      return new_lined_node(type,
+      return new_lined_node(0,type,
                             Game_SF07_StructCheckLTLGameSF07_copy_node(lhs),
                             Game_SF07_StructCheckLTLGameSF07_copy_node(rhs),
                             lineno);

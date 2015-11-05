@@ -106,12 +106,12 @@ int Game_CommandEncodeVariables(char* input_order_file_name)
   BoolEnc_ptr bool_enc;
   BddEnc_ptr bdd_enc;
 
-  if (opt_verbose_level_gt(OptsHandler_get_instance(), 0)) {
+  if (opt_verbose_level_gt(OptsHandler_create(), 0)) {
     fprintf(nusmv_stderr, "Building variables...");
   }
 
   if (input_order_file_name != NIL(char)) {
-    set_input_order_file(OptsHandler_get_instance(), input_order_file_name);
+    set_input_order_file(OptsHandler_create(), input_order_file_name);
   }
 
   /* Creates the bool encoding, and commits the model layer, which was
@@ -129,24 +129,24 @@ int Game_CommandEncodeVariables(char* input_order_file_name)
 
   cmp_struct_set_encode_variables(cmps);
 
-  if (!opt_reorder(OptsHandler_get_instance()) &&
-      !is_default_order_file(OptsHandler_get_instance()) &&
-      !util_is_string_null(get_output_order_file(OptsHandler_get_instance()))) {
+  if (!opt_reorder(OptsHandler_create()) &&
+      !is_default_order_file(OptsHandler_create()) &&
+      !util_is_string_null(get_output_order_file(OptsHandler_create()))) {
     VarOrderingType dump_type;
-    if (opt_write_order_dumps_bits(OptsHandler_get_instance())) {
+    if (opt_write_order_dumps_bits(OptsHandler_create())) {
       dump_type = DUMP_BITS;
     }
     else dump_type = DUMP_DEFAULT;
 
     BddEnc_write_var_ordering(Enc_get_bdd_encoding(),
-                              get_output_order_file(OptsHandler_get_instance()),
+                              get_output_order_file(OptsHandler_create()),
                               dump_type);
 
     /* batch mode: */
-    if (opt_batch(OptsHandler_get_instance())) { nusmv_exit(0); }
+    if (opt_batch(OptsHandler_create())) { nusmv_exit(0); }
   }
 
-  if (opt_verbose_level_gt(OptsHandler_get_instance(), 0)) {
+  if (opt_verbose_level_gt(OptsHandler_create(), 0)) {
     fprintf(nusmv_stderr, "...done\n");
   }
 

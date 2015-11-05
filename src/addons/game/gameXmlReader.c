@@ -297,7 +297,7 @@ int Game_RatFileToGame(const char *filename)
   if (cmp_struct_get_read_model(cmps)) {
     fprintf(nusmv_stderr,
             "A model appears to be already read from file: %s.\n",
-            get_input_file(OptsHandler_get_instance()));
+            get_input_file(OptsHandler_create()));
     return(1);
   }
 
@@ -396,46 +396,46 @@ int Game_RatFileToGame(const char *filename)
                         &property);
 
     if (Nil != parseResult->input_vars) {
-      module1 = cons(new_node(VAR, parseResult->input_vars, Nil), module1);
+      module1 = cons(0,new_node(0,VAR, parseResult->input_vars, Nil), module1);
     }
     if (Nil != init1) {
-      module1 = cons(new_node(INIT, init1, Nil), module1);
+      module1 = cons(0,new_node(0,INIT, init1, Nil), module1);
     }
     if (Nil != trans1) {
-      module1 = cons(new_node(TRANS, trans1, Nil), module1);
+      module1 = cons(0,new_node(0,TRANS, trans1, Nil), module1);
     }
 
     if (Nil != parseResult->output_vars) {
-      module2 = cons(new_node(VAR, parseResult->output_vars, Nil), module2);
+      module2 = cons(0,new_node(0,VAR, parseResult->output_vars, Nil), module2);
     }
     if (Nil != init2) {
-      module2 = cons(new_node(INIT, init2, Nil), module2);
+      module2 = cons(0,new_node(0,INIT, init2, Nil), module2);
     }
     if (Nil != trans2) {
-      module2 = cons(new_node(TRANS, trans2, Nil), module2);
+      module2 = cons(0,new_node(0,TRANS, trans2, Nil), module2);
     }
 
     /* Create the players\' MODULE (the same as NuGaT parser does). */
-    module1 = new_node(MODULE,
-                       new_node(MODTYPE,
-                                new_node(ATOM,
+    module1 = new_node(0,MODULE,
+                       new_node(0,MODTYPE,
+                                new_node(0,ATOM,
                                          (node_ptr) find_string(PLAYER_NAME_1),
                                          Nil),
                                 Nil),
                        module1);
-    module2 = new_node(MODULE,
-                       new_node(MODTYPE,
-                                new_node(ATOM,
+    module2 = new_node(0,MODULE,
+                       new_node(0,MODTYPE,
+                                new_node(0,ATOM,
                                          (node_ptr) find_string(PLAYER_NAME_2),
                                          Nil),
                                 Nil),
                        module2);
 
     /* Create a GAME structure as the NuGaT parser does it. */
-    parsed_tree = new_node(GAME,
-                           cons(property, Nil),
-                           cons(module1,
-                                cons(module2,
+    parsed_tree = new_node(0,GAME,
+                           cons(0,property, Nil),
+                           cons(0,module1,
+                                cons(0,module2,
                                      Nil /*module list is empty*/)));
 
 //     /* debugging printing */
@@ -458,7 +458,7 @@ int Game_RatFileToGame(const char *filename)
   }
 
 
-  if (!opt_game_game(OptsHandler_get_instance())) {
+  if (!opt_game_game(OptsHandler_create())) {
     Game_Mode_Enter();
   }
   cmp_struct_set_read_model(cmps);
@@ -570,21 +570,21 @@ static node_ptr game_xml_reader_parse_type(const char* text) {
   int size = -1; /* size has some default, for sure wrong value */
 
   if (0 == strcmp(text, "boolean")) {
-    return new_node(BOOLEAN, Nil, Nil);
+    return new_node(0,BOOLEAN, Nil, Nil);
   }
   else if (0 == strcmp(text, "integer")) {
-    return new_node(INTEGER, Nil, Nil);
+    return new_node(0,INTEGER, Nil, Nil);
   }
   else if (0 == strcmp(text, "real")) {
-    return new_node(REAL, Nil, Nil);
+    return new_node(0,REAL, Nil, Nil);
   }
   else if (1 == sscanf(text, "word [ %d ] %n", &i1, &size) ||
            1 == sscanf(text, "unsigned word [ %d ] %n", &i1, &size)) {
     if (-1 == size || text[size] != '\0') {
       rpterr("Incorrect XML file (word type)");
     }
-    return new_node(UNSIGNED_WORD,
-                    new_node(NUMBER,
+    return new_node(0,UNSIGNED_WORD,
+                    new_node(0,NUMBER,
                              NODE_FROM_INT(i1),
                              Nil),
                     Nil);
@@ -593,8 +593,8 @@ static node_ptr game_xml_reader_parse_type(const char* text) {
     if (-1 == size || text[size] != '\0') {
       rpterr("Incorrect XML file (word type)");
     }
-    return new_node(SIGNED_WORD,
-                    new_node(NUMBER,
+    return new_node(0,SIGNED_WORD,
+                    new_node(0,NUMBER,
                              NODE_FROM_INT(i1),
                              Nil),
                     Nil);
@@ -614,9 +614,9 @@ static node_ptr game_xml_reader_parse_type(const char* text) {
     size = -1;
     if (1 == sscanf(text, "%d %n", &i2, &size)) {
       if (-1 == size) rpterr("03 Incorrect XML file %%d .. %%d (range) type");
-      return new_node(TWODOTS,
-                      new_node(NUMBER, NODE_FROM_INT(i1), Nil),
-                      new_node(NUMBER, NODE_FROM_INT(i2), Nil));
+      return new_node(0,TWODOTS,
+                      new_node(0,NUMBER, NODE_FROM_INT(i1), Nil),
+                      new_node(0,NUMBER, NODE_FROM_INT(i2), Nil));
     }
     else {
       rpterr("04 Incorrect XML file %%d .. %%d (range) type");
@@ -639,7 +639,7 @@ static node_ptr game_xml_reader_parse_type(const char* text) {
 
       if (1 == sscanf(text, "%d %n", &i, &size)) {
         text += size;
-        newNode = new_node(NUMBER, NODE_FROM_INT(i), Nil);
+        newNode = new_node(0,NUMBER, NODE_FROM_INT(i), Nil);
       }
       else if (1 == sscanf(text, "%1[A-Za-z_]", buf)) {
 
@@ -673,13 +673,13 @@ static node_ptr game_xml_reader_parse_type(const char* text) {
         text += size;
 
         if (0 == strcmp(buf, "TRUE")) {
-          newNode = new_node(TRUEEXP, Nil, Nil);
+          newNode = new_node(0,TRUEEXP, Nil, Nil);
         }
         else if (0 == strcmp(buf, "FALSE")) {
-          newNode = new_node(FALSEEXP, Nil, Nil);
+          newNode = new_node(0,FALSEEXP, Nil, Nil);
         }
         else {
-          newNode = new_node(ATOM, (node_ptr) find_string(buf), Nil);
+          newNode = new_node(0,ATOM, (node_ptr) find_string(buf), Nil);
         }
       }
       else {
@@ -702,12 +702,12 @@ static node_ptr game_xml_reader_parse_type(const char* text) {
       }
       else rpterr("Invalid constant list in type");
 
-      listOfVals = cons(newNode, listOfVals);
+      listOfVals = cons(0,newNode, listOfVals);
     } /* while */
 
     if (text[0] != '\0') rpterr("Incorrect XML file (list of type constants)");
 
-    return new_node(SCALAR, listOfVals, Nil);
+    return new_node(0,SCALAR, listOfVals, Nil);
   }
   /* Arrays */
   else if (0 == strncmp(text, "array", 5)) {
@@ -736,10 +736,10 @@ static node_ptr game_xml_reader_parse_type(const char* text) {
           rpterr("03 Incorrect XML file array %%d .. %%d type");
         }
         text += size;
-        return new_node(ARRAY_TYPE,
-                        new_node(TWODOTS,
-                                 new_node(NUMBER, NODE_FROM_INT(i1), Nil),
-                                 new_node(NUMBER, NODE_FROM_INT(i2), Nil)),
+        return new_node(0,ARRAY_TYPE,
+                        new_node(0,TWODOTS,
+                                 new_node(0,NUMBER, NODE_FROM_INT(i1), Nil),
+                                 new_node(0,NUMBER, NODE_FROM_INT(i2), Nil)),
                         game_xml_reader_parse_type(text));
       }
       else rpterr("04 Incorrect XML file array %%d .. %%d type");
@@ -865,7 +865,7 @@ static void game_xml_reader_tag_begin(void* data,
       rpterr("Unexpected XML element attribute: %s", atts[0]);
     }
 
-    parseResult->stack = cons(new_node(tag, Nil, Nil), parseResult->stack);
+    parseResult->stack = cons(0,new_node(0,tag, Nil, Nil), parseResult->stack);
     return;
 
   /* Tags which are to be ignored. */
@@ -903,7 +903,7 @@ static void game_xml_reader_tag_begin(void* data,
   case XML_AUTO_SIGNAL:
 
   case XML_NOTES:
-    parseResult->stack = cons(new_node(tag, Nil, Nil), parseResult->stack);
+    parseResult->stack = cons(0,new_node(0,tag, Nil, Nil), parseResult->stack);
     parseResult->isIgnore = true;
     return;
   } /* switch */
@@ -1005,13 +1005,13 @@ static void game_xml_reader_tag_end(void* data, const char *string)
       nusmv_assert(car(name) != Nil && car(kind) != Nil && car(type) != Nil);
 
       free_node(signal);
-      signal = new_node(COLON, car(name), car(type));
+      signal = new_node(0,COLON, car(name), car(type));
 
       if ('E' == PTR_TO_INT(car(kind))) {
-        parseResult->input_vars = cons(signal, parseResult->input_vars);
+        parseResult->input_vars = cons(0,signal, parseResult->input_vars);
       }
       else if ('S' == PTR_TO_INT(car(kind))) {
-        parseResult->output_vars = cons(signal, parseResult->output_vars);
+        parseResult->output_vars = cons(0,signal, parseResult->output_vars);
       }
       else {
         rpterr("The value of kind of a signal can only be E or S (found: %c).",
@@ -1078,12 +1078,12 @@ static void game_xml_reader_tag_end(void* data, const char *string)
          ignore it). */
       if ('1' == PTR_TO_INT(car(toggled))) {
         if ('A' == PTR_TO_INT(car(kind))) {
-          parseResult->assumptions = new_node(AND,
+          parseResult->assumptions = new_node(0,AND,
                                               car(property),
                                               parseResult->assumptions);
         }
         else if ('G' == PTR_TO_INT(car(kind))) {
-          parseResult->guarantees = new_node(AND,
+          parseResult->guarantees = new_node(0,AND,
                                              car(property),
                                              parseResult->guarantees);
         }
@@ -1134,7 +1134,7 @@ static void game_xml_reader_tag_end(void* data, const char *string)
       if (XML_NAME == tag || XML_STATUS == tag) {
         /* Create left child for the tag node as usual NuSMV ATOM. */
         setcar(car(parseResult->stack),
-               new_node(ATOM, (node_ptr) find_string((char*) car(text)), Nil));
+               new_node(0,ATOM, (node_ptr) find_string((char*) car(text)), Nil));
       }
       else if (XML_KIND == tag) {
         /* Set left child to be an integer 'A', 'G', 'E' or 'S'. */
@@ -1314,8 +1314,8 @@ static void game_xml_reader_char_handler(void* data, const char *txt, int len)
     if (0 == len) return;
   }
   else {
-    text_node = new_node(XML_TEXT, Nil, Nil);
-    parseResult->stack = cons(text_node, parseResult->stack);
+    text_node = new_node(0,XML_TEXT, Nil, Nil);
+    parseResult->stack = cons(0,text_node, parseResult->stack);
   }
 
   buffer = (char*) car(text_node);

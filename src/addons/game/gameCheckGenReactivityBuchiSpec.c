@@ -151,7 +151,7 @@ void Game_CheckGenReactivitySpec(PropGame_ptr prop, gameParams_ptr params)
   strategy = GAME_STRATEGY(NULL);
   construct_strategy = (((params != (gameParams_ptr) NULL) &&
                          params->strategy_printout) ||
-                        opt_game_print_strategy(OptsHandler_get_instance()));
+                        opt_game_print_strategy(OptsHandler_create()));
   Game_BeforeCheckingSpec(prop);
 
   /* Declare a special variable required for strategy printing. */
@@ -161,12 +161,12 @@ void Game_CheckGenReactivitySpec(PropGame_ptr prop, gameParams_ptr params)
                              &var);
 
     if (find_string(PLAYER_NAME_1) == PropGame_get_player(prop)) {
-      varList1 = cons(var, Nil);
+      varList1 = cons(0,var, Nil);
       varList2 = Nil;
     }
     else {
       varList1 = Nil;
-      varList2 = cons(var, Nil);
+      varList2 = cons(0,var, Nil);
     }
   }
 
@@ -232,7 +232,7 @@ void Game_CheckBuchiGameSpec(PropGame_ptr prop, gameParams_ptr params)
   strategy = GAME_STRATEGY(NULL);
   construct_strategy = (((params != (gameParams_ptr) NULL) &&
                          params->strategy_printout) ||
-                        opt_game_print_strategy(OptsHandler_get_instance()));
+                        opt_game_print_strategy(OptsHandler_create()));
   Game_BeforeCheckingSpec(prop);
 
   /* Declare a special variable required for strategy printing. */
@@ -242,12 +242,12 @@ void Game_CheckBuchiGameSpec(PropGame_ptr prop, gameParams_ptr params)
                              &var);
 
     if (find_string(PLAYER_NAME_1) == PropGame_get_player(prop)) {
-      varList1 = cons(var, Nil);
+      varList1 = cons(0,var, Nil);
       varList2 = Nil;
     }
     else {
       varList1 = Nil;
-      varList2 = cons(var, Nil);
+      varList2 = cons(0,var, Nil);
     }
   }
 
@@ -432,14 +432,14 @@ static void game_declare_special_var(int guaranteeNumber,
   /* Loop until a free name is found. */
   do {
     sprintf(name+2, "_%d", ++i);
-    var = find_node(ATOM, (node_ptr)find_string(name), Nil);
-    var = find_node(DOT, Nil, var);
+    var = find_node(0,ATOM, (node_ptr)find_string(name), Nil);
+    var = find_node(0,DOT, Nil, var);
   } while (!SymbLayer_can_declare_var(layer, var));
 
   /* Create a list of values. */
-  values = CompileFlatten_expand_range(0, guaranteeNumber - 1);
+  values = CompileFlatten_expand_range(0,0, guaranteeNumber - 1);
   /* We don't declare constants here since there are just numbers. */
-  symbolicType = SymbType_create(SYMB_TYPE_ENUM, values);
+  symbolicType = SymbType_create(0,SYMB_TYPE_ENUM, values);
   SymbLayer_declare_state_var(layer, var, symbolicType);
 
   /* Commit the layer to all encodings. */
@@ -451,7 +451,7 @@ static void game_declare_special_var(int guaranteeNumber,
   *new_var = var;
   *new_layer = layer;
 
-  if(opt_verbose_level_gt(OptsHandler_get_instance(), 0)) {
+  if(opt_verbose_level_gt(OptsHandler_create(), 0)) {
     fprintf(nusmv_stdout, "\n -- VAR %s : 0 .. %d;", name, guaranteeNumber - 1);
   }
 
@@ -570,7 +570,7 @@ static boolean game_compute_gen_reactivity(node_ptr specExp,
 //long time_init_check;
   BddEnc_ptr enc = Enc_get_bdd_encoding();
   DdManager* dd_manager = BddEnc_get_dd_manager(enc);
-  OptsHandler_ptr oh = OptsHandler_get_instance();
+  OptsHandler_ptr oh = OptsHandler_create();
 
   bdd_ptr init_1, init_2, invar_1, invar_2;
   bdd_ptr Z;
@@ -847,8 +847,8 @@ static boolean game_compute_gen_reactivity(node_ptr specExp,
           bdd_free(dd_manager, notAssumption);
         } /* for i = 0 ... */
 
-        xResults[j] = cons((node_ptr)xArray, xResults[j]);
-        yResults[j] = cons((node_ptr)bdd_dup(Y), yResults[j]);
+        xResults[j] = cons(0,(node_ptr)xArray, xResults[j]);
+        yResults[j] = cons(0,(node_ptr)bdd_dup(Y), yResults[j]);
 
         /* Note: if after the first iteration Y = 0, the second
            iteration is not executed. This is OK and the game is
@@ -879,11 +879,11 @@ static boolean game_compute_gen_reactivity(node_ptr specExp,
           /* create an copy of last elements in xResults and yResults.
              (These elements will be removed at the end)
           */
-          yResults[j] = cons((node_ptr)(bdd_dup(Y)), yResults[j]);
+          yResults[j] = cons(0,(node_ptr)(bdd_dup(Y)), yResults[j]);
 
           newXArray = ALLOC(bdd_ptr, assumptionsN);
           for (i = 0; i < assumptionsN; ++i) newXArray[i] = bdd_dup(xArray[i]);
-          xResults[j] = cons((node_ptr)newXArray, xResults[j]);
+          xResults[j] = cons(0,(node_ptr)newXArray, xResults[j]);
         }
 
         bdd_free(dd_manager, previousY);
@@ -1039,17 +1039,17 @@ static boolean game_compute_gen_reactivity(node_ptr specExp,
         /* compute a disjunct of (jx=j & jx' = (j+1) & guarantee[j]) for
            all j and then a conjunct with Z & trans12 & Z' */
         for (j = 0; j < guaranteesN; ++j) {
-          node_ptr eq1 = find_node(EQUAL,
+          node_ptr eq1 = find_node(0,EQUAL,
                                    jxVar,
-                                   find_node(NUMBER, NODE_FROM_INT(j), Nil));
-          node_ptr eq2 = find_node(EQUAL,
-                                   find_node(NEXT,
+                                   find_node(0,NUMBER, (j), Nil));
+          node_ptr eq2 = find_node(0,EQUAL,
+                                   find_node(0,NEXT,
                                              jxVar,
                                              Nil),
-                                   find_node(NUMBER,
-                                             NODE_FROM_INT((j+1) % guaranteesN),
+                                   find_node(0,NUMBER,
+                                             ((j+1) % guaranteesN),
                                              Nil));
-          node_ptr eq = find_node(AND, eq1, eq2);
+          node_ptr eq = find_node(0,AND, eq1, eq2);
           tmp = BddEnc_expr_to_bdd(enc, eq, Nil);
           bdd_and_accumulate(dd_manager, &tmp, guarantees[j]);
           bdd_or_accumulate(dd_manager, &trans, tmp);
@@ -1073,10 +1073,10 @@ static boolean game_compute_gen_reactivity(node_ptr specExp,
 
           for (r = cdr(r); r != Nil; r = cdr(r)) {
             bdd_ptr newTrans;
-            node_ptr eq1 = find_node(EQUAL,
+            node_ptr eq1 = find_node(0,EQUAL,
                                      jxVar,
-                                     find_node(NUMBER, NODE_FROM_INT(j), Nil));
-            node_ptr eq = find_node(AND, eq1, find_node(NEXT, eq1, Nil));
+                                     find_node(0,NUMBER, (j), Nil));
+            node_ptr eq = find_node(0,AND, eq1, find_node(NEXT, eq1, Nil));
             tmp = BddEnc_expr_to_bdd(enc, eq, Nil);
 
             newTrans = GameBddFsm_get_move(fsm, low, player);
@@ -1103,9 +1103,9 @@ static boolean game_compute_gen_reactivity(node_ptr specExp,
         for (j = 0; j < guaranteesN; ++j) {
           bdd_ptr low = bdd_false(dd_manager);
 
-          node_ptr eq1 = find_node(EQUAL, jxVar,
-                             find_node(NUMBER, NODE_FROM_INT(j), Nil));
-          node_ptr eq = find_node(AND, eq1, find_node(NEXT, eq1, Nil));
+          node_ptr eq1 = find_node(0,EQUAL, jxVar,
+                             find_node(0,NUMBER, (j), Nil));
+          node_ptr eq = find_node(0,AND, eq1, find_node(0,NEXT, eq1, Nil));
           bdd_ptr varBdd = BddEnc_expr_to_bdd(enc, eq, Nil);
 
           node_ptr r;
@@ -1242,7 +1242,7 @@ static boolean game_compute_buchi_game(PropGame_ptr prop,
   GameBddFsm_ptr fsm = PropGame_get_game_bdd_fsm(prop);
   BddEnc_ptr enc = Enc_get_bdd_encoding();
   DdManager* dd_manager = BddEnc_get_dd_manager(enc);
-  OptsHandler_ptr opt = OptsHandler_get_instance();
+  OptsHandler_ptr opt = OptsHandler_create();
 
 
   /* flag which player this game is for */
@@ -1370,7 +1370,7 @@ static boolean game_compute_buchi_game(PropGame_ptr prop,
 
       /* free the previously remembered results and create a new one */
       game_free_list_of_bdd(dd_manager, yResults[j]);
-      yResults[j] = cons((node_ptr)Y, Nil); /* BDD does not belong to
+      yResults[j] = cons(0,(node_ptr)Y, Nil); /* BDD does not belong to
                                                Y anymore */
 
       while (!isYFixpointReached) { /* --- Y least fix point loop */
@@ -1378,7 +1378,7 @@ static boolean game_compute_buchi_game(PropGame_ptr prop,
         Y = GameBddFsm_get_strong_backward_image(fsm, Y, player);
         bdd_or_accumulate(dd_manager, &Y, preImageZAndBuchi);
 
-        yResults[j] = cons((node_ptr)Y, yResults[j]);
+        yResults[j] = cons(0,(node_ptr)Y, yResults[j]);
 
         if (previousY == Y) { /* fixpoint is reached */
           isYFixpointReached = true;
@@ -1472,20 +1472,18 @@ static boolean game_compute_buchi_game(PropGame_ptr prop,
         /* compute a disjunct of (jx=j & jx' = (j+1) & buchiConditions[j]) for
            all j and then a conjunct with Z & trans12 & Z' */
         for (j = 0; j < buchiConditionsN; ++j) {
-          node_ptr eq1 = find_node(EQUAL,
+          node_ptr eq1 = find_node(0,EQUAL,
                                    jxVar,
-                                   find_node(NUMBER,
-                                             NODE_FROM_INT(j),
-                                             Nil));
+                                   find_node(0,NUMBER,NODE_FROM_INT(j),Nil));
           node_ptr eq2 =
-            find_node(EQUAL,
-                      find_node(NEXT,
+            find_node(0,EQUAL,
+                      find_node(0,NEXT,
                                 jxVar,
                                 Nil),
-                      find_node(NUMBER,
-                                NODE_FROM_INT(((j+1) % buchiConditionsN)),
+                      find_node(0,NUMBER,
+                                (((j+1) % buchiConditionsN)),
                                 Nil));
-          node_ptr eq = find_node(AND, eq1, eq2);
+          node_ptr eq = find_node(0,AND, eq1, eq2);
           tmp = BddEnc_expr_to_bdd(enc, eq, Nil);
           bdd_and_accumulate(dd_manager, &tmp, buchiConditions[j]);
           bdd_or_accumulate(dd_manager, &trans, tmp);
@@ -1510,12 +1508,8 @@ static boolean game_compute_buchi_game(PropGame_ptr prop,
 
           for (r = cdr(r); r != Nil; r = cdr(r)) {
             bdd_ptr newTrans;
-            node_ptr eq1 = find_node(EQUAL,
-                                     jxVar,
-                                     find_node(NUMBER,
-                                               NODE_FROM_INT(j),
-                                               Nil));
-            node_ptr eq = find_node(AND, eq1, find_node(NEXT, eq1, Nil));
+            node_ptr eq1 = find_node(0,EQUAL,jxVar,find_node(0,NUMBER,NODE_FROM_INT(j),Nil));
+            node_ptr eq = find_node(0,AND, eq1, find_node(0,NEXT, eq1, Nil));
             tmp = BddEnc_expr_to_bdd(enc, eq, Nil);
 
             newTrans = GameBddFsm_get_move(fsm, low, player);

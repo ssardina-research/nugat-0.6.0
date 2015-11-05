@@ -601,13 +601,13 @@ int prop_db_game_prop_create_and_add(PropDbGame_ptr self,
   }
 
   /* Add property to database */
-  if (opt_verbose_level_gt(OptsHandler_get_instance(), 3)) {
+  if (opt_verbose_level_gt(OptsHandler_create(), 3)) {
     fprintf(nusmv_stdout,
             "Attempting to add %s property (index %d) to property list.\n",
             Prop_get_type_as_string(PROP(prop)), index);
   }
   retval = PropDb_add(PROP_DB(self), PROP(prop));
-  if (opt_verbose_level_gt(OptsHandler_get_instance(), 3)) {
+  if (opt_verbose_level_gt(OptsHandler_create(), 3)) {
     if (retval == 1) {
       fprintf(nusmv_stdout, \
               "Failing to add %s property (index %d) to property list.\n", \

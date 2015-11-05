@@ -503,7 +503,7 @@ GameStrategy_ptr GameStrategy_construct(GameBddFsm_ptr fsm,
      to opt_game_game_initial_condition. So there can be 6 values,
      N, N+1, E, E+1, A, A+1, and they are all distinguishable.
   */
-  switch (opt_game_game_initial_condition(OptsHandler_get_instance()) +
+  switch (opt_game_game_initial_condition(OptsHandler_create()) +
           reverseInitialQuantifiers) {
   case 'N':    /* normal initial condition. */
   case 'N' + 1:

@@ -291,7 +291,7 @@ void Game_CommandBuildBddModel(void)
                           scalar_fsm,
                           SymbTable_get_layer(st, MODEL_LAYER_1),
                           SymbTable_get_layer(st, MODEL_LAYER_2),
-                          get_partition_method(OptsHandler_get_instance()));
+                          get_partition_method(OptsHandler_create()));
   PropDbGame_master_set_game_bdd_fsm(PROP_DB_GAME(PropPkg_get_prop_database()),
                                      bdd_fsm);
 }

@@ -96,7 +96,7 @@ EXTERN DdManager* dd_manager;
 ******************************************************************************/
 void Smgame_BatchMain()
 {
-  OptsHandler_ptr oh = OptsHandler_get_instance();
+  OptsHandler_ptr oh = OptsHandler_create();
 
   /* Necessary to have standard behavior in the batch mode */
   util_resetlongjmp();

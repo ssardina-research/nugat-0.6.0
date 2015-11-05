@@ -139,14 +139,14 @@ static void game_pkg_restore_cmds ARGS((NodeList_ptr* stored));
 ******************************************************************************/
 void Game_Init(void)
 {
-  if (opt_verbose_level_gt(OptsHandler_get_instance(), 0)) {
+  if (opt_verbose_level_gt(OptsHandler_create(), 0)) {
     fprintf(nusmv_stderr, "Initializing the Game package... \n");
   }
 
   nusmv_assert(GAME_HIERARCHY(NULL) == mainGameHierarchy);
   nusmv_assert(NODE_LIST(NULL) == stored_dependent);
   nusmv_assert(NODE_LIST(NULL) == stored_specific);
-  set_pgm_name(OptsHandler_get_instance(), PACKAGE_NAME); //NEW
+  set_pgm_name(OptsHandler_create(), PACKAGE_NAME); //NEW
   Game_init_opt();
   Game_init_cmd();
   game_pkg_add_cmds(Game_cmd_get_generic_commands());
@@ -190,11 +190,11 @@ void Game_Init(void)
 ******************************************************************************/
 void Game_Quit(void)
 {
-  if (opt_verbose_level_gt(OptsHandler_get_instance(), 0)) {
+  if (opt_verbose_level_gt(OptsHandler_create(), 0)) {
     fprintf(nusmv_stderr, "Quitting the Game package... \n");
   }
 
-  if (opt_game_game(OptsHandler_get_instance())) {
+  if (opt_game_game(OptsHandler_create())) {
     Game_Mode_Exit();
   }
 
@@ -221,9 +221,9 @@ void Game_Quit(void)
 ******************************************************************************/
 void Game_Mode_Enter(void)
 {
-  nusmv_assert(!opt_game_game(OptsHandler_get_instance()));
+  nusmv_assert(!opt_game_game(OptsHandler_create()));
 
-  if (!opt_batch(OptsHandler_get_instance())) {
+  if (!opt_batch(OptsHandler_create())) {
     fprintf(nusmv_stderr, "Entering game mode...\n");
   }
 
@@ -231,9 +231,9 @@ void Game_Mode_Enter(void)
   game_pkg_switch_to_game_cmds(Game_cmd_get_generic_commands(),
                                Game_cmd_get_dependent_commands(),
                                Game_cmd_get_specific_commands());
-  set_game_game(OptsHandler_get_instance());
+  set_game_game(OptsHandler_create());
 
-  if (!opt_batch(OptsHandler_get_instance())) {
+  if (!opt_batch(OptsHandler_create())) {
     fprintf(nusmv_stderr,
             "Done entering game mode.\n"
             "Note that now game commands apply.\n");
@@ -256,9 +256,9 @@ void Game_Mode_Enter(void)
 ******************************************************************************/
 void Game_Mode_Exit(void)
 {
-  nusmv_assert(opt_game_game(OptsHandler_get_instance()));
+  nusmv_assert(opt_game_game(OptsHandler_create()));
 
-  if (!opt_batch(OptsHandler_get_instance())) {
+  if (!opt_batch(OptsHandler_create())) {
     fprintf(nusmv_stderr, "Exiting game mode...\n");
   }
 
@@ -269,9 +269,9 @@ void Game_Mode_Exit(void)
   game_pkg_switch_to_prop_db();
   game_pkg_switch_from_game_cmds(Game_cmd_get_dependent_commands(),
                                  Game_cmd_get_specific_commands());
-  unset_game_game(OptsHandler_get_instance());
+  unset_game_game(OptsHandler_create());
 
-  if (!opt_batch(OptsHandler_get_instance())) {
+  if (!opt_batch(OptsHandler_create())) {
     fprintf(nusmv_stderr,
             "Done exiting game mode.\n"
             "Note that now the commands from before entering game mode "

@@ -36,7 +36,7 @@ NUSMV_DIR = $(nusmv_dir)
 NUSMV_PARSER = $(NUSMV_DIR)/code/nusmv/core/parser
 
 INCLUDES = -I$(top_srcdir)/src -I$(top_builddir)/src -I$(CUDD_DIR)/include \
-	   -I$(NUSMV_DIR)/code/nusmv/core -I$(NUSMV_DIR)/code/nusmv/shell -I$(NUSMV_DIR)/code/nusmv -I$(NUSMV_DIR)/code -I$(NUSMV_DIR)/build -I$(NUSMV_DIR)
+	   -I$(NUSMV_DIR)/code/nusmv/core -I$(NUSMV_DIR)/code/nusmv/shell -I$(NUSMV_DIR)/code/nusmv -I$(NUSMV_DIR)/code -I$(NUSMV_DIR)/build -I$(NUSMV_DIR)/build/code -I$(NUSMV_DIR)
 
 GRAMMAR_START = game_begin # initial nugat grammar non-terminal symbol
 
@@ -54,7 +54,7 @@ AM_LFLAGS = -l
 PKG_SOURCES = grammar.y.1.55 grammar.y.2.55 input.l.2.55 grammar.y input.l
 
 parserdir = $(includedir)/nugat/parser
-parser_HEADERS =  
+parser_HEADERS =
 
 # -------------------------------------------------------
 

@@ -74,6 +74,7 @@
     <orderEntry type="module-library">
       <library name="Header Search Paths">
         <CLASSES>
+          <root url="file://$MODULE_DIR$/../NuSMV-2.6.0/NuSMV" />
           <root url="file:///usr/include" />
           <root url="file:///usr/lib/gcc/x86_64-linux-gnu/4.9/include" />
           <root url="file:///usr/lib/gcc/x86_64-linux-gnu/4.9/include-fixed" />
@@ -82,6 +83,7 @@
           <root url="file:///usr/local/include" />
         </CLASSES>
         <SOURCES>
+          <root url="file://$MODULE_DIR$/../NuSMV-2.6.0/NuSMV" />
           <root url="file:///usr/include" />
           <root url="file:///usr/lib/gcc/x86_64-linux-gnu/4.9/include" />
           <root url="file:///usr/lib/gcc/x86_64-linux-gnu/4.9/include-fixed" />
