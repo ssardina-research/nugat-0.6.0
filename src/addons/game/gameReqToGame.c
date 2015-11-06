@@ -440,7 +440,7 @@ boolean Game_PropertyToGame(node_ptr* inputVars,
 
       /* Terminate AND chains with TRUEEXP. */
       if (exp_1_orig == Nil) {
-        exp_1_orig = find_node(0,TRUEEXP, Nil, Nil);
+        exp_1_orig = find_node(NODE_MGR,TRUEEXP, Nil, Nil);
       } else {
         node_ptr iter = exp_1_orig;
         if (node_get_type(iter) == AND) {
@@ -451,7 +451,7 @@ boolean Game_PropertyToGame(node_ptr* inputVars,
         }
       }
       if (exp_2_orig == Nil) {
-        exp_2_orig = find_node(0,TRUEEXP, Nil, Nil);
+        exp_2_orig = find_node(NODE_MGR,TRUEEXP, Nil, Nil);
       } else {
         node_ptr iter = exp_2_orig;
         if (node_get_type(iter) == AND) {
@@ -549,7 +549,7 @@ static node_ptr game_create_unique_name(void)
 
   do {
     sprintf(buffer, "_un_%i", ++i);
-    res = find_node(0,ATOM, (node_ptr) find_string(buffer), Nil);
+    res = find_node(NODE_MGR,ATOM, (node_ptr) UStringMgr_find_string(USTRING_MGR,buffer), Nil);
   } while(Nil != find_assoc(nameToType, res));
 
   return res;

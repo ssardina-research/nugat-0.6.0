@@ -57,7 +57,10 @@ Nitin Yadav - nitin.yadav@rmit.edu.au
         
         %}
         
-8.
+8.Error: function not found
+
+    *   'find_string' has been replaced by 'UStringMgr_find_string(USTRING_MGR,' and in <grammar.y.2.55> with 'UStringMgr_find_string(USTRING_MGR(NULL),'
+    
 
 9.
 

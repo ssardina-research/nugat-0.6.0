@@ -402,7 +402,7 @@ game_flatten_game_hierarchy(SymbTable_ptr symbol_table,
        child is the body of spec.
     */
     if (list != (node_ptr*) NULL) {
-      spec = find_node(0,GAME_SPEC_WRAPPER,
+      spec = find_node(NODE_MGR,GAME_SPEC_WRAPPER,
                        sym_intern(0,((car(spec)) == 1 ?
                                    PLAYER_NAME_1 :
                                    PLAYER_NAME_2)),

@@ -160,7 +160,7 @@ void Game_CheckGenReactivitySpec(PropGame_ptr prop, gameParams_ptr params)
                              &layer,
                              &var);
 
-    if (find_string(PLAYER_NAME_1) == PropGame_get_player(prop)) {
+    if (UStringMgr_find_string(USTRING_MGR,PLAYER_NAME_1) == PropGame_get_player(prop)) {
       varList1 = cons(NODE_MGR,var, Nil);
       varList2 = Nil;
     }
@@ -241,7 +241,7 @@ void Game_CheckBuchiGameSpec(PropGame_ptr prop, gameParams_ptr params)
                              &layer,
                              &var);
 
-    if (find_string(PLAYER_NAME_1) == PropGame_get_player(prop)) {
+    if (UStringMgr_find_string(USTRING_MGR,PLAYER_NAME_1) == PropGame_get_player(prop)) {
       varList1 = cons(NODE_MGR,var, Nil);
       varList2 = Nil;
     }
@@ -432,8 +432,8 @@ static void game_declare_special_var(int guaranteeNumber,
   /* Loop until a free name is found. */
   do {
     sprintf(name+2, "_%d", ++i);
-    var = find_node(0,ATOM, (node_ptr)find_string(name), Nil);
-    var = find_node(0,DOT, Nil, var);
+    var = find_node(NODE_MGR,ATOM, (node_ptr)UStringMgr_find_string(USTRING_MGR,name), Nil);
+    var = find_node(NODE_MGR,DOT, Nil, var);
   } while (!SymbLayer_can_declare_var(layer, var));
 
   /* Create a list of values. */
@@ -1039,17 +1039,17 @@ static boolean game_compute_gen_reactivity(node_ptr specExp,
         /* compute a disjunct of (jx=j & jx' = (j+1) & guarantee[j]) for
            all j and then a conjunct with Z & trans12 & Z' */
         for (j = 0; j < guaranteesN; ++j) {
-          node_ptr eq1 = find_node(0,EQUAL,
+          node_ptr eq1 = find_node(NODE_MGR,EQUAL,
                                    jxVar,
-                                   find_node(0,NUMBER, (j), Nil));
-          node_ptr eq2 = find_node(0,EQUAL,
-                                   find_node(0,NEXT,
+                                   find_node(NODE_MGR,NUMBER, (j), Nil));
+          node_ptr eq2 = find_node(NODE_MGR,EQUAL,
+                                   find_node(NODE_MGR,NEXT,
                                              jxVar,
                                              Nil),
-                                   find_node(0,NUMBER,
+                                   find_node(NODE_MGR,NUMBER,
                                              ((j+1) % guaranteesN),
                                              Nil));
-          node_ptr eq = find_node(0,AND, eq1, eq2);
+          node_ptr eq = find_node(NODE_MGR,AND, eq1, eq2);
           tmp = BddEnc_expr_to_bdd(enc, eq, Nil);
           bdd_and_accumulate(dd_manager, &tmp, guarantees[j]);
           bdd_or_accumulate(dd_manager, &trans, tmp);
@@ -1073,10 +1073,10 @@ static boolean game_compute_gen_reactivity(node_ptr specExp,
 
           for (r = cdr(r); r != Nil; r = cdr(r)) {
             bdd_ptr newTrans;
-            node_ptr eq1 = find_node(0,EQUAL,
+            node_ptr eq1 = find_node(NODE_MGR,EQUAL,
                                      jxVar,
-                                     find_node(0,NUMBER, (j), Nil));
-            node_ptr eq = find_node(0,AND, eq1, find_node(NEXT, eq1, Nil));
+                                     find_node(NODE_MGR,NUMBER, (j), Nil));
+            node_ptr eq = find_node(NODE_MGR,AND, eq1, find_node(NEXT, eq1, Nil));
             tmp = BddEnc_expr_to_bdd(enc, eq, Nil);
 
             newTrans = GameBddFsm_get_move(fsm, low, player);
@@ -1103,9 +1103,9 @@ static boolean game_compute_gen_reactivity(node_ptr specExp,
         for (j = 0; j < guaranteesN; ++j) {
           bdd_ptr low = bdd_false(dd_manager);
 
-          node_ptr eq1 = find_node(0,EQUAL, jxVar,
-                             find_node(0,NUMBER, (j), Nil));
-          node_ptr eq = find_node(0,AND, eq1, find_node(0,NEXT, eq1, Nil));
+          node_ptr eq1 = find_node(NODE_MGR,EQUAL, jxVar,
+                             find_node(NODE_MGR,NUMBER, (j), Nil));
+          node_ptr eq = find_node(NODE_MGR,AND, eq1, find_node(NODE_MGR,NEXT, eq1, Nil));
           bdd_ptr varBdd = BddEnc_expr_to_bdd(enc, eq, Nil);
 
           node_ptr r;
@@ -1247,7 +1247,7 @@ static boolean game_compute_buchi_game(PropGame_ptr prop,
 
   /* flag which player this game is for */
   GamePlayer player =
-    (find_string(PLAYER_NAME_1) == PropGame_get_player(prop))
+    (UStringMgr_find_string(USTRING_MGR,PLAYER_NAME_1) == PropGame_get_player(prop))
     ? PLAYER_1 : PLAYER_2;
 
   bdd_ptr init_1, init_2, invar_1, invar_2;
@@ -1472,18 +1472,18 @@ static boolean game_compute_buchi_game(PropGame_ptr prop,
         /* compute a disjunct of (jx=j & jx' = (j+1) & buchiConditions[j]) for
            all j and then a conjunct with Z & trans12 & Z' */
         for (j = 0; j < buchiConditionsN; ++j) {
-          node_ptr eq1 = find_node(0,EQUAL,
+          node_ptr eq1 = find_node(NODE_MGR,EQUAL,
                                    jxVar,
-                                   find_node(0,NUMBER,NODE_FROM_INT(j),Nil));
+                                   find_node(NODE_MGR,NUMBER,NODE_FROM_INT(j),Nil));
           node_ptr eq2 =
-            find_node(0,EQUAL,
-                      find_node(0,NEXT,
+            find_node(NODE_MGR,EQUAL,
+                      find_node(NODE_MGR,NEXT,
                                 jxVar,
                                 Nil),
-                      find_node(0,NUMBER,
+                      find_node(NODE_MGR,NUMBER,
                                 (((j+1) % buchiConditionsN)),
                                 Nil));
-          node_ptr eq = find_node(0,AND, eq1, eq2);
+          node_ptr eq = find_node(NODE_MGR,AND, eq1, eq2);
           tmp = BddEnc_expr_to_bdd(enc, eq, Nil);
           bdd_and_accumulate(dd_manager, &tmp, buchiConditions[j]);
           bdd_or_accumulate(dd_manager, &trans, tmp);
@@ -1508,8 +1508,8 @@ static boolean game_compute_buchi_game(PropGame_ptr prop,
 
           for (r = cdr(r); r != Nil; r = cdr(r)) {
             bdd_ptr newTrans;
-            node_ptr eq1 = find_node(0,EQUAL,jxVar,find_node(0,NUMBER,NODE_FROM_INT(j),Nil));
-            node_ptr eq = find_node(0,AND, eq1, find_node(0,NEXT, eq1, Nil));
+            node_ptr eq1 = find_node(NODE_MGR,EQUAL,jxVar,find_node(NODE_MGR,NUMBER,NODE_FROM_INT(j),Nil));
+            node_ptr eq = find_node(NODE_MGR,AND, eq1, find_node(NODE_MGR,NEXT, eq1, Nil));
             tmp = BddEnc_expr_to_bdd(enc, eq, Nil);
 
             newTrans = GameBddFsm_get_move(fsm, low, player);

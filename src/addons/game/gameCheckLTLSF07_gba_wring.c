@@ -909,7 +909,7 @@ void Game_SF07_gba_wring_parse_output_file(Game_SF07_gba_wring_ptr self)
       string_ptr state_id;
       node_ptr label;
 
-      state_id = find_string(self->po_s);
+      state_id = UStringMgr_find_string(USTRING_MGR,self->po_s);
       game_sf07_gba_wring_clear_po_s(self);
 
       res = game_sf07_gba_wring_read_token(self,
@@ -1052,7 +1052,7 @@ void Game_SF07_gba_wring_parse_output_file(Game_SF07_gba_wring_ptr self)
       /* Source state. Needed. */
       res = game_sf07_gba_wring_read_state_id(self);
       if (res != 0) { goto ERROR_PARSER; }
-      source_state_id = find_string(self->po_s);
+      source_state_id = UStringMgr_find_string(USTRING_MGR,self->po_s);
       source_state =
         GAME_SF07_GBA_STATE(find_assoc(state_id_2_state,
                                        (node_ptr) source_state_id));
@@ -1087,7 +1087,7 @@ void Game_SF07_gba_wring_parse_output_file(Game_SF07_gba_wring_ptr self)
           Game_SF07_gba_state_ptr target_state;
           Game_SF07_gba_transition_ptr transition;
 
-          target_state_id = find_string(self->po_s);
+          target_state_id = UStringMgr_find_string(USTRING_MGR,self->po_s);
           target_state =
             GAME_SF07_GBA_STATE(find_assoc(state_id_2_state,
                                            (node_ptr) target_state_id));
@@ -1148,7 +1148,7 @@ void Game_SF07_gba_wring_parse_output_file(Game_SF07_gba_wring_ptr self)
           string_ptr fair_state_id;
           Game_SF07_gba_state_ptr fair_state;
 
-          fair_state_id = find_string(self->po_s);
+          fair_state_id = UStringMgr_find_string(USTRING_MGR,self->po_s);
           fair_state =
             GAME_SF07_GBA_STATE(find_assoc(state_id_2_state,
                                            (node_ptr) fair_state_id));
@@ -2228,7 +2228,7 @@ static int game_sf07_gba_wring_varnamestring2nodeptr(char* s,
         }
 
         *pos_first_zr = '\0'; /* simulate shorter s */
-        lhs = (node_ptr) find_string(&(s[*pos]));
+        lhs = (node_ptr) UStringMgr_find_string(USTRING_MGR,&(s[*pos]));
         *pos = strlen(s);
         *pos_first_zr = 'Z'; /* restore s */
 

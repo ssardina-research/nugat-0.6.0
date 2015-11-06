@@ -435,9 +435,9 @@ static void game_pkg_switch_to_game_cmds(NodeList_ptr generic,
 
     names_specific_set = Set_MakeEmpty();
     avl_foreach_item(cmdCommandTable, gen, AVL_FORWARD, &key, (char**) NULL) {
-      if (!Set_IsMember(names_gen_dep_set, (Set_Element_t) find_string(key))) {
+      if (!Set_IsMember(names_gen_dep_set, (Set_Element_t) UStringMgr_find_string(USTRING_MGR,key))) {
         names_specific_set = Set_AddMember(names_specific_set,
-                                           (Set_Element_t) find_string(key));
+                                           (Set_Element_t) UStringMgr_find_string(USTRING_MGR,key));
       }
     }
   }

@@ -13,6 +13,7 @@ int yyerror_lined();
 %}
 
 %{
+
 #include "config.h"
 #if HAVE_GAME
 #include "addons/game/parser/game_symbols.h"

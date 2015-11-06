@@ -1155,7 +1155,7 @@ static void Game_SF07_StructCheckLTLGameSF07_construct_monitor_sexp
     monitor = new_node(NODE_MGR,MODULE,
                        new_node(NODE_MGR,MODTYPE,
                                 new_node(NODE_MGR,ATOM,
-                                         (node_ptr) find_string(module_name),
+                                         (node_ptr) UStringMgr_find_string(USTRING_MGR,module_name),
                                          Nil),
                                 Nil),
                        monitor);
@@ -1196,7 +1196,7 @@ static void Game_SF07_StructCheckLTLGameSF07_construct_monitor_sexp
     monitor = new_node(NODE_MGR,MODULE,
                        new_node(NODE_MGR,MODTYPE,
                                 new_node(NODE_MGR,ATOM,
-                                         (node_ptr) find_string(module_name),
+                                         (node_ptr) UStringMgr_find_string(USTRING_MGR,module_name),
                                          Nil),
                                 Nil),
                        Nil);
@@ -2124,7 +2124,7 @@ static node_ptr Game_SF07_StructCheckLTLGameSF07_gba_state_to_var_name
           state_id_s);
 
   res = find_node(NODE_MGR,ATOM,
-                  (node_ptr) find_string(res_s),
+                  (node_ptr) UStringMgr_find_string(USTRING_MGR,res_s),
                   Nil);
 
   FREE(res_s);

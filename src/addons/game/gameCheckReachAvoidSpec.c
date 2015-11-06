@@ -308,7 +308,7 @@ Game_RealizabilityStatus Game_UseStrongReachabilityAlgorithm(PropGame_ptr prop,
 
   /* flag which player this game is for */
   GamePlayer player =
-    (find_string(PLAYER_NAME_1) == PropGame_get_player(prop))
+    (UStringMgr_find_string(USTRING_MGR,PLAYER_NAME_1) == PropGame_get_player(prop))
     ? PLAYER_1 : PLAYER_2;
   GamePlayer opponent = PLAYER_1 == player ? PLAYER_2 : PLAYER_1;
   char quantifiers = opt_game_game_initial_condition(oh);

@@ -419,14 +419,14 @@ int Game_RatFileToGame(const char *filename)
     module1 = new_node(NODE_MGR,MODULE,
                        new_node(NODE_MGR,MODTYPE,
                                 new_node(NODE_MGR,ATOM,
-                                         (node_ptr) find_string(PLAYER_NAME_1),
+                                         (node_ptr) UStringMgr_find_string(USTRING_MGR,PLAYER_NAME_1),
                                          Nil),
                                 Nil),
                        module1);
     module2 = new_node(NODE_MGR,MODULE,
                        new_node(NODE_MGR,MODTYPE,
                                 new_node(NODE_MGR,ATOM,
-                                         (node_ptr) find_string(PLAYER_NAME_2),
+                                         (node_ptr) UStringMgr_find_string(USTRING_MGR,PLAYER_NAME_2),
                                          Nil),
                                 Nil),
                        module2);
@@ -679,7 +679,7 @@ static node_ptr game_xml_reader_parse_type(const char* text) {
           newNode = new_node(NODE_MGR,FALSEEXP, Nil, Nil);
         }
         else {
-          newNode = new_node(NODE_MGR,ATOM, (node_ptr) find_string(buf), Nil);
+          newNode = new_node(NODE_MGR,ATOM, (node_ptr) UStringMgr_find_string(USTRING_MGR,buf), Nil);
         }
       }
       else {

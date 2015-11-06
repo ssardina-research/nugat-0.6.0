@@ -1162,7 +1162,7 @@ static node_ptr game_create_new_param(Game_UnrealizableCore_Struct_ptr self,
            game_unrealizable_core_unique_num,
            *uniqueNum);
 
-  node_ptr var = find_node(0,DOT, Nil, sym_intern(name));
+  node_ptr var = find_node(NODE_MGR,DOT, Nil, sym_intern(name));
 
   if (is_new_var) {
     nusmv_assert(SymbLayer_can_declare_var(self->layer, var));
@@ -2452,7 +2452,7 @@ static boolean game_minimize_players_constraints(
                                                  boolean just_check,
                                                  game_is_game_still_correct fun)
 {
-  node_ptr trueConst = find_node(0,TRUEEXP, Nil, Nil);
+  node_ptr trueConst = find_node(NODE_MGR,TRUEEXP, Nil, Nil);
 
   boolean somethingChanged = false;
 
