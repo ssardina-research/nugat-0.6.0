@@ -161,12 +161,12 @@ void Game_CheckGenReactivitySpec(PropGame_ptr prop, gameParams_ptr params)
                              &var);
 
     if (find_string(PLAYER_NAME_1) == PropGame_get_player(prop)) {
-      varList1 = cons(0,var, Nil);
+      varList1 = cons(NODE_MGR,var, Nil);
       varList2 = Nil;
     }
     else {
       varList1 = Nil;
-      varList2 = cons(0,var, Nil);
+      varList2 = cons(NODE_MGR,var, Nil);
     }
   }
 
@@ -242,12 +242,12 @@ void Game_CheckBuchiGameSpec(PropGame_ptr prop, gameParams_ptr params)
                              &var);
 
     if (find_string(PLAYER_NAME_1) == PropGame_get_player(prop)) {
-      varList1 = cons(0,var, Nil);
+      varList1 = cons(NODE_MGR,var, Nil);
       varList2 = Nil;
     }
     else {
       varList1 = Nil;
-      varList2 = cons(0,var, Nil);
+      varList2 = cons(NODE_MGR,var, Nil);
     }
   }
 
@@ -847,8 +847,8 @@ static boolean game_compute_gen_reactivity(node_ptr specExp,
           bdd_free(dd_manager, notAssumption);
         } /* for i = 0 ... */
 
-        xResults[j] = cons(0,(node_ptr)xArray, xResults[j]);
-        yResults[j] = cons(0,(node_ptr)bdd_dup(Y), yResults[j]);
+        xResults[j] = cons(NODE_MGR,(node_ptr)xArray, xResults[j]);
+        yResults[j] = cons(NODE_MGR,(node_ptr)bdd_dup(Y), yResults[j]);
 
         /* Note: if after the first iteration Y = 0, the second
            iteration is not executed. This is OK and the game is
@@ -879,11 +879,11 @@ static boolean game_compute_gen_reactivity(node_ptr specExp,
           /* create an copy of last elements in xResults and yResults.
              (These elements will be removed at the end)
           */
-          yResults[j] = cons(0,(node_ptr)(bdd_dup(Y)), yResults[j]);
+          yResults[j] = cons(NODE_MGR,(node_ptr)(bdd_dup(Y)), yResults[j]);
 
           newXArray = ALLOC(bdd_ptr, assumptionsN);
           for (i = 0; i < assumptionsN; ++i) newXArray[i] = bdd_dup(xArray[i]);
-          xResults[j] = cons(0,(node_ptr)newXArray, xResults[j]);
+          xResults[j] = cons(NODE_MGR,(node_ptr)newXArray, xResults[j]);
         }
 
         bdd_free(dd_manager, previousY);
@@ -1370,7 +1370,7 @@ static boolean game_compute_buchi_game(PropGame_ptr prop,
 
       /* free the previously remembered results and create a new one */
       game_free_list_of_bdd(dd_manager, yResults[j]);
-      yResults[j] = cons(0,(node_ptr)Y, Nil); /* BDD does not belong to
+      yResults[j] = cons(NODE_MGR,(node_ptr)Y, Nil); /* BDD does not belong to
                                                Y anymore */
 
       while (!isYFixpointReached) { /* --- Y least fix point loop */
@@ -1378,7 +1378,7 @@ static boolean game_compute_buchi_game(PropGame_ptr prop,
         Y = GameBddFsm_get_strong_backward_image(fsm, Y, player);
         bdd_or_accumulate(dd_manager, &Y, preImageZAndBuchi);
 
-        yResults[j] = cons(0,(node_ptr)Y, yResults[j]);
+        yResults[j] = cons(NODE_MGR,(node_ptr)Y, yResults[j]);
 
         if (previousY == Y) { /* fixpoint is reached */
           isYFixpointReached = true;

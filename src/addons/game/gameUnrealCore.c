@@ -931,7 +931,7 @@ node_ptr copy_opposite_list(node_ptr list)
 
   /* create a reversed copy of the list */
   for (new_list = Nil; list != Nil; list = car(list)) {
-    new_list = new_node(0,node_get_type(list), new_list, cdr(list));
+    new_list = new_node(NODE_MGR,node_get_type(list), new_list, cdr(list));
   }
 
   /* reverse the created list */
@@ -1177,8 +1177,8 @@ static node_ptr game_create_new_param(Game_UnrealizableCore_Struct_ptr self,
   }
 
   /* Wrap the expression into its high level kind. */
-  node_ptr old_exp = find_assoc(self->parameter2expression, var);   
-  old_exp = cons(0,new_node(0,kind, expr, Nil), old_exp);
+  node_ptr old_exp = find_assoc(self->parameter2expression, var);
+  old_exp = cons(NODE_MGR,new_node(NODE_MGR,kind, expr, Nil), old_exp);
   insert_assoc(self->parameter2expression, var, old_exp);
 
   if (player == PLAYER_1) ++(self->constraints_1_guarded_num);
@@ -1217,6 +1217,10 @@ static void game_guard_exprs_by_parameters(Game_UnrealizableCore_Struct_ptr self
 {
   node_ptr iter;
 
+    const NuSMVEnv_ptr env = EnvObject_get_environment(ENV_OBJECT(self));
+    const NodeMgr_ptr NODE_MGR =
+            NODE_MGR(NuSMVEnv_get_value(env, ENV_NODE_MGR));
+
   /* The expected format of exprs is a list connected by AND, right
      child is a head, left child is a tail, the last element is
      Nil. */
@@ -1229,7 +1233,7 @@ static void game_guard_exprs_by_parameters(Game_UnrealizableCore_Struct_ptr self
     exp = cdr(iter);
     param = game_create_new_param(self, exp, kind, player);
     if (param != NULL) {
-      exp = new_node(0,IMPLIES, param, exp);
+      exp = new_node(NODE_MGR,IMPLIES, param, exp);
       setcdr(iter, exp);
     }
   }
@@ -1291,7 +1295,7 @@ static void game_guard_gamespecs_by_parameters(
     }
     param = game_create_new_param(self, cdr(exp), kind, self->player);
     if (param != Nil) {
-      rhs = new_lined_node(0,IMPLIES,
+      rhs = new_lined_node(NODE_MGR,IMPLIES,
                            param,
                            cdr(exp),
                            node_get_lineno(car(exp)));
@@ -1305,7 +1309,7 @@ static void game_guard_gamespecs_by_parameters(
     kind = AVOIDTARGET;
     param = game_create_new_param(self, cdr(exp), kind, self->player);
     if (param != Nil) {
-      rhs = new_lined_node(0,AND,
+      rhs = new_lined_node(NODE_MGR,AND,
                            param,
                            cdr(exp),
                            node_get_lineno(car(exp)));
@@ -1333,7 +1337,7 @@ static void game_guard_gamespecs_by_parameters(
         node_ptr cond = car(iter);
         param = game_create_new_param(self, cond, kind, self->player);
         if (param != Nil) {
-          cond = new_lined_node(0,IMPLIES,
+          cond = new_lined_node(NODE_MGR,IMPLIES,
                                 param,
                                 cond,
                                 node_get_lineno(cond));
@@ -1363,7 +1367,7 @@ static void game_guard_gamespecs_by_parameters(
           node_ptr cond = car(iter);
           param = game_create_new_param(self, cond, kind, p);
           if (param != Nil) {
-            cond = new_lined_node(0,IMPLIES,
+            cond = new_lined_node(NODE_MGR,IMPLIES,
                                   param,
                                   cond,
                                   node_get_lineno(cond));
@@ -1828,6 +1832,10 @@ void game_process_unrealizable_core_with_params(
                                                 bdd_ptr winningCore)
 {
   boolean is_realizable;
+
+    const NuSMVEnv_ptr env = EnvObject_get_environment(ENV_OBJECT(self));
+    const NodeMgr_ptr NODE_MGR =
+            NODE_MGR(NuSMVEnv_get_value(env, ENV_NODE_MGR));
 
   nusmv_assert(PropGame_PropGame_Type_First < Prop_get_type(PROP(self->prop)) &&
                PropGame_PropGame_Type_Last > Prop_get_type(PROP(self->prop)));
@@ -2481,7 +2489,7 @@ static boolean game_minimize_players_constraints(
     for (iter_orig = FlatHierarchy_get_init(playerModified);
          iter_orig != Nil;
          iter_orig = car(iter_orig)) {
-      bdd_inits = new_node(0,AND,
+      bdd_inits = new_node(NODE_MGR,AND,
                            bdd_inits,
                            (node_ptr) BddEnc_expr_to_bdd(self->bdd_enc,
                                                          cdr(iter_orig),
@@ -2489,9 +2497,9 @@ static boolean game_minimize_players_constraints(
     }
 
     /* construct a list of bdd: i2^..^iN, i3^..^iN , .. , iN, true */
-    bdd_conjuncts = new_node(0,AND, Nil, (node_ptr) bdd_true(self->dd_manager));
+    bdd_conjuncts = new_node(NODE_MGR,AND, Nil, (node_ptr) bdd_true(self->dd_manager));
     for (iter_init = bdd_inits; iter_init != Nil; iter_init = car(iter_init)) {
-      bdd_conjuncts = new_node(0,AND,
+      bdd_conjuncts = new_node(NODE_MGR,AND,
                                bdd_conjuncts,
                                (node_ptr) bdd_and(self->dd_manager,
                                                   (bdd_ptr) cdr(bdd_conjuncts),
@@ -3026,7 +3034,7 @@ static void game_compute_core_switching_constraints(
   FlatHierarchy_clear_var_expr_associations(p1);
   FlatHierarchy_clear_var_expr_associations(p2);
 
-  spec = new_node(0,node_get_type(spec),
+  spec = new_node(NODE_MGR,node_get_type(spec),
                   copy_list(0,car(spec)),
                   copy_list(0,cdr(spec)));
 

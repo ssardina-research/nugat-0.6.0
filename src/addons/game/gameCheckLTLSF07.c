@@ -922,7 +922,7 @@ static void Game_SF07_StructCheckLTLGameSF07_construct_ba
      formula. */
   formula = Prop_get_expr_core(PROP(self->prop));
   if (self->player == self->curr_player) {
-    formula = find_node(NOT, formula, Nil);
+    formula = find_node(NODE_MGR,NOT, formula, Nil);
   }
 
   /* Booleanize and nnfize. */
@@ -945,7 +945,7 @@ static void Game_SF07_StructCheckLTLGameSF07_construct_ba
     /**NEW_CODE_END**/
     if (NodeList_get_length(/*SymbLayer_get_all_symbols(det_layer)*/syms) != 0) {
       char* tmp;
-      tmp = sprint_node(formula);
+      tmp = sprint_node(NODE_MGR,formula);
       fprintf(nusmv_stderr,
               "Error generating B\"uchi automaton for formula %s: "
               "booleanization introduced determinization variables.\n",
@@ -956,14 +956,14 @@ static void Game_SF07_StructCheckLTLGameSF07_construct_ba
     SymbTable_remove_layer(self->symb_table, det_layer);
 
     /* Nnfize. */
-    nnfed = Wff2Nnf(booleanized);
+    nnfed = Wff2Nnf(NODE_MGR,booleanized);
 
     /* Log result. */
     if (opt_verbose_level_ge(OptsHandler_create(), 4)) {
       fprintf(nusmv_stderr,
               "\nGame_SF07_StructCheckLTLGameSF07_construct_ba: booleanized, "
               "nnfed formula is:\n");
-      print_node(nusmv_stderr, nnfed);
+      print_node(NODE_MGR,nusmv_stderr, nnfed);
       fprintf(nusmv_stderr,
               "\nGame_SF07_StructCheckLTLGameSF07_construct_ba: end "
               "booleanized, nnfed formula\n");
@@ -974,7 +974,7 @@ static void Game_SF07_StructCheckLTLGameSF07_construct_ba
   ba = Game_SF07_gba_wring_ltl2gba(nnfed);
   if (ba == GAME_SF07_GBA(NULL)) {
     char* tmp;
-    tmp = sprint_node(formula);
+    tmp = sprint_node(NODE_MGR,formula);
     fprintf(nusmv_stderr,
             "Error generating B\"uchi automaton for formula %s.\n",
             tmp);
@@ -983,7 +983,7 @@ static void Game_SF07_StructCheckLTLGameSF07_construct_ba
   }
   if (Game_SF07_gba_get_fairness_constraints_count(ba) > 1) {
     char* tmp;
-    tmp = sprint_node(formula);
+    tmp = sprint_node(NODE_MGR,formula);
     fprintf(nusmv_stderr,
             "Error generating B\"uchi automaton for formula %s: result has "
             "more than 1 fairness constraints.\n",
@@ -1071,7 +1071,7 @@ static void Game_SF07_StructCheckLTLGameSF07_construct_goal
       Game_SF07_StructCheckLTLGameSF07_gba_state_to_var_name(self, state);
 
     if (Game_SF07_gba_is_state_in_first_fairness_constraint(ba, state)) {
-      avoidtarget_statement = find_node(OR,
+      avoidtarget_statement = find_node(NODE_MGR,OR,
                                         find_node(EQUAL,
                                                   state_var_name,
                                                 find_node_number(self->curr_k)),
@@ -1079,7 +1079,7 @@ static void Game_SF07_StructCheckLTLGameSF07_construct_goal
     }
   }
 
-  self->curr_goal = find_node(AVOIDTARGET,
+  self->curr_goal = find_node(NODE_MGR,AVOIDTARGET,
                               NODE_FROM_INT((self->curr_player == PLAYER_1) ?
                                             1 :
                                             2),
@@ -1150,11 +1150,11 @@ static void Game_SF07_StructCheckLTLGameSF07_construct_monitor_sexp
     monitor = append(monitor, trans_statements);
     monitor = append(monitor, init_statements);
     if (var_decls != Nil) {
-      monitor = new_node(0,CONS, var_decls, monitor);
+      monitor = new_node(NODE_MGR,CONS, var_decls, monitor);
     }
-    monitor = new_node(0,MODULE,
-                       new_node(0,MODTYPE,
-                                new_node(0,ATOM,
+    monitor = new_node(NODE_MGR,MODULE,
+                       new_node(NODE_MGR,MODTYPE,
+                                new_node(NODE_MGR,ATOM,
                                          (node_ptr) find_string(module_name),
                                          Nil),
                                 Nil),
@@ -1193,9 +1193,9 @@ static void Game_SF07_StructCheckLTLGameSF07_construct_monitor_sexp
             self->curr_unique_number);
 
     /* Construct empty module. */
-    monitor = new_node(0,MODULE,
-                       new_node(0,MODTYPE,
-                                new_node(0,ATOM,
+    monitor = new_node(NODE_MGR,MODULE,
+                       new_node(NODE_MGR,MODTYPE,
+                                new_node(NODE_MGR,ATOM,
                                          (node_ptr) find_string(module_name),
                                          Nil),
                                 Nil),
@@ -1262,7 +1262,7 @@ static node_ptr Game_SF07_StructCheckLTLGameSF07_construct_monitor_var_decls
   states = Game_SF07_gba_get_states(ba);
   var_decls = Nil;
 
-  var_type = find_node(0,TWODOTS,
+  var_type = find_node(NODE_MGR,TWODOTS,
                        find_node_number(-1),
                        find_node_number(self->curr_k));
 
@@ -1276,12 +1276,12 @@ static node_ptr Game_SF07_StructCheckLTLGameSF07_construct_monitor_var_decls
     state = GAME_SF07_GBA_STATE(Siter_element(s_iter));
     state_var_name =
       Game_SF07_StructCheckLTLGameSF07_gba_state_to_var_name(self, state);
-    var_decl = new_node(0,COLON, state_var_name, var_type);
-    var_decls = new_node(0,CONS, var_decl, var_decls);
+    var_decl = new_node(NODE_MGR,COLON, state_var_name, var_type);
+    var_decls = new_node(NODE_MGR,CONS, var_decl, var_decls);
   }
 
   if (var_decls != Nil) {
-    res = new_node(0,VAR, reverse(var_decls), Nil);
+    res = new_node(NODE_MGR,VAR, reverse(var_decls), Nil);
   } else {
     res = Nil;
   }
@@ -1360,8 +1360,8 @@ Game_SF07_StructCheckLTLGameSF07_construct_monitor_init_statements
       Game_SF07_StructCheckLTLGameSF07_gba_state_to_var_name(self, state);
 
     if (!Game_SF07_gba_is_state_initial(ba, state)) {
-      init_statement = new_node(0,INIT,
-                                find_node(EQUAL,
+      init_statement = new_node(NODE_MGR,INIT,
+                                find_node(NODE_MGR,EQUAL,
                                           state_var_name,
                                           find_node_number(-1)),
                                 Nil);
@@ -1380,26 +1380,26 @@ Game_SF07_StructCheckLTLGameSF07_construct_monitor_init_statements
         inv_true_init_value = 1;
       }
 
-      inv_false = find_node(0,IFF,
-                            find_node(0,NOT,
+      inv_false = find_node(NODE_MGR,IFF,
+                            find_node(NODE_MGR,NOT,
                                       label,
                                       Nil),
-                            find_node(0,EQUAL,
+                            find_node(NODE_MGR,EQUAL,
                                       state_var_name,
                                       find_node_number(-1)));
-      inv_true = find_node(0,IFF,
+      inv_true = find_node(NODE_MGR,IFF,
                            label,
-                           find_node(0,EQUAL,
+                           find_node(NODE_MGR,EQUAL,
                                      state_var_name,
                                      find_node_number(inv_true_init_value)));
-      init_statement = new_node(0,INIT,
-                                find_node(0,AND,
+      init_statement = new_node(NODE_MGR,INIT,
+                                find_node(NODE_MGR,AND,
                                           inv_false,
                                           inv_true),
                                 Nil);
     }
 
-    init_statements = new_node(0,CONS, init_statement, init_statements);
+    init_statements = new_node(NODE_MGR,CONS, init_statement, init_statements);
   }
 
   res = reverse(init_statements);
@@ -1540,11 +1540,11 @@ Game_SF07_StructCheckLTLGameSF07_construct_monitor_trans_statements
       node_ptr i_conjuncts;
       node_ptr i_trans;
 
-      i_lhs = find_node(0,EQUAL,
+      i_lhs = find_node(NODE_MGR,EQUAL,
                         state_var_name,
                         find_node_number(i));
 
-      i_conjuncts = find_node(TRUEEXP, Nil, Nil);
+      i_conjuncts = find_node(NODE_MGR,TRUEEXP, Nil, Nil);
       SLIST_FOREACH(transitions, t_iter) {
         Game_SF07_gba_transition_ptr transition;
         Game_SF07_gba_state_ptr target_state;
@@ -1560,11 +1560,11 @@ Game_SF07_StructCheckLTLGameSF07_construct_monitor_trans_statements
         target_state_var_name =
           Game_SF07_StructCheckLTLGameSF07_gba_state_to_var_name(self,
                                                                  target_state);
-        next_of_target_state_var_name = find_node(0,NEXT,
+        next_of_target_state_var_name = find_node(NODE_MGR,NEXT,
                                                   target_state_var_name,
                                                   Nil);
         target_state_label = Game_SF07_gba_state_get_label(target_state);
-        next_of_target_state_label = find_node(0,NEXT,
+        next_of_target_state_label = find_node(NODE_MGR,NEXT,
                                                target_state_label,
                                                Nil);
 
@@ -1578,28 +1578,28 @@ Game_SF07_StructCheckLTLGameSF07_construct_monitor_trans_statements
         } else {
           rhs_type = EQUAL;
         }
-        rhs = find_node(0,rhs_type,
+        rhs = find_node(NODE_MGR,rhs_type,
                         next_of_target_state_var_name,
                         find_node_number(i));
-        i_conjuncts = find_node(0,AND,
+        i_conjuncts = find_node(NODE_MGR,AND,
                                 i_conjuncts,
-                                find_node(0,IMPLIES,
+                                find_node(NODE_MGR,IMPLIES,
                                           next_of_target_state_label,
                                           rhs));
       }
 
-      i_trans = new_node(0,TRANS,
-                         find_node(IMPLIES,
+      i_trans = new_node(NODE_MGR,TRANS,
+                         find_node(NODE_MGR,IMPLIES,
                                    i_lhs,
                                    i_conjuncts),
                          Nil);
 
-      trans_statements = new_node(0,CONS, i_trans, trans_statements);
+      trans_statements = new_node(NODE_MGR,CONS, i_trans, trans_statements);
     }
 
     /* handle incoming transitions */
     state_label = Game_SF07_gba_state_get_label(state);
-    next_of_state_label = find_node(0,NEXT, state_label, Nil);
+    next_of_state_label = find_node(NODE_MGR,NEXT, state_label, Nil);
     transitions = Game_SF07_gba_state_get_incoming(state);
     for (i = 0; i <= self->curr_k; i++) {
       Siter t_iter;
@@ -1607,8 +1607,8 @@ Game_SF07_StructCheckLTLGameSF07_construct_monitor_trans_statements
       node_ptr i_rhs;
       node_ptr i_trans;
 
-      i_lhs = find_node(0,EQUAL,
-                        find_node(0,NEXT,
+      i_lhs = find_node(NODE_MGR,EQUAL,
+                        find_node(NODE_MGR,NEXT,
                                   state_var_name,
                                   Nil),
                         find_node_number(i));
@@ -1620,8 +1620,8 @@ Game_SF07_StructCheckLTLGameSF07_construct_monitor_trans_statements
         node_ptr i_conjuncts;
         node_ptr i_disjuncts;
 
-        i_conjuncts = find_node(0,TRUEEXP, Nil, Nil);
-        i_disjuncts = find_node(0,FALSEEXP, Nil, Nil);
+        i_conjuncts = find_node(NODE_MGR,TRUEEXP, Nil, Nil);
+        i_disjuncts = find_node(NODE_MGR,FALSEEXP, Nil, Nil);
         SLIST_FOREACH(transitions, t_iter) {
           Game_SF07_gba_transition_ptr transition;
           Game_SF07_gba_state_ptr source_state;
@@ -1658,37 +1658,37 @@ Game_SF07_StructCheckLTLGameSF07_construct_monitor_trans_statements
             i_disj_value = i - 1;
           }
 
-          i_conjunct = find_node(0,i_conj_type,
+          i_conjunct = find_node(NODE_MGR,i_conj_type,
                                  source_state_var_name,
                                  find_node_number(i));
-          i_conjuncts = find_node(0,AND,
+          i_conjuncts = find_node(NODE_MGR,AND,
                                   i_conjuncts,
                                   i_conjunct);
 
-          i_disjunct = find_node(0,i_disj_type,
+          i_disjunct = find_node(NODE_MGR,i_disj_type,
                                  source_state_var_name,
                                  find_node_number(i_disj_value));
-          i_disjuncts = find_node(0,OR,
+          i_disjuncts = find_node(NODE_MGR,OR,
                                   i_disjuncts,
                                   i_disjunct);
 
-          i_rhs = find_node(0,AND,
+          i_rhs = find_node(NODE_MGR,AND,
                             next_of_state_label,
-                            find_node(0,AND,
+                            find_node(NODE_MGR,AND,
                                       i_conjuncts,
                                       i_disjuncts));
         }
       } else {
-        i_rhs = find_node(0,FALSEEXP, Nil, Nil);
+        i_rhs = find_node(NODE_MGR,FALSEEXP, Nil, Nil);
       }
 
-      i_trans = new_node(0,TRANS,
-                         find_node(0,IMPLIES,
+      i_trans = new_node(NODE_MGR,TRANS,
+                         find_node(NODE_MGR,IMPLIES,
                                    i_lhs,
                                    i_rhs),
                          Nil);
 
-      trans_statements = new_node(0,CONS, i_trans, trans_statements);
+      trans_statements = new_node(NODE_MGR,CONS, i_trans, trans_statements);
     }
   }
 
@@ -1745,7 +1745,7 @@ static void Game_SF07_StructCheckLTLGameSF07_construct_monitor_game_bdd_fsm
   nusmv_assert(self->curr_monitor_game_bdd_fsm == GAME_BDD_FSM(NULL));
 
   /* Construct hierarchies. */
-  CompileFlatten_hash_module(self->curr_player2_monitor_sexp);
+  CompileFlatten_hash_module(NODE_MGR,self->curr_player2_monitor_sexp);
   player2_monitor_flat_hierarchy =
     Compile_FlattenHierarchy(self->symb_table,
                              self->curr_player2_monitor_layer,
@@ -1755,7 +1755,7 @@ static void Game_SF07_StructCheckLTLGameSF07_construct_monitor_game_bdd_fsm
                              false,
                              true,
                              HRC_NODE(NULL));
-  CompileFlatten_hash_module(self->curr_player1_monitor_sexp);
+  CompileFlatten_hash_module(NODE_MGR,self->curr_player1_monitor_sexp);
   player1_monitor_flat_hierarchy =
     Compile_FlattenHierarchy(self->symb_table,
                              self->curr_player1_monitor_layer,
@@ -2049,7 +2049,7 @@ static void Game_SF07_StructCheckLTLGameSF07_check
                         opt_game_print_strategy(OptsHandler_create()));
 
   /* Construct property. */
-  expr = find_node(0,GAME_SPEC_WRAPPER,
+  expr = find_node(NODE_MGR,GAME_SPEC_WRAPPER,
                    sym_intern(PTR_TO_INT(car(self->curr_goal)) == 1 ?
                               PLAYER_NAME_1 :
                               PLAYER_NAME_2),
@@ -2123,7 +2123,7 @@ static node_ptr Game_SF07_StructCheckLTLGameSF07_gba_state_to_var_name
           self->curr_unique_number,
           state_id_s);
 
-  res = find_node(0,ATOM,
+  res = find_node(NODE_MGR,ATOM,
                   (node_ptr) find_string(res_s),
                   Nil);
 
@@ -2147,9 +2147,9 @@ static node_ptr Game_SF07_StructCheckLTLGameSF07_gba_state_to_var_name
 static node_ptr find_node_number(int n)
 {
   if (n < 0) {
-    return find_node(0,UMINUS, find_node(0,NUMBER, NODE_FROM_INT(-n), Nil), Nil);
+    return find_node(NODE_MGR,UMINUS, find_node(NODE_MGR,NUMBER, NODE_FROM_INT(-n), Nil), Nil);
   } else {
-    return find_node(0,NUMBER, NODE_FROM_INT(n), Nil);
+    return find_node(NODE_MGR,NUMBER, NODE_FROM_INT(n), Nil);
   }
 
   nusmv_assert(false);
@@ -2214,9 +2214,9 @@ static void Game_SF07_StructCheckLTLGameSF07_print_monitor
             fprintf(ostream,
                     "  %s : ",
                     get_text((string_ptr)car(car(car(var)))));
-            print_node(ostream, car(cdr(car(var))));
+            print_node(NODE_MGR,ostream, car(cdr(car(var))));
             fprintf(ostream, "..");
-            print_node(ostream, cdr(cdr(car(var))));
+            print_node(NODE_MGR,ostream, cdr(cdr(car(var))));
             fprintf(ostream, ";\n");
 
             var = cdr(var);
@@ -2228,13 +2228,13 @@ static void Game_SF07_StructCheckLTLGameSF07_print_monitor
 
     case INIT: /* INIT declarations */
       fprintf(ostream, "INIT\n  ");
-      print_node(ostream, car(car(iter)));
+      print_node(NODE_MGR,ostream, car(car(iter)));
       fprintf(ostream, "\n");
       break;
 
     case TRANS: /* TRANS declarations */
       fprintf(ostream, "TRANS\n  ");
-      print_node(ostream, car(car(iter)));
+      print_node(NODE_MGR,ostream, car(car(iter)));
       fprintf(ostream, "\n");
       break;
 
@@ -2615,9 +2615,9 @@ static node_ptr Game_SF07_StructCheckLTLGameSF07_copy_node(node_ptr node) {
     case ATOM:
     case NUMBER:
       nusmv_assert(rhs == Nil);
-      return new_lined_node(0,type, lhs, rhs, lineno);
+      return new_lined_node(NODE_MGR,type, lhs, rhs, lineno);
     case BIT:
-      return new_lined_node(0,type,
+      return new_lined_node(NODE_MGR,type,
                             Game_SF07_StructCheckLTLGameSF07_copy_node(lhs),
                             rhs,
                             lineno);
@@ -2646,7 +2646,7 @@ static node_ptr Game_SF07_StructCheckLTLGameSF07_copy_node(node_ptr node) {
     case TWODOTS:
     case UMINUS:
     case VAR:
-      return new_lined_node(0,type,
+      return new_lined_node(NODE_MGR,type,
                             Game_SF07_StructCheckLTLGameSF07_copy_node(lhs),
                             Game_SF07_StructCheckLTLGameSF07_copy_node(rhs),
                             lineno);
@@ -2722,6 +2722,6 @@ static void Game_SF07_StructCheckLTLGameSF07_free_node(node_ptr node) {
       nusmv_assert(false);
     }
 
-    free_node(node);
+    free_node(NODE_MGR,node);
   }
 }

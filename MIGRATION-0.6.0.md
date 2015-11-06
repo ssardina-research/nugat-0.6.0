@@ -38,8 +38,8 @@ Nitin Yadav - nitin.yadav@rmit.edu.au
     .2 "cons" requires 3 arguments, but only 2 given
     .3 "new_lined_node" requires 5 arguments, but only 4 given
     .4 {and others functions} 
-
-    *   replaces '...(' with '...(0,' 
+    
+    * added this 2 lines before the usage of 'nodemgr'
 
 7. Error : input.l:127:8: ‘nusmv_yytext’ undeclared (first use in this function) ------------- ^"#"" "[0-9]+.*\n       sscanf(nusmv_yytext,"# %d",&nusmv_yylineno); 
 

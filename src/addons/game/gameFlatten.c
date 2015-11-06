@@ -369,19 +369,19 @@ game_flatten_game_hierarchy(SymbTable_ptr symbol_table,
 
     switch (node_get_type(spec)) {
     case SPEC:
-      ctlspec = cons(0,find_node(CONTEXT, Nil, car(spec)), ctlspec);
+      ctlspec = cons(NODE_MGR,find_node(CONTEXT, Nil, car(spec)), ctlspec);
       break;
     case LTLSPEC:
-      ltlspec = cons(0,find_node(CONTEXT, Nil, car(spec)), ltlspec);
+      ltlspec = cons(NODE_MGR,find_node(CONTEXT, Nil, car(spec)), ltlspec);
       break;
     case INVARSPEC:
-      invarspec = cons(0,find_node(CONTEXT, Nil, car(spec)), invarspec);
+      invarspec = cons(NODE_MGR,find_node(CONTEXT, Nil, car(spec)), invarspec);
       break;
     case PSLSPEC:
-      pslspec = cons(0,PslNode_new_context(PSL_NULL, car(spec)), pslspec);
+      pslspec = cons(NODE_MGR,PslNode_new_context(PSL_NULL, car(spec)), pslspec);
       break;
     case COMPUTE:
-      compute = cons(0,find_node(CONTEXT, Nil, car(spec)), compute);
+      compute = cons(NODE_MGR,find_node(CONTEXT, Nil, car(spec)), compute);
       break;
 
     /* The true game spec is dealt below, outside of switch statement. */
@@ -407,7 +407,7 @@ game_flatten_game_hierarchy(SymbTable_ptr symbol_table,
                                    PLAYER_NAME_1 :
                                    PLAYER_NAME_2)),
                        cdr(spec));
-      *list = cons(0,spec, *list);
+      *list = cons(NODE_MGR,spec, *list);
     }
   } /* for */
 

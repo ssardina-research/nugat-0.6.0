@@ -29,10 +29,10 @@ game_begin    : {
                        PLAYER_1 and PLAYER_2) created from player
                        declarations.
                     */
-                    parsed_tree = new_node(0,GAME,
+                    parsed_tree = new_node(NODEMGR,GAME,
                                            game_parser_spec_list,
-                                           cons(0,game_parser_player_1,
-                                                cons(0,game_parser_player_2,
+                                           cons(NODEMGR,game_parser_player_1,
+                                                cons(NODEMGR,game_parser_player_2,
                                                      $2)));
                   }
 #else /* no GAME */
@@ -60,8 +60,8 @@ game_begin    : {
 /* ------------------------------------------------------------------------ */
 
 simple_list_expression
-              : simple_expression {$$ = cons(0,$1,Nil);}
-              | simple_list_expression TOK_COMMA simple_expression {$$ = cons(0,$3, $1);}
+              : simple_expression {$$ = cons(NODEMGR,$1,Nil);}
+              | simple_list_expression TOK_COMMA simple_expression {$$ = cons(NODEMGR,$3, $1);}
               ;
 
 /* ------------------------------------------------------------------------ */
@@ -76,9 +76,9 @@ simple_list_expression
  and not returned by this rule.
 */
 game_module_list
-             : module {$$ = cons(0,$1, Nil);}
+             : module {$$ = cons(NODEMGR,$1, Nil);}
              | game_definition {$$ = Nil;}
-             | module_list module {$$ = cons(0,$2, $1);}
+             | module_list module {$$ = cons(NODEMGR,$2, $1);}
              | module_list game_definition {$$ = $1;}
              ;
 
@@ -114,7 +114,7 @@ game_definition
 game_body
              :       {$$=Nil;}
              | game_body_element game_body
-                     {if (Nil != $1) $$ = cons(0,$1,$2); else $$ = $2;}
+                     {if (Nil != $1) $$ = cons(NODEMGR,$1,$2); else $$ = $2;}
              ;
 
 /* a GAME definition consists of both players definitions,
@@ -131,9 +131,9 @@ game_body_element
                          yyerror_lined("redefinition of a PLAYER_1", $1);
                          YYABORT;
                        }
-                       game_parser_player_1 = new_lined_node(0,MODULE,
-                           new_node(0,MODTYPE,
-                             new_node(0,ATOM,(node_ptr)find_string("PLAYER_1"),
+                       game_parser_player_1 = new_lined_node(NODEMGR,MODULE,
+                           new_node(NODEMGR,MODTYPE,
+                             new_node(NODEMGR,ATOM,(node_ptr)find_string("PLAYER_1"),
                                       Nil), Nil),  $2, $1);
                        $$=Nil;
                      }
@@ -147,9 +147,9 @@ game_body_element
                          yyerror_lined("redefinition of a PLAYER_2", $1);
                          YYABORT;
                        }
-                       game_parser_player_2 = new_lined_node(0,MODULE,
-                           new_node(0,MODTYPE,
-                             new_node(0,ATOM,(node_ptr)find_string("PLAYER_2"),
+                       game_parser_player_2 = new_lined_node(NODEMGR,MODULE,
+                           new_node(NODEMGR,MODTYPE,
+                             new_node(NODEMGR,ATOM,(node_ptr)find_string("PLAYER_2"),
                                       Nil), Nil), $2, $1);
                        $$=Nil;
                      }
@@ -171,7 +171,7 @@ game_body_element
    cannot have ISA declaration and specifications
 */
 player_body  : { $$ = Nil; }
-             | player_body player_body_element{ $$ = cons(0,$2, $1); }
+             | player_body player_body_element{ $$ = cons(NODEMGR,$2, $1); }
              ;
 
 player_body_element
@@ -194,28 +194,28 @@ player_num    : TOK_PLAYER_1 {$$=1;}
 reachtarget   : TOK_REACHTARGET player_num simple_expression optsemi
                        {
 #if HAVE_GAME
-                         $$ = new_lined_node(0,REACHTARGET, NODE_FROM_INT($2), $3, $1);
+                         $$ = new_lined_node(NODEMGR,REACHTARGET, NODE_FROM_INT($2), $3, $1);
 #endif
                        }
               ;
 avoidtarget   : TOK_AVOIDTARGET player_num simple_expression optsemi
                        {
 #if HAVE_GAME
-                         $$ = new_lined_node(0,AVOIDTARGET, NODE_FROM_INT($2), $3, $1);
+                         $$ = new_lined_node(NODEMGR,AVOIDTARGET, NODE_FROM_INT($2), $3, $1);
 #endif
                        }
               ;
 reachdeadlock : TOK_REACHDEADLOCK player_num optsemi
                        {
 #if HAVE_GAME
-                         $$ = new_lined_node(0,REACHDEADLOCK, NODE_FROM_INT($2), Nil, $1);
+                         $$ = new_lined_node(NODEMGR,REACHDEADLOCK, NODE_FROM_INT($2), Nil, $1);
 #endif
                        }
               ;
 avoiddeadlock : TOK_AVOIDDEADLOCK player_num optsemi
                        {
 #if HAVE_GAME
-                         $$ = new_lined_node(0,AVOIDDEADLOCK, NODE_FROM_INT($2), Nil, $1);
+                         $$ = new_lined_node(NODEMGR,AVOIDDEADLOCK, NODE_FROM_INT($2), Nil, $1);
 #endif
 }
               ;
@@ -223,8 +223,8 @@ buchigame     : TOK_BUCHIGAME player_num
                 TOK_LP simple_list_expression TOK_RP optsemi
                        {
 #if HAVE_GAME
-                         $$ = new_lined_node(0,BUCHIGAME, NODE_FROM_INT($2),
-                                             new_lined_node(0,GAME_EXP_LIST,
+                         $$ = new_lined_node(NODEMGR,BUCHIGAME, NODE_FROM_INT($2),
+                                             new_lined_node(NODEMGR,GAME_EXP_LIST,
                                                             reverse($4), Nil, $3),
                                              $1);
 #endif
@@ -233,7 +233,7 @@ buchigame     : TOK_BUCHIGAME player_num
 ltlgame       : TOK_LTLGAME player_num ltl_expression optsemi
                        {
 #if HAVE_GAME
-                         $$ = new_lined_node(0,LTLGAME, NODE_FROM_INT($2), $3, $1);
+                         $$ = new_lined_node(NODEMGR,LTLGAME, NODE_FROM_INT($2), $3, $1);
 #endif
                        }
               ;
@@ -242,8 +242,8 @@ genreactivity : TOK_GENREACTIVITY player_num
                 TOK_LP simple_list_expression TOK_RP optsemi
                        {
 #if HAVE_GAME
-                         $$ = new_lined_node(0,GENREACTIVITY, NODE_FROM_INT($2),
-                                             new_lined_node(0,GAME_TWO_EXP_LISTS,
+                         $$ = new_lined_node(NODEMGR,GENREACTIVITY, NODE_FROM_INT($2),
+                                             new_lined_node(NODEMGR,GAME_TWO_EXP_LISTS,
                                                             reverse($4), reverse($8), $6),
                                              $1);
 #endif

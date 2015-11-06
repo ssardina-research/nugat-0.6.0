@@ -363,7 +363,7 @@ Game_RealizabilityStatus Game_UseStrongReachabilityAlgorithm(PropGame_ptr prop,
   }
 
   allReachStates = bdd_dup(originalTarget);
-  reachStateList = cons(0,(node_ptr)bdd_dup(originalTarget), Nil);
+  reachStateList = cons(NODE_MGR,(node_ptr)bdd_dup(originalTarget), Nil);
 
   /* check whether the target can be reached at the initial state */
   isTargetReached = GameBddFsm_can_player_satisfy(fsm, init_1, init_2,
@@ -433,7 +433,7 @@ Game_RealizabilityStatus Game_UseStrongReachabilityAlgorithm(PropGame_ptr prop,
     }
 
     /* add to the list of reach states sets */
-    reachStateList = cons(0,(node_ptr)bdd_dup(allReachStates), reachStateList);
+    reachStateList = cons(NODE_MGR,(node_ptr)bdd_dup(allReachStates), reachStateList);
     pathLength++;
 
     bdd_free(dd_manager, preImage);
@@ -481,7 +481,7 @@ Game_RealizabilityStatus Game_UseStrongReachabilityAlgorithm(PropGame_ptr prop,
         bdd_ptr not_prev = bdd_not(dd_manager, (bdd_ptr)car(cdr(iter)));
         bdd_ptr and = bdd_and(dd_manager, (bdd_ptr)car(iter), not_prev);
         bdd_free(dd_manager, not_prev);
-        diffReachStateList = cons(0,(node_ptr)and, diffReachStateList);
+        diffReachStateList = cons(NODE_MGR,(node_ptr)and, diffReachStateList);
       }
       diffReachStateList = reverse(diffReachStateList);
 
@@ -526,7 +526,7 @@ Game_RealizabilityStatus Game_UseStrongReachabilityAlgorithm(PropGame_ptr prop,
       while (diffReachStateList != Nil) {
         node_ptr n = cdr(diffReachStateList);
         bdd_free(dd_manager, (bdd_ptr)car(diffReachStateList));
-        free_node(diffReachStateList);
+        free_node(NODE_MGR,diffReachStateList);
         diffReachStateList = n;
       }
 
