@@ -25,7 +25,7 @@ Nitin Yadav - nitin.yadav@rmit.edu.au
 
 4.Error: statement EXTERN is missing [TODO alternative solution : include NuSMV-2.6.0/NuSMV/code/nusmv/core/utils/defs.h]
     
-    *   added the statement of EXTERN in nugat-0.5.4/src/addons/game/fsm/GameSexpFsm.h 
+    *   added the statement of EXTERN in <src/addons/game/fsm/GameSexpFsm.h>
 
 5.Warning: ggrammar.y:1076:38: warning: passing argument 1 of ‘opt_game_game’ makes pointer from integer without a cast
                         if (!opt_game_game(OptsHandler_get_instance())) {...
@@ -39,17 +39,33 @@ Nitin Yadav - nitin.yadav@rmit.edu.au
     .3 "new_lined_node" requires 5 arguments, but only 4 given
     .4 {and others functions} 
     
-    * added this 2 lines before the usage of 'nodemgr'
+    *   added this 2 lines before the usage of 'nodemgr'
 
-7. Error : input.l:127:8: ‘nusmv_yytext’ undeclared (first use in this function) ------------- ^"#"" "[0-9]+.*\n       sscanf(nusmv_yytext,"# %d",&nusmv_yylineno); 
+7.Warning: implicit declaration of function ‘yylex’,‘yyerror’ and ‘yyerror_lined’
 
-    *   [ how input.c is created? ]
-
+    *   added this code in head of <src/parser/grammar.y.1.55>
+    
+        %{
+        /* includes, C defs */
+        
+        #if YYBISON
+        union YYSTYPE;
+        int yylex(); //union YYSTYPE *, void *
+        int yyerror();
+        int yyerror_lined();
+        #endif
+        
+        %}
+        
 8.
 
 9.
 
-10. 
+. Error : input.l:127:8: ‘nusmv_yytext’ undeclared (first use in this function) ------------- ^"#"" "[0-9]+.*\n       sscanf(nusmv_yytext,"# %d",&nusmv_yylineno); 
+
+    *   [ how input.c is created? ]
+
+
 
 ================================================================================
 EOF
