@@ -33,7 +33,7 @@ Nitin Yadav - nitin.yadav@rmit.edu.au
     *   This is because NuSMV has renamed  OptsHandler_get_instance with OptsHandler_create
     *   Rename all calls to OptsHandler_get_instance with OptsHandler_create in NuGat code.
 
-6.Warning: macro ... [TODO: understand how to use new parameter]
+6.Warning: macro ... 
     .1 "new_node" requires 4 arguments, but only 3 given
     .2 "cons" requires 3 arguments, but only 2 given
     .3 "new_lined_node" requires 5 arguments, but only 4 given
