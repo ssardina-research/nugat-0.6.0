@@ -133,7 +133,7 @@ game_body_element
                        }
                        game_parser_player_1 = new_lined_node(NODEMGR,MODULE,
                            new_node(NODEMGR,MODTYPE,
-                             new_node(NODEMGR,ATOM,(node_ptr)UStringMgr_find_string(USTRING_MGR(NULL),"PLAYER_1"),
+                             new_node(NODEMGR,ATOM,(node_ptr)UStringMgr_find_string(USTRING_MGR(NuSMVEnv_get_value(__nusmv_parser_env__, ENV_STRING_MGR)),"PLAYER_1"),
                                       Nil), Nil),  $2, $1);
                        $$=Nil;
                      }
@@ -149,7 +149,7 @@ game_body_element
                        }
                        game_parser_player_2 = new_lined_node(NODEMGR,MODULE,
                            new_node(NODEMGR,MODTYPE,
-                             new_node(NODEMGR,ATOM,(node_ptr)UStringMgr_find_string(USTRING_MGR(NULL),"PLAYER_2"),
+                             new_node(NODEMGR,ATOM,(node_ptr)UStringMgr_find_string(USTRING_MGR(NuSMVEnv_get_value(__nusmv_parser_env__, ENV_STRING_MGR)),"PLAYER_2"),
                                       Nil), Nil), $2, $1);
                        $$=Nil;
                      }

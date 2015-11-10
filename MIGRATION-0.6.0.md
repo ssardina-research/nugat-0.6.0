@@ -25,7 +25,7 @@ Nitin Yadav - nitin.yadav@rmit.edu.au
 
 4.Error: statement EXTERN is missing 
     
-    *   added this 2 rows in <config.h>
+    *   added this 2 lines in <config.h>
     
             /* Define to 1 if the system has EXTERN and ARGS */
             #define HAVE_EXTERN_ARGS_MACROS 1
@@ -51,7 +51,7 @@ Nitin Yadav - nitin.yadav@rmit.edu.au
         
 8.Error: grammar.y : function 'find_string' not found
 
-    *   'find_string' has been replaced by 'UStringMgr_find_string(USTRING_MGR,' and in <grammar.y.2.55> with 'UStringMgr_find_string(USTRING_MGR(NULL),'
+    *   'find_string' has been replaced by 'UStringMgr_find_string(USTRING_MGR,' and in <grammar.y.2.55> with 'UStringMgr_find_string(USTRING_MGR(NuSMVEnv_get_value(__nusmv_parser_env__, ENV_STRING_MGR)),'
     
 9.Error : input.l: ‘nusmv_yytext’ undeclared (first use in this function) ------------- ^"#"" "[0-9]+.*\n       sscanf(nusmv_yytext,"# %d",&nusmv_yylineno); 
 
@@ -81,6 +81,13 @@ Nitin Yadav - nitin.yadav@rmit.edu.au
             
                     #include "nusmv/core/utils/StreamMgr.h"
                     #include "nusmv/core/cinit/NuSMVEnv.h"
+                   
+13.Error: GamePlayer.c : ‘USTRING_MGR’ undeclared (first use in this function)
+
+    *   'USTRING_MGR' has been replaced by 'USTRING_MGR(NuSMVEnv_get_value(__nusmv_parser_env__, ENV_STRING_MGR))'
+    *   added this line below the #include code
+            
+            extern NuSMVEnv_ptr __nusmv_parser_env__;
     
 
 ================================================================================

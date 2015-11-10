@@ -46,6 +46,8 @@
 #include "utils/utils.h"
 #include "utils/ustring.h"
 
+extern NuSMVEnv_ptr __nusmv_parser_env__;
+
 static char rcsid[] UTIL_UNUSED = "$Id: GamePlayer.c,v 1.1.2.1 2010-02-05 17:19:08 nusmv Exp $";
 
 /*---------------------------------------------------------------------------*/
@@ -87,8 +89,8 @@ static char rcsid[] UTIL_UNUSED = "$Id: GamePlayer.c,v 1.1.2.1 2010-02-05 17:19:
 ******************************************************************************/
 string_ptr Game_PlayerToStr(GamePlayer player)
 {
-  if (PLAYER_1 == player) return UStringMgr_find_string(USTRING_MGR,PLAYER_NAME_1);
-  else if (PLAYER_2 == player) return UStringMgr_find_string(USTRING_MGR,PLAYER_NAME_2);
+  if (PLAYER_1 == player) return UStringMgr_find_string(USTRING_MGR(NuSMVEnv_get_value(__nusmv_parser_env__, ENV_STRING_MGR)),PLAYER_NAME_1);
+  else if (PLAYER_2 == player) return UStringMgr_find_string(USTRING_MGR(NuSMVEnv_get_value(__nusmv_parser_env__, ENV_STRING_MGR)),PLAYER_NAME_2);
   else nusmv_assert(false); /* illegal value */
 }
 
@@ -106,8 +108,8 @@ string_ptr Game_PlayerToStr(GamePlayer player)
 ******************************************************************************/
 GamePlayer Game_StrToPlayer(string_ptr str)
 {
-  if (UStringMgr_find_string(USTRING_MGR,PLAYER_NAME_1) == str) return PLAYER_1;
-  else if (UStringMgr_find_string(USTRING_MGR,PLAYER_NAME_2) == str) return PLAYER_2;
+  if (UStringMgr_find_string(USTRING_MGR(NuSMVEnv_get_value(__nusmv_parser_env__, ENV_STRING_MGR)),PLAYER_NAME_1) == str) return PLAYER_1;
+  else if (UStringMgr_find_string(USTRING_MGR(NuSMVEnv_get_value(__nusmv_parser_env__, ENV_STRING_MGR)),PLAYER_NAME_2) == str) return PLAYER_2;
   else nusmv_assert(false); /* illegal value */
 }
 
