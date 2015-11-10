@@ -25,7 +25,7 @@ Nitin Yadav - nitin.yadav@rmit.edu.au
 
 4.Error: statement EXTERN is missing 
     
-    *   added this 2 lines in <config.h>
+    *   added this 2 lines in <config.h.in>
     
             /* Define to 1 if the system has EXTERN and ARGS */
             #define HAVE_EXTERN_ARGS_MACROS 1
@@ -95,10 +95,7 @@ Nitin Yadav - nitin.yadav@rmit.edu.au
 
 15.Warning: GameStrategy.c : implicit declaration of function ‘Enc_get_bdd_encoding’
 
-    *   added 'env' parameter to the function GameStrategy_construct(NuSMVEnv_ptr env,...) 
-    *   added declaration of the 'env' below the 'dd_manager' declaration where GameStrategy_construct is used:
-            
-               const NuSMVEnv_ptr env = EnvObject_get_environment(ENV_OBJECT(dd_manager));
+
 
 
 

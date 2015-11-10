@@ -533,7 +533,7 @@ Game_RealizabilityStatus Game_UseStrongReachabilityAlgorithm(PropGame_ptr prop,
 
       /* construct the strategy */
       *strategy =
-        GameStrategy_construct(env,fsm,
+        GameStrategy_construct(fsm,
                                player,
                                /* initial quantifiers have been
                                   reversed => reverse */
@@ -571,7 +571,7 @@ Game_RealizabilityStatus Game_UseStrongReachabilityAlgorithm(PropGame_ptr prop,
 
       /* construct the strategy */
       *strategy =
-        GameStrategy_construct(env,fsm,
+        GameStrategy_construct(fsm,
                                opponent,
                                /*initial quantifiers have been reversed
                                  => keep them */

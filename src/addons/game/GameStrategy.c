@@ -438,8 +438,7 @@ void GameStrategy_destroy(GameStrategy_ptr self)
                 game_compute_gen_reactivity, game_compute_buchi_game ]
 
 ******************************************************************************/
-GameStrategy_ptr GameStrategy_construct(NuSMVEnv_ptr env,
-                                        GameBddFsm_ptr fsm,
+GameStrategy_ptr GameStrategy_construct(GameBddFsm_ptr fsm,
                                         GamePlayer player,
                                         boolean reverseInitialQuantifiers,
                                         bdd_ptr goal,
@@ -466,7 +465,7 @@ GameStrategy_ptr GameStrategy_construct(NuSMVEnv_ptr env,
   self = ALLOC(GameStrategy, 1);
   GAME_STRATEGY_CHECK_INSTANCE(self);
 
-  self->bdd_enc = BDD_ENC(NuSMVEnv_get_value(env, ENV_BDD_ENCODER));
+  self->bdd_enc = Enc_get_bdd_encoding();
   self->dd_manager = BddEnc_get_dd_manager(self->bdd_enc);
   self->player = player;
   self->reverseInitialQuantifiers = reverseInitialQuantifiers;

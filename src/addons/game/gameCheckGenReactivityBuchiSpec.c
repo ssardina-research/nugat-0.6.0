@@ -1151,7 +1151,7 @@ static boolean game_compute_gen_reactivity(node_ptr specExp,
         } else {
           tmp2 = bdd_dup(Z);
         }
-        *strategy = GameStrategy_construct(env,fsm, player, false, tmp, tmp2, trans);
+        *strategy = GameStrategy_construct(fsm, player, false, tmp, tmp2, trans);
         bdd_free(dd_manager, tmp2);
       }
       bdd_free(dd_manager, trans);
@@ -1539,7 +1539,7 @@ static boolean game_compute_buchi_game(PropGame_ptr prop,
 
       /* -- fill in the strategy structure -- */
       tmp = bdd_false(dd_manager);
-      *strategy = GameStrategy_construct(env,fsm, player, false, tmp, Z, trans);
+      *strategy = GameStrategy_construct(fsm, player, false, tmp, Z, trans);
 
       bdd_free(dd_manager, tmp);
       bdd_free(dd_manager, trans);
