@@ -23,10 +23,12 @@ Nitin Yadav - nitin.yadav@rmit.edu.au
 
     *   check if exists the directory "include" into 'NuSMV-2.6.0/cudd-2.4.1.1', if not present execute 'setup.sh' into NuSMV-2.6.0/cudd-2.4.1.1 directory
 
-4.Error: statement EXTERN is missing [TODO alternative solution : include NuSMV-2.6.0/NuSMV/code/nusmv/core/utils/defs.h]
+4.Error: statement EXTERN is missing 
     
-    *   added the statement of EXTERN in <src/addons/game/fsm/GameSexpFsm.h>
-    *   removed all the EXTERN and ARGS
+    *   added this 2 rows in <config.h>
+    
+            /* Define to 1 if the system has EXTERN and ARGS */
+            #define HAVE_EXTERN_ARGS_MACROS 1
 
 5.Warning: ggrammar.y:1076:38: warning: passing argument 1 of ‘opt_game_game’ makes pointer from integer without a cast
                         if (!opt_game_game(OptsHandler_get_instance())) {...
@@ -70,9 +72,9 @@ Nitin Yadav - nitin.yadav@rmit.edu.au
 
     *   commented the file <input.l.2.55>   
 
-12.Error: unknown type name ‘EXTERN’
+12.Error: gameOpt.c : too few arguments to function ‘OptsHandler_register_option’
 
-    *
+    *   added argument to Game_init_opt(NuSMVEnv_ptr const env)
 
 ================================================================================
 EOF

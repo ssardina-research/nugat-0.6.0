@@ -17,64 +17,6 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/MIGRATION-0.6.0.md" afterPath="$PROJECT_DIR$/MIGRATION-0.6.0.md" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config.h" afterPath="$PROJECT_DIR$/config.h" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libtool" afterPath="$PROJECT_DIR$/libtool" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/addons/addons.h" afterPath="$PROJECT_DIR$/src/addons/addons.h" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/addons/game/GameHierarchy.c" afterPath="$PROJECT_DIR$/src/addons/game/GameHierarchy.c" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/addons/game/GameHierarchy.h" afterPath="$PROJECT_DIR$/src/addons/game/GameHierarchy.h" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/addons/game/GamePlayer.h" afterPath="$PROJECT_DIR$/src/addons/game/GamePlayer.h" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/addons/game/GameStrategy.c" afterPath="$PROJECT_DIR$/src/addons/game/GameStrategy.c" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/addons/game/GameStrategy.h" afterPath="$PROJECT_DIR$/src/addons/game/GameStrategy.h" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/addons/game/Makefile.am" afterPath="$PROJECT_DIR$/src/addons/game/Makefile.am" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/addons/game/Makefile.in" afterPath="$PROJECT_DIR$/src/addons/game/Makefile.in" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/addons/game/PropDbGame.c" afterPath="$PROJECT_DIR$/src/addons/game/PropDbGame.c" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/addons/game/PropDbGame.h" afterPath="$PROJECT_DIR$/src/addons/game/PropDbGame.h" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/addons/game/PropDbGame_private.h" afterPath="$PROJECT_DIR$/src/addons/game/PropDbGame_private.h" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/addons/game/PropGame.c" afterPath="$PROJECT_DIR$/src/addons/game/PropGame.c" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/addons/game/PropGame.h" afterPath="$PROJECT_DIR$/src/addons/game/PropGame.h" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/addons/game/PropGame_private.h" afterPath="$PROJECT_DIR$/src/addons/game/PropGame_private.h" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/addons/game/TypeCheckerGame.c" afterPath="$PROJECT_DIR$/src/addons/game/TypeCheckerGame.c" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/addons/game/TypeCheckerGame.h" afterPath="$PROJECT_DIR$/src/addons/game/TypeCheckerGame.h" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/addons/game/fsm/GameBddFsm.c" afterPath="$PROJECT_DIR$/src/addons/game/fsm/GameBddFsm.c" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/addons/game/fsm/GameBddFsm.h" afterPath="$PROJECT_DIR$/src/addons/game/fsm/GameBddFsm.h" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/addons/game/fsm/GameBeFsm.c" afterPath="$PROJECT_DIR$/src/addons/game/fsm/GameBeFsm.c" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/addons/game/fsm/GameBeFsm.h" afterPath="$PROJECT_DIR$/src/addons/game/fsm/GameBeFsm.h" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/addons/game/fsm/GameSexpFsm.c" afterPath="$PROJECT_DIR$/src/addons/game/fsm/GameSexpFsm.c" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/addons/game/fsm/GameSexpFsm.h" afterPath="$PROJECT_DIR$/src/addons/game/fsm/GameSexpFsm.h" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/addons/game/game.h" afterPath="$PROJECT_DIR$/src/addons/game/game.h" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/addons/game/gameBuildModel.c" afterPath="$PROJECT_DIR$/src/addons/game/gameBuildModel.c" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/addons/game/gameCheckGenReactivityBuchiSpec.c" afterPath="$PROJECT_DIR$/src/addons/game/gameCheckGenReactivityBuchiSpec.c" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/addons/game/gameCheckLTLSF07.c" afterPath="$PROJECT_DIR$/src/addons/game/gameCheckLTLSF07.c" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/addons/game/gameCheckLTLSF07_gba.h" afterPath="$PROJECT_DIR$/src/addons/game/gameCheckLTLSF07_gba.h" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/addons/game/gameCheckLTLSF07_gba_wring.c" afterPath="$PROJECT_DIR$/src/addons/game/gameCheckLTLSF07_gba_wring.c" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/addons/game/gameCheckLTLSF07_gba_wring.h" afterPath="$PROJECT_DIR$/src/addons/game/gameCheckLTLSF07_gba_wring.h" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/addons/game/gameCheckReachAvoidSpec.c" afterPath="$PROJECT_DIR$/src/addons/game/gameCheckReachAvoidSpec.c" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/addons/game/gameCmd.c" afterPath="$PROJECT_DIR$/src/addons/game/gameCmd.c" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/addons/game/gameCmd.h" afterPath="$PROJECT_DIR$/src/addons/game/gameCmd.h" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/addons/game/gameFlatten.c" afterPath="$PROJECT_DIR$/src/addons/game/gameFlatten.c" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/addons/game/gameGeneral.c" afterPath="$PROJECT_DIR$/src/addons/game/gameGeneral.c" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/addons/game/gameInt.h" afterPath="$PROJECT_DIR$/src/addons/game/gameInt.h" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/addons/game/gameOpt.c" afterPath="$PROJECT_DIR$/src/addons/game/gameOpt.c" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/addons/game/gamePkg.c" afterPath="$PROJECT_DIR$/src/addons/game/gamePkg.c" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/addons/game/gameReqToGame.c" afterPath="$PROJECT_DIR$/src/addons/game/gameReqToGame.c" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/addons/game/gameUnrealCore.c" afterPath="$PROJECT_DIR$/src/addons/game/gameUnrealCore.c" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/addons/game/gameVarEncoding.c" afterPath="$PROJECT_DIR$/src/addons/game/gameVarEncoding.c" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/addons/game/gameXmlReader.c" afterPath="$PROJECT_DIR$/src/addons/game/gameXmlReader.c" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/addons/game/walkers/CheckerGame.c" afterPath="$PROJECT_DIR$/src/addons/game/walkers/CheckerGame.c" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/addons/game/walkers/CheckerGame.h" afterPath="$PROJECT_DIR$/src/addons/game/walkers/CheckerGame.h" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/addons/game/walkers/CheckerGame_private.h" afterPath="$PROJECT_DIR$/src/addons/game/walkers/CheckerGame_private.h" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/addons/game/walkers/PrinterGame.c" afterPath="$PROJECT_DIR$/src/addons/game/walkers/PrinterGame.c" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/addons/game/walkers/PrinterGame.h" afterPath="$PROJECT_DIR$/src/addons/game/walkers/PrinterGame.h" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/addons/game/walkers/PrinterGame_private.h" afterPath="$PROJECT_DIR$/src/addons/game/walkers/PrinterGame_private.h" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/addons/game/walkers/PrinterSexpGame.c" afterPath="$PROJECT_DIR$/src/addons/game/walkers/PrinterSexpGame.c" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/addons/game/walkers/PrinterSexpGame.h" afterPath="$PROJECT_DIR$/src/addons/game/walkers/PrinterSexpGame.h" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/addons/game/walkers/PrinterSexpGame_private.h" afterPath="$PROJECT_DIR$/src/addons/game/walkers/PrinterSexpGame_private.h" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/parser/Makefile.in" afterPath="$PROJECT_DIR$/src/parser/Makefile.in" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/parser/input.l.2.55" afterPath="$PROJECT_DIR$/src/parser/input.l.2.55" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/smgame/smgameCmd.c" afterPath="$PROJECT_DIR$/src/smgame/smgameCmd.c" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/smgame/smgameInit.c" afterPath="$PROJECT_DIR$/src/smgame/smgameInit.c" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/smgame/smgameInt.h" afterPath="$PROJECT_DIR$/src/smgame/smgameInt.h" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/smgame/smgameMain.c" afterPath="$PROJECT_DIR$/src/smgame/smgameMain.c" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/smgame/smgameMisc.c" afterPath="$PROJECT_DIR$/src/smgame/smgameMisc.c" />
     </list>
     <ignored path="NuGaT-0.54.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -100,83 +42,16 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="PrinterGame.h" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/addons/game/walkers/PrinterGame.h">
+      <file leaf-file-name="MIGRATION-0.6.0.md" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/MIGRATION-0.6.0.md">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="99" column="34" selection-start-line="99" selection-start-column="34" selection-end-line="99" selection-end-column="34" />
+            <state vertical-scroll-proportion="-8.733334">
+              <caret line="76" column="26" selection-start-line="76" selection-start-column="26" selection-end-line="76" selection-end-column="26" />
               <folding />
             </state>
           </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="PrinterGame_private.h" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/addons/game/walkers/PrinterGame_private.h">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="109" column="24" selection-start-line="109" selection-start-column="24" selection-end-line="109" selection-end-column="24" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="PrinterSexpGame.c" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/addons/game/walkers/PrinterSexpGame.c">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="104" column="38" selection-start-line="104" selection-start-column="38" selection-end-line="104" selection-end-column="38" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="PrinterSexpGame.h" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/addons/game/walkers/PrinterSexpGame.h">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="100" column="42" selection-start-line="100" selection-start-column="42" selection-end-line="100" selection-end-column="42" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="PrinterSexpGame_private.h" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/addons/game/walkers/PrinterSexpGame_private.h">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="110" column="29" selection-start-line="110" selection-start-column="29" selection-end-line="110" selection-end-column="29" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="smgameCmd.c" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/smgame/smgameCmd.c">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="83" column="25" selection-start-line="83" selection-start-column="25" selection-end-line="83" selection-end-column="25" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="smgameInt.h" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/smgame/smgameInt.h">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="79" column="16" selection-start-line="79" selection-start-column="16" selection-end-line="79" selection-end-column="16" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="smgameMain.c" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/smgame/smgameMain.c">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="87" column="61" selection-start-line="87" selection-start-column="61" selection-end-line="87" selection-end-column="61" />
-              <folding />
-            </state>
+          <provider editor-type-id="MarkdownPreviewEditor">
+            <state />
           </provider>
         </entry>
       </file>
@@ -184,20 +59,78 @@
         <entry file="file://$PROJECT_DIR$/make.log">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="11" column="40" selection-start-line="11" selection-start-column="40" selection-end-line="11" selection-end-column="40" />
+              <caret line="274" column="24" selection-start-line="274" selection-start-column="24" selection-end-line="274" selection-end-column="24" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="game.h" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/addons/game/game.h">
+      <file leaf-file-name="gameOpt.c" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/addons/game/gameOpt.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.33205375">
-              <caret line="248" column="66" selection-start-line="181" selection-start-column="30" selection-end-line="248" selection-end-column="66" />
-              <folding>
-                <element signature="e#7662#7707#0" expanded="true" />
-              </folding>
+            <state vertical-scroll-proportion="0.7962529">
+              <caret line="110" column="56" selection-start-line="110" selection-start-column="56" selection-end-line="110" selection-end-column="56" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="gameInt.h" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/addons/game/gameInt.h">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-13.833333">
+              <caret line="458" column="12" selection-start-line="458" selection-start-column="12" selection-end-line="458" selection-end-column="12" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="gamePkg.c" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/addons/game/gamePkg.c">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-6.6">
+              <caret line="152" column="0" selection-start-line="152" selection-start-column="0" selection-end-line="152" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="input.l.2.55" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/parser/input.l.2.55">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Makefile.am" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/addons/game/Makefile.am">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Makefile.in" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/parser/Makefile.in">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Makefile.in" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/addons/game/Makefile.in">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -210,15 +143,11 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/addons/game/TypeCheckerGame.h" />
-        <option value="$PROJECT_DIR$/src/addons/game/gameBuildModel.c" />
         <option value="$PROJECT_DIR$/src/addons/game/gameCheckReachAvoidSpec.c" />
         <option value="$PROJECT_DIR$/src/addons/game/gameFlatten.c" />
-        <option value="$PROJECT_DIR$/src/addons/game/gameOpt.c" />
         <option value="$PROJECT_DIR$/src/addons/game/gameVarEncoding.c" />
         <option value="$PROJECT_DIR$/src/smgame/smgameInit.c" />
         <option value="$PROJECT_DIR$/src/smgame/smgameMisc.c" />
-        <option value="$PROJECT_DIR$/src/addons/addons.h" />
         <option value="$PROJECT_DIR$/src/addons/game/GameHierarchy.c" />
         <option value="$PROJECT_DIR$/src/addons/game/GameHierarchy.h" />
         <option value="$PROJECT_DIR$/src/addons/game/GamePlayer.h" />
@@ -243,8 +172,6 @@
         <option value="$PROJECT_DIR$/src/addons/game/gameCmd.c" />
         <option value="$PROJECT_DIR$/src/addons/game/gameCmd.h" />
         <option value="$PROJECT_DIR$/src/addons/game/gameGeneral.c" />
-        <option value="$PROJECT_DIR$/src/addons/game/gameInt.h" />
-        <option value="$PROJECT_DIR$/src/addons/game/gamePkg.c" />
         <option value="$PROJECT_DIR$/src/addons/game/gameReqToGame.c" />
         <option value="$PROJECT_DIR$/src/addons/game/gameUnrealCore.c" />
         <option value="$PROJECT_DIR$/src/addons/game/gameXmlReader.c" />
@@ -261,6 +188,12 @@
         <option value="$PROJECT_DIR$/src/smgame/smgameInt.h" />
         <option value="$PROJECT_DIR$/src/smgame/smgameMain.c" />
         <option value="$PROJECT_DIR$/src/addons/game/game.h" />
+        <option value="$PROJECT_DIR$/src/addons/addons.h" />
+        <option value="$PROJECT_DIR$/config.h" />
+        <option value="$PROJECT_DIR$/MIGRATION-0.6.0.md" />
+        <option value="$PROJECT_DIR$/src/addons/game/gameInt.h" />
+        <option value="$PROJECT_DIR$/src/addons/game/gamePkg.c" />
+        <option value="$PROJECT_DIR$/src/addons/game/gameOpt.c" />
       </list>
     </option>
   </component>
@@ -343,226 +276,6 @@
             <PATH_ELEMENT>
               <option name="myItemId" value="NuGaT-0.54" />
               <option name="myItemType" value="com.jetbrains.cidr.projectView.CidrFilesViewHelper$MyProjectTreeStructure$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="External Libraries" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Header Search Paths" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.NamedLibraryElementNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="NuGaT-0.54" />
-              <option name="myItemType" value="com.jetbrains.cidr.projectView.CidrFilesViewHelper$MyProjectTreeStructure$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="External Libraries" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Header Search Paths" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.NamedLibraryElementNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="NuSMV" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="NuGaT-0.54" />
-              <option name="myItemType" value="com.jetbrains.cidr.projectView.CidrFilesViewHelper$MyProjectTreeStructure$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="External Libraries" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Header Search Paths" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.NamedLibraryElementNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="NuSMV" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="code" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="NuGaT-0.54" />
-              <option name="myItemType" value="com.jetbrains.cidr.projectView.CidrFilesViewHelper$MyProjectTreeStructure$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="External Libraries" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Header Search Paths" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.NamedLibraryElementNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="NuSMV" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="code" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="nusmv" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="NuGaT-0.54" />
-              <option name="myItemType" value="com.jetbrains.cidr.projectView.CidrFilesViewHelper$MyProjectTreeStructure$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="External Libraries" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Header Search Paths" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.NamedLibraryElementNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="NuSMV" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="code" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="nusmv" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="core" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="NuGaT-0.54" />
-              <option name="myItemType" value="com.jetbrains.cidr.projectView.CidrFilesViewHelper$MyProjectTreeStructure$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="External Libraries" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Header Search Paths" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.NamedLibraryElementNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="NuSMV" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="code" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="nusmv" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="core" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="utils" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="NuGaT-0.54" />
-              <option name="myItemType" value="com.jetbrains.cidr.projectView.CidrFilesViewHelper$MyProjectTreeStructure$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="External Libraries" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Header Search Paths" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.NamedLibraryElementNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="NuSMV" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="build" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="NuGaT-0.54" />
-              <option name="myItemType" value="com.jetbrains.cidr.projectView.CidrFilesViewHelper$MyProjectTreeStructure$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="External Libraries" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Header Search Paths" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.NamedLibraryElementNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="NuSMV" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="build" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="build-cudd" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="NuGaT-0.54" />
-              <option name="myItemType" value="com.jetbrains.cidr.projectView.CidrFilesViewHelper$MyProjectTreeStructure$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="External Libraries" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Header Search Paths" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.NamedLibraryElementNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="NuSMV" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="build" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="build-cudd" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="include" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="cudd" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
@@ -726,7 +439,7 @@
     <property name="last_opened_file_path" value="$USER_HOME$/Desktop/nugat-0.5.4" />
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
-    <property name="SearchEverywhereHistoryKey" value="GameSexpFsm.h&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/fsm/GameSexpFsm.h&#10;config.h&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/config.h&#10;gameopt&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/gameOpt.c&#10;lwr&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/helpers/ylwrap&#10;lex.&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/lex.yy.c&#10;lex.nu&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/parser/ylwrap4223/lex.nusmv_yy.c&#10;nusmv_yy33&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/parser/ylwrap8259/lex.nusmv_yy33.c&#10;yy&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/parser/ylwrap10952/lex.yy.c&#10;ylw&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/helpers/ylwrap&#10;lore&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/parser/loretest&#10;mgr&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/NuSMV-2.6.0/NuSMV/code/nusmv/core/utils/UStringMgr.h&#10;game_symbols.h&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/parser/game_symbols.h&#10;util&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/NuSMV-2.6.0/NuSMV/code/nusmv/core/utils/utils.h&#10;game.h&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/game.h&#10;NodeM&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/NuSMV-2.6.0/NuSMV/code/nusmv/core/node/NodeMgr.c&#10;grammar.y:1191:28&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/parser/grammar.y&#10;nusmv-config.h&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/NuSMV-2.6.0/NuSMV/build/nusmv-config.h&#10;game.h:207&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/game.h&#10;ylwrap&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/helpers/ylwrap&#10;grammar.c&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/parser/grammar.c&#10;input.l&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/parser/input.l&#10;Prop&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/PropGame.h&#10;GameBe&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/fsm/GameBeFsm.c&#10;gameF&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/fsm/GameSexpFsm.h&#10;game_symbols&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/parser/game_symbols.h&#10;grammar.y&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/parser/grammar.y&#10;GameSexpFsm&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/fsm/GameSexpFsm.h&#10;Games&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/fsm/GameSexpFsm.h&#10;PropGame.h&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/PropGame.h&#10;GameBddFsm.h&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/fsm/GameBddFsm.h" />
+    <property name="SearchEverywhereHistoryKey" value="gameOp&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/gameOpt.c&#10;gameOpt&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/gameOpt.c&#10;GameSexpFsm.h&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/fsm/GameSexpFsm.h&#10;config.h&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/config.h&#10;gameopt&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/gameOpt.c&#10;lwr&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/helpers/ylwrap&#10;lex.&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/lex.yy.c&#10;lex.nu&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/parser/ylwrap4223/lex.nusmv_yy.c&#10;nusmv_yy33&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/parser/ylwrap8259/lex.nusmv_yy33.c&#10;yy&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/parser/ylwrap10952/lex.yy.c&#10;ylw&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/helpers/ylwrap&#10;lore&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/parser/loretest&#10;mgr&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/NuSMV-2.6.0/NuSMV/code/nusmv/core/utils/UStringMgr.h&#10;game_symbols.h&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/parser/game_symbols.h&#10;util&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/NuSMV-2.6.0/NuSMV/code/nusmv/core/utils/utils.h&#10;game.h&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/game.h&#10;NodeM&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/NuSMV-2.6.0/NuSMV/code/nusmv/core/node/NodeMgr.c&#10;grammar.y:1191:28&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/parser/grammar.y&#10;nusmv-config.h&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/NuSMV-2.6.0/NuSMV/build/nusmv-config.h&#10;game.h:207&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/game.h&#10;ylwrap&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/helpers/ylwrap&#10;grammar.c&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/parser/grammar.c&#10;input.l&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/parser/input.l&#10;Prop&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/PropGame.h&#10;GameBe&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/fsm/GameBeFsm.c&#10;gameF&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/fsm/GameSexpFsm.h&#10;game_symbols&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/parser/game_symbols.h&#10;grammar.y&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/parser/grammar.y&#10;GameSexpFsm&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/fsm/GameSexpFsm.h&#10;Games&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/fsm/GameSexpFsm.h&#10;PropGame.h&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/PropGame.h&#10;GameBddFsm.h&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/fsm/GameBddFsm.h" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -826,10 +539,10 @@
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32978722" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="CMake" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3258786" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="true" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3514377" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3514377" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33013844" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24986821" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4824281" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.4824281" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -879,74 +592,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/addons/game/gameBuildModel.c">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="77" column="0" selection-start-line="77" selection-start-column="0" selection-end-line="77" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/addons/game/gameCheckReachAvoidSpec.c">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="77" column="0" selection-start-line="77" selection-start-column="0" selection-end-line="77" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/addons/game/gameFlatten.c">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="94" column="0" selection-start-line="94" selection-start-column="0" selection-end-line="94" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/addons/game/gameOpt.c">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="60" column="0" selection-start-line="60" selection-start-column="0" selection-end-line="60" selection-end-column="0" />
-          <folding>
-            <element signature="e#1458#1475#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/addons/game/gameVarEncoding.c">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="71" column="0" selection-start-line="71" selection-start-column="0" selection-end-line="71" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/smgame/smgameInit.c">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="55" column="0" selection-start-line="55" selection-start-column="0" selection-end-line="55" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/smgame/smgameMisc.c">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-2.2372882">
-          <caret line="159" column="45" selection-start-line="159" selection-start-column="42" selection-end-line="159" selection-end-column="45" />
-          <folding>
-            <element signature="e#1947#2046#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/addons/addons.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="82" column="21" selection-start-line="82" selection-start-column="21" selection-end-line="82" selection-end-column="21" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/addons/game/GameHierarchy.c">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1016,7 +661,7 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="158" column="28" selection-start-line="158" selection-start-column="28" selection-end-line="158" selection-end-column="28" />
           <folding>
-            <element signature="e#1620#1648#0" expanded="true" />
+            <element signature="e#1620#1648#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1073,17 +718,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="119" column="32" selection-start-line="119" selection-start-column="32" selection-end-line="119" selection-end-column="32" />
-          <folding>
-            <element signature="e#1609#1628#0" expanded="true" />
-            <element signature="e#1637#1671#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/addons/game/gameCheckGenReactivityBuchiSpec.c">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="99" column="33" selection-start-line="99" selection-start-column="33" selection-end-line="99" selection-end-column="33" />
           <folding />
         </state>
       </provider>
@@ -1109,46 +743,46 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="241" column="44" selection-start-line="241" selection-start-column="44" selection-end-line="241" selection-end-column="44" />
           <folding>
-            <marker date="1447120342729" expanded="true" signature="2172:3427" placeholder="/**...*/" />
-            <marker date="1447120342729" expanded="true" signature="10864:11442" placeholder="/**...*/" />
-            <marker date="1447120342729" expanded="true" signature="12498:13085" placeholder="{...}" />
-            <marker date="1447120342729" expanded="true" signature="13426:14818" placeholder="{...}" />
-            <marker date="1447120342729" expanded="true" signature="15287:15432" placeholder="{...}" />
-            <marker date="1447120342729" expanded="true" signature="16194:16924" placeholder="{...}" />
-            <marker date="1447120342729" expanded="true" signature="16926:17671" placeholder="/**...*/" />
-            <marker date="1447120342729" expanded="true" signature="17821:19304" placeholder="{...}" />
-            <marker date="1447120342729" expanded="true" signature="19306:20076" placeholder="/**...*/" />
-            <marker date="1447120342729" expanded="true" signature="20229:21741" placeholder="{...}" />
-            <marker date="1447120342729" expanded="true" signature="22114:22182" placeholder="{...}" />
-            <marker date="1447120342729" expanded="true" signature="22184:23866" placeholder="/**...*/" />
-            <marker date="1447120342729" expanded="true" signature="23939:25051" placeholder="{...}" />
-            <marker date="1447120342729" expanded="true" signature="25053:25696" placeholder="/**...*/" />
-            <marker date="1447120342729" expanded="true" signature="25759:27865" placeholder="{...}" />
-            <marker date="1447120342729" expanded="true" signature="27867:28298" placeholder="/**...*/" />
-            <marker date="1447120342729" expanded="true" signature="28372:45032" placeholder="{...}" />
-            <marker date="1447120342729" expanded="true" signature="45896:47261" placeholder="{...}" />
-            <marker date="1447120342729" expanded="true" signature="47982:48439" placeholder="{...}" />
-            <marker date="1447120342729" expanded="true" signature="49055:49672" placeholder="{...}" />
-            <marker date="1447120342729" expanded="true" signature="50380:50852" placeholder="{...}" />
-            <marker date="1447120342729" expanded="true" signature="51617:52144" placeholder="{...}" />
-            <marker date="1447120342729" expanded="true" signature="52146:53120" placeholder="/**...*/" />
-            <marker date="1447120342729" expanded="true" signature="53196:53765" placeholder="{...}" />
-            <marker date="1447120342729" expanded="true" signature="54588:56640" placeholder="{...}" />
-            <marker date="1447120342729" expanded="true" signature="57138:57405" placeholder="{...}" />
-            <marker date="1447120342729" expanded="true" signature="57912:58200" placeholder="{...}" />
-            <marker date="1447120342729" expanded="true" signature="58698:58965" placeholder="{...}" />
-            <marker date="1447120342729" expanded="true" signature="59369:59567" placeholder="{...}" />
-            <marker date="1447120342729" expanded="true" signature="60133:62046" placeholder="{...}" />
-            <marker date="1447120342729" expanded="true" signature="62048:62405" placeholder="/**...*/" />
-            <marker date="1447120342729" expanded="true" signature="62598:63037" placeholder="{...}" />
-            <marker date="1447120342729" expanded="true" signature="63039:63397" placeholder="/**...*/" />
-            <marker date="1447120342729" expanded="true" signature="63654:64339" placeholder="{...}" />
-            <marker date="1447120342729" expanded="true" signature="64341:65352" placeholder="/**...*/" />
-            <marker date="1447120342729" expanded="true" signature="65562:68687" placeholder="{...}" />
-            <marker date="1447120342729" expanded="true" signature="69227:69996" placeholder="{...}" />
-            <marker date="1447120342729" expanded="true" signature="70674:71970" placeholder="{...}" />
-            <marker date="1447120342729" expanded="true" signature="71972:72839" placeholder="/**...*/" />
-            <marker date="1447120342729" expanded="true" signature="73110:79298" placeholder="{...}" />
+            <marker date="1447120810665" expanded="true" signature="2172:3427" placeholder="/**...*/" />
+            <marker date="1447120810665" expanded="true" signature="10997:11575" placeholder="/**...*/" />
+            <marker date="1447120810665" expanded="true" signature="12631:13218" placeholder="{...}" />
+            <marker date="1447120810665" expanded="true" signature="13559:14951" placeholder="{...}" />
+            <marker date="1447120810665" expanded="true" signature="15420:15565" placeholder="{...}" />
+            <marker date="1447120810665" expanded="true" signature="16327:17057" placeholder="{...}" />
+            <marker date="1447120810665" expanded="true" signature="17059:17804" placeholder="/**...*/" />
+            <marker date="1447120810665" expanded="true" signature="17954:19437" placeholder="{...}" />
+            <marker date="1447120810665" expanded="true" signature="19439:20209" placeholder="/**...*/" />
+            <marker date="1447120810665" expanded="true" signature="20362:21874" placeholder="{...}" />
+            <marker date="1447120810665" expanded="true" signature="22247:22315" placeholder="{...}" />
+            <marker date="1447120810665" expanded="true" signature="22317:23999" placeholder="/**...*/" />
+            <marker date="1447120810665" expanded="true" signature="24072:25184" placeholder="{...}" />
+            <marker date="1447120810665" expanded="true" signature="25186:25829" placeholder="/**...*/" />
+            <marker date="1447120810665" expanded="true" signature="25892:27998" placeholder="{...}" />
+            <marker date="1447120810665" expanded="true" signature="28000:28431" placeholder="/**...*/" />
+            <marker date="1447120810665" expanded="true" signature="28505:45165" placeholder="{...}" />
+            <marker date="1447120810665" expanded="true" signature="46029:47394" placeholder="{...}" />
+            <marker date="1447120810665" expanded="true" signature="48115:48572" placeholder="{...}" />
+            <marker date="1447120810665" expanded="true" signature="49188:49805" placeholder="{...}" />
+            <marker date="1447120810665" expanded="true" signature="50513:50985" placeholder="{...}" />
+            <marker date="1447120810665" expanded="true" signature="51750:52277" placeholder="{...}" />
+            <marker date="1447120810665" expanded="true" signature="52279:53253" placeholder="/**...*/" />
+            <marker date="1447120810665" expanded="true" signature="53329:53898" placeholder="{...}" />
+            <marker date="1447120810665" expanded="true" signature="54721:56773" placeholder="{...}" />
+            <marker date="1447120810665" expanded="true" signature="57271:57538" placeholder="{...}" />
+            <marker date="1447120810665" expanded="true" signature="58045:58333" placeholder="{...}" />
+            <marker date="1447120810665" expanded="true" signature="58831:59098" placeholder="{...}" />
+            <marker date="1447120810665" expanded="true" signature="59502:59700" placeholder="{...}" />
+            <marker date="1447120810665" expanded="true" signature="60266:62179" placeholder="{...}" />
+            <marker date="1447120810665" expanded="true" signature="62181:62538" placeholder="/**...*/" />
+            <marker date="1447120810665" expanded="true" signature="62731:63170" placeholder="{...}" />
+            <marker date="1447120810665" expanded="true" signature="63172:63530" placeholder="/**...*/" />
+            <marker date="1447120810665" expanded="true" signature="63787:64472" placeholder="{...}" />
+            <marker date="1447120810665" expanded="true" signature="64474:65485" placeholder="/**...*/" />
+            <marker date="1447120810665" expanded="true" signature="65695:68820" placeholder="{...}" />
+            <marker date="1447120810665" expanded="true" signature="69360:70129" placeholder="{...}" />
+            <marker date="1447120810665" expanded="true" signature="70807:72103" placeholder="{...}" />
+            <marker date="1447120810665" expanded="true" signature="72105:72972" placeholder="/**...*/" />
+            <marker date="1447120810665" expanded="true" signature="73243:79431" placeholder="{...}" />
           </folding>
         </state>
       </provider>
@@ -1181,22 +815,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="79" column="31" selection-start-line="79" selection-start-column="31" selection-end-line="79" selection-end-column="31" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/addons/game/gameInt.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="431" column="23" selection-start-line="431" selection-start-column="23" selection-end-line="431" selection-end-column="23" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/addons/game/gamePkg.c">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="112" column="43" selection-start-line="112" selection-start-column="43" selection-end-line="112" selection-end-column="43" />
           <folding />
         </state>
       </provider>
@@ -1292,7 +910,7 @@
     <entry file="file://$PROJECT_DIR$/src/addons/game/walkers/PrinterSexpGame_private.h">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="110" column="29" selection-start-line="110" selection-start-column="29" selection-end-line="110" selection-end-column="29" />
+          <caret line="111" column="0" selection-start-line="111" selection-start-column="0" selection-end-line="111" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -1321,21 +939,113 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/make.log">
+    <entry file="file://$PROJECT_DIR$/src/addons/game/game.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="11" column="40" selection-start-line="11" selection-start-column="40" selection-end-line="11" selection-end-column="40" />
+        <state vertical-scroll-proportion="-6.4915257">
+          <caret line="199" column="0" selection-start-line="199" selection-start-column="0" selection-end-line="199" selection-end-column="0" />
+          <folding>
+            <marker date="1447120810661" expanded="true" signature="4517:4836" placeholder="/**...*/" />
+            <marker date="1447120810661" expanded="true" signature="4920:5193" placeholder="/**...*/" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/addons/game/gameCheckGenReactivityBuchiSpec.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-4.2033896">
+          <caret line="98" column="0" selection-start-line="98" selection-start-column="0" selection-end-line="98" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/addons/game/game.h">
+    <entry file="file://$PROJECT_DIR$/src/addons/addons.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33205375">
-          <caret line="248" column="66" selection-start-line="181" selection-start-column="30" selection-end-line="248" selection-end-column="66" />
-          <folding>
-            <element signature="e#7662#7707#0" expanded="true" />
-          </folding>
+        <state vertical-scroll-proportion="0.0">
+          <caret line="82" column="21" selection-start-line="82" selection-start-column="21" selection-end-line="82" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/parser/input.l.2.55">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/addons/game/Makefile.am">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/parser/Makefile.in">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/addons/game/Makefile.in">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/addons/game/gameInt.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-13.833333">
+          <caret line="458" column="12" selection-start-line="458" selection-start-column="12" selection-end-line="458" selection-end-column="12" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/make.log">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="274" column="24" selection-start-line="274" selection-start-column="24" selection-end-line="274" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MIGRATION-0.6.0.md">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-8.733334">
+          <caret line="76" column="26" selection-start-line="76" selection-start-column="26" selection-end-line="76" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="MarkdownPreviewEditor">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.38641685">
+          <caret line="197" column="0" selection-start-line="197" selection-start-column="0" selection-end-line="197" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/addons/game/gamePkg.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-6.6">
+          <caret line="152" column="0" selection-start-line="152" selection-start-column="0" selection-end-line="152" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/addons/game/gameOpt.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.7962529">
+          <caret line="110" column="56" selection-start-line="110" selection-start-column="56" selection-end-line="110" selection-end-column="56" />
+          <folding />
         </state>
       </provider>
     </entry>

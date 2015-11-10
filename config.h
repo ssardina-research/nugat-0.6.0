@@ -199,6 +199,9 @@
 /* Define to 1 if the system has the type `_Bool'. */
 #define HAVE__BOOL 1
 
+/* Define to 1 if the system has EXTERN and ARGS */
+#define HAVE_EXTERN_ARGS_MACROS 1
+
 /* Names of linked addons */
 #define LINKED_ADDONS "game "
 
