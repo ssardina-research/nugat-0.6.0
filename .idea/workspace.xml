@@ -16,8 +16,7 @@
     <list default="true" id="270c3bb5-5a79-42ad-ba25-a8665d2f47cb" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/MIGRATION-0.6.0.md" afterPath="$PROJECT_DIR$/MIGRATION-0.6.0.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/addons/game/GamePlayer.c" afterPath="$PROJECT_DIR$/src/addons/game/GamePlayer.c" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/parser/grammar.y.2.55" afterPath="$PROJECT_DIR$/src/parser/grammar.y.2.55" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/addons/game/GameStrategy.c" afterPath="$PROJECT_DIR$/src/addons/game/GameStrategy.c" />
     </list>
     <ignored path="NuGaT-0.54.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -53,16 +52,38 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MIGRATION-0.6.0.md" pinned="false" current-in-tab="true">
+      <file leaf-file-name="MIGRATION-0.6.0.md" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/MIGRATION-0.6.0.md">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.6666667">
-              <caret line="87" column="51" selection-start-line="87" selection-start-column="8" selection-end-line="87" selection-end-column="51" />
+            <state vertical-scroll-proportion="-4.866667">
+              <caret line="91" column="26" selection-start-line="91" selection-start-column="12" selection-end-line="91" selection-end-column="26" />
               <folding />
             </state>
           </provider>
           <provider editor-type-id="MarkdownPreviewEditor">
             <state />
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="GameStrategy.c" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/addons/game/GameStrategy.c">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.48596492">
+              <caret line="290" column="25" selection-start-line="290" selection-start-column="25" selection-end-line="290" selection-end-column="25" />
+              <folding>
+                <element signature="e#1438#1455#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="GameStrategy.h" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/addons/game/GameStrategy.h">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="68" column="28" selection-start-line="68" selection-start-column="28" selection-end-line="68" selection-end-column="28" />
+              <folding />
+            </state>
           </provider>
         </entry>
       </file>
@@ -118,7 +139,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/addons/game/GamePlayer.h" />
         <option value="$PROJECT_DIR$/src/addons/game/GameStrategy.h" />
         <option value="$PROJECT_DIR$/src/addons/game/PropDbGame.c" />
         <option value="$PROJECT_DIR$/src/addons/game/PropDbGame.h" />
@@ -169,6 +189,7 @@
         <option value="$PROJECT_DIR$/src/addons/game/GamePlayer.c" />
         <option value="$PROJECT_DIR$/src/parser/grammar.c" />
         <option value="$PROJECT_DIR$/MIGRATION-0.6.0.md" />
+        <option value="$PROJECT_DIR$/src/addons/game/GameStrategy.c" />
       </list>
     </option>
   </component>
@@ -251,6 +272,144 @@
             <PATH_ELEMENT>
               <option name="myItemId" value="NuGaT-0.54" />
               <option name="myItemType" value="com.jetbrains.cidr.projectView.CidrFilesViewHelper$MyProjectTreeStructure$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="External Libraries" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Header Search Paths" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.NamedLibraryElementNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="NuGaT-0.54" />
+              <option name="myItemType" value="com.jetbrains.cidr.projectView.CidrFilesViewHelper$MyProjectTreeStructure$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="External Libraries" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Header Search Paths" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.NamedLibraryElementNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="NuSMV" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="NuGaT-0.54" />
+              <option name="myItemType" value="com.jetbrains.cidr.projectView.CidrFilesViewHelper$MyProjectTreeStructure$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="External Libraries" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Header Search Paths" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.NamedLibraryElementNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="NuSMV" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="code" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="NuGaT-0.54" />
+              <option name="myItemType" value="com.jetbrains.cidr.projectView.CidrFilesViewHelper$MyProjectTreeStructure$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="External Libraries" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Header Search Paths" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.NamedLibraryElementNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="NuSMV" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="code" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="nusmv" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="NuGaT-0.54" />
+              <option name="myItemType" value="com.jetbrains.cidr.projectView.CidrFilesViewHelper$MyProjectTreeStructure$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="External Libraries" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Header Search Paths" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.NamedLibraryElementNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="NuSMV" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="code" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="nusmv" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="core" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="NuGaT-0.54" />
+              <option name="myItemType" value="com.jetbrains.cidr.projectView.CidrFilesViewHelper$MyProjectTreeStructure$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="External Libraries" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Header Search Paths" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.NamedLibraryElementNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="NuSMV" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="code" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="nusmv" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="core" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="dd" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
@@ -414,7 +573,7 @@
     <property name="last_opened_file_path" value="$USER_HOME$/Desktop/nugat-0.5.4" />
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
-    <property name="SearchEverywhereHistoryKey" value="gameopt&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/gameOpt.c&#10;gameOp&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/gameOpt.c&#10;gameOpt&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/gameOpt.c&#10;GameSexpFsm.h&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/fsm/GameSexpFsm.h&#10;config.h&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/config.h&#10;lwr&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/helpers/ylwrap&#10;lex.&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/lex.yy.c&#10;lex.nu&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/parser/ylwrap4223/lex.nusmv_yy.c&#10;nusmv_yy33&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/parser/ylwrap8259/lex.nusmv_yy33.c&#10;yy&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/parser/ylwrap10952/lex.yy.c&#10;ylw&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/helpers/ylwrap&#10;lore&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/parser/loretest&#10;mgr&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/NuSMV-2.6.0/NuSMV/code/nusmv/core/utils/UStringMgr.h&#10;game_symbols.h&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/parser/game_symbols.h&#10;util&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/NuSMV-2.6.0/NuSMV/code/nusmv/core/utils/utils.h&#10;game.h&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/game.h&#10;NodeM&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/NuSMV-2.6.0/NuSMV/code/nusmv/core/node/NodeMgr.c&#10;grammar.y:1191:28&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/parser/grammar.y&#10;nusmv-config.h&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/NuSMV-2.6.0/NuSMV/build/nusmv-config.h&#10;game.h:207&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/game.h&#10;ylwrap&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/helpers/ylwrap&#10;grammar.c&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/parser/grammar.c&#10;input.l&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/parser/input.l&#10;Prop&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/PropGame.h&#10;GameBe&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/fsm/GameBeFsm.c&#10;gameF&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/fsm/GameSexpFsm.h&#10;game_symbols&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/parser/game_symbols.h&#10;grammar.y&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/parser/grammar.y&#10;GameSexpFsm&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/fsm/GameSexpFsm.h&#10;Games&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/fsm/GameSexpFsm.h&#10;PropGame.h&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/PropGame.h&#10;GameBddFsm.h&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/fsm/GameBddFsm.h" />
+    <property name="SearchEverywhereHistoryKey" value="GameStrategy.c&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/GameStrategy.c&#10;gameopt&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/gameOpt.c&#10;gameOp&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/gameOpt.c&#10;gameOpt&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/gameOpt.c&#10;GameSexpFsm.h&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/fsm/GameSexpFsm.h&#10;config.h&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/config.h&#10;lwr&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/helpers/ylwrap&#10;lex.&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/lex.yy.c&#10;lex.nu&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/parser/ylwrap4223/lex.nusmv_yy.c&#10;nusmv_yy33&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/parser/ylwrap8259/lex.nusmv_yy33.c&#10;yy&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/parser/ylwrap10952/lex.yy.c&#10;ylw&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/helpers/ylwrap&#10;lore&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/parser/loretest&#10;mgr&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/NuSMV-2.6.0/NuSMV/code/nusmv/core/utils/UStringMgr.h&#10;game_symbols.h&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/parser/game_symbols.h&#10;util&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/NuSMV-2.6.0/NuSMV/code/nusmv/core/utils/utils.h&#10;game.h&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/game.h&#10;NodeM&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/NuSMV-2.6.0/NuSMV/code/nusmv/core/node/NodeMgr.c&#10;grammar.y:1191:28&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/parser/grammar.y&#10;nusmv-config.h&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/NuSMV-2.6.0/NuSMV/build/nusmv-config.h&#10;game.h:207&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/game.h&#10;ylwrap&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/helpers/ylwrap&#10;grammar.c&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/parser/grammar.c&#10;input.l&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/parser/input.l&#10;Prop&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/PropGame.h&#10;GameBe&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/fsm/GameBeFsm.c&#10;gameF&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/fsm/GameSexpFsm.h&#10;game_symbols&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/parser/game_symbols.h&#10;grammar.y&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/parser/grammar.y&#10;GameSexpFsm&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/fsm/GameSexpFsm.h&#10;Games&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/fsm/GameSexpFsm.h&#10;PropGame.h&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/PropGame.h&#10;GameBddFsm.h&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/fsm/GameBddFsm.h" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -507,7 +666,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-1" y="0" width="1922" height="1060" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.14971007" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32978722" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -985,15 +1144,49 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/../NuSMV-2.6.0/NuSMV/code/nusmv/core/dd/dd.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.33260393">
+          <caret line="1312" column="17" selection-start-line="1312" selection-start-column="9" selection-end-line="1312" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/addons/game/GameStrategy.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="68" column="28" selection-start-line="68" selection-start-column="28" selection-end-line="68" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../NuSMV-2.6.0/NuSMV/code/nusmv/core/dd/DDMgr.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.33260393">
+          <caret line="52" column="36" selection-start-line="52" selection-start-column="27" selection-end-line="52" selection-end-column="36" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/MIGRATION-0.6.0.md">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6666667">
-          <caret line="87" column="51" selection-start-line="87" selection-start-column="8" selection-end-line="87" selection-end-column="51" />
+        <state vertical-scroll-proportion="-4.866667">
+          <caret line="91" column="26" selection-start-line="91" selection-start-column="12" selection-end-line="91" selection-end-column="26" />
           <folding />
         </state>
       </provider>
       <provider editor-type-id="MarkdownPreviewEditor">
         <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/addons/game/GameStrategy.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.48596492">
+          <caret line="290" column="25" selection-start-line="290" selection-start-column="25" selection-end-line="290" selection-end-column="25" />
+          <folding>
+            <element signature="e#1438#1455#0" expanded="true" />
+          </folding>
+        </state>
       </provider>
     </entry>
   </component>

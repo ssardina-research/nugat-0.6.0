@@ -89,6 +89,14 @@ Nitin Yadav - nitin.yadav@rmit.edu.au
             
             extern NuSMVEnv_ptr __nusmv_parser_env__;
     
+14.Warning: GameStrategy.c : passing argument 1 of ‘bdd_free’ from incompatible pointer type
+
+    * replaced 'DdManager* dd_manager;' with 'DDMgr_ptr dd_manager;'
+
+15.Warning: GameStrategy.c : implicit declaration of function ‘Enc_get_bdd_encoding’
+
+
+
 
 ================================================================================
 EOF

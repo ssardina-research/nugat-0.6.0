@@ -280,7 +280,7 @@ struct GameStrategy_TAG {
 
   BddEnc_ptr bdd_enc;
 
-  DdManager* dd_manager;
+    DDMgr_ptr dd_manager;
 
   /* Which player this strategy belongs to (1 or 2). */
   GamePlayer player;
