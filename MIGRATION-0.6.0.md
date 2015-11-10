@@ -91,9 +91,14 @@ Nitin Yadav - nitin.yadav@rmit.edu.au
     
 14.Warning: GameStrategy.c : passing argument 1 of ‘bdd_free’ from incompatible pointer type
 
-    * replaced 'DdManager* dd_manager;' with 'DDMgr_ptr dd_manager;'
+    * replaced 'DdManager*' with 'DDMgr_ptr' in all files
 
 15.Warning: GameStrategy.c : implicit declaration of function ‘Enc_get_bdd_encoding’
+
+    *   added 'env' parameter to the function GameStrategy_construct(NuSMVEnv_ptr env,...) 
+    *   added declaration of the 'env' below the 'dd_manager' declaration where GameStrategy_construct is used:
+            
+               const NuSMVEnv_ptr env = EnvObject_get_environment(ENV_OBJECT(dd_manager));
 
 
 

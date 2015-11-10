@@ -97,13 +97,13 @@ static boolean game_compute_buchi_game ARGS((PropGame_ptr prop,
                                              GameStrategy_ptr* strategy,
                                              node_ptr jxVar));
 
-static void game_free_list_of_bdd ARGS((DdManager* dd, node_ptr list));
+static void game_free_list_of_bdd ARGS((DDMgr_ptr dd, node_ptr list));
 
-static void game_free_array_of_bdd ARGS((DdManager* dd,
+static void game_free_array_of_bdd ARGS((DDMgr_ptr dd,
                                          bdd_ptr* array,
                                          int size));
 
-static void game_free_list_of_array_of_bdd ARGS((DdManager* dd,
+static void game_free_list_of_array_of_bdd ARGS((DDMgr_ptr dd,
                                                  node_ptr list,
                                                  int size));
 
@@ -322,7 +322,7 @@ boolean Game_ComputeGenReactivity(node_ptr specExp,
   SeeAlso     [ ]
 
 ******************************************************************************/
-static void game_free_list_of_bdd(DdManager* dd, node_ptr list)
+static void game_free_list_of_bdd(DDMgr_ptr dd, node_ptr list)
 {
   node_ptr iter = list;
 
@@ -347,7 +347,7 @@ static void game_free_list_of_bdd(DdManager* dd, node_ptr list)
   SeeAlso     [ ]
 
 ******************************************************************************/
-static void game_free_array_of_bdd(DdManager* dd, bdd_ptr* array, int size)
+static void game_free_array_of_bdd(DDMgr_ptr dd, bdd_ptr* array, int size)
 {
   int i;
 
@@ -368,7 +368,7 @@ static void game_free_array_of_bdd(DdManager* dd, bdd_ptr* array, int size)
   SeeAlso     [ ]
 
 ******************************************************************************/
-static void game_free_list_of_array_of_bdd(DdManager* dd,
+static void game_free_list_of_array_of_bdd(DDMgr_ptr dd,
                                            node_ptr list,
                                            int size)
 {
@@ -569,7 +569,8 @@ static boolean game_compute_gen_reactivity(node_ptr specExp,
 //long time_tmp = util_cpu_time();
 //long time_init_check;
   BddEnc_ptr enc = Enc_get_bdd_encoding();
-  DdManager* dd_manager = BddEnc_get_dd_manager(enc);
+  DDMgr_ptr dd_manager = BddEnc_get_dd_manager(enc);
+  const NuSMVEnv_ptr env = EnvObject_get_environment(ENV_OBJECT(dd_manager));
   OptsHandler_ptr oh = OptsHandler_create();
 
   bdd_ptr init_1, init_2, invar_1, invar_2;
@@ -1150,7 +1151,7 @@ static boolean game_compute_gen_reactivity(node_ptr specExp,
         } else {
           tmp2 = bdd_dup(Z);
         }
-        *strategy = GameStrategy_construct(fsm, player, false, tmp, tmp2, trans);
+        *strategy = GameStrategy_construct(env,fsm, player, false, tmp, tmp2, trans);
         bdd_free(dd_manager, tmp2);
       }
       bdd_free(dd_manager, trans);
@@ -1241,7 +1242,8 @@ static boolean game_compute_buchi_game(PropGame_ptr prop,
 {
   GameBddFsm_ptr fsm = PropGame_get_game_bdd_fsm(prop);
   BddEnc_ptr enc = Enc_get_bdd_encoding();
-  DdManager* dd_manager = BddEnc_get_dd_manager(enc);
+  DDMgr_ptr dd_manager = BddEnc_get_dd_manager(enc);
+  const NuSMVEnv_ptr env = EnvObject_get_environment(ENV_OBJECT(dd_manager));
   OptsHandler_ptr opt = OptsHandler_create();
 
 
@@ -1537,7 +1539,7 @@ static boolean game_compute_buchi_game(PropGame_ptr prop,
 
       /* -- fill in the strategy structure -- */
       tmp = bdd_false(dd_manager);
-      *strategy = GameStrategy_construct(fsm, player, false, tmp, Z, trans);
+      *strategy = GameStrategy_construct(env,fsm, player, false, tmp, Z, trans);
 
       bdd_free(dd_manager, tmp);
       bdd_free(dd_manager, trans);

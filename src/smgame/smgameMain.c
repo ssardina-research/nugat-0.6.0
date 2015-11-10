@@ -73,7 +73,7 @@ static char * NuSMV_CMD_LINE = (char *) NULL;
 
 EXTERN FILE* nusmv_stderr;
 EXTERN FILE* nusmv_stdout;
-EXTERN DdManager* dd_manager;
+EXTERN DDMgr_ptr dd_manager;
 
 EXTERN GameParams gameParams;
 

@@ -272,7 +272,7 @@ struct Game_UnrealizableCore_Struct_TAG {
   SymbTable_ptr st;
   BoolEnc_ptr bool_enc;
   BddEnc_ptr bdd_enc;
-  DdManager* dd_manager;
+  DDMgr_ptr dd_manager;
   GameHierarchy_ptr gh;
 
   /* input */

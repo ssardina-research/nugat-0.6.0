@@ -191,7 +191,7 @@ void Game_CommandBuildBooleanModel(void)
     int reord_status;
     dd_reorderingtype rt;
     BddEnc_ptr enc = Enc_get_bdd_encoding();
-    DdManager* dd;
+    DDMgr_ptr dd;
 
     /* temporary disables reordering */
     dd = BddEnc_get_dd_manager(enc);
@@ -326,7 +326,7 @@ GameBddFsm_ptr Game_CreateGameBddFsm(const FsmBuilder_ptr self,
                                      const SymbLayer_ptr layer_2,
                                      const TransType trans_type)
 {
-  DdManager* dd;
+  DDMgr_ptr dd;
   bdd_ptr one;
   SexpFsm_ptr player_1;
   SexpFsm_ptr player_2;

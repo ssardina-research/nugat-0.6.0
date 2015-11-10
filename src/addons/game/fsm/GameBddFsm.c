@@ -74,7 +74,7 @@ static char rcsid[] UTIL_UNUSED = "$Id: GameBddFsm.c,v 1.1.2.4 2010-02-08 14:07:
 typedef struct GameBddFsm_TAG
 {
   BddEnc_ptr enc;
-  DdManager* dd;
+  DDMgr_ptr dd;
 
   BddFsm_ptr player_1;
   BddFsm_ptr player_2;
@@ -1053,7 +1053,7 @@ EXTERN boolean GameBddFsm_can_player_satisfy(const GameBddFsm_ptr self,
      changed as well !!!
   */
 
-  DdManager* dd_manager;
+  DDMgr_ptr dd_manager;
   bdd_ptr tmp, result;
   boolean isOne;
   boolean goalNegation, p2Negation, p1Negation;
@@ -1174,7 +1174,7 @@ EXTERN BddStates GameBddFsm_player_satisfies_from(const GameBddFsm_ptr self,
      !!!
   */
 
-  DdManager* dd_manager;
+  DDMgr_ptr dd_manager;
   bdd_ptr tmp, result;
   boolean goalNegation, p2Negation, p1Negation;
 

@@ -68,7 +68,7 @@ static char rcsid[] UTIL_UNUSED = "$Id: smMisc.c,v 1.26.2.26.2.3.2.26.4.14 2010-
 /*---------------------------------------------------------------------------*/
 EXTERN FILE* nusmv_stderr;
 EXTERN FILE* nusmv_stdout;
-EXTERN DdManager* dd_manager;
+EXTERN DDMgr_ptr dd_manager;
 
 /*---------------------------------------------------------------------------*/
 /* Definition of exported functions                                          */

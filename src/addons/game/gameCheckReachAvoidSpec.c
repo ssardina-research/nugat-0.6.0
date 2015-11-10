@@ -297,7 +297,8 @@ Game_RealizabilityStatus Game_UseStrongReachabilityAlgorithm(PropGame_ptr prop,
 {
   GameBddFsm_ptr fsm = PropGame_get_game_bdd_fsm(prop);
   BddEnc_ptr enc = Enc_get_bdd_encoding();
-  DdManager* dd_manager = BddEnc_get_dd_manager(enc);
+  DDMgr_ptr dd_manager = BddEnc_get_dd_manager(enc);
+  const NuSMVEnv_ptr env = EnvObject_get_environment(ENV_OBJECT(dd_manager));
   OptsHandler_ptr oh = OptsHandler_create();
 
   PROP_GAME_CHECK_INSTANCE(prop);
@@ -532,7 +533,7 @@ Game_RealizabilityStatus Game_UseStrongReachabilityAlgorithm(PropGame_ptr prop,
 
       /* construct the strategy */
       *strategy =
-        GameStrategy_construct(fsm,
+        GameStrategy_construct(env,fsm,
                                player,
                                /* initial quantifiers have been
                                   reversed => reverse */
@@ -570,7 +571,7 @@ Game_RealizabilityStatus Game_UseStrongReachabilityAlgorithm(PropGame_ptr prop,
 
       /* construct the strategy */
       *strategy =
-        GameStrategy_construct(fsm,
+        GameStrategy_construct(env,fsm,
                                opponent,
                                /*initial quantifiers have been reversed
                                  => keep them */
