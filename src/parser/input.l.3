@@ -1,0 +1,20 @@
+  /* BEGINS: /home/lorenzo/Documents/software/ClionProjects/NuSMV-2.6.0/NuSMV/code/nusmv/core/parser/input.l.3.50 */
+/***************************************************************  -*-C-*-  ***/
+static int nusmv_skip_comment()
+{
+#ifdef __cplusplus
+  return Parser_skip_one_line_comment(yyinput);
+#else
+  return Parser_skip_one_line_comment(input);
+#endif
+}
+
+static int nusmv_skip_multiline_comment()
+{
+#ifdef __cplusplus
+  return Parser_skip_multiline_comment(yyinput);
+#else
+  return Parser_skip_multiline_comment(input);
+#endif 
+}
+  /* ENDS: /home/lorenzo/Documents/software/ClionProjects/NuSMV-2.6.0/NuSMV/code/nusmv/core/parser/input.l.3.50 */

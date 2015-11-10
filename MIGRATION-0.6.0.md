@@ -26,6 +26,7 @@ Nitin Yadav - nitin.yadav@rmit.edu.au
 4.Error: statement EXTERN is missing [TODO alternative solution : include NuSMV-2.6.0/NuSMV/code/nusmv/core/utils/defs.h]
     
     *   added the statement of EXTERN in <src/addons/game/fsm/GameSexpFsm.h>
+    *   removed all the EXTERN and ARGS
 
 5.Warning: ggrammar.y:1076:38: warning: passing argument 1 of ‘opt_game_game’ makes pointer from integer without a cast
                         if (!opt_game_game(OptsHandler_get_instance())) {...
@@ -52,22 +53,26 @@ Nitin Yadav - nitin.yadav@rmit.edu.au
     
 9.Error : input.l: ‘nusmv_yytext’ undeclared (first use in this function) ------------- ^"#"" "[0-9]+.*\n       sscanf(nusmv_yytext,"# %d",&nusmv_yylineno); 
 
-    *   change in <parser/Makefile>
+    *   change in <parser/Makefile(.am and .in)>
     
         **  the flags
             AM_YFLAGS = -d -p nusmv_yy
             AM_LFLAGS = -l -Pnusmv_yy
             
-        **  the variable 
-            LEX_OUTPUT_ROOT=lex.nusmv_yy
+        **  added this variable after this 2 flags
+            LEX_OUTPUT_ROOT = lex.nusmv_yy
        
 10.Error: input.l : ‘yylval’ undeclared (first use in this function)
 
-    *   replaced in <input.2.55> the string 'yylval' with 'nusmv_yylval'
+    *   replaced in <input.2.55> the string 'yylval' with 'nusmv_yylval' and 'yylineno' with 'nusmv_yylineno'
 
-11.Error: input.l : ‘TOK_GAME’ undeclared (first use in this function)
+11.Error: input.l : ‘TOK_GAME’ undeclared (first use in this function) [ TODO : FIND ANOTHER SOLUTION? )]
 
-    *      
+    *   commented the file <input.l.2.55>   
+
+12.Error: unknown type name ‘EXTERN’
+
+    *
 
 ================================================================================
 EOF
