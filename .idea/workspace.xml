@@ -16,19 +16,22 @@
     <list default="true" id="270c3bb5-5a79-42ad-ba25-a8665d2f47cb" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/MIGRATION-0.6.0.md" afterPath="$PROJECT_DIR$/MIGRATION-0.6.0.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/addons/game/GamePlayer.c" afterPath="$PROJECT_DIR$/src/addons/game/GamePlayer.c" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/addons/game/gameCheckGenReactivityBuchiSpec.c" afterPath="$PROJECT_DIR$/src/addons/game/gameCheckGenReactivityBuchiSpec.c" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/addons/game/gameCheckLTLSF07.c" afterPath="$PROJECT_DIR$/src/addons/game/gameCheckLTLSF07.c" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/addons/game/gameCheckLTLSF07_gba_wring.c" afterPath="$PROJECT_DIR$/src/addons/game/gameCheckLTLSF07_gba_wring.c" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/addons/game/gameCheckReachAvoidSpec.c" afterPath="$PROJECT_DIR$/src/addons/game/gameCheckReachAvoidSpec.c" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/addons/game/gameCmd.c" afterPath="$PROJECT_DIR$/src/addons/game/gameCmd.c" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/addons/game/gameFlatten.c" afterPath="$PROJECT_DIR$/src/addons/game/gameFlatten.c" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/addons/game/gamePkg.c" afterPath="$PROJECT_DIR$/src/addons/game/gamePkg.c" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/addons/game/gameReqToGame.c" afterPath="$PROJECT_DIR$/src/addons/game/gameReqToGame.c" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/addons/game/gameUnrealCore.c" afterPath="$PROJECT_DIR$/src/addons/game/gameUnrealCore.c" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/addons/game/gameXmlReader.c" afterPath="$PROJECT_DIR$/src/addons/game/gameXmlReader.c" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Makefile.in" afterPath="$PROJECT_DIR$/Makefile.in" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/aclocal.m4" afterPath="$PROJECT_DIR$/aclocal.m4" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config.h" afterPath="$PROJECT_DIR$/config.h" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/configure" afterPath="$PROJECT_DIR$/configure" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/contrib/Makefile.in" afterPath="$PROJECT_DIR$/contrib/Makefile.in" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/examples/Makefile.in" afterPath="$PROJECT_DIR$/examples/Makefile.in" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/helpers/ylwrap" afterPath="$PROJECT_DIR$/helpers/ylwrap" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libtool" afterPath="$PROJECT_DIR$/libtool" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Makefile.in" afterPath="$PROJECT_DIR$/src/Makefile.in" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/addons/Makefile.in" afterPath="$PROJECT_DIR$/src/addons/Makefile.in" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/addons/game/Makefile.in" afterPath="$PROJECT_DIR$/src/addons/game/Makefile.in" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/parser/Makefile.in" afterPath="$PROJECT_DIR$/src/parser/Makefile.in" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/parser/grammar.y.1.55" afterPath="$PROJECT_DIR$/src/parser/grammar.y.1.55" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/parser/grammar.y.2.55" afterPath="$PROJECT_DIR$/src/parser/grammar.y.2.55" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/smgame/Makefile.in" afterPath="$PROJECT_DIR$/src/smgame/Makefile.in" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/Makefile.in" afterPath="$PROJECT_DIR$/test/Makefile.in" />
     </list>
     <ignored path="NuGaT-0.54.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -57,7 +60,7 @@
       <file leaf-file-name="grammar.y.2.55" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/parser/grammar.y.2.55">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-11.233334">
+            <state vertical-scroll-proportion="0.0">
               <caret line="151" column="101" selection-start-line="151" selection-start-column="84" selection-end-line="151" selection-end-column="101" />
               <folding>
                 <element signature="e#246#405#0" expanded="true" />
@@ -72,8 +75,8 @@
       <file leaf-file-name="MIGRATION-0.6.0.md" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/MIGRATION-0.6.0.md">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.68384075">
-              <caret line="63" column="0" selection-start-line="63" selection-start-column="0" selection-end-line="63" selection-end-column="0" />
+            <state vertical-scroll-proportion="1.8969555">
+              <caret line="54" column="0" selection-start-line="54" selection-start-column="0" selection-end-line="54" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -96,7 +99,7 @@
         <entry file="file://$PROJECT_DIR$/src/parser/grammar.y.1.55">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="14" column="2" selection-start-line="14" selection-start-column="2" selection-end-line="14" selection-end-column="2" />
+              <caret line="2" column="2" selection-start-line="2" selection-start-column="2" selection-end-line="2" selection-end-column="2" />
               <folding>
                 <element signature="e#120#209#0" expanded="true" />
                 <element signature="e#260#334#0" expanded="true" />
@@ -105,20 +108,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="grammar.h" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/parser/grammar.h">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="gameCmd.c" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/addons/game/gameCmd.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="58.5">
+            <state vertical-scroll-proportion="0.0">
               <caret line="41" column="0" selection-start-line="41" selection-start-column="0" selection-end-line="41" selection-end-column="0" />
               <folding>
                 <element signature="e#1463#1483#0" expanded="true" />
@@ -131,7 +124,7 @@
       <file leaf-file-name="gameCheckReachAvoidSpec.c" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/addons/game/gameCheckReachAvoidSpec.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-4.733333">
+            <state vertical-scroll-proportion="0.0">
               <caret line="310" column="39" selection-start-line="310" selection-start-column="28" selection-end-line="310" selection-end-column="39" />
               <folding>
                 <element signature="e#1952#1979#0" expanded="true" />
@@ -143,7 +136,7 @@
       <file leaf-file-name="gameCheckGenReactivityBuchiSpec.c" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/addons/game/gameCheckGenReactivityBuchiSpec.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-6.1">
+            <state vertical-scroll-proportion="0.0">
               <caret line="162" column="23" selection-start-line="162" selection-start-column="23" selection-end-line="162" selection-end-column="23" />
               <folding>
                 <element signature="e#1808#1828#0" expanded="true" />
@@ -163,47 +156,6 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="grammar.c" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/parser/grammar.c">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-2.9333334">
-              <caret line="4451" column="88" selection-start-line="4451" selection-start-column="88" selection-end-line="4451" selection-end-column="88" />
-              <folding>
-                <marker date="1446793803668" expanded="true" signature="49:822" placeholder="/.../" />
-                <marker date="1446793803668" expanded="true" signature="824:1517" placeholder="/.../" />
-                <marker date="1446793803668" expanded="true" signature="1519:1640" placeholder="/.../" />
-                <marker date="1446793803668" expanded="true" signature="1642:2005" placeholder="/.../" />
-                <marker date="1446793803668" expanded="true" signature="2394:2420" placeholder="..." />
-                <marker date="1446793803668" expanded="true" signature="2474:2555" placeholder="..." />
-                <marker date="1446793803668" expanded="true" signature="2622:2707" placeholder="..." />
-                <marker date="1446793803668" expanded="true" signature="2734:2754" placeholder="..." />
-                <marker date="1446793803668" expanded="true" signature="2772:3161" placeholder="..." />
-                <marker date="1446793803668" expanded="true" signature="4198:4284" placeholder="/.../" />
-                <marker date="1446793803668" expanded="true" signature="4573:5254" placeholder="/.../" />
-                <marker date="1446793803668" expanded="true" signature="5271:5311" placeholder="{...}" />
-                <marker date="1446793803668" expanded="true" signature="5695:5724" placeholder="..." />
-                <marker date="1446793803668" expanded="true" signature="5838:5888" placeholder="..." />
-                <marker date="1446793803668" expanded="true" signature="5930:6022" placeholder="/.../" />
-                <marker date="1446793803668" expanded="true" signature="6161:6180" placeholder="..." />
-                <marker date="1446793803668" expanded="true" signature="6270:9581" placeholder="{...}" />
-                <marker date="1446793803668" expanded="true" signature="13184:13299" placeholder="{...}" />
-                <marker date="1446793803668" expanded="true" signature="194944:195819" placeholder="{...}" />
-                <marker date="1446793803668" expanded="true" signature="194948:195135" placeholder="/.../" />
-                <marker date="1446793803668" expanded="true" signature="195821:195926" placeholder="/.../" />
-                <marker date="1446793803668" expanded="true" signature="195977:196676" placeholder="{...}" />
-                <marker date="1446793803668" expanded="true" signature="196697:196713" placeholder="{...}" />
-                <marker date="1446793803668" expanded="true" signature="196716:196965" placeholder="/.../" />
-                <marker date="1446793803668" expanded="true" signature="197014:197322" placeholder="{...}" />
-                <marker date="1446793803668" expanded="true" signature="197324:197564" placeholder="/.../" />
-                <marker date="1446793803668" expanded="true" signature="197714:198883" placeholder="{...}" />
-                <marker date="1446793803668" expanded="true" signature="198885:199188" placeholder="/.../" />
-                <marker date="1446793803668" expanded="true" signature="199259:203190" placeholder="{...}" />
-                <marker date="1446793803668" expanded="true" signature="203222:203273" placeholder="{...}" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
     </leaf>
   </component>
   <component name="Git.Settings">
@@ -212,39 +164,12 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/CMakeLists.txt" />
-        <option value="$PROJECT_DIR$/src/addons/game/PropGame.h" />
-        <option value="$PROJECT_DIR$/nusmv_yytext" />
-        <option value="$PROJECT_DIR$/src/parser/input.l.2" />
-        <option value="$PROJECT_DIR$/src/parser/input.l.2.55" />
-        <option value="$PROJECT_DIR$/src/parser/grammar.h" />
-        <option value="$PROJECT_DIR$/src/parser/grammar.y.3" />
-        <option value="$PROJECT_DIR$/src/parser/input.l.1.55" />
-        <option value="$PROJECT_DIR$/helpers/ylwrap" />
-        <option value="$PROJECT_DIR$/src/addons/Makefile" />
-        <option value="$PROJECT_DIR$/src/addons/Makefile.in" />
-        <option value="$PROJECT_DIR$/src/smgame/Makefile.am" />
-        <option value="$PROJECT_DIR$/src/addons/Makefile.am" />
-        <option value="$PROJECT_DIR$/src/parser/input.l.1" />
-        <option value="$PROJECT_DIR$/Makefile" />
-        <option value="$PROJECT_DIR$/Makefile.am" />
-        <option value="$PROJECT_DIR$/Makefile.in" />
-        <option value="$PROJECT_DIR$/src/addons/game/gameOpt.c" />
         <option value="$PROJECT_DIR$/contrib/BddEnc.c.patch" />
         <option value="$PROJECT_DIR$/MIGRATION-0.6.0" />
         <option value="$PROJECT_DIR$/src/addons/game/game.h" />
         <option value="$PROJECT_DIR$/src/addons/game/fsm/GameBddFsm.h" />
-        <option value="$PROJECT_DIR$/src/parser/input.c" />
-        <option value="$PROJECT_DIR$/config.h" />
-        <option value="$PROJECT_DIR$/configure" />
-        <option value="$PROJECT_DIR$/configure.ac" />
         <option value="$PROJECT_DIR$/src/addons/game/gameUnrealCore.c" />
-        <option value="$PROJECT_DIR$/src/parser/input.l" />
         <option value="$PROJECT_DIR$/../NuSMV-2.6.0/NuSMV/code/nusmv/core/node/NodeMgr.h" />
-        <option value="$PROJECT_DIR$/src/parser/Makefile.in" />
-        <option value="$PROJECT_DIR$/src/parser/Makefile.am" />
-        <option value="$PROJECT_DIR$/src/parser/Makefile" />
-        <option value="$PROJECT_DIR$/config.status" />
         <option value="$PROJECT_DIR$/src/addons/game/gameCheckLTLSF07.c" />
         <option value="$PROJECT_DIR$/src/addons/game/gameCheckLTLSF07_gba_wring.c" />
         <option value="$PROJECT_DIR$/src/addons/game/gameCmd.c" />
@@ -258,11 +183,38 @@
         <option value="$PROJECT_DIR$/src/addons/addons.h" />
         <option value="$PROJECT_DIR$/src/addons/game/gameFlatten.c" />
         <option value="$PROJECT_DIR$/src/addons/game/gameCheckGenReactivityBuchiSpec.c" />
-        <option value="$PROJECT_DIR$/src/parser/grammar.c" />
-        <option value="$PROJECT_DIR$/src/parser/grammar.y.1.55" />
-        <option value="$PROJECT_DIR$/src/parser/grammar.y.2.55" />
         <option value="$PROJECT_DIR$/src/addons/game/gameCheckReachAvoidSpec.c" />
+        <option value="$PROJECT_DIR$/src/parser/grammar.y.1.55" />
+        <option value="$PROJECT_DIR$/config.h" />
+        <option value="$PROJECT_DIR$/src/parser/grammar.c" />
+        <option value="$PROJECT_DIR$/src/parser/input.l" />
+        <option value="$PROJECT_DIR$/src/parser/input.l.1" />
+        <option value="$PROJECT_DIR$/src/parser/input.c" />
+        <option value="$PROJECT_DIR$/src/parser/grammar.y.2.55" />
+        <option value="$PROJECT_DIR$/INSTALL" />
+        <option value="$PROJECT_DIR$/src/parser/Makefile.in" />
+        <option value="$PROJECT_DIR$/1.nugat-configure.log" />
         <option value="$PROJECT_DIR$/MIGRATION-0.6.0.md" />
+        <option value="$PROJECT_DIR$/lex.yy.c" />
+        <option value="$PROJECT_DIR$/Makefile" />
+        <option value="$PROJECT_DIR$/autom4te.cache/output.0" />
+        <option value="$PROJECT_DIR$/autom4te.cache/output.1" />
+        <option value="$PROJECT_DIR$/autom4te.cache/traces.1" />
+        <option value="$PROJECT_DIR$/configure" />
+        <option value="$PROJECT_DIR$/configure.ac" />
+        <option value="$PROJECT_DIR$/contrib/Makefile" />
+        <option value="$PROJECT_DIR$/examples/Makefile" />
+        <option value="$PROJECT_DIR$/helpers/missing" />
+        <option value="$PROJECT_DIR$/src/Makefile" />
+        <option value="$PROJECT_DIR$/src/addons/Makefile" />
+        <option value="$PROJECT_DIR$/src/addons/game/Makefile" />
+        <option value="$PROJECT_DIR$/src/parser/ylwrap4223/lex.nusmv_yy.c" />
+        <option value="$PROJECT_DIR$/src/smgame/Makefile" />
+        <option value="$PROJECT_DIR$/test/Makefile" />
+        <option value="$PROJECT_DIR$/helpers/ylwrap" />
+        <option value="$PROJECT_DIR$/config.status" />
+        <option value="$PROJECT_DIR$/src/parser/Makefile" />
+        <option value="$PROJECT_DIR$/src/parser/Makefile.am" />
       </list>
     </option>
   </component>
@@ -672,7 +624,7 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
-    <property name="SearchEverywhereHistoryKey" value="mgr&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/NuSMV-2.6.0/NuSMV/code/nusmv/core/utils/UStringMgr.h&#10;game_symbols.h&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/parser/game_symbols.h&#10;util&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/NuSMV-2.6.0/NuSMV/code/nusmv/core/utils/utils.h&#10;game.h&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/game.h&#10;NodeM&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/NuSMV-2.6.0/NuSMV/code/nusmv/core/node/NodeMgr.c&#10;grammar.y:1191:28&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/parser/grammar.y&#10;nusmv-config.h&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/NuSMV-2.6.0/NuSMV/build/nusmv-config.h&#10;game.h:207&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/game.h&#10;GameSexpFsm.h&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/fsm/GameSexpFsm.h&#10;ylwrap&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/helpers/ylwrap&#10;grammar.c&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/parser/grammar.c&#10;input.l&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/parser/input.l&#10;Prop&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/PropGame.h&#10;GameBe&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/fsm/GameBeFsm.c&#10;gameF&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/fsm/GameSexpFsm.h&#10;game_symbols&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/parser/game_symbols.h&#10;grammar.y&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/parser/grammar.y&#10;GameSexpFsm&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/fsm/GameSexpFsm.h&#10;Games&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/fsm/GameSexpFsm.h&#10;PropGame.h&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/PropGame.h&#10;GameBddFsm.h&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/fsm/GameBddFsm.h&#10;config.h&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/config.h" />
+    <property name="SearchEverywhereHistoryKey" value="lwr&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/helpers/ylwrap&#10;lex.&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/lex.yy.c&#10;lex.nu&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/parser/ylwrap4223/lex.nusmv_yy.c&#10;nusmv_yy33&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/parser/ylwrap8259/lex.nusmv_yy33.c&#10;yy&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/parser/ylwrap10952/lex.yy.c&#10;ylw&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/helpers/ylwrap&#10;lore&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/parser/loretest&#10;mgr&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/NuSMV-2.6.0/NuSMV/code/nusmv/core/utils/UStringMgr.h&#10;game_symbols.h&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/parser/game_symbols.h&#10;util&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/NuSMV-2.6.0/NuSMV/code/nusmv/core/utils/utils.h&#10;game.h&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/game.h&#10;NodeM&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/NuSMV-2.6.0/NuSMV/code/nusmv/core/node/NodeMgr.c&#10;grammar.y:1191:28&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/parser/grammar.y&#10;nusmv-config.h&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/NuSMV-2.6.0/NuSMV/build/nusmv-config.h&#10;game.h:207&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/game.h&#10;GameSexpFsm.h&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/fsm/GameSexpFsm.h&#10;ylwrap&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/helpers/ylwrap&#10;grammar.c&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/parser/grammar.c&#10;input.l&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/parser/input.l&#10;Prop&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/PropGame.h&#10;GameBe&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/fsm/GameBeFsm.c&#10;gameF&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/fsm/GameSexpFsm.h&#10;game_symbols&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/parser/game_symbols.h&#10;grammar.y&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/parser/grammar.y&#10;GameSexpFsm&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/fsm/GameSexpFsm.h&#10;Games&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/fsm/GameSexpFsm.h&#10;PropGame.h&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/PropGame.h&#10;GameBddFsm.h&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/fsm/GameBddFsm.h&#10;config.h&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/config.h" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -765,16 +717,15 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-1" y="0" width="1922" height="1060" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.14971007" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.14971007" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32978722" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="CMake" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3258786" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="true" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3514377" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33013844" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24986821" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.4824281" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.4824281" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32978722" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -783,6 +734,7 @@
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3514377" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
     </layout>
@@ -825,6 +777,76 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/MIGRATION-0.6.0.md">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="MarkdownPreviewEditor">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MIGRATION-0.5.4">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="121" column="51" selection-start-line="121" selection-start-column="4" selection-end-line="121" selection-end-column="51" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/parser/grammar.y.1.55">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="2" column="2" selection-start-line="2" selection-start-column="2" selection-end-line="2" selection-end-column="2" />
+          <folding>
+            <element signature="e#120#209#0" expanded="true" />
+            <element signature="e#260#334#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/addons/game/gameCmd.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="41" column="0" selection-start-line="41" selection-start-column="0" selection-end-line="41" selection-end-column="0" />
+          <folding>
+            <element signature="e#1463#1483#0" expanded="true" />
+            <element signature="e#1492#1509#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/addons/game/gameCheckReachAvoidSpec.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="310" column="39" selection-start-line="310" selection-start-column="28" selection-end-line="310" selection-end-column="39" />
+          <folding>
+            <element signature="e#1952#1979#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/addons/game/gameCheckGenReactivityBuchiSpec.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="162" column="23" selection-start-line="162" selection-start-column="23" selection-end-line="162" selection-end-column="23" />
+          <folding>
+            <element signature="e#1808#1828#0" expanded="true" />
+            <element signature="e#1837#1854#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/addons/game/gameXmlReader.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="428" column="86" selection-start-line="428" selection-start-column="75" selection-end-line="428" selection-end-column="86" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/../NuSMV-2.6.0/NuSMV/code/nusmv/core/node/node.h">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-5.0666666">
@@ -839,7 +861,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-4.733333">
           <caret line="298" column="47" selection-start-line="298" selection-start-column="44" selection-end-line="298" selection-end-column="47" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -847,7 +868,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="213" column="18" selection-start-line="213" selection-start-column="2" selection-end-line="213" selection-end-column="18" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -855,7 +875,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -871,7 +890,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="170" column="8" selection-start-line="170" selection-start-column="8" selection-end-line="170" selection-end-column="8" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -887,7 +905,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-1.1">
           <caret line="50" column="14" selection-start-line="50" selection-start-column="14" selection-end-line="50" selection-end-column="14" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -903,7 +920,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="901" column="15" selection-start-line="901" selection-start-column="15" selection-end-line="901" selection-end-column="15" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -911,7 +927,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="16710" column="11" selection-start-line="16710" selection-start-column="11" selection-end-line="16710" selection-end-column="11" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -919,9 +934,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="16004" column="11" selection-start-line="16004" selection-start-column="11" selection-end-line="16004" selection-end-column="11" />
-          <folding>
-            <marker date="1446701831472" expanded="true" signature="74432:74500" placeholder="..." />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -929,7 +942,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="2126" column="29" selection-start-line="2126" selection-start-column="29" selection-end-line="2126" selection-end-column="29" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -937,7 +949,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="2230" column="25" selection-start-line="2230" selection-start-column="25" selection-end-line="2230" selection-end-column="25" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -945,15 +956,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="439" column="59" selection-start-line="439" selection-start-column="59" selection-end-line="439" selection-end-column="59" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/parser/grammar.y.2">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="975" column="61" selection-start-line="975" selection-start-column="61" selection-end-line="975" selection-end-column="61" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -961,7 +963,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="11" column="67" selection-start-line="11" selection-start-column="67" selection-end-line="11" selection-end-column="67" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -977,7 +978,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -985,7 +985,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="38" column="35" selection-start-line="38" selection-start-column="35" selection-end-line="38" selection-end-column="35" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1009,7 +1008,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-25.733334">
           <caret line="61" column="33" selection-start-line="61" selection-start-column="33" selection-end-line="61" selection-end-column="33" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1017,7 +1015,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-4.733333">
           <caret line="213" column="10" selection-start-line="213" selection-start-column="0" selection-end-line="213" selection-end-column="10" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1025,9 +1022,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="50" column="16" selection-start-line="50" selection-start-column="16" selection-end-line="50" selection-end-column="16" />
-          <folding>
-            <element signature="e#1618#1637#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1035,11 +1029,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="55" column="9" selection-start-line="55" selection-start-column="9" selection-end-line="55" selection-end-column="9" />
-          <folding>
-            <element signature="e#1592#1611#0" expanded="false" />
-            <element signature="e#1620#1648#0" expanded="false" />
-            <element signature="e#1762#1784#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1047,10 +1036,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="50" column="9" selection-start-line="50" selection-start-column="9" selection-end-line="50" selection-end-column="9" />
-          <folding>
-            <element signature="e#1642#1661#0" expanded="false" />
-            <element signature="e#1670#1692#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1058,9 +1043,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="50" column="0" selection-start-line="50" selection-start-column="0" selection-end-line="50" selection-end-column="0" />
-          <folding>
-            <element signature="e#1602#1621#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1068,9 +1050,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="42" column="21" selection-start-line="42" selection-start-column="8" selection-end-line="42" selection-end-column="21" />
-          <folding>
-            <element signature="e#1504#1523#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1088,15 +1067,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/parser/input.l.1">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-9.5">
-          <caret line="21" column="33" selection-start-line="21" selection-start-column="33" selection-end-line="21" selection-end-column="33" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1104,31 +1074,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/parser/grammar.y">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-7.0">
-          <caret line="24" column="19" selection-start-line="24" selection-start-column="19" selection-end-line="24" selection-end-column="19" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/parser/input.l">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="325" column="31" selection-start-line="325" selection-start-column="20" selection-end-line="325" selection-end-column="31" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/parser/input.c">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="2046" column="90" selection-start-line="2045" selection-start-column="18" selection-end-line="2046" selection-end-column="90" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1136,7 +1081,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="89" column="56" selection-start-line="89" selection-start-column="56" selection-end-line="89" selection-end-column="56" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1144,7 +1088,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="553" column="0" selection-start-line="553" selection-start-column="0" selection-end-line="553" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1152,7 +1095,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="417" column="74" selection-start-line="417" selection-start-column="74" selection-end-line="417" selection-end-column="74" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1160,7 +1102,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="53" column="35" selection-start-line="53" selection-start-column="35" selection-end-line="53" selection-end-column="35" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1172,48 +1113,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/parser/grammar.c">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-2.9333334">
-          <caret line="4451" column="88" selection-start-line="4451" selection-start-column="88" selection-end-line="4451" selection-end-column="88" />
-          <folding>
-            <marker date="1446793803668" expanded="true" signature="49:822" placeholder="/.../" />
-            <marker date="1446793803668" expanded="true" signature="824:1517" placeholder="/.../" />
-            <marker date="1446793803668" expanded="true" signature="1519:1640" placeholder="/.../" />
-            <marker date="1446793803668" expanded="true" signature="1642:2005" placeholder="/.../" />
-            <marker date="1446793803668" expanded="true" signature="2394:2420" placeholder="..." />
-            <marker date="1446793803668" expanded="true" signature="2474:2555" placeholder="..." />
-            <marker date="1446793803668" expanded="true" signature="2622:2707" placeholder="..." />
-            <marker date="1446793803668" expanded="true" signature="2734:2754" placeholder="..." />
-            <marker date="1446793803668" expanded="true" signature="2772:3161" placeholder="..." />
-            <marker date="1446793803668" expanded="true" signature="4198:4284" placeholder="/.../" />
-            <marker date="1446793803668" expanded="true" signature="4573:5254" placeholder="/.../" />
-            <marker date="1446793803668" expanded="true" signature="5271:5311" placeholder="{...}" />
-            <marker date="1446793803668" expanded="true" signature="5695:5724" placeholder="..." />
-            <marker date="1446793803668" expanded="true" signature="5838:5888" placeholder="..." />
-            <marker date="1446793803668" expanded="true" signature="5930:6022" placeholder="/.../" />
-            <marker date="1446793803668" expanded="true" signature="6161:6180" placeholder="..." />
-            <marker date="1446793803668" expanded="true" signature="6270:9581" placeholder="{...}" />
-            <marker date="1446793803668" expanded="true" signature="13184:13299" placeholder="{...}" />
-            <marker date="1446793803668" expanded="true" signature="194944:195819" placeholder="{...}" />
-            <marker date="1446793803668" expanded="true" signature="194948:195135" placeholder="/.../" />
-            <marker date="1446793803668" expanded="true" signature="195821:195926" placeholder="/.../" />
-            <marker date="1446793803668" expanded="true" signature="195977:196676" placeholder="{...}" />
-            <marker date="1446793803668" expanded="true" signature="196697:196713" placeholder="{...}" />
-            <marker date="1446793803668" expanded="true" signature="196716:196965" placeholder="/.../" />
-            <marker date="1446793803668" expanded="true" signature="197014:197322" placeholder="{...}" />
-            <marker date="1446793803668" expanded="true" signature="197324:197564" placeholder="/.../" />
-            <marker date="1446793803668" expanded="true" signature="197714:198883" placeholder="{...}" />
-            <marker date="1446793803668" expanded="true" signature="198885:199188" placeholder="/.../" />
-            <marker date="1446793803668" expanded="true" signature="199259:203190" placeholder="{...}" />
-            <marker date="1446793803668" expanded="true" signature="203222:203273" placeholder="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/addons/game/gameCheckGenReactivityBuchiSpec.c">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-6.1">
+        <state vertical-scroll-proportion="0.0">
           <caret line="162" column="23" selection-start-line="162" selection-start-column="23" selection-end-line="162" selection-end-column="23" />
           <folding>
             <element signature="e#1808#1828#0" expanded="true" />
@@ -1226,21 +1128,12 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="1.0">
           <caret line="42" column="0" selection-start-line="42" selection-start-column="0" selection-end-line="42" selection-end-column="35" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/parser/grammar.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/addons/game/gameCmd.c">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="58.5">
+        <state vertical-scroll-proportion="0.0">
           <caret line="41" column="0" selection-start-line="41" selection-start-column="0" selection-end-line="41" selection-end-column="0" />
           <folding>
             <element signature="e#1463#1483#0" expanded="true" />
@@ -1251,7 +1144,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/addons/game/gameCheckReachAvoidSpec.c">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-4.733333">
+        <state vertical-scroll-proportion="0.0">
           <caret line="310" column="39" selection-start-line="310" selection-start-column="28" selection-end-line="310" selection-end-column="39" />
           <folding>
             <element signature="e#1952#1979#0" expanded="true" />
@@ -1270,7 +1163,7 @@
     <entry file="file://$PROJECT_DIR$/src/parser/grammar.y.1.55">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="14" column="2" selection-start-line="14" selection-start-column="2" selection-end-line="14" selection-end-column="2" />
+          <caret line="2" column="2" selection-start-line="2" selection-start-column="2" selection-end-line="2" selection-end-column="2" />
           <folding>
             <element signature="e#120#209#0" expanded="true" />
             <element signature="e#260#334#0" expanded="true" />
@@ -1280,7 +1173,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/parser/grammar.y.2.55">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-11.233334">
+        <state vertical-scroll-proportion="0.0">
           <caret line="151" column="101" selection-start-line="151" selection-start-column="84" selection-end-line="151" selection-end-column="101" />
           <folding>
             <element signature="e#246#405#0" expanded="true" />
@@ -1293,8 +1186,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/MIGRATION-0.6.0.md">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.68384075">
-          <caret line="63" column="0" selection-start-line="63" selection-start-column="0" selection-end-line="63" selection-end-column="0" />
+        <state vertical-scroll-proportion="1.8969555">
+          <caret line="54" column="0" selection-start-line="54" selection-start-column="0" selection-end-line="54" selection-end-column="0" />
           <folding />
         </state>
       </provider>

@@ -94,13 +94,13 @@ game_definition
 #if HAVE_GAME
                        /* check that the game is not redeclared */
                        if (opt_game_game(OptsHandler_create())) {
-                         yyerror_lined("redefinition of a GAME", $1);
+                         nusmv_yyerror_lined("redefinition of a GAME", $1);
                        }
                        else {
                          Game_Mode_Enter();
                        }
 #else
-                       yyerror_lined("GAME declaration cannot be processes "
+                       nusmv_yyerror_lined("GAME declaration cannot be processes "
                                      "because GAME package is not set up\n"
                                      "Check --enable-addons=game option of "
                                      "the configure script\n", $1);
@@ -128,7 +128,7 @@ game_body_element
                           to simplify the further flattening
                        */
                        if (game_parser_player_1 != Nil) {
-                         yyerror_lined("redefinition of a PLAYER_1", $1);
+                         nusmv_yyerror_lined("redefinition of a PLAYER_1", $1);
                          YYABORT;
                        }
                        game_parser_player_1 = new_lined_node(NODEMGR,MODULE,
@@ -144,7 +144,7 @@ game_body_element
                           to simplify the further flattening
                        */
                        if (game_parser_player_2 != Nil) {
-                         yyerror_lined("redefinition of a PLAYER_2", $1);
+                         nusmv_yyerror_lined("redefinition of a PLAYER_2", $1);
                          YYABORT;
                        }
                        game_parser_player_2 = new_lined_node(NODEMGR,MODULE,

@@ -48,8 +48,8 @@ MOSTLYCLEANFILES = grammar.h grammar.c grammar.y \
 	           grammar.y.1 grammar.y.2 grammar.y.3 \
 		   input.c input.l input.l.1 input.l.2 input.l.3
 
-AM_YFLAGS = -d
-AM_LFLAGS = -l
+AM_YFLAGS = -d -p nusmv_yy
+AM_LFLAGS = -l -Pnusmv_yy
 
 PKG_SOURCES = grammar.y.1.55 grammar.y.2.55 input.l.2.55 grammar.y input.l
 

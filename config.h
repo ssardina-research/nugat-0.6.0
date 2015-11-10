@@ -220,13 +220,13 @@
 #define PACKAGE_BUGREPORT "nugat@list.fbk.eu"
 
 /* Build date */
-#define PACKAGE_BUILD_DATE "Tue Nov 10 00:09:41 UTC 2015"
+#define PACKAGE_BUILD_DATE "Tue Nov 10 00:21:00 UTC 2015"
 
 /* Define to the full name of this package. */
 #define PACKAGE_NAME "NuGaT"
 
 /* Define to the full name and version of this package. */
-#define PACKAGE_STRING "NuGaT 0.5.4"
+#define PACKAGE_STRING "NuGaT 0.5.0"
 
 /* Define to the one symbol short name of this package. */
 #define PACKAGE_TARNAME "nugat"
@@ -235,7 +235,7 @@
 #define PACKAGE_URL ""
 
 /* Define to the version of this package. */
-#define PACKAGE_VERSION "0.5.4"
+#define PACKAGE_VERSION "0.5.0"
 
 /* Preprocessor call string */
 #define PROG_CPP gcc -E -x c
@@ -259,7 +259,7 @@
 #define STDC_HEADERS 1
 
 /* Version number of package */
-#define VERSION "0.5.4"
+#define VERSION "0.5.0"
 
 /* Define to 1 if `lex' declares `yytext' as a `char *' by default, not a
    `char[]'. */

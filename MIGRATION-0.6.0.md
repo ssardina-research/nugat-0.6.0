@@ -43,30 +43,27 @@ Nitin Yadav - nitin.yadav@rmit.edu.au
 
 7.Warning: implicit declaration of function ‘yylex’,‘yyerror’ and ‘yyerror_lined’
 
-    *   added this code in head of <src/parser/grammar.y.1.55>
-    
-        %{
-        /* includes, C defs */
+    *   changed content in <src/config.status> -> S["YFLAGS"]="-d -p nusmv_yy"
+    *   replace in <grammar.y.2.55> 'yyerror_lined' with 'nusmv_yyerror_lined'
         
-        #if YYBISON
-        union YYSTYPE;
-        int yylex(); //union YYSTYPE *, void *
-        int yyerror();
-        int yyerror_lined();
-        #endif
-        
-        %}
-        
-8.Error: function not found
+8.Error: function 'find_string' not found
 
     *   'find_string' has been replaced by 'UStringMgr_find_string(USTRING_MGR,' and in <grammar.y.2.55> with 'UStringMgr_find_string(USTRING_MGR(NULL),'
     
+9.Error : input.l:127:8: ‘nusmv_yytext’ undeclared (first use in this function) ------------- ^"#"" "[0-9]+.*\n       sscanf(nusmv_yytext,"# %d",&nusmv_yylineno); 
 
-9.
+    *   change in <parser/Makefile>
+    
+        **  the flags
+            AM_YFLAGS = -d -p nusmv_yy
+            AM_LFLAGS = -l -Pnusmv_yy
+            
+        **  the variable 
+            LEX_OUTPUT_ROOT=lex.nusmv_yy
+       
+10.Error: ‘yylval’ undeclared (first use in this function)
 
-. Error : input.l:127:8: ‘nusmv_yytext’ undeclared (first use in this function) ------------- ^"#"" "[0-9]+.*\n       sscanf(nusmv_yytext,"# %d",&nusmv_yylineno); 
-
-    *   [ how input.c is created? ]
+    *
 
 
 

@@ -1,19 +1,6 @@
 /***************************************************************  -*-C-*-  ***/
 
 %{
-/* includes, C defs */
-
-#if YYBISON
-union YYSTYPE;
-int yylex(); //union YYSTYPE *, void *
-int yyerror();
-int yyerror_lined();
-#endif
-
-%}
-
-%{
-
 #include "config.h"
 #if HAVE_GAME
 #include "addons/game/parser/game_symbols.h"
