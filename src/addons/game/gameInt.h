@@ -456,6 +456,6 @@ EXTERN boolean Game_PropertyToGame
        node_ptr exp_2, node_ptr* init_2, node_ptr* trans_2,
        node_ptr* property));
 
-EXTERN void Game_init_opt ARGS((void));
+EXTERN void Game_init_opt ARGS((NuSMVEnv_ptr env));
 
 #endif /* __GAME_INT_H__ */

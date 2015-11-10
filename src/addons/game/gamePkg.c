@@ -139,6 +139,8 @@ static void game_pkg_restore_cmds ARGS((NodeList_ptr* stored));
 ******************************************************************************/
 void Game_Init(void)
 {
+    NuSMVEnv_ptr env = NuSMVEnv_create();
+
   if (opt_verbose_level_gt(OptsHandler_create(), 0)) {
     fprintf(nusmv_stderr, "Initializing the Game package... \n");
   }
@@ -147,7 +149,7 @@ void Game_Init(void)
   nusmv_assert(NODE_LIST(NULL) == stored_dependent);
   nusmv_assert(NODE_LIST(NULL) == stored_specific);
   set_pgm_name(OptsHandler_create(), PACKAGE_NAME); //NEW
-  Game_init_opt();
+  Game_init_opt(env);
   Game_init_cmd();
   game_pkg_add_cmds(Game_cmd_get_generic_commands());
 

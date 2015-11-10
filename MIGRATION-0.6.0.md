@@ -74,7 +74,14 @@ Nitin Yadav - nitin.yadav@rmit.edu.au
 
 12.Error: gameOpt.c : too few arguments to function ‘OptsHandler_register_option’
 
-    *   added argument to Game_init_opt(NuSMVEnv_ptr const env)
+    *   added argument to Game_init_opt(NuSMVEnv_ptr const env) in <gameInt.h> and <gameOpt.c> 
+    *   in <gamePkg.c>
+            -added in head 'NuSMVEnv_ptr env = NuSMVEnv_create();' and update 'Game_init_opt();' with 'Game_init_opt(env);' in 'void Game_Init(void)'
+            -append these 2 libraries
+            
+                    #include "nusmv/core/utils/StreamMgr.h"
+                    #include "nusmv/core/cinit/NuSMVEnv.h"
+    
 
 ================================================================================
 EOF

@@ -46,6 +46,8 @@
 #include "gameInt.h"
 #include "opt/opt.h"
 #include "utils/utils.h"
+#include "nusmv/core/utils/StreamMgr.h"
+#include "nusmv/core/cinit/NuSMVEnv.h"
 
 /*---------------------------------------------------------------------------*/
 static char rcsid[] UTIL_UNUSED = "$Id$";
@@ -85,9 +87,9 @@ static boolean game_opt_check_initial_condition ARGS((OptsHandler_ptr opt,
    SeeAlso     []
 
 ******************************************************************************/
-void Game_init_opt()
+void Game_init_opt(NuSMVEnv_ptr env)
 {
-  OptsHandler_ptr opt = OptsHandler_create();
+  OptsHandler_ptr opt = NuSMVEnv_get_value(env, ENV_OPTS_HANDLER);
   boolean res = true;
   boolean options_registered;
 
@@ -108,7 +110,7 @@ void Game_init_opt()
   res = OptsHandler_register_option(opt, GAME_GAME_INITIAL_CONDITION, "N",
                              (Opts_CheckFnType)game_opt_check_initial_condition,
                                     (Opts_ReturnFnType)game_opt_get_string,
-                                    true, GENERIC_OPTION);
+                                    true, GENERIC_OPTION,env);
   nusmv_assert(res);
 
   res = OptsHandler_register_generic_option(opt, GAME_SF07_GBA_WRING_BINARY,
