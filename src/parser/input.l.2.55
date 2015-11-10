@@ -1,12 +1,12 @@
   /* **************************************************************  -*-C-*-  ***/
 
-"GAME"                  {yylval.lineno = yylineno; return(TOK_GAME);}
-"PLAYER_1"              {yylval.lineno = yylineno; return(TOK_PLAYER_1);}
-"PLAYER_2"              {yylval.lineno = yylineno; return(TOK_PLAYER_2);}
-"REACHTARGET"           {yylval.lineno = yylineno; return(TOK_REACHTARGET);}
-"AVOIDTARGET"           {yylval.lineno = yylineno; return(TOK_AVOIDTARGET);}
-"REACHDEADLOCK"         {yylval.lineno = yylineno; return(TOK_REACHDEADLOCK);}
-"AVOIDDEADLOCK"         {yylval.lineno = yylineno; return(TOK_AVOIDDEADLOCK);}
-"BUCHIGAME"             {yylval.lineno = yylineno; return(TOK_BUCHIGAME);}
-"LTLGAME"               {yylval.lineno = yylineno; return(TOK_LTLGAME);}
-"GENREACTIVITY"         {yylval.lineno = yylineno; return(TOK_GENREACTIVITY);}
+"GAME"                  {nusmv_yylval.lineno = yylineno; return(TOK_GAME);}
+"PLAYER_1"              {nusmv_yylval.lineno = yylineno; return(TOK_PLAYER_1);}
+"PLAYER_2"              {nusmv_yylval.lineno = yylineno; return(TOK_PLAYER_2);}
+"REACHTARGET"           {nusmv_yylval.lineno = yylineno; return(TOK_REACHTARGET);}
+"AVOIDTARGET"           {nusmv_yylval.lineno = yylineno; return(TOK_AVOIDTARGET);}
+"REACHDEADLOCK"         {nusmv_yylval.lineno = yylineno; return(TOK_REACHDEADLOCK);}
+"AVOIDDEADLOCK"         {nusmv_yylval.lineno = yylineno; return(TOK_AVOIDDEADLOCK);}
+"BUCHIGAME"             {nusmv_yylval.lineno = yylineno; return(TOK_BUCHIGAME);}
+"LTLGAME"               {nusmv_yylval.lineno = yylineno; return(TOK_LTLGAME);}
+"GENREACTIVITY"         {nusmv_yylval.lineno = yylineno; return(TOK_GENREACTIVITY);}

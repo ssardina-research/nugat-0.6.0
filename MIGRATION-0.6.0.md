@@ -41,16 +41,16 @@ Nitin Yadav - nitin.yadav@rmit.edu.au
     
     *   added this 2 lines before the usage of 'nodemgr'
 
-7.Warning: implicit declaration of function ‘yylex’,‘yyerror’ and ‘yyerror_lined’
+7.Warning: grammar.y.: implicit declaration of function ‘yylex’,‘yyerror’ and ‘yyerror_lined’
 
     *   changed content in <src/config.status> -> S["YFLAGS"]="-d -p nusmv_yy"
     *   replace in <grammar.y.2.55> 'yyerror_lined' with 'nusmv_yyerror_lined'
         
-8.Error: function 'find_string' not found
+8.Error: grammar.y : function 'find_string' not found
 
     *   'find_string' has been replaced by 'UStringMgr_find_string(USTRING_MGR,' and in <grammar.y.2.55> with 'UStringMgr_find_string(USTRING_MGR(NULL),'
     
-9.Error : input.l:127:8: ‘nusmv_yytext’ undeclared (first use in this function) ------------- ^"#"" "[0-9]+.*\n       sscanf(nusmv_yytext,"# %d",&nusmv_yylineno); 
+9.Error : input.l: ‘nusmv_yytext’ undeclared (first use in this function) ------------- ^"#"" "[0-9]+.*\n       sscanf(nusmv_yytext,"# %d",&nusmv_yylineno); 
 
     *   change in <parser/Makefile>
     
@@ -61,11 +61,13 @@ Nitin Yadav - nitin.yadav@rmit.edu.au
         **  the variable 
             LEX_OUTPUT_ROOT=lex.nusmv_yy
        
-10.Error: ‘yylval’ undeclared (first use in this function)
+10.Error: input.l : ‘yylval’ undeclared (first use in this function)
 
-    *
+    *   replaced in <input.2.55> the string 'yylval' with 'nusmv_yylval'
 
+11.Error: input.l : ‘TOK_GAME’ undeclared (first use in this function)
 
+    *      
 
 ================================================================================
 EOF
