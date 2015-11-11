@@ -1789,11 +1789,11 @@ static int CommandGameShowProperty(NuSMVEnv_ptr env,int argc, char** argv)
         }
         return 0;
     }
-
-    PropDb_print_list_header(prop_db, nusmv_stdout);
+    OStream_ptr ostream_ptr_nusmv_output = OStream_create(nusmv_stdout);
+    PropDb_print_list_header(prop_db, ostream_ptr_nusmv_output);
     if (prop_no != -1) {
         retval = PropDb_print_prop_at_index(prop_db,
-                                            nusmv_stdout,
+                                            ostream_ptr_nusmv_output,
                                             prop_no);
     } else {
         PropDbGame_ptr pdb = PROP_DB_GAME(prop_db);

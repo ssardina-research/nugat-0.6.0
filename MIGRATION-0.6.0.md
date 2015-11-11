@@ -201,6 +201,12 @@ Nitin Yadav - nitin.yadav@rmit.edu.au
 23.Error: gameCmd.c: ‘USTRING_MGR’ undeclared (first use in this function)
 
     *   *   'USTRING_MGR' has been replaced by 'USTRING_MGR(NuSMVEnv_get_value(env, ENV_STRING_MGR))'
+    
+24.Warning: gameCmd.c:  passing argument 2 of ‘PropDb_print_list_header’ from incompatible pointer type
+
+    *   added "OStream_ptr ostream_ptr_nusmv_output = OStream_create(nusmv_stdout);" before the 'PropDb_print_list_header()' function
+    *   replaced for :
+            'PropDb_print_list_header()' and 'PropDb_print_prop_at_index()' -> 'nusmv_output' with 'ostream_ptr_nusmv_output'
 
 ================================================================================
 EOF
