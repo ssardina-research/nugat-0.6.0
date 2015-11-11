@@ -207,6 +207,10 @@ Nitin Yadav - nitin.yadav@rmit.edu.au
     *   added "OStream_ptr ostream_ptr_nusmv_output = OStream_create(nusmv_stdout);" before the 'PropDb_print_list_header()' function
     *   replaced for :
             'PropDb_print_list_header()' and 'PropDb_print_prop_at_index()' -> 'nusmv_output' with 'ostream_ptr_nusmv_output'
+            
+25.Error: gameCmd.c:  ‘dd_manager’ undeclared (first use in this function)
+
+    *   added declaration "DDMgr_ptr dd_manager = (DDMgr_ptr )NuSMVEnv_get_value(env, ENV_DD_MGR);"
 
 ================================================================================
 EOF

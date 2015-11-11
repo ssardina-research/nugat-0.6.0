@@ -1891,6 +1891,7 @@ static int CommandGamePrintUsage(NuSMVEnv_ptr env,int argc, char **argv)
     int c;
     PropDbGame_ptr pdb;
     PropDb_ptr prop_db  = PROP_DB(NuSMVEnv_get_value(env, ENV_PROP_DB));
+    DDMgr_ptr dd_manager = (DDMgr_ptr )NuSMVEnv_get_value(env, ENV_DD_MGR);
 
     nusmv_assert(opt_game_game(OptsHandler_create()));
     nusmv_assert(opt_cone_of_influence(OptsHandler_create()) == false);
