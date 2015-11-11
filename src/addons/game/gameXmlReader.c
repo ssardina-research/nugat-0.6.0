@@ -326,7 +326,7 @@ int Game_RatFileToGame(const char *filename)
                                 &game_xml_reader_char_handler);
 
     /* Parse the file. */
-    CATCH {
+    CATCH(errmgr) {
       while (!done) {
         len = fread(inBuffer, sizeof(char), BUFFSIZE, file);
 

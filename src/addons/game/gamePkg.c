@@ -141,6 +141,9 @@ void Game_Init(void)
 {
     NuSMVEnv_ptr env = NuSMVEnv_create();
 
+    ErrorMgr_ptr const errmgr =
+            ERROR_MGR(NuSMVEnv_get_value(env, ENV_ERROR_MANAGER));
+
   if (opt_verbose_level_gt(OptsHandler_create(), 0)) {
     fprintf(nusmv_stderr, "Initializing the Game package... \n");
   }
@@ -159,7 +162,7 @@ void Game_Init(void)
     TypeChecker_ptr tc =
       SymbTable_get_type_checker(Compile_get_global_symb_table());
 
-    CATCH {
+    CATCH(errmgr) {
       NodeWalker_ptr walker;
 
       walker = NODE_WALKER(PrinterGame_create("GAME Printer"));
@@ -172,9 +175,9 @@ void Game_Init(void)
       MasterNodeWalker_register_walker(MASTER_NODE_WALKER(tc), walker);
     }
 
-    FAIL {
+    FAIL(errmgr) {
       Game_Quit();
-      nusmv_exit(1);
+      ErrorMgr_nusmv_exit(errmgr,1);
     }
   }
 }

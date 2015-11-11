@@ -827,6 +827,10 @@ static void Game_SF07_StructCheckLTLGameSF07_run_iteration
 
   GAME_SF07_STRUCT_CHECK_LTL_GAME_SF07_CHECK_INSTANCE(self);
 
+  NuSMVEnv_ptr const env = EnvObject_get_environment(ENV_OBJECT(self->symb_table));
+  ErrorMgr_ptr const errmgr =
+            ERROR_MGR(NuSMVEnv_get_value(env, ENV_ERROR_MANAGER));
+
   /* Increase counter. */
   nusmv_assert(ltlgame_sf07_unique_number < 999999999);
   ltlgame_sf07_unique_number++;
@@ -844,7 +848,7 @@ static void Game_SF07_StructCheckLTLGameSF07_run_iteration
             (curr_player == PLAYER_1) ? 1 : 2);
   }
 
-  CATCH {
+  CATCH(errmgr) {
     Game_SF07_StructCheckLTLGameSF07_construct_ba(self);
     Game_SF07_StructCheckLTLGameSF07_construct_goal(self);
     Game_SF07_StructCheckLTLGameSF07_construct_monitor_sexp(self);
@@ -859,10 +863,10 @@ static void Game_SF07_StructCheckLTLGameSF07_run_iteration
       }
     }
   }
-  FAIL {
+  FAIL(errmgr) {
     fprintf(nusmv_stderr,
             "Error executing an iteration of the sf07 algorithm.\n");
-    nusmv_exit(1);
+    ErrorMgr_nusmv_exit(errmgr,1);
   }
 
   if (opt_verbose_level_ge(OptsHandler_create(), 2)) {
@@ -910,6 +914,10 @@ static void Game_SF07_StructCheckLTLGameSF07_construct_ba
   GAME_SF07_STRUCT_CHECK_LTL_GAME_SF07_CHECK_INSTANCE(self);
   PROP_GAME_CHECK_INSTANCE(self->prop);
 
+  NuSMVEnv_ptr const env = EnvObject_get_environment(ENV_OBJECT(self->symb_table));
+  ErrorMgr_ptr const errmgr =
+            ERROR_MGR(NuSMVEnv_get_value(env, ENV_ERROR_MANAGER));
+
   /* Has the ba already been constructed? */
   if (((self->curr_player == PLAYER_1) &&
        (self->player1_ba != GAME_SF07_GBA(NULL))) ||
@@ -951,7 +959,7 @@ static void Game_SF07_StructCheckLTLGameSF07_construct_ba
               "booleanization introduced determinization variables.\n",
               tmp);
       FREE(tmp);
-      nusmv_exit(1);
+      ErrorMgr_nusmv_exit(errmgr,1);
     }
     SymbTable_remove_layer(self->symb_table, det_layer);
 
@@ -979,7 +987,7 @@ static void Game_SF07_StructCheckLTLGameSF07_construct_ba
             "Error generating B\"uchi automaton for formula %s.\n",
             tmp);
     FREE(tmp);
-    nusmv_exit(1);
+    ErrorMgr_nusmv_exit(errmgr,1);
   }
   if (Game_SF07_gba_get_fairness_constraints_count(ba) > 1) {
     char* tmp;
@@ -989,7 +997,7 @@ static void Game_SF07_StructCheckLTLGameSF07_construct_ba
             "more than 1 fairness constraints.\n",
             tmp);
     FREE(tmp);
-    nusmv_exit(1);
+    ErrorMgr_nusmv_exit(errmgr,1);
   }
 
   /* Fix the ba if it has no sets of fairness constraints: add the set

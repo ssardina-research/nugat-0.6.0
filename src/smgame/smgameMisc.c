@@ -104,7 +104,7 @@ void Smgame_BatchMain()
 
   /* Necessary to have standard behavior in the batch mode */
   util_resetlongjmp();
-  CATCH {
+  CATCH(errmgr) {
 
   /* ================================================== */
   /*   1: Read the model                                */
@@ -482,7 +482,7 @@ void Smgame_BatchMain()
                                        nusmv_stdout);
   }
 
-  } FAIL {
+  } FAIL(errmgr) {
     fprintf(nusmv_stderr, "\nNuGaT terminated by a signal\n");
     ErrorMgr_nusmv_exit(errmgr,1);
   }

@@ -184,6 +184,14 @@ Nitin Yadav - nitin.yadav@rmit.edu.au
             CmdOpenPipe
             CmdOpenFile
 
+21.Error: gameCmd.c:  ‘CATCH’ undeclared (first use in this function)
+
+    *   replaced "CATCH" with "CATCH(errmgr)" and "FAIL" with "FAIL(errmgr)" and added this lines of declaration
+    
+            NuSMVEnv_ptr const env = EnvObject_get_environment(ENV_OBJECT(self->symb_table));  ( ONLY IF 'env' IS NOT DECLARED )
+            ErrorMgr_ptr const errmgr =
+                        ERROR_MGR(NuSMVEnv_get_value(env, ENV_ERROR_MANAGER));
+
 ================================================================================
 EOF
 ================================================================================

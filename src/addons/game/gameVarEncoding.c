@@ -50,9 +50,11 @@
 #include "opt/opt.h"
 #include "utils/utils.h"
 #include "utils/error.h"
+#include "code/nusmv/core/utils/ErrorMgr.h"
 #include "utils/ucmd.h"
 
 #include <stdio.h>
+
 
 /*---------------------------------------------------------------------------*/
 static char rcsid[] UTIL_UNUSED = "$Id: gameVarEncoding.c,v 1.1.2.2 2010-02-08 16:19:04 nusmv Exp $";
@@ -106,6 +108,10 @@ int Game_CommandEncodeVariables(char* input_order_file_name)
   BoolEnc_ptr bool_enc;
   BddEnc_ptr bdd_enc;
 
+  NuSMVEnv_ptr const env = EnvObject_get_environment(ENV_OBJECT(self));
+  ErrorMgr_ptr const errmgr =
+            ERROR_MGR(NuSMVEnv_get_value(env, ENV_ERROR_MANAGER));
+
   if (opt_verbose_level_gt(OptsHandler_create(), 0)) {
     fprintf(nusmv_stderr, "Building variables...");
   }
@@ -143,7 +149,7 @@ int Game_CommandEncodeVariables(char* input_order_file_name)
                               dump_type);
 
     /* batch mode: */
-    if (opt_batch(OptsHandler_create())) { nusmv_exit(0); }
+    if (opt_batch(OptsHandler_create())) { ErrorMgr_nusmv_exit(errmgr,0); }
   }
 
   if (opt_verbose_level_gt(OptsHandler_create(), 0)) {

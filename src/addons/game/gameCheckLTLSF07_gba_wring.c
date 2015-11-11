@@ -54,6 +54,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <code/nusmv/core/utils/ErrorMgr.h>
 
 static char rcsid[] UTIL_UNUSED = "$Id: gameCheckLTLSF07_gba_wring.c,v 1.1.2.5 2010-01-15 04:40:05 nusmv Exp $";
 
@@ -691,6 +692,10 @@ void Game_SF07_gba_wring_write_input_file(Game_SF07_gba_wring_ptr self)
   nusmv_assert(self->input_file_name != (char*) NULL);
   nusmv_assert(self->gba == GAME_SF07_GBA(NULL));
 
+  NuSMVEnv_ptr const env = EnvObject_get_environment(ENV_OBJECT(self->gba));
+  ErrorMgr_ptr const errmgr =
+            ERROR_MGR(NuSMVEnv_get_value(env, ENV_ERROR_MANAGER));
+
   /* Write translated formula into self->iw_s. */
   game_sf07_gba_wring_ensure_size_iw_s(self,
                                    GAME_SF07_GBA_WRING_MIN_SIZE_STRING_BUFFERS);
@@ -706,7 +711,7 @@ void Game_SF07_gba_wring_write_input_file(Game_SF07_gba_wring_ptr self)
             "Error opening file %s for writing (errno = %d).\n",
             self->input_file_name,
             errno);
-    nusmv_exit(1);
+    ErrorMgr_nusmv_exit(errmgr,1);
   }
   fprintf(self->input_file, "%s\n", self->iw_s);
   if (fclose(self->input_file) != 0) {
@@ -714,7 +719,7 @@ void Game_SF07_gba_wring_write_input_file(Game_SF07_gba_wring_ptr self)
             "Error closing file %s (errno = %d).\n",
             self->input_file_name,
             errno);
-    nusmv_exit(1);
+    ErrorMgr_nusmv_exit(errmgr,1);
   }
 }
 
@@ -832,6 +837,10 @@ void Game_SF07_gba_wring_parse_output_file(Game_SF07_gba_wring_ptr self)
   GAME_SF07_GBA_WRING_CHECK_INSTANCE(self);
   nusmv_assert(self->output_file_name != (char*) NULL);
 
+  NuSMVEnv_ptr const env = EnvObject_get_environment(ENV_OBJECT(self->gba));
+  ErrorMgr_ptr const errmgr =
+            ERROR_MGR(NuSMVEnv_get_value(env, ENV_ERROR_MANAGER));
+
   /* Open output file. */
   self->output_file = fopen(self->output_file_name, "r");
   if (self->output_file == (FILE*) NULL) {
@@ -839,7 +848,7 @@ void Game_SF07_gba_wring_parse_output_file(Game_SF07_gba_wring_ptr self)
             "Error opening file %s for reading (errno = %d).\n",
             self->output_file_name,
             errno);
-    nusmv_exit(1);
+    ErrorMgr_nusmv_exit(errmgr,1);
   }
 
   /* Initialize structues. */
@@ -1221,7 +1230,7 @@ void Game_SF07_gba_wring_parse_output_file(Game_SF07_gba_wring_ptr self)
             "Error closing file %s (errno = %d).\n",
             self->output_file_name,
             errno);
-    nusmv_exit(1);
+    ErrorMgr_nusmv_exit(errmgr,1);
   }
   free_assoc(state_id_2_state);
   return;
@@ -1269,10 +1278,10 @@ void Game_SF07_gba_wring_parse_output_file(Game_SF07_gba_wring_ptr self)
             "Error closing file %s (errno = %d).\n",
             self->output_file_name,
             errno);
-    nusmv_exit(1);
+    ErrorMgr_nusmv_exit(errmgr,1);
   }
   free_assoc(state_id_2_state);
-  nusmv_exit(1);
+  ErrorMgr_nusmv_exit(errmgr,1);
 }
 
 /*---------------------------------------------------------------------------*/
