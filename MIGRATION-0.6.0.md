@@ -151,6 +151,9 @@ Nitin Yadav - nitin.yadav@rmit.edu.au
                            UsagePrint(env,...)
                            
 
+17.Warning: GameStrategy.c: passing argument 7 of ‘BddEnc_print_bdd_wff’ from incompatible pointer type
+
+    *   replaced the parameter "out" with "OSTREAM(out)"
 
 
 

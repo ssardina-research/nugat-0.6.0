@@ -1036,7 +1036,7 @@ void GameStrategy_print_module(GameStrategy_ptr self,
                          do_sharing,
                          do_indentation,
                          strlen(init_str),
-                         out);
+                         OSTREAM(out));
     fprintf(out, "\n");
 
     bdd_free(self->dd_manager, init_bdd);
@@ -1058,7 +1058,7 @@ void GameStrategy_print_module(GameStrategy_ptr self,
                          do_sharing,
                          do_indentation,
                          strlen(trans_str),
-                         out);
+                         OSTREAM(out));
     fprintf(out, "\n");
 
     bdd_free(self->dd_manager, trans_bdd);
