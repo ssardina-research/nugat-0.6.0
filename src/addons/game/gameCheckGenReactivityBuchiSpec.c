@@ -445,7 +445,7 @@ static void game_declare_special_var(int guaranteeNumber,
   /* Commit the layer to all encodings. */
   BaseEnc_commit_layer(BASE_ENC(Enc_get_bool_encoding()),
                        SymbLayer_get_name(layer));
-  BaseEnc_commit_layer(BASE_ENC(Enc_get_bdd_encoding()),
+  BaseEnc_commit_layer(BASE_ENC(BddFsm_get_bdd_encoding(BDD_FSM(GAME_SEXP_FSM(NULL)))),
                        SymbLayer_get_name(layer));
 
   *new_var = var;
@@ -475,8 +475,8 @@ static void game_undeclare_special_var(SymbLayer_ptr layer)
   const char* name = SymbLayer_get_name(layer);
 
   /* remove the layer from all encodings (bool and bdd) */
-  if (BaseEnc_layer_occurs(BASE_ENC(Enc_get_bdd_encoding()), name)) {
-    BaseEnc_remove_layer(BASE_ENC(Enc_get_bdd_encoding()), name);
+  if (BaseEnc_layer_occurs(BASE_ENC(BddFsm_get_bdd_encoding(BDD_FSM(GAME_SEXP_FSM(NULL)))), name)) {
+    BaseEnc_remove_layer(BASE_ENC(BddFsm_get_bdd_encoding(BDD_FSM(GAME_SEXP_FSM(NULL)))), name);
   }
   if (BaseEnc_layer_occurs(BASE_ENC(Enc_get_bool_encoding()), name)) {
     BaseEnc_remove_layer(BASE_ENC(Enc_get_bool_encoding()), name);
@@ -568,7 +568,7 @@ static boolean game_compute_gen_reactivity(node_ptr specExp,
 {
 //long time_tmp = util_cpu_time();
 //long time_init_check;
-  BddEnc_ptr enc = Enc_get_bdd_encoding();
+  BddEnc_ptr enc = BddFsm_get_bdd_encoding(BDD_FSM(fsm));
   DDMgr_ptr dd_manager = BddEnc_get_dd_manager(enc);
   const NuSMVEnv_ptr env = EnvObject_get_environment(ENV_OBJECT(dd_manager));
   OptsHandler_ptr oh = OptsHandler_create();
@@ -1241,7 +1241,7 @@ static boolean game_compute_buchi_game(PropGame_ptr prop,
                                        node_ptr jxVar)
 {
   GameBddFsm_ptr fsm = PropGame_get_game_bdd_fsm(prop);
-  BddEnc_ptr enc = Enc_get_bdd_encoding();
+  BddEnc_ptr enc = BddFsm_get_bdd_encoding(BDD_FSM(fsm));
   DDMgr_ptr dd_manager = BddEnc_get_dd_manager(enc);
   const NuSMVEnv_ptr env = EnvObject_get_environment(ENV_OBJECT(dd_manager));
   OptsHandler_ptr opt = OptsHandler_create();

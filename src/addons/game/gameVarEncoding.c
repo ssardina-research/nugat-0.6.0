@@ -123,7 +123,7 @@ int Game_CommandEncodeVariables(char* input_order_file_name)
 
   /* Creates the bdd encoding, and again commits the model layer. */
   Enc_init_bdd_encoding();
-  bdd_enc = Enc_get_bdd_encoding();
+  bdd_enc = BddFsm_get_bdd_encoding(BDD_FSM(GAME_BDD_FSM(NULL)));
   BaseEnc_commit_layer(BASE_ENC(bdd_enc), MODEL_LAYER_1);
   BaseEnc_commit_layer(BASE_ENC(bdd_enc), MODEL_LAYER_2);
 
@@ -138,7 +138,7 @@ int Game_CommandEncodeVariables(char* input_order_file_name)
     }
     else dump_type = DUMP_DEFAULT;
 
-    BddEnc_write_var_ordering(Enc_get_bdd_encoding(),
+    BddEnc_write_var_ordering(BddFsm_get_bdd_encoding(BDD_FSM(GAME_BDD_FSM(NULL))),
                               get_output_order_file(OptsHandler_create()),
                               dump_type);
 

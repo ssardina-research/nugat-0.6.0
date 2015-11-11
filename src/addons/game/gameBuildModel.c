@@ -190,7 +190,7 @@ void Game_CommandBuildBooleanModel(void)
 
     int reord_status;
     dd_reorderingtype rt;
-    BddEnc_ptr enc = Enc_get_bdd_encoding();
+    BddEnc_ptr enc = BddFsm_get_bdd_encoding(BDD_FSM(GAME_SEXP_FSM(NULL)));
     DDMgr_ptr dd;
 
     /* temporary disables reordering */
@@ -226,9 +226,9 @@ void Game_CommandBuildBooleanModel(void)
     BaseEnc_commit_layer(BASE_ENC(Enc_get_bool_encoding()),
                          DETERM_LAYER_2);
 
-    BaseEnc_commit_layer(BASE_ENC(Enc_get_bdd_encoding()),
+    BaseEnc_commit_layer(BASE_ENC(EBddFsm_get_bdd_encoding(BDD_FSM(GAME_SEXP_FSM(NULL)))),
                          DETERM_LAYER_1);
-    BaseEnc_commit_layer(BASE_ENC(Enc_get_bdd_encoding()),
+    BaseEnc_commit_layer(BASE_ENC(BddFsm_get_bdd_encoding(BDD_FSM(GAME_SEXP_FSM(NULL)))),
                          DETERM_LAYER_2);
 
      /*NEW_CODE_START*/
@@ -287,7 +287,7 @@ void Game_CommandBuildBddModel(void)
 
   GameBddFsm_ptr bdd_fsm =
     Game_CreateGameBddFsm(global_fsm_builder,
-                          Enc_get_bdd_encoding(),
+                          BddFsm_get_bdd_encoding(BDD_FSM(scalar_fsm)),
                           scalar_fsm,
                           SymbTable_get_layer(st, MODEL_LAYER_1),
                           SymbTable_get_layer(st, MODEL_LAYER_2),

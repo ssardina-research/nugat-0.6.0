@@ -599,7 +599,7 @@ Game_SF07_StructCheckLTLGameSF07_create(PropGame_ptr prop,
   res->player1_ba = GAME_SF07_GBA(NULL);
   res->player2_ba = GAME_SF07_GBA(NULL);
 
-  res->bdd_enc = Enc_get_bdd_encoding();
+  res->bdd_enc = BddFsm_get_bdd_encoding(BDD_FSM(GAME_BDD_FSM(NULL)));
   res->bool_enc =
     BoolEncClient_get_bool_enc(BOOL_ENC_CLIENT(res->bdd_enc));
   res->dd_manager = BddEnc_get_dd_manager(res->bdd_enc);

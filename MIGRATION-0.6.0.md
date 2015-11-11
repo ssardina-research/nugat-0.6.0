@@ -91,11 +91,21 @@ Nitin Yadav - nitin.yadav@rmit.edu.au
     
 14.Warning: GameStrategy.c : passing argument 1 of ‘bdd_free’ from incompatible pointer type
 
-    * replaced 'DdManager*' with 'DDMgr_ptr' in all files
+    *   replaced 'DdManager*' with 'DDMgr_ptr' in all files
 
 15.Warning: GameStrategy.c : implicit declaration of function ‘Enc_get_bdd_encoding’
 
-
+    *   is replaced with: if 'fsm' variable is 
+        -present 
+        
+                BddFsm_get_bdd_encoding(BDD_FSM(fsm))
+                BddFsm_get_bdd_encoding(BDD_FSM(scalar_fsm)) 
+                BddFsm_get_bdd_encoding(BDD_FSM(bool_fsm)) ('enc' and 'st' dropped below the 'bool_fsm' declaration)
+                
+        -not present
+                
+                BddFsm_get_bdd_encoding(BDD_FSM(GAME_BDD_FSM(NULL)));
+                BddFsm_get_bdd_encoding(BDD_FSM(GAME_SEXP_FSM(NULL)));
 
 
 

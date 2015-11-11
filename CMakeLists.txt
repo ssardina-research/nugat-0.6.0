@@ -1,5 +1,7 @@
 cmake_minimum_required(VERSION 3.2)
 project(NuGaT_0_60)
+include_directories("/home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src")
+include_directories("/home/lorenzo/Documents/software/ClionProjects/NuSMV-2.6.0/cudd-2.4.1.1/include")
 include_directories("/home/lorenzo/Documents/software/ClionProjects/NuSMV-2.6.0/NuSMV")
 include_directories("/home/lorenzo/Documents/software/ClionProjects/NuSMV-2.6.0/NuSMV/build")
 include_directories("/home/lorenzo/Documents/software/ClionProjects/NuSMV-2.6.0/NuSMV/code")

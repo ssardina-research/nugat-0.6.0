@@ -75,6 +75,8 @@
       <library name="Header Search Paths">
         <CLASSES>
           <root url="file://$MODULE_DIR$/../NuSMV-2.6.0/NuSMV" />
+          <root url="file://$MODULE_DIR$/../NuSMV-2.6.0/cudd-2.4.1.1/include" />
+          <root url="file://$MODULE_DIR$/src" />
           <root url="file:///usr/include" />
           <root url="file:///usr/lib/gcc/x86_64-linux-gnu/4.9/include" />
           <root url="file:///usr/lib/gcc/x86_64-linux-gnu/4.9/include-fixed" />
@@ -84,6 +86,8 @@
         </CLASSES>
         <SOURCES>
           <root url="file://$MODULE_DIR$/../NuSMV-2.6.0/NuSMV" />
+          <root url="file://$MODULE_DIR$/../NuSMV-2.6.0/cudd-2.4.1.1/include" />
+          <root url="file://$MODULE_DIR$/src" />
           <root url="file:///usr/include" />
           <root url="file:///usr/lib/gcc/x86_64-linux-gnu/4.9/include" />
           <root url="file:///usr/lib/gcc/x86_64-linux-gnu/4.9/include-fixed" />
@@ -91,6 +95,73 @@
           <root url="file:///usr/lib/gcc/x86_64-linux-gnu/4.9/include/sanitizer" />
           <root url="file:///usr/local/include" />
         </SOURCES>
+        <excluded>
+          <root url="file://$MODULE_DIR$/src/smgame/smgameCmd.c" />
+          <root url="file://$MODULE_DIR$/src/addons/game/gameCheckLTLSF07_gba.h" />
+          <root url="file://$MODULE_DIR$/src/parser/Makefile.in" />
+          <root url="file://$MODULE_DIR$/src/addons/game/GamePlayer.h" />
+          <root url="file://$MODULE_DIR$/src/addons/game/gameCheckLTLSF07_gba.c" />
+          <root url="file://$MODULE_DIR$/src/addons/game/walkers/PrinterGame_private.h" />
+          <root url="file://$MODULE_DIR$/src/addons/game/GamePlayer.c" />
+          <root url="file://$MODULE_DIR$/src/addons/game/gameWriteModel.c" />
+          <root url="file://$MODULE_DIR$/src/addons/game/GameHierarchy.c" />
+          <root url="file://$MODULE_DIR$/src/addons/game/gameUnrealCore.c" />
+          <root url="file://$MODULE_DIR$/src/addons/game/GameStrategy.h" />
+          <root url="file://$MODULE_DIR$/src/addons/game/parser/game_symbols.h" />
+          <root url="file://$MODULE_DIR$/src/addons/game/GameStrategy.c" />
+          <root url="file://$MODULE_DIR$/src/addons/game/PropGame_private.h" />
+          <root url="file://$MODULE_DIR$/src/smgame/smgameInit.c" />
+          <root url="file://$MODULE_DIR$/src/addons/game/fsm/GameBddFsm.h" />
+          <root url="file://$MODULE_DIR$/src/smgame/smgameMisc.c" />
+          <root url="file://$MODULE_DIR$/src/addons/game/fsm/GameBddFsm.c" />
+          <root url="file://$MODULE_DIR$/src/addons/game/gameGeneral.c" />
+          <root url="file://$MODULE_DIR$/src/addons/game/walkers/PrinterSexpGame_private.h" />
+          <root url="file://$MODULE_DIR$/src/parser/grammar.y.1.55" />
+          <root url="file://$MODULE_DIR$/src/addons/addonsPkg.c" />
+          <root url="file://$MODULE_DIR$/src/smgame/smgameDummyMac.c" />
+          <root url="file://$MODULE_DIR$/src/addons/game/gameCheckReachAvoidSpec.c" />
+          <root url="file://$MODULE_DIR$/src/addons/game/TypeCheckerGame.h" />
+          <root url="file://$MODULE_DIR$/src/addons/game/gameVarEncoding.c" />
+          <root url="file://$MODULE_DIR$/src/smgame/smgameMain.c" />
+          <root url="file://$MODULE_DIR$/src/addons/game/gameOpt.c" />
+          <root url="file://$MODULE_DIR$/src/parser/grammar.y.2.55" />
+          <root url="file://$MODULE_DIR$/src/addons/game/TypeCheckerGame.c" />
+          <root url="file://$MODULE_DIR$/src/addons/game/gameBuildModel.c" />
+          <root url="file://$MODULE_DIR$/src/addons/game/gameCheckGenReactivityBuchiSpec.c" />
+          <root url="file://$MODULE_DIR$/src/smgame/smgameInt.h" />
+          <root url="file://$MODULE_DIR$/src/addons/game/walkers/CheckerGame_private.h" />
+          <root url="file://$MODULE_DIR$/src/addons/game/gameCheckLTLSF07.c" />
+          <root url="file://$MODULE_DIR$/src/addons/game/gameCheckLTLSF07_gba_wring.h" />
+          <root url="file://$MODULE_DIR$/src/addons/game/walkers/PrinterSexpGame.h" />
+          <root url="file://$MODULE_DIR$/src/addons/game/gameCheckLTLSF07_gba_wring.c" />
+          <root url="file://$MODULE_DIR$/src/addons/game/gamePkg.c" />
+          <root url="file://$MODULE_DIR$/src/smgame/smgameVers.c" />
+          <root url="file://$MODULE_DIR$/src/addons/game/gameReqToGame.c" />
+          <root url="file://$MODULE_DIR$/src/addons/game/PropDbGame_private.h" />
+          <root url="file://$MODULE_DIR$/src/addons/game/gameInt.h" />
+          <root url="file://$MODULE_DIR$/src/addons/game/game.h" />
+          <root url="file://$MODULE_DIR$/src/addons/game/walkers/CheckerGame.c" />
+          <root url="file://$MODULE_DIR$/src/parser/Makefile.am" />
+          <root url="file://$MODULE_DIR$/src/addons/game/PropGame.h" />
+          <root url="file://$MODULE_DIR$/src/addons/game/PropGame.c" />
+          <root url="file://$MODULE_DIR$/src/addons/game/fsm/GameSexpFsm.c" />
+          <root url="file://$MODULE_DIR$/src/addons/game/walkers/PrinterGame.h" />
+          <root url="file://$MODULE_DIR$/src/addons/game/walkers/PrinterSexpGame.c" />
+          <root url="file://$MODULE_DIR$/src/addons/game/walkers/CheckerGame.h" />
+          <root url="file://$MODULE_DIR$/src/parser/input.l.2.55" />
+          <root url="file://$MODULE_DIR$/src/addons/game/PropDbGame.h" />
+          <root url="file://$MODULE_DIR$/src/addons/game/PropDbGame.c" />
+          <root url="file://$MODULE_DIR$/src/addons/game/gameXmlReader.c" />
+          <root url="file://$MODULE_DIR$/src/addons/game/fsm/GameBeFsm.h" />
+          <root url="file://$MODULE_DIR$/src/addons/addons.h" />
+          <root url="file://$MODULE_DIR$/src/addons/game/walkers/PrinterGame.c" />
+          <root url="file://$MODULE_DIR$/src/addons/game/gameCmd.h" />
+          <root url="file://$MODULE_DIR$/src/addons/game/fsm/GameBeFsm.c" />
+          <root url="file://$MODULE_DIR$/src/addons/game/GameHierarchy.h" />
+          <root url="file://$MODULE_DIR$/src/addons/game/fsm/GameSexpFsm.h" />
+          <root url="file://$MODULE_DIR$/src/addons/game/gameFlatten.c" />
+          <root url="file://$MODULE_DIR$/src/addons/game/gameCmd.c" />
+        </excluded>
       </library>
     </orderEntry>
   </component>

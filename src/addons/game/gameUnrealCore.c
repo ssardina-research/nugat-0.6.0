@@ -681,7 +681,7 @@ Game_UnrealizableCore_Struct_create (PropGame_ptr prop,
   cls->oh = OptsHandler_create();
   cls->st = Compile_get_global_symb_table();
   cls->bool_enc = Enc_get_bool_encoding();
-  cls->bdd_enc = Enc_get_bdd_encoding();
+  cls->bdd_enc = BddFsm_get_bdd_encoding(BDD_FSM(GAME_BDD_FSM(NULL)));
   cls->dd_manager = BddEnc_get_dd_manager(cls->bdd_enc);
   cls->gh = mainGameHierarchy;
 

@@ -465,7 +465,7 @@ GameStrategy_ptr GameStrategy_construct(GameBddFsm_ptr fsm,
   self = ALLOC(GameStrategy, 1);
   GAME_STRATEGY_CHECK_INSTANCE(self);
 
-  self->bdd_enc = Enc_get_bdd_encoding();
+  self->bdd_enc = BddFsm_get_bdd_encoding(BDD_FSM(fsm));
   self->dd_manager = BddEnc_get_dd_manager(self->bdd_enc);
   self->player = player;
   self->reverseInitialQuantifiers = reverseInitialQuantifiers;

@@ -296,7 +296,7 @@ Game_RealizabilityStatus Game_UseStrongReachabilityAlgorithm(PropGame_ptr prop,
                                                     GameStrategy_ptr* strategy)
 {
   GameBddFsm_ptr fsm = PropGame_get_game_bdd_fsm(prop);
-  BddEnc_ptr enc = Enc_get_bdd_encoding();
+  BddEnc_ptr enc = BddFsm_get_bdd_encoding(BDD_FSM(fsm));
   DDMgr_ptr dd_manager = BddEnc_get_dd_manager(enc);
   const NuSMVEnv_ptr env = EnvObject_get_environment(ENV_OBJECT(dd_manager));
   OptsHandler_ptr oh = OptsHandler_create();

@@ -208,10 +208,10 @@ void Game_CommandWriteBooleanModel(FILE* ofileid)
 
   nusmv_assert((FILE *) NULL != ofileid);
 
-  enc = Enc_get_bdd_encoding();
-  st = BaseEnc_get_symb_table(BASE_ENC(enc));
   bool_fsm = PropDbGame_master_get_game_bool_sexp_fsm( \
                                      PROP_DB_GAME(PropPkg_get_prop_database()));
+  enc = BddFsm_get_bdd_encoding(BDD_FSM(bool_fsm));
+  st = BaseEnc_get_symb_table(BASE_ENC(enc));
 
   fprintf(ofileid, "\nGAME\n");
 
