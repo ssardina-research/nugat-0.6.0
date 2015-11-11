@@ -85,27 +85,27 @@ typedef void (*command_function_ptr) (PropGame_ptr prop, gameParams_ptr params);
 /* Prototypes of the command functions. */
 
 /* Commands that exists also in non-game but are overridden. */
-static int CommandGameBuildBooleanModel ARGS((int argc, char ** argv));
-static int CommandGameBuildFlatModel ARGS((int argc, char ** argv));
-static int CommandGameBuildModel ARGS((int argc, char ** argv));
-static int CommandGameCheckProperty ARGS((int argc, char** argv));
-static int CommandGameEncodeVariables ARGS((int argc, char ** argv));
-static int CommandGameFlattenHierarchy ARGS((int argc, char **argv));
-static int CommandGamePrintUsage ARGS((int argc, char** argv));
-static int CommandGameShowProperty ARGS((int argc, char** argv));
-static int CommandGameWriteModelFlatBool ARGS((int argc, char **argv));
-static int CommandGameWriteModelFlat ARGS((int argc, char **argv));
+static int CommandGameBuildBooleanModel ARGS((NuSMVEnv_ptr env,int argc, char ** argv));
+static int CommandGameBuildFlatModel ARGS((NuSMVEnv_ptr env,int argc, char ** argv));
+static int CommandGameBuildModel ARGS((NuSMVEnv_ptr env,int argc, char ** argv));
+static int CommandGameCheckProperty ARGS((NuSMVEnv_ptr env,int argc, char** argv));
+static int CommandGameEncodeVariables ARGS((NuSMVEnv_ptr env,int argc, char ** argv));
+static int CommandGameFlattenHierarchy ARGS((NuSMVEnv_ptr env,int argc, char **argv));
+static int CommandGamePrintUsage ARGS((NuSMVEnv_ptr env,int argc, char** argv));
+static int CommandGameShowProperty ARGS((NuSMVEnv_ptr env,int argc, char** argv));
+static int CommandGameWriteModelFlatBool ARGS((NuSMVEnv_ptr env,int argc, char **argv));
+static int CommandGameWriteModelFlat ARGS((NuSMVEnv_ptr env,int argc, char **argv));
 
 /* Commands specific to game. */
-static int CommandReadRatFile ARGS((int argc, char **argv));
-static int CommandCheckReachTargetSpec ARGS((int argc, char **argv));
-static int CommandCheckReachDeadlockSpec ARGS((int argc, char **argv));
-static int CommandCheckAvoidTargetSpec ARGS((int argc, char **argv));
-static int CommandCheckAvoidDeadlockSpec ARGS((int argc, char **argv));
-static int CommandCheckBuchiGameSpec ARGS((int argc, char **argv));
-static int CommandCheckLtlGameSpecSF07 ARGS((int argc, char **argv));
-static int CommandCheckGenReactivitySpec ARGS((int argc, char **argv));
-static int CommandExtractUnrealizableCore ARGS((int argc, char **argv));
+static int CommandReadRatFile ARGS((NuSMVEnv_ptr env,int argc, char **argv));
+static int CommandCheckReachTargetSpec ARGS((NuSMVEnv_ptr env,int argc, char **argv));
+static int CommandCheckReachDeadlockSpec ARGS((NuSMVEnv_ptr env,int argc, char **argv));
+static int CommandCheckAvoidTargetSpec ARGS((NuSMVEnv_ptr env,int argc, char **argv));
+static int CommandCheckAvoidDeadlockSpec ARGS((NuSMVEnv_ptr env,int argc, char **argv));
+static int CommandCheckBuchiGameSpec ARGS((NuSMVEnv_ptr env,int argc, char **argv));
+static int CommandCheckLtlGameSpecSF07 ARGS((NuSMVEnv_ptr env,int argc, char **argv));
+static int CommandCheckGenReactivitySpec ARGS((NuSMVEnv_ptr env,int argc, char **argv));
+static int CommandExtractUnrealizableCore ARGS((NuSMVEnv_ptr env,int argc, char **argv));
 
 /* Prototypes of function to print the command's usage. */
 
@@ -405,7 +405,7 @@ NodeList_ptr Game_cmd_get_specific_commands()
   SeeAlso            [ CommandReadModel ]
 
 ******************************************************************************/
-static int CommandReadRatFile(int argc, char** argv)
+static int CommandReadRatFile(NuSMVEnv_ptr env,int argc, char** argv)
 {
 #if ! HAVE_LIBEXPAT
   fprintf(nusmv_stderr,
@@ -525,7 +525,7 @@ static int UsageReadRatFile()
   SeeAlso            [ CommandFlattenHierarchy ]
 
 ******************************************************************************/
-static int CommandGameFlattenHierarchy(int argc, char** argv)
+static int CommandGameFlattenHierarchy(NuSMVEnv_ptr env,int argc, char** argv)
 {
   int c;
 
@@ -610,7 +610,7 @@ static int UsageGameFlattenHierarchy()
   SeeAlso            [ CommandEncodeVariables, compile_encode_variables ]
 
 ******************************************************************************/
-static int CommandGameEncodeVariables(int argc, char** argv)
+static int CommandGameEncodeVariables(NuSMVEnv_ptr env,int argc, char** argv)
 {
   int c;
   char* input_order_file_name = NIL(char);
@@ -708,7 +708,7 @@ static int UsageGameEncodeVariables()
                        compile_create_flat_model ]
 
 ******************************************************************************/
-static int CommandGameBuildModel(int argc, char** argv)
+static int CommandGameBuildModel(NuSMVEnv_ptr env,int argc, char** argv)
 {
   int c;
   boolean force_build = false;
@@ -839,7 +839,7 @@ static int UsageGameBuildModel()
   SeeAlso            [ CommandBuildFlatModel, compile_create_flat_model ]
 
 ******************************************************************************/
-static int CommandGameBuildFlatModel(int argc, char** argv)
+static int CommandGameBuildFlatModel(NuSMVEnv_ptr env,int argc, char** argv)
 {
   int c;
 
@@ -912,7 +912,7 @@ static int UsageGameBuildFlatModel()
                        compile_create_boolean_model ]
 
 ******************************************************************************/
-static int CommandGameBuildBooleanModel(int argc, char ** argv)
+static int CommandGameBuildBooleanModel(NuSMVEnv_ptr env,int argc, char ** argv)
 {
   int c;
   boolean forced = false;
@@ -995,7 +995,7 @@ static int UsageGameBuildBooleanModel()
   SeeAlso            [ CommandWriteModelFlat ]
 
 ******************************************************************************/
-static int CommandGameWriteModelFlat(int argc, char **argv)
+static int CommandGameWriteModelFlat(NuSMVEnv_ptr env,int argc, char **argv)
 {
   int c = 0;
   int rv = 0;
@@ -1143,7 +1143,7 @@ static int UsageGameWriteModelFlat(void)
   SeeAlso            [ CommandWriteModelFlatBool ]
 
 ******************************************************************************/
-static int CommandGameWriteModelFlatBool(int argc, char** argv)
+static int CommandGameWriteModelFlatBool(NuSMVEnv_ptr env,int argc, char** argv)
 {
   int c = 0;
   int rv = 0;
@@ -1280,7 +1280,7 @@ static int UsageGameWriteModelFlatBool(void)
   SeeAlso            [ CommandCheckProperty ]
 
 ******************************************************************************/
-static int CommandGameCheckProperty(int argc, char** argv)
+static int CommandGameCheckProperty(NuSMVEnv_ptr env,int argc, char** argv)
 {
   int c = 0;
   int prop_no = -1;
@@ -1542,7 +1542,7 @@ static int UsageGameCheckProperty()
   SeeAlso            [ CommandShowProperty ]
 
 ******************************************************************************/
-static int CommandGameShowProperty(int argc, char** argv)
+static int CommandGameShowProperty(NuSMVEnv_ptr env,int argc, char** argv)
 {
   int c;
   int retval = 0;
@@ -1870,7 +1870,7 @@ static int UsageGameShowProperty()
   SeeAlso            [ CommandPrintUsage ]
 
 ******************************************************************************/
-static int CommandGamePrintUsage(int argc, char **argv)
+static int CommandGamePrintUsage(NuSMVEnv_ptr env,int argc, char **argv)
 {
   int c;
   PropDbGame_ptr pdb;
@@ -1972,7 +1972,7 @@ static int UsageGamePrintUsage()
   SeeAlso            [ CommandCheck* ]
 
 ******************************************************************************/
-static int CommandCheckReachTargetSpec(int argc, char **argv)
+static int CommandCheckReachTargetSpec(NuSMVEnv_ptr env,int argc, char **argv)
 {
   return game_invoke_game_command(argc, argv, PropGame_ReachTarget);
 }
@@ -2064,7 +2064,7 @@ static int UsageCheckReachTargetSpec()
   SeeAlso            [ CommandCheck* ]
 
 ******************************************************************************/
-static int CommandCheckAvoidTargetSpec(int argc, char **argv)
+static int CommandCheckAvoidTargetSpec(NuSMVEnv_ptr env,int argc, char **argv)
 {
   return game_invoke_game_command(argc, argv, PropGame_AvoidTarget);
 }
@@ -2155,7 +2155,7 @@ static int UsageCheckAvoidTargetSpec()
   SeeAlso            [ CommandCheck* ]
 
 ******************************************************************************/
-static int CommandCheckReachDeadlockSpec(int argc, char **argv)
+static int CommandCheckReachDeadlockSpec(NuSMVEnv_ptr env,int argc, char **argv)
 {
   return game_invoke_game_command(argc, argv, PropGame_ReachDeadlock);
 }
@@ -2243,7 +2243,7 @@ static int UsageCheckReachDeadlockSpec()
   SeeAlso            [ CommandCheck* ]
 
 ******************************************************************************/
-static int CommandCheckAvoidDeadlockSpec(int argc, char **argv)
+static int CommandCheckAvoidDeadlockSpec(NuSMVEnv_ptr env,int argc, char **argv)
 {
   return game_invoke_game_command(argc, argv, PropGame_AvoidDeadlock);
 }
@@ -2331,7 +2331,7 @@ static int UsageCheckAvoidDeadlockSpec()
   SeeAlso            [ CommandCheck* ]
 
 ******************************************************************************/
-static int CommandCheckBuchiGameSpec(int argc, char **argv)
+static int CommandCheckBuchiGameSpec(NuSMVEnv_ptr env,int argc, char **argv)
 {
   return game_invoke_game_command(argc, argv, PropGame_BuchiGame);
 }
@@ -2419,7 +2419,7 @@ static int UsageCheckBuchiGameSpec()
   SeeAlso            [ CommandCheck* ]
 
 ******************************************************************************/
-static int CommandCheckGenReactivitySpec(int argc, char **argv)
+static int CommandCheckGenReactivitySpec(NuSMVEnv_ptr env,int argc, char **argv)
 {
   return game_invoke_game_command(argc, argv, PropGame_GenReactivity);
 }
@@ -2837,7 +2837,7 @@ static int game_invoke_game_command(int argc, char **argv, PropGame_Type type)
   SeeAlso            [ CommandCheck* ]
 
 ******************************************************************************/
-static int CommandCheckLtlGameSpecSF07(int argc, char **argv)
+static int CommandCheckLtlGameSpecSF07(NuSMVEnv_ptr env,int argc, char **argv)
 {
   int c;
   int prop_no = -1;
@@ -3273,7 +3273,7 @@ static int UsageCheckLtlGameSpecSF07()
   SeeAlso            [ CommandCheck* ]
 
 ******************************************************************************/
-static int CommandExtractUnrealizableCore(int argc, char **argv)
+static int CommandExtractUnrealizableCore(NuSMVEnv_ptr env,int argc, char **argv)
 {
   int c;
   int useMore = 0;

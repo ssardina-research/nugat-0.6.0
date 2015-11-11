@@ -155,7 +155,11 @@ Nitin Yadav - nitin.yadav@rmit.edu.au
 
     *   replaced the parameter "out" with "OSTREAM(out)"
 
+18.Warning: gameCmd.c:  initialization from incompatible pointer type {"read_rat_file",        CommandReadRatFile, 0, true},
 
+    *   added the "NuSMVEnv_ptr env" parameter in functions declaration
+        
+            static int Command...(NuSMVEnv_ptr env,...)
 
 
 ================================================================================
