@@ -1298,7 +1298,6 @@ static int CommandGameCheckProperty(NuSMVEnv_ptr env,int argc, char** argv)
   int player_no = 0; /* Valid values only 1 and 2. */
   ErrorMgr_ptr const errmgr =
             ERROR_MGR(NuSMVEnv_get_value(env, ENV_ERROR_MANAGER));
-  PropDb_ptr prop_db  = PROP_DB(NuSMVEnv_get_value(env, ENV_PROP_DB));
 
   nusmv_assert(opt_game_game(OptsHandler_create()));
 
@@ -1312,7 +1311,7 @@ static int CommandGameCheckProperty(NuSMVEnv_ptr env,int argc, char** argv)
         if (prop_no != -1) return UsageGameCheckProperty();
         if (player_no != 0) return UsageGameCheckProperty();
 
-        prop_no = PropDb_get_prop_index_from_string(prop_db,
+        prop_no = PropDb_get_prop_index_from_string(PropPkg_get_prop_database(),
                                                     util_optarg);
         if (prop_no == -1) return 1;
 
@@ -1402,20 +1401,20 @@ static int CommandGameCheckProperty(NuSMVEnv_ptr env,int argc, char** argv)
 
       /* If this is PropGame_LtlGame, then check whether Boolean model
          has been built. */
-      prop = PropDb_get_prop_at_index(prop_db, prop_no);
+      prop = PropDb_get_prop_at_index(PropPkg_get_prop_database(), prop_no);
       if ((prop != PROP(NULL)) && (Prop_get_type(prop) == PropGame_LtlGame)) {
         if (Compile_check_if_bool_model_was_built(env,nusmv_stderr, false)) {
           return 1;
         }
       }
 
-      PropDb_verify_prop_at_index(prop_db, prop_no);
+      PropDb_verify_prop_at_index(PropPkg_get_prop_database(), prop_no);
     }
     FAIL(errmgr) {
       return 1;
     }
   } else {
-    PropDbGame_ptr pdb = PROP_DB_GAME(prop_db);
+    PropDbGame_ptr pdb = PROP_DB_GAME(PropPkg_get_prop_database());
     string_ptr player_str = (string_ptr) NULL;
 
     if (player_no == 1) {
@@ -1569,7 +1568,6 @@ static int CommandGameShowProperty(NuSMVEnv_ptr env,int argc, char** argv)
   Prop_Type type = Prop_NoType;
   ErrorMgr_ptr const errmgr =
             ERROR_MGR(NuSMVEnv_get_value(env, ENV_ERROR_MANAGER));
-  PropDb_ptr prop_db  = PROP_DB(NuSMVEnv_get_value(env, ENV_PROP_DB));
 
   nusmv_assert(opt_game_game(OptsHandler_create()));
 
@@ -1614,7 +1612,7 @@ static int CommandGameShowProperty(NuSMVEnv_ptr env,int argc, char** argv)
           return UsageGameShowProperty();
         }
 
-        prop_no = PropDb_get_prop_index_from_string(prop_db,
+        prop_no = PropDb_get_prop_index_from_string(PropPkg_get_prop_database(),
                                                     util_optarg);
         if (prop_no == -1) {
           if (outFileName != NIL(char)) FREE(outFileName);
@@ -1777,7 +1775,7 @@ static int CommandGameShowProperty(NuSMVEnv_ptr env,int argc, char** argv)
 
   if (print_props_num) {
     fprintf(nusmv_stdout, "Current number of stored properties: %d\n",
-            PropDb_get_size(prop_db));
+            PropDb_get_size(PropPkg_get_prop_database()));
     if (useMore) {
       CmdClosePipe(nusmv_stdout);
       nusmv_stdout = old_nusmv_stdout;
@@ -1790,13 +1788,13 @@ static int CommandGameShowProperty(NuSMVEnv_ptr env,int argc, char** argv)
     return 0;
   }
 
-  PropDb_print_list_header(prop_db, nusmv_stdout);
+  PropDb_print_list_header(PropPkg_get_prop_database(), nusmv_stdout);
   if (prop_no != -1) {
-    retval = PropDb_print_prop_at_index(prop_db,
+    retval = PropDb_print_prop_at_index(PropPkg_get_prop_database(),
                                         nusmv_stdout,
                                         prop_no);
   } else {
-    PropDbGame_ptr pdb = PROP_DB_GAME(prop_db);
+    PropDbGame_ptr pdb = PROP_DB_GAME(PropPkg_get_prop_database());
     string_ptr player_str = (string_ptr) NULL;
 
     if (player_no == 1) {
@@ -1890,7 +1888,6 @@ static int CommandGamePrintUsage(NuSMVEnv_ptr env,int argc, char **argv)
 {
   int c;
   PropDbGame_ptr pdb;
-  PropDb_ptr prop_db  = PROP_DB(NuSMVEnv_get_value(env, ENV_PROP_DB));
 
   nusmv_assert(opt_game_game(OptsHandler_create()));
   nusmv_assert(opt_cone_of_influence(OptsHandler_create()) == false);
@@ -1920,7 +1917,7 @@ static int CommandGamePrintUsage(NuSMVEnv_ptr env,int argc, char **argv)
   fprintf(nusmv_stdout,
           "--------------------\n");
 
-  pdb = PROP_DB_GAME(prop_db);
+  pdb = PROP_DB_GAME(PropPkg_get_prop_database());
   if (PropDbGame_master_get_game_bdd_fsm(pdb) != GAME_BDD_FSM(NULL)) {
     GameBddFsm_print_info(PropDbGame_master_get_game_bdd_fsm(pdb), nusmv_stdout);
   }
@@ -2499,7 +2496,6 @@ static int game_invoke_game_command(NuSMVEnv_ptr env,int argc, char **argv, Prop
   FILE* old_nusmv_stdout = (FILE*) NULL;
   FILE* strategy_stream =(FILE*) NULL;
   char* algorithm = NIL(char);
-  PropDb_ptr prop_db  = PROP_DB(NuSMVEnv_get_value(env, ENV_PROP_DB));
 
   /* command related parameters */
   command_function_ptr command_function;
@@ -2566,7 +2562,7 @@ static int game_invoke_game_command(NuSMVEnv_ptr env,int argc, char **argv, Prop
 
     case 'n':
       if (prop_no != -1) goto game_invoke_game_command_return_usage;
-      prop_no = PropDb_get_prop_index_from_string(prop_db,
+      prop_no = PropDb_get_prop_index_from_string(PropPkg_get_prop_database(),
                                                   util_optarg);
       if (prop_no == -1) goto game_invoke_game_command_return_1;
       break;
@@ -2666,7 +2662,7 @@ static int game_invoke_game_command(NuSMVEnv_ptr env,int argc, char **argv, Prop
 
   /* The formula is specified. */
   if (prop_no != -1) {
-    Prop_ptr p = PropDb_get_prop_at_index(prop_db, prop_no);
+    Prop_ptr p = PropDb_get_prop_at_index(PropPkg_get_prop_database(), prop_no);
 
     /* Check its kind. */
     if (Prop_check_type(p, type) != 0) {
@@ -2695,7 +2691,7 @@ static int game_invoke_game_command(NuSMVEnv_ptr env,int argc, char **argv, Prop
   else {
     CATCH(errmgr) {
       int i;
-      int s = PropDb_get_size(prop_db);
+      int s = PropDb_get_size(PropPkg_get_prop_database());
 
       GameParams params;
       params.strategy_printout = strategy_printout;
@@ -2709,7 +2705,7 @@ static int game_invoke_game_command(NuSMVEnv_ptr env,int argc, char **argv, Prop
                    ((strategyFileName != NIL(char)) &&
                     (strategy_stream != (FILE*) NULL)));
       for (i=0; i < s; ++i) {
-        Prop_ptr p = PropDb_get_prop_at_index(prop_db, i);
+        Prop_ptr p = PropDb_get_prop_at_index(PropPkg_get_prop_database(), i);
 
         if (Prop_get_type(p) == type) {
           command_function(PROP_GAME(p), &params);
@@ -2875,7 +2871,6 @@ static int CommandCheckLtlGameSpecSF07(NuSMVEnv_ptr env,int argc, char **argv)
   Game_Who w = GAME_WHO_INVALID;
   ErrorMgr_ptr const errmgr =
             ERROR_MGR(NuSMVEnv_get_value(env, ENV_ERROR_MANAGER));
-  PropDb_ptr prop_db  = PROP_DB(NuSMVEnv_get_value(env, ENV_PROP_DB));
 
   nusmv_assert(opt_game_game(OptsHandler_create()));
 
@@ -2897,7 +2892,7 @@ static int CommandCheckLtlGameSpecSF07(NuSMVEnv_ptr env,int argc, char **argv)
       break;
     case 'n':
       if (prop_no != -1) { goto CommandCheckLtlGameSpecSF07_return_usage; }
-      prop_no = PropDb_get_prop_index_from_string(prop_db,
+      prop_no = PropDb_get_prop_index_from_string(PropPkg_get_prop_database(),
                                                   util_optarg);
       if (prop_no == -1) { goto CommandCheckLtlGameSpecSF07_return_1; }
       break;
@@ -3053,7 +3048,7 @@ static int CommandCheckLtlGameSpecSF07(NuSMVEnv_ptr env,int argc, char **argv)
 
   /* the formula is specified. check its kind */
   if (prop_no != -1) {
-    if (Prop_check_type(PropDb_get_prop_at_index(prop_db,
+    if (Prop_check_type(PropDb_get_prop_at_index(PropPkg_get_prop_database(),
                                                  prop_no),
                         PropGame_LtlGame) != 0) {
       goto CommandCheckLtlGameSpecSF07_return_1;
@@ -3063,7 +3058,7 @@ static int CommandCheckLtlGameSpecSF07(NuSMVEnv_ptr env,int argc, char **argv)
   /* one formula is specified. check it alone */
   if (prop_no != -1) {
     CATCH(errmgr) {
-      Prop_ptr p = PropDb_get_prop_at_index(prop_db,
+      Prop_ptr p = PropDb_get_prop_at_index(PropPkg_get_prop_database(),
                                             prop_no);
       nusmv_assert(Prop_get_type(p) == PropGame_LtlGame);
 
@@ -3090,7 +3085,7 @@ static int CommandCheckLtlGameSpecSF07(NuSMVEnv_ptr env,int argc, char **argv)
   else {
     CATCH(errmgr) {
       int i;
-      int s = PropDb_get_size(prop_db);
+      int s = PropDb_get_size(PropPkg_get_prop_database());
 
       GameParams params;
       params.strategy_printout = strategy_printout;
@@ -3106,7 +3101,7 @@ static int CommandCheckLtlGameSpecSF07(NuSMVEnv_ptr env,int argc, char **argv)
                     (FILE*) NULL != strategy_stream) );
 
       for (i=0; i < s; ++i) {
-        Prop_ptr p = PropDb_get_prop_at_index(prop_db, i);
+        Prop_ptr p = PropDb_get_prop_at_index(PropPkg_get_prop_database(), i);
 
         if (Prop_get_type(p) == PropGame_LtlGame) {
           Game_CheckLtlGameSpecSF07(PROP_GAME(p), &params, kmin, kmax, w);
@@ -3316,7 +3311,7 @@ static int CommandExtractUnrealizableCore(NuSMVEnv_ptr env,int argc, char **argv
   int status;
   ErrorMgr_ptr const errmgr =
             ERROR_MGR(NuSMVEnv_get_value(env, ENV_ERROR_MANAGER));
-  PropDb_ptr prop_db  = PROP_DB(NuSMVEnv_get_value(env, ENV_PROP_DB));
+
 
   nusmv_assert(opt_game_game(OptsHandler_create()));
 
@@ -3339,7 +3334,7 @@ static int CommandExtractUnrealizableCore(NuSMVEnv_ptr env,int argc, char **argv
       break;
     case 'n':
       if (prop_no != -1) { goto CommandExtractUnrealizableCore_return_usage; }
-      prop_no = PropDb_get_prop_index_from_string(prop_db,
+      prop_no = PropDb_get_prop_index_from_string(PropPkg_get_prop_database(),
                                                   util_optarg);
       if (prop_no == -1) { goto CommandExtractUnrealizableCore_return_1; }
       break;
@@ -3507,7 +3502,7 @@ static int CommandExtractUnrealizableCore(NuSMVEnv_ptr env,int argc, char **argv
   /* One formula is specified. Process it. */
   if (prop_no != -1) {
     CATCH(errmgr) {
-      Prop_ptr p = PropDb_get_prop_at_index(prop_db,
+      Prop_ptr p = PropDb_get_prop_at_index(PropPkg_get_prop_database(),
                                             prop_no);
 
       PROP_CHECK_INSTANCE(p);
@@ -3536,10 +3531,10 @@ static int CommandExtractUnrealizableCore(NuSMVEnv_ptr env,int argc, char **argv
   else {
     CATCH(errmgr) {
       int i;
-      int s = PropDb_get_size(prop_db);
+      int s = PropDb_get_size(PropPkg_get_prop_database());
 
       for (i = 0; i < s; ++i) {
-        Prop_ptr p = PropDb_get_prop_at_index(prop_db, i);
+        Prop_ptr p = PropDb_get_prop_at_index(PropPkg_get_prop_database(), i);
 
         PROP_CHECK_INSTANCE(p);
         if (Prop_get_type(p) != PropGame_GenReactivity) {
