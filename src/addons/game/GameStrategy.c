@@ -964,13 +964,16 @@ bdd_ptr GameStrategy_get_moves(GameStrategy_ptr self)
   SeeAlso     [ ]
 
 ******************************************************************************/
-void GameStrategy_print_module(GameStrategy_ptr self,
+void GameStrategy_print_module(const NuSMVEnv_ptr env,
+                               GameStrategy_ptr self,
                                NodeList_ptr vars,
                                NodeList_ptr vars_to_decl,
                                gameParams_ptr params)
 {
   /* an internal static autoincrement variable */
   static int module_incr_number = 0;
+  const MasterPrinter_ptr wffprint =
+            MASTER_PRINTER(NuSMVEnv_get_value(env, ENV_WFF_PRINTER));
 
   SymbTable_ptr st;
   FILE* out;
@@ -1005,7 +1008,7 @@ void GameStrategy_print_module(GameStrategy_ptr self,
       var_name = NodeList_get_elem_at(vars_to_decl, iter);
       var_type = SymbTable_get_var_type(st, var_name);
       fprintf(out, "  ");
-      print_node(out, var_name);
+      print_node(wffprint,out, var_name);
       fprintf(out, ": ");
       SymbType_print(var_type, out);
       fprintf(out, ";\n");

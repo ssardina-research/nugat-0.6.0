@@ -131,7 +131,8 @@ GameStrategy_get_opponent_deadlock ARGS((GameStrategy_ptr self));
 
 EXTERN bdd_ptr GameStrategy_get_moves ARGS((GameStrategy_ptr self));
 
-EXTERN void GameStrategy_print_module ARGS((GameStrategy_ptr self,
+EXTERN void GameStrategy_print_module ARGS((const NuSMVEnv_ptr env,
+                                            GameStrategy_ptr self,
                                             NodeList_ptr vars,
                                             NodeList_ptr vars_to_decl,
                                             gameParams_ptr params));

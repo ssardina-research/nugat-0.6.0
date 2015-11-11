@@ -106,6 +106,53 @@ Nitin Yadav - nitin.yadav@rmit.edu.au
                 
                 BddFsm_get_bdd_encoding(BDD_FSM(GAME_BDD_FSM(NULL)));
                 BddFsm_get_bdd_encoding(BDD_FSM(GAME_SEXP_FSM(NULL)));
+                
+16.Warning: GameStrategy.c: passing argument 1 of ‘print_node’ from incompatible pointer type
+   
+           -replace print_node(...) with print_node(wffprint,...)
+           
+   changed this functions in GameStrategy(.c/.h)
+   
+           GameStrategy_print_module(const NuSMVEnv_ptr env,...)
+           
+           -added this line in head of GameStrategy_print_module() 
+                   
+                   const MasterPrinter_ptr wffprint = _PRINTER(NuSMVEnv_get_value(env, ENV_WFF_PRINTER));
+   
+   
+   changed this functions in smgameMain.c
+   
+           main()
+                   -insert in head
+                           
+                           NuSMVEnv_ptr env = NuSMVEnv_create();
+                       
+                   -added first parameter 'env'
+   
+                          NuSMVCore_init(env,...)
+                          NuSMVCore_init_cmd_options(env)
+                          sm_ParseLineOptions(env,...)
+                          Cmd_CommandExecute(env,...)
+          
+           UsagePrint()
+   
+                   -added first parameter 'env'
+                   
+                           UsagePrint(const NuSMVEnv_ptr env,...)
+                           get_preprocessors_num(env,...)
+                           get_preprocessor_names(env,...)
+                           
+           sm_ParseLineOptions()
+           
+                   -added parameter 'env'
+                           
+                           sm_ParseLineOptions(const NuSMVEnv_ptr env,...)
+                           set_pp_list(...,env)
+                           UsagePrint(env,...)
+                           
+17.Warning: GameStrategy.c: passing argument 2 of ‘SymbType_print’ from incompatible pointer type
+
+    *   
 
 
 

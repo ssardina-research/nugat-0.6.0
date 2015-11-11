@@ -83,9 +83,9 @@ EXTERN GameParams gameParams;
 /* Static function prototypes                                                */
 /*---------------------------------------------------------------------------*/
 
-static void UsagePrint ARGS((char * program, char * unknown_option));
+static void UsagePrint ARGS((const NuSMVEnv_ptr env,char * program, char * unknown_option));
 static void BannerPrint ARGS((FILE * file));
-static void sm_ParseLineOptions ARGS((int argc, char ** argv,
+static void sm_ParseLineOptions ARGS((const NuSMVEnv_ptr env,int argc, char ** argv,
                                       OptsHandler_ptr options));
 
 /**AutomaticEnd***************************************************************/
@@ -109,6 +109,7 @@ static void sm_ParseLineOptions ARGS((int argc, char ** argv,
 int main(int  argc, char ** argv)
 {
   int status = 0;
+  NuSMVEnv_ptr env = NuSMVEnv_create();
 
   boolean requires_shutdown = true;
   FP_V_V iq_fns[][2] = {{NuGaTAddons_Init, NuGaTAddons_Quit}};
@@ -120,10 +121,10 @@ int main(int  argc, char ** argv)
   NuSMVCore_set_tool_name("NuGAT-0.5.4");
 
   /* Initializes all packages, having the list of init/quit mfunctions */
-  NuSMVCore_init(iq_fns, sizeof(iq_fns)/sizeof(iq_fns[0]));
+  NuSMVCore_init(env,iq_fns, sizeof(iq_fns)/sizeof(iq_fns[0]));
 
   /* Adds the command line options of NuSMV */
-  NuSMVCore_init_cmd_options();
+  NuSMVCore_init_cmd_options(env);
 
   /* Add [or remove] custom command line options */
   //main_init_custom_cmd_options();
@@ -134,7 +135,7 @@ int main(int  argc, char ** argv)
   int quit_flag;
   quit_flag = 0;
 
-  sm_ParseLineOptions(argc, argv, OptsHandler_create());
+  sm_ParseLineOptions(env,argc, argv, OptsHandler_create());
 
   if (!opt_batch(OptsHandler_create())) { /* interactive mode */
     /* Initiliazes the commands to handle with options. */
@@ -154,7 +155,7 @@ int main(int  argc, char ** argv)
         char* command = ALLOC(char,
         strlen(NuSMV_CMD_LINE) + strlen("source ") + 1);
         sprintf(command, "source %s", NuSMV_CMD_LINE);
-        quit_flag = Cmd_CommandExecute(command);
+        quit_flag = Cmd_CommandExecute(env,command);
         FREE(command);
       }
       else {
@@ -165,7 +166,7 @@ int main(int  argc, char ** argv)
       NuSMV_CMD_LINE=(char*)NULL;
     }
     while (quit_flag >= 0) {
-      quit_flag = Cmd_CommandExecute("source -ip -");
+      quit_flag = Cmd_CommandExecute(env,"source -ip -");
     }
     status = 0;
   }
@@ -230,7 +231,7 @@ int main(int  argc, char ** argv)
   SeeAlso     [ ]
 
 ******************************************************************************/
-static void UsagePrint(char * program, char * unknown_option)
+static void UsagePrint(const NuSMVEnv_ptr env,char * program, char * unknown_option)
 {
   char *libraryName;
 
@@ -307,8 +308,8 @@ static void UsagePrint(char * program, char * unknown_option)
             "\t\t\t to run (in the order given) on the input file.\n"\
             "\t\t\t The list must be in double quotes if there is more\n"\
             "\t\t\t than one pre-processor named.\n");
-    if (get_preprocessors_num() > 0) {
-      char* preps = get_preprocessor_names();
+    if (get_preprocessors_num(env) > 0) {
+      char* preps = get_preprocessor_names(env);
       fprintf(nusmv_stderr, "\t\t\t The available preprocessors are: %s\n", preps);
       FREE(preps);
     }
@@ -435,7 +436,7 @@ static void BannerPrint(FILE * file)
   SeeAlso     [ ]
 
 ******************************************************************************/
-static void sm_ParseLineOptions(int argc, char ** argv, OptsHandler_ptr options)
+static void sm_ParseLineOptions(const NuSMVEnv_ptr env,int argc, char ** argv, OptsHandler_ptr options)
 {
   /* parses the Program Name */
   argc--;
@@ -444,11 +445,11 @@ static void sm_ParseLineOptions(int argc, char ** argv, OptsHandler_ptr options)
   while (argc > 0) {
     if (strcmp(*argv, "-h") == 0) {
       argv++; argc--;
-      UsagePrint(get_pgm_path(options), NULL);
+      UsagePrint(env,get_pgm_path(options), NULL);
     }
     else if (strcmp(*argv, "-help") == 0) {
       argv++; argc--;
-      UsagePrint(get_pgm_path(options), NULL);
+      UsagePrint(env,get_pgm_path(options), NULL);
     }
     else if (strcmp(*argv,"-quiet") == 0) {
       argv++; argc--;
@@ -604,7 +605,7 @@ static void sm_ParseLineOptions(int argc, char ** argv, OptsHandler_ptr options)
         preprocessors = *(argv++);
         pp_list = get_pp_list(options);
         if (strcmp(pp_list, "") == 0) {
-          set_pp_list(options, preprocessors);
+          set_pp_list(options, preprocessors,env);
         }
         else {
           char* new_pp_list;
@@ -613,7 +614,7 @@ static void sm_ParseLineOptions(int argc, char ** argv, OptsHandler_ptr options)
           strcpy(new_pp_list, pp_list);
           strcat(new_pp_list, " ");
           strcat(new_pp_list, preprocessors);
-          set_pp_list(options, new_pp_list);
+          set_pp_list(options, new_pp_list,env);
           FREE(new_pp_list);
         }
 
@@ -950,7 +951,7 @@ static void sm_ParseLineOptions(int argc, char ** argv, OptsHandler_ptr options)
       continue;
     }
     else  {
-      UsagePrint(get_pgm_path(options), *argv);
+      UsagePrint(env,get_pgm_path(options), *argv);
     }
   }
 }
