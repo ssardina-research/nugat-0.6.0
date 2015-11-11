@@ -1419,9 +1419,9 @@ static int CommandGameCheckProperty(NuSMVEnv_ptr env,int argc, char** argv)
         string_ptr player_str = (string_ptr) NULL;
 
         if (player_no == 1) {
-            player_str = UStringMgr_find_string(USTRING_MGR,PLAYER_NAME_1);
+            player_str = UStringMgr_find_string(USTRING_MGR(NuSMVEnv_get_value(env, ENV_STRING_MGR)),PLAYER_NAME_1);
         } else if (player_no == 2) {
-            player_str = UStringMgr_find_string(USTRING_MGR,PLAYER_NAME_2);
+            player_str = UStringMgr_find_string(USTRING_MGR(NuSMVEnv_get_value(env, ENV_STRING_MGR)),PLAYER_NAME_2);
         } else {
             nusmv_assert(player_no == 0);
         }
@@ -1800,9 +1800,9 @@ static int CommandGameShowProperty(NuSMVEnv_ptr env,int argc, char** argv)
         string_ptr player_str = (string_ptr) NULL;
 
         if (player_no == 1) {
-            player_str = UStringMgr_find_string(USTRING_MGR,PLAYER_NAME_1);
+            player_str = UStringMgr_find_string(USTRING_MGR(NuSMVEnv_get_value(env, ENV_STRING_MGR)),PLAYER_NAME_1);
         } else if (player_no == 2) {
-            player_str = UStringMgr_find_string(USTRING_MGR,PLAYER_NAME_2);
+            player_str = UStringMgr_find_string(USTRING_MGR(NuSMVEnv_get_value(env, ENV_STRING_MGR)),PLAYER_NAME_2);
         } else {
             nusmv_assert(player_no == 0);
         }

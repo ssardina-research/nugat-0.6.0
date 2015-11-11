@@ -197,6 +197,10 @@ Nitin Yadav - nitin.yadav@rmit.edu.au
     *   replaced with variable "prop_db" and declaration
     
             PropDb_ptr prop_db  = PROP_DB(NuSMVEnv_get_value(env, ENV_PROP_DB));
+            
+23.Error: gameCmd.c: ‘USTRING_MGR’ undeclared (first use in this function)
+
+    *   *   'USTRING_MGR' has been replaced by 'USTRING_MGR(NuSMVEnv_get_value(env, ENV_STRING_MGR))'
 
 ================================================================================
 EOF
