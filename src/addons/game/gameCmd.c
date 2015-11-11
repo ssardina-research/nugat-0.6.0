@@ -86,66 +86,66 @@ typedef void (*command_function_ptr) (PropGame_ptr prop, gameParams_ptr params);
 
 /* Commands that exists also in non-game but are overridden. */
 static int CommandGameBuildBooleanModel ARGS((NuSMVEnv_ptr env,int argc, char ** argv));
-static int CommandGameBuildFlatModel ARGS((NuSMVEnv_ptr env,int argc, char ** argv));
-static int CommandGameBuildModel ARGS((NuSMVEnv_ptr env,int argc, char ** argv));
-static int CommandGameCheckProperty ARGS((NuSMVEnv_ptr env,int argc, char** argv));
-static int CommandGameEncodeVariables ARGS((NuSMVEnv_ptr env,int argc, char ** argv));
-static int CommandGameFlattenHierarchy ARGS((NuSMVEnv_ptr env,int argc, char **argv));
-static int CommandGamePrintUsage ARGS((NuSMVEnv_ptr env,int argc, char** argv));
-static int CommandGameShowProperty ARGS((NuSMVEnv_ptr env,int argc, char** argv));
-static int CommandGameWriteModelFlatBool ARGS((NuSMVEnv_ptr env,int argc, char **argv));
-static int CommandGameWriteModelFlat ARGS((NuSMVEnv_ptr env,int argc, char **argv));
+                                        static int CommandGameBuildFlatModel ARGS((NuSMVEnv_ptr env,int argc, char ** argv));
+                                        static int CommandGameBuildModel ARGS((NuSMVEnv_ptr env,int argc, char ** argv));
+                                        static int CommandGameCheckProperty ARGS((NuSMVEnv_ptr env,int argc, char** argv));
+                                        static int CommandGameEncodeVariables ARGS((NuSMVEnv_ptr env,int argc, char ** argv));
+                                        static int CommandGameFlattenHierarchy ARGS((NuSMVEnv_ptr env,int argc, char **argv));
+                                        static int CommandGamePrintUsage ARGS((NuSMVEnv_ptr env,int argc, char** argv));
+                                        static int CommandGameShowProperty ARGS((NuSMVEnv_ptr env,int argc, char** argv));
+                                        static int CommandGameWriteModelFlatBool ARGS((NuSMVEnv_ptr env,int argc, char **argv));
+                                        static int CommandGameWriteModelFlat ARGS((NuSMVEnv_ptr env,int argc, char **argv));
 
 /* Commands specific to game. */
-static int CommandReadRatFile ARGS((NuSMVEnv_ptr env,int argc, char **argv));
-static int CommandCheckReachTargetSpec ARGS((NuSMVEnv_ptr env,int argc, char **argv));
-static int CommandCheckReachDeadlockSpec ARGS((NuSMVEnv_ptr env,int argc, char **argv));
-static int CommandCheckAvoidTargetSpec ARGS((NuSMVEnv_ptr env,int argc, char **argv));
-static int CommandCheckAvoidDeadlockSpec ARGS((NuSMVEnv_ptr env,int argc, char **argv));
-static int CommandCheckBuchiGameSpec ARGS((NuSMVEnv_ptr env,int argc, char **argv));
-static int CommandCheckLtlGameSpecSF07 ARGS((NuSMVEnv_ptr env,int argc, char **argv));
-static int CommandCheckGenReactivitySpec ARGS((NuSMVEnv_ptr env,int argc, char **argv));
-static int CommandExtractUnrealizableCore ARGS((NuSMVEnv_ptr env,int argc, char **argv));
+                                        static int CommandReadRatFile ARGS((NuSMVEnv_ptr env,int argc, char **argv));
+                                        static int CommandCheckReachTargetSpec ARGS((NuSMVEnv_ptr env,int argc, char **argv));
+                                        static int CommandCheckReachDeadlockSpec ARGS((NuSMVEnv_ptr env,int argc, char **argv));
+                                        static int CommandCheckAvoidTargetSpec ARGS((NuSMVEnv_ptr env,int argc, char **argv));
+                                        static int CommandCheckAvoidDeadlockSpec ARGS((NuSMVEnv_ptr env,int argc, char **argv));
+                                        static int CommandCheckBuchiGameSpec ARGS((NuSMVEnv_ptr env,int argc, char **argv));
+                                        static int CommandCheckLtlGameSpecSF07 ARGS((NuSMVEnv_ptr env,int argc, char **argv));
+                                        static int CommandCheckGenReactivitySpec ARGS((NuSMVEnv_ptr env,int argc, char **argv));
+                                        static int CommandExtractUnrealizableCore ARGS((NuSMVEnv_ptr env,int argc, char **argv));
 
 /* Prototypes of function to print the command's usage. */
 
 /* Commands that exists also in non-game but are overridden. */
-static int UsageGameBuildBooleanModel ARGS((void));
-static int UsageGameBuildFlatModel ARGS((void));
-static int UsageGameBuildModel ARGS((void));
-static int UsageGameCheckProperty ARGS((void));
-static int UsageGameEncodeVariables ARGS((void));
-static int UsageGameFlattenHierarchy ARGS((void));
-static int UsageGamePrintUsage ARGS((void));
-static int UsageGameShowProperty ARGS((void));
-static int UsageGameWriteModelFlat ARGS((void));
-static int UsageGameWriteModelFlatBool ARGS((void));
+                                        static int UsageGameBuildBooleanModel ARGS((void));
+                                        static int UsageGameBuildFlatModel ARGS((void));
+                                        static int UsageGameBuildModel ARGS((void));
+                                        static int UsageGameCheckProperty ARGS((void));
+                                        static int UsageGameEncodeVariables ARGS((void));
+                                        static int UsageGameFlattenHierarchy ARGS((void));
+                                        static int UsageGamePrintUsage ARGS((void));
+                                        static int UsageGameShowProperty ARGS((void));
+                                        static int UsageGameWriteModelFlat ARGS((void));
+                                        static int UsageGameWriteModelFlatBool ARGS((void));
 
 /* Commands specific to game. */
-static int UsageReadRatFile ARGS((void));
-static int UsageCheckReachTargetSpec ARGS((void));
-static int UsageCheckReachDeadlockSpec ARGS((void));
-static int UsageCheckAvoidTargetSpec ARGS((void));
-static int UsageCheckAvoidDeadlockSpec ARGS((void));
-static int UsageCheckBuchiGameSpec ARGS((void));
-static int UsageCheckLtlGameSpecSF07 ARGS((void));
-static int UsageCheckGenReactivitySpec ARGS((void));
-static int UsageExtractUnrealizableCore ARGS((void));
+                                        static int UsageReadRatFile ARGS((void));
+                                        static int UsageCheckReachTargetSpec ARGS((void));
+                                        static int UsageCheckReachDeadlockSpec ARGS((void));
+                                        static int UsageCheckAvoidTargetSpec ARGS((void));
+                                        static int UsageCheckAvoidDeadlockSpec ARGS((void));
+                                        static int UsageCheckBuchiGameSpec ARGS((void));
+                                        static int UsageCheckLtlGameSpecSF07 ARGS((void));
+                                        static int UsageCheckGenReactivitySpec ARGS((void));
+                                        static int UsageExtractUnrealizableCore ARGS((void));
 
 /* Prototypes of non-command functions. */
 
-static int game_invoke_game_command ARGS((NuSMVEnv_ptr env,
-                                          int argc,
-                                          char **argv,
-                                          PropGame_Type type));
-static NodeList_ptr game_cmd_init_commands_list ARGS((CommandDescr_t *commands,
-                                                      int len));
+                                        static int game_invoke_game_command ARGS((NuSMVEnv_ptr env,
+                                                                                  int argc,
+                                                                                  char **argv,
+                                                                                  PropGame_Type type));
+                                        static NodeList_ptr game_cmd_init_commands_list ARGS((CommandDescr_t *commands,
+                                                                                              int len));
 
 /*---------------------------------------------------------------------------*/
 /* Variable declarations                                                     */
 /*---------------------------------------------------------------------------*/
 
-EXTERN FILE* nusmv_stdout;
+                                        EXTERN FILE* nusmv_stdout;
 EXTERN FILE* nusmv_stderr;
 
 /**Variable********************************************************************
@@ -160,37 +160,37 @@ EXTERN FILE* nusmv_stderr;
 
 ******************************************************************************/
 static CommandDescr_t generic_commands[] = {
-  {"alias",                (PFI) NULL, 0, false},
-  {"clean_bdd_cache",      (PFI) NULL, 0, false},
-  {"dynamic_var_ordering", (PFI) NULL, 0, false},
-  {"echo",                 (PFI) NULL, 0, false},
-  {"get_internal_status",  (PFI) NULL, 0, false},
-  /* go is here for now as its implementation uses only calls to
-     commands and with options that are appropriately overloaded. In a
-     sense that works because its subroutines are virtual functions
-     using late binding and no dependent options.*/
-  {"go",                   (PFI) NULL, 0, false},
-  {"help",                 (PFI) NULL, 0, false},
-  {"history",              (PFI) NULL, 0, false},
-  {"print_bdd_stats",      (PFI) NULL, 0, false},
-  {"print_iwls95options",  (PFI) NULL, 0, false},
-  {"print_formula",        (PFI) NULL, 0, false},
-  {"quit",                 (PFI) NULL, 0, false},
-  {"read_model",           (PFI) NULL, 0, false},
-  {"read_rat_file",        CommandReadRatFile, 0, true},
-  {"reset",                (PFI) NULL, 0, false},
-  {"set",                  (PFI) NULL, 0, false},
-  {"set_bdd_parameters",   (PFI) NULL, 0, false},
-  {"show_vars",            (PFI) NULL, 0, false},
-  {"source",               (PFI) NULL, 0, false},
-  {"time",                 (PFI) NULL, 0, false},
-  {"unalias",              (PFI) NULL, 0, false},
-  {"unset",                (PFI) NULL, 0, false},
-  {"usage",                (PFI) NULL, 0, false},
-  {"which",                (PFI) NULL, 0, false},
-  {"write_order",          (PFI) NULL, 0, false},
-  {"_memory_profile",      (PFI) NULL, 0, false},
-  {"_show_help",           (PFI) NULL, 0, false}
+        {"alias",                (PFI) NULL, 0, false},
+        {"clean_bdd_cache",      (PFI) NULL, 0, false},
+        {"dynamic_var_ordering", (PFI) NULL, 0, false},
+        {"echo",                 (PFI) NULL, 0, false},
+        {"get_internal_status",  (PFI) NULL, 0, false},
+        /* go is here for now as its implementation uses only calls to
+           commands and with options that are appropriately overloaded. In a
+           sense that works because its subroutines are virtual functions
+           using late binding and no dependent options.*/
+        {"go",                   (PFI) NULL, 0, false},
+        {"help",                 (PFI) NULL, 0, false},
+        {"history",              (PFI) NULL, 0, false},
+        {"print_bdd_stats",      (PFI) NULL, 0, false},
+        {"print_iwls95options",  (PFI) NULL, 0, false},
+        {"print_formula",        (PFI) NULL, 0, false},
+        {"quit",                 (PFI) NULL, 0, false},
+        {"read_model",           (PFI) NULL, 0, false},
+        {"read_rat_file",        CommandReadRatFile, 0, true},
+        {"reset",                (PFI) NULL, 0, false},
+        {"set",                  (PFI) NULL, 0, false},
+        {"set_bdd_parameters",   (PFI) NULL, 0, false},
+        {"show_vars",            (PFI) NULL, 0, false},
+        {"source",               (PFI) NULL, 0, false},
+        {"time",                 (PFI) NULL, 0, false},
+        {"unalias",              (PFI) NULL, 0, false},
+        {"unset",                (PFI) NULL, 0, false},
+        {"usage",                (PFI) NULL, 0, false},
+        {"which",                (PFI) NULL, 0, false},
+        {"write_order",          (PFI) NULL, 0, false},
+        {"_memory_profile",      (PFI) NULL, 0, false},
+        {"_show_help",           (PFI) NULL, 0, false}
 };
 
 /**Variable********************************************************************
@@ -213,16 +213,16 @@ static CommandDescr_t generic_commands[] = {
    the commands, so not doing it for now.
 */
 static CommandDescr_t dependent_commands[] = {
-  {"build_boolean_model", CommandGameBuildBooleanModel,  0, false},
-  {"build_flat_model",    CommandGameBuildFlatModel,     0, false},
-  {"build_model",         CommandGameBuildModel,         0, false},
-  {"check_property",      CommandGameCheckProperty,      0, true},
-  {"encode_variables",    CommandGameEncodeVariables,    0, false},
-  {"flatten_hierarchy",   CommandGameFlattenHierarchy,   0, false},
-  {"print_usage",         CommandGamePrintUsage,         0, true},
-  {"show_property",       CommandGameShowProperty,       0, true},
-  {"write_boolean_model", CommandGameWriteModelFlatBool, 0, true},
-  {"write_flat_model",    CommandGameWriteModelFlat,     0, true}
+        {"build_boolean_model", CommandGameBuildBooleanModel,  0, false},
+        {"build_flat_model",    CommandGameBuildFlatModel,     0, false},
+        {"build_model",         CommandGameBuildModel,         0, false},
+        {"check_property",      CommandGameCheckProperty,      0, true},
+        {"encode_variables",    CommandGameEncodeVariables,    0, false},
+        {"flatten_hierarchy",   CommandGameFlattenHierarchy,   0, false},
+        {"print_usage",         CommandGamePrintUsage,         0, true},
+        {"show_property",       CommandGameShowProperty,       0, true},
+        {"write_boolean_model", CommandGameWriteModelFlatBool, 0, true},
+        {"write_flat_model",    CommandGameWriteModelFlat,     0, true}
 };
 
 /**Variable********************************************************************
@@ -236,14 +236,14 @@ static CommandDescr_t dependent_commands[] = {
 
 ******************************************************************************/
 static CommandDescr_t specific_commands[] = {
-  {"check_reach_target",        CommandCheckReachTargetSpec,    0, true},
-  {"check_reach_deadlock",      CommandCheckReachDeadlockSpec,  0, true},
-  {"check_avoid_target",        CommandCheckAvoidTargetSpec,    0, true},
-  {"check_avoid_deadlock",      CommandCheckAvoidDeadlockSpec,  0, true},
-  {"check_buchi_game",          CommandCheckBuchiGameSpec,      0, true},
-  {"check_ltlgame_sf07",        CommandCheckLtlGameSpecSF07,    0, true},
-  {"check_gen_reactivity",      CommandCheckGenReactivitySpec,  0, true},
-  {"extract_unrealizable_core", CommandExtractUnrealizableCore, 0, true}
+        {"check_reach_target",        CommandCheckReachTargetSpec,    0, true},
+        {"check_reach_deadlock",      CommandCheckReachDeadlockSpec,  0, true},
+        {"check_avoid_target",        CommandCheckAvoidTargetSpec,    0, true},
+        {"check_avoid_deadlock",      CommandCheckAvoidDeadlockSpec,  0, true},
+        {"check_buchi_game",          CommandCheckBuchiGameSpec,      0, true},
+        {"check_ltlgame_sf07",        CommandCheckLtlGameSpecSF07,    0, true},
+        {"check_gen_reactivity",      CommandCheckGenReactivitySpec,  0, true},
+        {"extract_unrealizable_core", CommandExtractUnrealizableCore, 0, true}
 };
 
 /**Variable********************************************************************
@@ -277,22 +277,22 @@ static NodeList_ptr specific_commands_list = NODE_LIST(NULL);
 ******************************************************************************/
 void Game_init_cmd()
 {
-  nusmv_assert(generic_commands_list == NODE_LIST(NULL));
-  nusmv_assert(dependent_commands_list == NODE_LIST(NULL));
-  nusmv_assert(specific_commands_list == NODE_LIST(NULL));
+    nusmv_assert(generic_commands_list == NODE_LIST(NULL));
+    nusmv_assert(dependent_commands_list == NODE_LIST(NULL));
+    nusmv_assert(specific_commands_list == NODE_LIST(NULL));
 
-  generic_commands_list =
-    game_cmd_init_commands_list(generic_commands,
-                                (sizeof(generic_commands) /
-                                 sizeof(generic_commands[0])));
-  dependent_commands_list =
-    game_cmd_init_commands_list(dependent_commands,
-                                (sizeof(dependent_commands) /
-                                 sizeof(dependent_commands[0])));
-  specific_commands_list =
-    game_cmd_init_commands_list(specific_commands,
-                                (sizeof(specific_commands) /
-                                 sizeof(specific_commands[0])));
+    generic_commands_list =
+            game_cmd_init_commands_list(generic_commands,
+                                        (sizeof(generic_commands) /
+                                         sizeof(generic_commands[0])));
+    dependent_commands_list =
+            game_cmd_init_commands_list(dependent_commands,
+                                        (sizeof(dependent_commands) /
+                                         sizeof(dependent_commands[0])));
+    specific_commands_list =
+            game_cmd_init_commands_list(specific_commands,
+                                        (sizeof(specific_commands) /
+                                         sizeof(specific_commands[0])));
 }
 
 /**Function********************************************************************
@@ -308,16 +308,16 @@ void Game_init_cmd()
 ******************************************************************************/
 void Game_quit_cmd()
 {
-  nusmv_assert(generic_commands_list != NODE_LIST(NULL));
-  nusmv_assert(dependent_commands_list != NODE_LIST(NULL));
-  nusmv_assert(specific_commands_list != NODE_LIST(NULL));
+    nusmv_assert(generic_commands_list != NODE_LIST(NULL));
+    nusmv_assert(dependent_commands_list != NODE_LIST(NULL));
+    nusmv_assert(specific_commands_list != NODE_LIST(NULL));
 
-  NodeList_destroy(generic_commands_list);
-  generic_commands_list = NODE_LIST(NULL);
-  NodeList_destroy(dependent_commands_list);
-  dependent_commands_list = NODE_LIST(NULL);
-  NodeList_destroy(specific_commands_list);
-  specific_commands_list = NODE_LIST(NULL);
+    NodeList_destroy(generic_commands_list);
+    generic_commands_list = NODE_LIST(NULL);
+    NodeList_destroy(dependent_commands_list);
+    dependent_commands_list = NODE_LIST(NULL);
+    NodeList_destroy(specific_commands_list);
+    specific_commands_list = NODE_LIST(NULL);
 }
 
 /**Function********************************************************************
@@ -334,8 +334,8 @@ void Game_quit_cmd()
 ******************************************************************************/
 NodeList_ptr Game_cmd_get_generic_commands()
 {
-  nusmv_assert(generic_commands_list != NODE_LIST(NULL));
-  return generic_commands_list;
+    nusmv_assert(generic_commands_list != NODE_LIST(NULL));
+    return generic_commands_list;
 }
 
 /**Function********************************************************************
@@ -352,8 +352,8 @@ NodeList_ptr Game_cmd_get_generic_commands()
 ******************************************************************************/
 NodeList_ptr Game_cmd_get_dependent_commands()
 {
-  nusmv_assert(dependent_commands_list != NODE_LIST(NULL));
-  return dependent_commands_list;
+    nusmv_assert(dependent_commands_list != NODE_LIST(NULL));
+    return dependent_commands_list;
 }
 
 /**Function********************************************************************
@@ -370,8 +370,8 @@ NodeList_ptr Game_cmd_get_dependent_commands()
 ******************************************************************************/
 NodeList_ptr Game_cmd_get_specific_commands()
 {
-  nusmv_assert(specific_commands_list != NODE_LIST(NULL));
-  return specific_commands_list;
+    nusmv_assert(specific_commands_list != NODE_LIST(NULL));
+    return specific_commands_list;
 }
 
 /*---------------------------------------------------------------------------*/
@@ -412,12 +412,12 @@ NodeList_ptr Game_cmd_get_specific_commands()
 static int CommandReadRatFile(NuSMVEnv_ptr env,int argc, char** argv)
 {
 #if ! HAVE_LIBEXPAT
-  fprintf(nusmv_stderr,
-          "The Expat XML library seems not to be avialable.\n"
-          "NuGaT cannot parse XML files without Expat.\n");
-  return 1;
+    fprintf(nusmv_stderr,
+            "The Expat XML library seems not to be avialable.\n"
+                    "NuGaT cannot parse XML files without Expat.\n");
+    return 1;
 #else
-  int c;
+    int c;
   char* input_file_name = (char*) NULL;
   const ErrorMgr_ptr errmgr =
                     ERROR_MGR(NuSMVEnv_get_value(env, ENV_ERROR_MANAGER));
@@ -497,11 +497,11 @@ static int CommandReadRatFile(NuSMVEnv_ptr env,int argc, char** argv)
 
 static int UsageReadRatFile()
 {
-  fprintf(nusmv_stderr, "usage: read_rat_file [-h] [-i <file>]\n");
-  fprintf(nusmv_stderr, "   -h \t\tPrints the command usage.\n");
-  fprintf(nusmv_stderr, "   -i <file> \tReads the model from the specified "
-          "RATSY project file.\n");
-  return(1);
+    fprintf(nusmv_stderr, "usage: read_rat_file [-h] [-i <file>]\n");
+    fprintf(nusmv_stderr, "   -h \t\tPrints the command usage.\n");
+    fprintf(nusmv_stderr, "   -i <file> \tReads the model from the specified "
+            "RATSY project file.\n");
+    return(1);
 }
 
 /**Function********************************************************************
@@ -533,40 +533,40 @@ static int UsageReadRatFile()
 ******************************************************************************/
 static int CommandGameFlattenHierarchy(NuSMVEnv_ptr env,int argc, char** argv)
 {
-  int c;
+    int c;
 
-  nusmv_assert(opt_game_game(OptsHandler_create()));
+    nusmv_assert(opt_game_game(OptsHandler_create()));
 
-  util_getopt_reset();
-  while ((c = util_getopt(argc, argv, "h")) != EOF) {
-    switch (c) {
-    case 'h': return UsageGameFlattenHierarchy();
+    util_getopt_reset();
+    while ((c = util_getopt(argc, argv, "h")) != EOF) {
+        switch (c) {
+            case 'h': return UsageGameFlattenHierarchy();
 
-    default:  return UsageGameFlattenHierarchy();
+            default:  return UsageGameFlattenHierarchy();
+        }
     }
-  }
 
-  if (argc != util_optind) return UsageGameFlattenHierarchy();
+    if (argc != util_optind) return UsageGameFlattenHierarchy();
 
-  if (cmp_struct_get_read_model(cmps) == 0) {
-    fprintf(nusmv_stderr,
-            "A model must be read before. Use the \"read_model\" command.\n");
-    return 1;
-  }
+    if (cmp_struct_get_read_model(cmps) == 0) {
+        fprintf(nusmv_stderr,
+                "A model must be read before. Use the \"read_model\" command.\n");
+        return 1;
+    }
 
-  if (cmp_struct_get_flatten_hrc(cmps)) {
-    fprintf(nusmv_stderr, "The hierarchy has already been flattened.\n");
-    return 1;
-  }
+    if (cmp_struct_get_flatten_hrc(cmps)) {
+        fprintf(nusmv_stderr, "The hierarchy has already been flattened.\n");
+        return 1;
+    }
 
-  return Game_CommandFlattenHierarchy(); /* does the work */
+    return Game_CommandFlattenHierarchy(); /* does the work */
 }
 
 static int UsageGameFlattenHierarchy()
 {
-  fprintf(nusmv_stderr, "usage: flatten_hierarchy [-h]\n");
-  fprintf(nusmv_stderr, "   -h \t\tPrints the command usage\n");
-  return 1;
+    fprintf(nusmv_stderr, "usage: flatten_hierarchy [-h]\n");
+    fprintf(nusmv_stderr, "   -h \t\tPrints the command usage\n");
+    return 1;
 }
 
 /**Function********************************************************************
@@ -618,62 +618,62 @@ static int UsageGameFlattenHierarchy()
 ******************************************************************************/
 static int CommandGameEncodeVariables(NuSMVEnv_ptr env,int argc, char** argv)
 {
-  int c;
-  char* input_order_file_name = NIL(char);
+    int c;
+    char* input_order_file_name = NIL(char);
 
-  nusmv_assert(opt_game_game(OptsHandler_create()));
+    nusmv_assert(opt_game_game(OptsHandler_create()));
 
-  util_getopt_reset();
-  while ((c = util_getopt(argc,argv,"i:h")) != EOF) {
-    switch (c) {
-    case 'i':
-      input_order_file_name = ALLOC(char, strlen(util_optarg)+1);
-      strcpy(input_order_file_name, util_optarg);
-      break;
+    util_getopt_reset();
+    while ((c = util_getopt(argc,argv,"i:h")) != EOF) {
+        switch (c) {
+            case 'i':
+                input_order_file_name = ALLOC(char, strlen(util_optarg)+1);
+                strcpy(input_order_file_name, util_optarg);
+                break;
 
-    case 'h':
-      goto command_game_encode_variables_return_usage;
+            case 'h':
+                goto command_game_encode_variables_return_usage;
 
-    default:
-      goto command_game_encode_variables_return_usage;
+            default:
+                goto command_game_encode_variables_return_usage;
+        }
     }
-  }
 
-  if (argc != util_optind) {
-    goto command_game_encode_variables_return_usage;
-  }
+    if (argc != util_optind) {
+        goto command_game_encode_variables_return_usage;
+    }
 
-  /* pre-conditions: */
-  if (Compile_check_if_flattening_was_built(env,nusmv_stderr)) {
-    goto command_game_encode_variables_return_1;
-  }
+    /* pre-conditions: */
+    if (Compile_check_if_flattening_was_built(env,nusmv_stderr)) {
+        goto command_game_encode_variables_return_1;
+    }
 
-  if (cmp_struct_get_encode_variables(cmps)) {
-    fprintf(nusmv_stderr, "The variables appear to be already built.\n");
-    goto command_game_encode_variables_return_1;
-  }
+    if (cmp_struct_get_encode_variables(cmps)) {
+        fprintf(nusmv_stderr, "The variables appear to be already built.\n");
+        goto command_game_encode_variables_return_1;
+    }
 
-  Game_CommandEncodeVariables(input_order_file_name);
+    Game_CommandEncodeVariables(input_order_file_name);
 
-  if (input_order_file_name != NIL(char)) FREE(input_order_file_name);
-  return 0;
+    if (input_order_file_name != NIL(char)) FREE(input_order_file_name);
+    return 0;
 
- command_game_encode_variables_return_1:
-  if (input_order_file_name != NIL(char)) FREE(input_order_file_name);
-  return 1;
+    command_game_encode_variables_return_1:
+    if (input_order_file_name != NIL(char)) FREE(input_order_file_name);
+    return 1;
 
- command_game_encode_variables_return_usage:
-  if (input_order_file_name != NIL(char)) FREE(input_order_file_name);
-  return UsageGameEncodeVariables();
+    command_game_encode_variables_return_usage:
+    if (input_order_file_name != NIL(char)) FREE(input_order_file_name);
+    return UsageGameEncodeVariables();
 }
 
 static int UsageGameEncodeVariables()
 {
-  fprintf(nusmv_stderr, "usage: encode_variables [-h] [-i <file>]\n");
-  fprintf(nusmv_stderr, "   -h \t\tPrints the command usage.\n");
-  fprintf(nusmv_stderr, "   -i <file> \tReads variable ordering from file "
-          "<file>.\n");
-  return 1;
+    fprintf(nusmv_stderr, "usage: encode_variables [-h] [-i <file>]\n");
+    fprintf(nusmv_stderr, "   -h \t\tPrints the command usage.\n");
+    fprintf(nusmv_stderr, "   -i <file> \tReads variable ordering from file "
+            "<file>.\n");
+    return 1;
 }
 
 /**Function********************************************************************
@@ -716,108 +716,108 @@ static int UsageGameEncodeVariables()
 ******************************************************************************/
 static int CommandGameBuildModel(NuSMVEnv_ptr env,int argc, char** argv)
 {
-  int c;
-  boolean force_build = false;
-  char* partition_method = NIL(char);
+    int c;
+    boolean force_build = false;
+    char* partition_method = NIL(char);
 
-  nusmv_assert(opt_game_game(OptsHandler_create()));
+    nusmv_assert(opt_game_game(OptsHandler_create()));
 
-  util_getopt_reset();
-  while((c = util_getopt(argc,argv,"m:fh")) != EOF){
-    switch(c){
-    case 'm': {
-      partition_method = ALLOC(char, strlen(util_optarg)+1);
-      strcpy(partition_method, util_optarg);
-      break;
-    }
+    util_getopt_reset();
+    while((c = util_getopt(argc,argv,"m:fh")) != EOF){
+        switch(c){
+            case 'm': {
+                partition_method = ALLOC(char, strlen(util_optarg)+1);
+                strcpy(partition_method, util_optarg);
+                break;
+            }
 
-    case 'f': {
-      force_build = true;
-      break;
-    }
+            case 'f': {
+                force_build = true;
+                break;
+            }
 
-    case 'h':
-      goto command_game_build_model_return_usage;
+            case 'h':
+                goto command_game_build_model_return_usage;
 
-    default:
-      goto command_game_build_model_return_usage;
-    }
-  }
-  if (argc != util_optind) {
-    goto command_game_build_model_return_usage;
-  }
-
-  /* pre-conditions: */
-  if (Compile_check_if_encoding_was_built(env,nusmv_stderr)) {
-    goto command_game_build_model_return_1;
-  }
-
-  if (!force_build && cmp_struct_get_build_model(cmps)) {
-    fprintf(nusmv_stderr,
-            "A model appears to be already built from file: %s.\n",
-            get_input_file(OptsHandler_create()));
-    goto command_game_build_model_return_1;
-  }
-
-  if (partition_method != NIL(char)) {
-    if (TransType_from_string(partition_method) != TRANS_TYPE_INVALID) {
-      if ((force_build) &&
-          (TransType_from_string(partition_method) ==
-           get_partition_method(OptsHandler_create()))) {
-        if (cmp_struct_get_build_model(cmps)) {
-          fprintf(nusmv_stderr,
-                  "A model for the chosen method has already been "
-                  "constructed.\n");
-          goto command_game_build_model_return_1;
+            default:
+                goto command_game_build_model_return_usage;
         }
-      }
-      set_partition_method(OptsHandler_create(),
-                           TransType_from_string(partition_method));
-    } else {
-      fprintf(nusmv_stderr,
-              "The only possible values for \"-m\" option are:\n\t");
-      print_partition_method(nusmv_stderr);
-      fprintf(nusmv_stderr, "\n");
-      goto command_game_build_model_return_1;
     }
-  }
+    if (argc != util_optind) {
+        goto command_game_build_model_return_usage;
+    }
 
-  Game_CommandBuildFlatModel();
-  cmp_struct_set_build_flat_model(cmps);
+    /* pre-conditions: */
+    if (Compile_check_if_encoding_was_built(env,nusmv_stderr)) {
+        goto command_game_build_model_return_1;
+    }
 
-  Game_CommandBuildBddModel();
-  cmp_struct_set_build_model(cmps);
+    if (!force_build && cmp_struct_get_build_model(cmps)) {
+        fprintf(nusmv_stderr,
+                "A model appears to be already built from file: %s.\n",
+                get_input_file(OptsHandler_create()));
+        goto command_game_build_model_return_1;
+    }
 
-  if (opt_verbose_level_gt(OptsHandler_create(), 0)) {
-    fprintf(nusmv_stderr,
-            "\nThe model has been built from file %s.\n",
-            get_input_file(OptsHandler_create()));
-  }
+    if (partition_method != NIL(char)) {
+        if (TransType_from_string(partition_method) != TRANS_TYPE_INVALID) {
+            if ((force_build) &&
+                (TransType_from_string(partition_method) ==
+                 get_partition_method(OptsHandler_create()))) {
+                if (cmp_struct_get_build_model(cmps)) {
+                    fprintf(nusmv_stderr,
+                            "A model for the chosen method has already been "
+                                    "constructed.\n");
+                    goto command_game_build_model_return_1;
+                }
+            }
+            set_partition_method(OptsHandler_create(),
+                                 TransType_from_string(partition_method));
+        } else {
+            fprintf(nusmv_stderr,
+                    "The only possible values for \"-m\" option are:\n\t");
+            print_partition_method(nusmv_stderr);
+            fprintf(nusmv_stderr, "\n");
+            goto command_game_build_model_return_1;
+        }
+    }
 
-  if (partition_method != NIL(char)) FREE(partition_method);
-  return 0;
+    Game_CommandBuildFlatModel();
+    cmp_struct_set_build_flat_model(cmps);
 
- command_game_build_model_return_1:
-  if (partition_method != NIL(char)) FREE(partition_method);
-  return 1;
+    Game_CommandBuildBddModel();
+    cmp_struct_set_build_model(cmps);
 
- command_game_build_model_return_usage:
-  if (partition_method != NIL(char)) FREE(partition_method);
-  return UsageGameBuildModel();
+    if (opt_verbose_level_gt(OptsHandler_create(), 0)) {
+        fprintf(nusmv_stderr,
+                "\nThe model has been built from file %s.\n",
+                get_input_file(OptsHandler_create()));
+    }
+
+    if (partition_method != NIL(char)) FREE(partition_method);
+    return 0;
+
+    command_game_build_model_return_1:
+    if (partition_method != NIL(char)) FREE(partition_method);
+    return 1;
+
+    command_game_build_model_return_usage:
+    if (partition_method != NIL(char)) FREE(partition_method);
+    return UsageGameBuildModel();
 }
 
 static int UsageGameBuildModel()
 {
-  fprintf(nusmv_stderr, "usage: build_model [-h] [-f] [-m Method]\n");
-  fprintf(nusmv_stderr, "   -h \t\tPrints the command usage\n");
-  fprintf(nusmv_stderr, "   -m Method \tUses \"Method\" as partitioning method, "
-          "and set it as default method\n");
-  fprintf(nusmv_stderr, "\t\tto be used in the following image computations.\n");
-  fprintf(nusmv_stderr, "\t\tThe currently available methods are:\n\t\t");
-  print_partition_method(nusmv_stderr);
-  fprintf(nusmv_stderr, "\n   -f \t\tForces the model re-construction, even if "
-          "a model has already been built\n");
-  return 1;
+    fprintf(nusmv_stderr, "usage: build_model [-h] [-f] [-m Method]\n");
+    fprintf(nusmv_stderr, "   -h \t\tPrints the command usage\n");
+    fprintf(nusmv_stderr, "   -m Method \tUses \"Method\" as partitioning method, "
+            "and set it as default method\n");
+    fprintf(nusmv_stderr, "\t\tto be used in the following image computations.\n");
+    fprintf(nusmv_stderr, "\t\tThe currently available methods are:\n\t\t");
+    print_partition_method(nusmv_stderr);
+    fprintf(nusmv_stderr, "\n   -f \t\tForces the model re-construction, even if "
+            "a model has already been built\n");
+    return 1;
 }
 
 /**Function********************************************************************
@@ -847,47 +847,47 @@ static int UsageGameBuildModel()
 ******************************************************************************/
 static int CommandGameBuildFlatModel(NuSMVEnv_ptr env,int argc, char** argv)
 {
-  int c;
+    int c;
 
-  nusmv_assert(opt_game_game(OptsHandler_create()));
+    nusmv_assert(opt_game_game(OptsHandler_create()));
 
-  util_getopt_reset();
-  while((c = util_getopt(argc,argv,"h")) != EOF){
-    switch(c){
-    case 'h': return(UsageGameBuildFlatModel());
+    util_getopt_reset();
+    while((c = util_getopt(argc,argv,"h")) != EOF){
+        switch(c){
+            case 'h': return(UsageGameBuildFlatModel());
 
-    default:  return(UsageGameBuildFlatModel());
+            default:  return(UsageGameBuildFlatModel());
+        }
     }
-  }
-  if (argc != util_optind) return(UsageGameBuildFlatModel());
+    if (argc != util_optind) return(UsageGameBuildFlatModel());
 
-  /* pre-conditions: */
-  if (Compile_check_if_flattening_was_built(env,nusmv_stderr)) return 1;
+    /* pre-conditions: */
+    if (Compile_check_if_flattening_was_built(env,nusmv_stderr)) return 1;
 
-  if (cmp_struct_get_build_flat_model(cmps)) {
-    fprintf(nusmv_stderr,
-            "A model appears to be already built from file: %s.\n",
-            get_input_file(OptsHandler_create()));
-    return 1;
-  }
+    if (cmp_struct_get_build_flat_model(cmps)) {
+        fprintf(nusmv_stderr,
+                "A model appears to be already built from file: %s.\n",
+                get_input_file(OptsHandler_create()));
+        return 1;
+    }
 
-  Game_CommandBuildFlatModel();
-  cmp_struct_set_build_flat_model(cmps);
+    Game_CommandBuildFlatModel();
+    cmp_struct_set_build_flat_model(cmps);
 
-  if (opt_verbose_level_gt(OptsHandler_create(), 0)) {
-    fprintf(nusmv_stderr,
-            "\nThe sexp model has been built from file %s.\n",
-            get_input_file(OptsHandler_create()));
-  }
+    if (opt_verbose_level_gt(OptsHandler_create(), 0)) {
+        fprintf(nusmv_stderr,
+                "\nThe sexp model has been built from file %s.\n",
+                get_input_file(OptsHandler_create()));
+    }
 
-  return 0;
+    return 0;
 }
 
 static int UsageGameBuildFlatModel()
 {
-  fprintf(nusmv_stderr, "usage: build_flat_model [-h]\n");
-  fprintf(nusmv_stderr, "   -h \t\tPrints the command usage.\n");
-  return 1;
+    fprintf(nusmv_stderr, "usage: build_flat_model [-h]\n");
+    fprintf(nusmv_stderr, "   -h \t\tPrints the command usage.\n");
+    return 1;
 }
 
 /**Function********************************************************************
@@ -920,54 +920,54 @@ static int UsageGameBuildFlatModel()
 ******************************************************************************/
 static int CommandGameBuildBooleanModel(NuSMVEnv_ptr env,int argc, char ** argv)
 {
-  int c;
-  boolean forced = false;
+    int c;
+    boolean forced = false;
 
-  nusmv_assert(opt_game_game(OptsHandler_create()));
+    nusmv_assert(opt_game_game(OptsHandler_create()));
 
-  util_getopt_reset();
-  while((c = util_getopt(argc,argv,"hf")) != EOF){
-    switch(c){
-    case 'h': return(UsageGameBuildBooleanModel());
+    util_getopt_reset();
+    while((c = util_getopt(argc,argv,"hf")) != EOF){
+        switch(c){
+            case 'h': return(UsageGameBuildBooleanModel());
 
-    case 'f': forced = true; break;
+            case 'f': forced = true; break;
 
-    default:  return(UsageGameBuildBooleanModel());
+            default:  return(UsageGameBuildBooleanModel());
+        }
     }
-  }
-  if (argc != util_optind) return(UsageGameBuildBooleanModel());
+    if (argc != util_optind) return(UsageGameBuildBooleanModel());
 
-  /* pre-conditions: */
-  if (Compile_check_if_encoding_was_built(env,nusmv_stderr)) return 1;
+    /* pre-conditions: */
+    if (Compile_check_if_encoding_was_built(env,nusmv_stderr)) return 1;
 
-  if (cmp_struct_get_build_bool_model(cmps) && !forced) {
-    fprintf(nusmv_stderr,
-            "A model appears to be already built from file: %s.\n",
-            get_input_file(OptsHandler_create()));
-    return 1;
-  }
+    if (cmp_struct_get_build_bool_model(cmps) && !forced) {
+        fprintf(nusmv_stderr,
+                "A model appears to be already built from file: %s.\n",
+                get_input_file(OptsHandler_create()));
+        return 1;
+    }
 
-  Game_CommandBuildFlatModel();
-  cmp_struct_set_build_flat_model(cmps);
+    Game_CommandBuildFlatModel();
+    cmp_struct_set_build_flat_model(cmps);
 
-  Game_CommandBuildBooleanModel();
-  cmp_struct_set_build_bool_model(cmps);
+    Game_CommandBuildBooleanModel();
+    cmp_struct_set_build_bool_model(cmps);
 
-  if (opt_verbose_level_gt(OptsHandler_create(), 0)) {
-    fprintf(nusmv_stderr,
-            "\nThe boolean sexp model has been built from file %s.\n",
-            get_input_file(OptsHandler_create()));
-  }
+    if (opt_verbose_level_gt(OptsHandler_create(), 0)) {
+        fprintf(nusmv_stderr,
+                "\nThe boolean sexp model has been built from file %s.\n",
+                get_input_file(OptsHandler_create()));
+    }
 
-  return 0;
+    return 0;
 }
 
 static int UsageGameBuildBooleanModel()
 {
-  fprintf(nusmv_stderr, "usage: build_boolean_model [-h][-f]\n");
-  fprintf(nusmv_stderr, "   -h \t\tPrints the command usage.\n");
-  fprintf(nusmv_stderr, "   -f \t\tForces the boolean model construction.\n");
-  return 1;
+    fprintf(nusmv_stderr, "usage: build_boolean_model [-h][-f]\n");
+    fprintf(nusmv_stderr, "   -h \t\tPrints the command usage.\n");
+    fprintf(nusmv_stderr, "   -f \t\tForces the boolean model construction.\n");
+    return 1;
 }
 
 /**Function********************************************************************
@@ -1003,103 +1003,103 @@ static int UsageGameBuildBooleanModel()
 ******************************************************************************/
 static int CommandGameWriteModelFlat(NuSMVEnv_ptr env,int argc, char **argv)
 {
-  int c = 0;
-  int rv = 0;
-  char* output_file = NIL(char);
-  FILE* ofileid = NIL(FILE);
-  int bSpecifiedFilename = FALSE;
-  ErrorMgr_ptr const errmgr =
+    int c = 0;
+    int rv = 0;
+    char* output_file = NIL(char);
+    FILE* ofileid = NIL(FILE);
+    int bSpecifiedFilename = FALSE;
+    ErrorMgr_ptr const errmgr =
             ERROR_MGR(NuSMVEnv_get_value(env, ENV_ERROR_MANAGER));
 
-  nusmv_assert(opt_game_game(OptsHandler_create()));
+    nusmv_assert(opt_game_game(OptsHandler_create()));
 
-  util_getopt_reset();
-  while ((c = util_getopt(argc, argv, "ho:")) != EOF) {
-    switch (c) {
-    case 'h':
-      goto command_game_write_model_flat_return_usage;
+    util_getopt_reset();
+    while ((c = util_getopt(argc, argv, "ho:")) != EOF) {
+        switch (c) {
+            case 'h':
+                goto command_game_write_model_flat_return_usage;
 
-    case 'o':
-      if (bSpecifiedFilename == TRUE) {
+            case 'o':
+                if (bSpecifiedFilename == TRUE) {
+                    goto command_game_write_model_flat_return_usage;
+                }
+                output_file = ALLOC(char, strlen(util_optarg)+1);
+                nusmv_assert(output_file);
+                strcpy(output_file, util_optarg);
+                bSpecifiedFilename = TRUE;
+                break;
+
+            default:
+                break;
+        }
+    }
+
+    if (argc != util_optind) {
         goto command_game_write_model_flat_return_usage;
-      }
-      output_file = ALLOC(char, strlen(util_optarg)+1);
-      nusmv_assert(output_file);
-      strcpy(output_file, util_optarg);
-      bSpecifiedFilename = TRUE;
-      break;
-
-    default:
-      break;
     }
-  }
 
-  if (argc != util_optind) {
-    goto command_game_write_model_flat_return_usage;
-  }
-
-  if (output_file == NIL(char)) {
-    output_file = get_output_flatten_model_file(OptsHandler_create());
-  }
-  if (output_file == NIL(char)) {
-    ofileid = nusmv_stdout;
-  } else {
-    ofileid = fopen(output_file, "w");
-    if (ofileid == NULL) {
-      fprintf(nusmv_stderr, "Unable to open file \"%s\".\n", output_file);
-      goto command_game_write_model_flat_return_1;
+    if (output_file == NIL(char)) {
+        output_file = get_output_flatten_model_file(OptsHandler_create());
     }
-  }
+    if (output_file == NIL(char)) {
+        ofileid = nusmv_stdout;
+    } else {
+        ofileid = fopen(output_file, "w");
+        if (ofileid == NULL) {
+            fprintf(nusmv_stderr, "Unable to open file \"%s\".\n", output_file);
+            goto command_game_write_model_flat_return_1;
+        }
+    }
 
-  /* pre-conditions: */
-  if (Compile_check_if_flattening_was_built(env,nusmv_stderr)) {
-    goto command_game_write_model_flat_return_1;
-  }
-
-  if (opt_verbose_level_gt(OptsHandler_create(), 0)) {
-    fprintf(nusmv_stderr, "Writing flat model into file \"%s\"..",
-      output_file == (char *)NULL ? "stdout" : output_file);
-  }
-
-  CATCH(errmgr) {
-    Game_CommandWriteFlatModel(ofileid);
+    /* pre-conditions: */
+    if (Compile_check_if_flattening_was_built(env,nusmv_stderr)) {
+        goto command_game_write_model_flat_return_1;
+    }
 
     if (opt_verbose_level_gt(OptsHandler_create(), 0)) {
-      fprintf(nusmv_stderr, ".. done.\n");
+        fprintf(nusmv_stderr, "Writing flat model into file \"%s\"..",
+                output_file == (char *)NULL ? "stdout" : output_file);
     }
-  }
-  FAIL(errmgr) {
-    rv = 1;
-  }
-  fflush(ofileid);
 
-  if (ofileid != nusmv_stdout) {
-    fclose(ofileid);
-    if (bSpecifiedFilename) FREE(output_file);
-  }
-  return rv;
+    CATCH(errmgr) {
+            Game_CommandWriteFlatModel(ofileid);
 
- command_game_write_model_flat_return_1:
-  if (ofileid != nusmv_stdout) {
-    fclose(ofileid);
-    if (bSpecifiedFilename == TRUE) FREE(output_file);
-  }
-  return 1;
+            if (opt_verbose_level_gt(OptsHandler_create(), 0)) {
+                fprintf(nusmv_stderr, ".. done.\n");
+            }
+        }
+    FAIL(errmgr) {
+        rv = 1;
+    }
+    fflush(ofileid);
 
- command_game_write_model_flat_return_usage:
-  if (ofileid != nusmv_stdout) {
-    fclose(ofileid);
-    if (bSpecifiedFilename == TRUE) FREE(output_file);
-  }
-  return UsageGameWriteModelFlat();
+    if (ofileid != nusmv_stdout) {
+        fclose(ofileid);
+        if (bSpecifiedFilename) FREE(output_file);
+    }
+    return rv;
+
+    command_game_write_model_flat_return_1:
+    if (ofileid != nusmv_stdout) {
+        fclose(ofileid);
+        if (bSpecifiedFilename == TRUE) FREE(output_file);
+    }
+    return 1;
+
+    command_game_write_model_flat_return_usage:
+    if (ofileid != nusmv_stdout) {
+        fclose(ofileid);
+        if (bSpecifiedFilename == TRUE) FREE(output_file);
+    }
+    return UsageGameWriteModelFlat();
 }
 
 static int UsageGameWriteModelFlat(void)
 {
-  fprintf(nusmv_stderr, "usage: write_flat_model [-h] [-o filename]\n");
-  fprintf(nusmv_stderr, "  -h \t\tPrints the command usage.\n");
-  fprintf(nusmv_stderr, "  -o filename\tWrites output to \"filename\"\n");
-  return 1;
+    fprintf(nusmv_stderr, "usage: write_flat_model [-h] [-o filename]\n");
+    fprintf(nusmv_stderr, "  -h \t\tPrints the command usage.\n");
+    fprintf(nusmv_stderr, "  -o filename\tWrites output to \"filename\"\n");
+    return 1;
 }
 
 /**Function********************************************************************
@@ -1153,93 +1153,93 @@ static int UsageGameWriteModelFlat(void)
 ******************************************************************************/
 static int CommandGameWriteModelFlatBool(NuSMVEnv_ptr env,int argc, char** argv)
 {
-  int c = 0;
-  int rv = 0;
-  char* output_file = NIL(char);
-  FILE* ofileid = NIL(FILE);
-  int bSpecifiedFilename = FALSE;
-  ErrorMgr_ptr const errmgr =
+    int c = 0;
+    int rv = 0;
+    char* output_file = NIL(char);
+    FILE* ofileid = NIL(FILE);
+    int bSpecifiedFilename = FALSE;
+    ErrorMgr_ptr const errmgr =
             ERROR_MGR(NuSMVEnv_get_value(env, ENV_ERROR_MANAGER));
 
-  nusmv_assert(opt_game_game(OptsHandler_create()));
+    nusmv_assert(opt_game_game(OptsHandler_create()));
 
-  util_getopt_reset();
-  while ((c = util_getopt(argc, argv, "ho:")) != EOF) {
-    switch (c) {
-    case 'h':
-      if (bSpecifiedFilename == TRUE) FREE(output_file);
-      return UsageGameWriteModelFlatBool();
+    util_getopt_reset();
+    while ((c = util_getopt(argc, argv, "ho:")) != EOF) {
+        switch (c) {
+            case 'h':
+                if (bSpecifiedFilename == TRUE) FREE(output_file);
+                return UsageGameWriteModelFlatBool();
 
-    case 'o':
-      output_file = ALLOC(char, strlen(util_optarg)+1);
-      nusmv_assert(output_file);
-      strcpy(output_file, util_optarg);
-      bSpecifiedFilename = TRUE;
-      break;
+            case 'o':
+                output_file = ALLOC(char, strlen(util_optarg)+1);
+                nusmv_assert(output_file);
+                strcpy(output_file, util_optarg);
+                bSpecifiedFilename = TRUE;
+                break;
 
-    default:
-      break;
+            default:
+                break;
+        }
     }
-  }
 
-  if (argc != util_optind) {
-    if (bSpecifiedFilename == TRUE) FREE(output_file);
-    return UsageGameWriteModelFlatBool();
-  }
-
-  if (output_file == NIL(char)) {
-    output_file = get_output_boolean_model_file(OptsHandler_create());
-  }
-
-  if (output_file == NIL(char)) {
-    ofileid = nusmv_stdout;
-  } else {
-    ofileid = fopen(output_file, "w");
-    if (ofileid == NULL) {
-      fprintf(nusmv_stderr, "Unable to open file \"%s\".\n", output_file);
-      if (bSpecifiedFilename == TRUE)  FREE(output_file);
-      return 1;
+    if (argc != util_optind) {
+        if (bSpecifiedFilename == TRUE) FREE(output_file);
+        return UsageGameWriteModelFlatBool();
     }
-  }
 
-  if (Compile_check_if_bool_model_was_built(env,nusmv_stderr, true)) {
-    if (ofileid != nusmv_stdout) {
-      fclose(ofileid);
-      if (bSpecifiedFilename == TRUE) FREE(output_file);
+    if (output_file == NIL(char)) {
+        output_file = get_output_boolean_model_file(OptsHandler_create());
     }
-    return 1;
-  }
 
-  if (opt_verbose_level_gt(OptsHandler_create(), 0)) {
-    fprintf(nusmv_stderr,
-            "Writing boolean model into file \"%s\"..",
-            output_file == (char *)NULL ? "stdout" : output_file);
-  }
+    if (output_file == NIL(char)) {
+        ofileid = nusmv_stdout;
+    } else {
+        ofileid = fopen(output_file, "w");
+        if (ofileid == NULL) {
+            fprintf(nusmv_stderr, "Unable to open file \"%s\".\n", output_file);
+            if (bSpecifiedFilename == TRUE)  FREE(output_file);
+            return 1;
+        }
+    }
 
-  CATCH(errmgr) {
-    Game_CommandWriteBooleanModel(ofileid);
+    if (Compile_check_if_bool_model_was_built(env,nusmv_stderr, true)) {
+        if (ofileid != nusmv_stdout) {
+            fclose(ofileid);
+            if (bSpecifiedFilename == TRUE) FREE(output_file);
+        }
+        return 1;
+    }
 
     if (opt_verbose_level_gt(OptsHandler_create(), 0)) {
-      fprintf(nusmv_stderr, ".. done.\n");
+        fprintf(nusmv_stderr,
+                "Writing boolean model into file \"%s\"..",
+                output_file == (char *)NULL ? "stdout" : output_file);
     }
-  } FAIL(errmgr) {
-    rv = 1;
-  }
-  fflush(ofileid);
 
-  if (ofileid != nusmv_stdout) {
-    fclose(ofileid);
-    if (bSpecifiedFilename == TRUE)  FREE(output_file);
-  }
-  return rv;
+    CATCH(errmgr) {
+            Game_CommandWriteBooleanModel(ofileid);
+
+            if (opt_verbose_level_gt(OptsHandler_create(), 0)) {
+                fprintf(nusmv_stderr, ".. done.\n");
+            }
+        } FAIL(errmgr) {
+        rv = 1;
+    }
+    fflush(ofileid);
+
+    if (ofileid != nusmv_stdout) {
+        fclose(ofileid);
+        if (bSpecifiedFilename == TRUE)  FREE(output_file);
+    }
+    return rv;
 }
 
 static int UsageGameWriteModelFlatBool(void)
 {
-  fprintf(nusmv_stderr, "usage: write_boolean_model [-h] [-o filename]\n");
-  fprintf(nusmv_stderr, "  -h \t\tPrints the command usage.\n");
-  fprintf(nusmv_stderr, "  -o filename\tWrites output to \"filename\".\n");
-  return 1;
+    fprintf(nusmv_stderr, "usage: write_boolean_model [-h] [-o filename]\n");
+    fprintf(nusmv_stderr, "  -h \t\tPrints the command usage.\n");
+    fprintf(nusmv_stderr, "  -o filename\tWrites output to \"filename\".\n");
+    return 1;
 }
 
 /**Function********************************************************************
@@ -1292,182 +1292,183 @@ static int UsageGameWriteModelFlatBool(void)
 ******************************************************************************/
 static int CommandGameCheckProperty(NuSMVEnv_ptr env,int argc, char** argv)
 {
-  int c = 0;
-  int prop_no = -1;
-  PropGame_Type pt = Prop_NoType;
-  int player_no = 0; /* Valid values only 1 and 2. */
-  ErrorMgr_ptr const errmgr =
+    int c = 0;
+    int prop_no = -1;
+    PropGame_Type pt = Prop_NoType;
+    int player_no = 0; /* Valid values only 1 and 2. */
+    ErrorMgr_ptr const errmgr =
             ERROR_MGR(NuSMVEnv_get_value(env, ENV_ERROR_MANAGER));
+    PropDb_ptr prop_db  = PROP_DB(NuSMVEnv_get_value(env, ENV_PROP_DB));
 
-  nusmv_assert(opt_game_game(OptsHandler_create()));
+    nusmv_assert(opt_game_game(OptsHandler_create()));
 
-  util_getopt_reset();
-  while((c = util_getopt(argc, argv, "hn:r:aAdDblg")) != EOF){
-    switch(c){
-    case 'h': return UsageGameCheckProperty();
-    case 'n':
-      {
-        if (pt != Prop_NoType) return UsageGameCheckProperty();
-        if (prop_no != -1) return UsageGameCheckProperty();
-        if (player_no != 0) return UsageGameCheckProperty();
+    util_getopt_reset();
+    while((c = util_getopt(argc, argv, "hn:r:aAdDblg")) != EOF){
+        switch(c){
+            case 'h': return UsageGameCheckProperty();
+            case 'n':
+            {
+                if (pt != Prop_NoType) return UsageGameCheckProperty();
+                if (prop_no != -1) return UsageGameCheckProperty();
+                if (player_no != 0) return UsageGameCheckProperty();
 
-        prop_no = PropDb_get_prop_index_from_string(PropPkg_get_prop_database(),
-                                                    util_optarg);
-        if (prop_no == -1) return 1;
+                prop_no = PropDb_get_prop_index_from_string(prop_db,
+                                                            util_optarg);
+                if (prop_no == -1) return 1;
 
-        break;
-      }
-    case 'r':
-      {
-        char* strNumber;
+                break;
+            }
+            case 'r':
+            {
+                char* strNumber;
 
-        if (prop_no != -1) return UsageGameCheckProperty();
-        if (player_no != 0) return UsageGameCheckProperty();
+                if (prop_no != -1) return UsageGameCheckProperty();
+                if (player_no != 0) return UsageGameCheckProperty();
 
-        strNumber = util_strsav(util_optarg);
-        if (util_str2int(strNumber, &player_no) != 0) {
-          FREE(strNumber);
-          return UsageGameCheckProperty();
+                strNumber = util_strsav(util_optarg);
+                if (util_str2int(strNumber, &player_no) != 0) {
+                    FREE(strNumber);
+                    return UsageGameCheckProperty();
+                }
+                if (player_no != 1 && player_no != 2) {
+                    FREE(strNumber);
+                    return UsageGameCheckProperty();
+                }
+
+                FREE(strNumber);
+                break;
+            }
+            case 'a':
+            {
+                if (pt != Prop_NoType) return UsageGameCheckProperty();
+                if (prop_no != -1) return UsageGameCheckProperty();
+                pt = PropGame_ReachTarget;
+                break;
+            }
+            case 'A':
+            {
+                if (pt != Prop_NoType) return UsageGameCheckProperty();
+                if (prop_no != -1) return UsageGameCheckProperty();
+                pt = PropGame_AvoidTarget;
+                break;
+            }
+            case 'd':
+            {
+                if (pt != Prop_NoType) return UsageGameCheckProperty();
+                if (prop_no != -1) return UsageGameCheckProperty();
+                pt = PropGame_ReachDeadlock;
+                break;
+            }
+            case 'D':
+            {
+                if (pt != Prop_NoType) return UsageGameCheckProperty();
+                if (prop_no != -1) return UsageGameCheckProperty();
+                pt = PropGame_AvoidDeadlock;
+                break;
+            }
+            case 'l':
+            {
+                if (pt != Prop_NoType) return UsageGameCheckProperty();
+                if (prop_no != -1) return UsageGameCheckProperty();
+                pt = PropGame_LtlGame;
+                break;
+            }
+            case 'b':
+            {
+                if (pt != Prop_NoType) return UsageGameCheckProperty();
+                if (prop_no != -1) return UsageGameCheckProperty();
+                pt = PropGame_BuchiGame;
+                break;
+            }
+            case 'g':
+            {
+                if (pt != Prop_NoType) return UsageGameCheckProperty();
+                if (prop_no != -1) return UsageGameCheckProperty();
+                pt = PropGame_GenReactivity;
+                break;
+            }
+            default:
+                return UsageGameCheckProperty();
         }
-        if (player_no != 1 && player_no != 2) {
-          FREE(strNumber);
-          return UsageGameCheckProperty();
-        }
-
-        FREE(strNumber);
-        break;
-      }
-    case 'a':
-      {
-        if (pt != Prop_NoType) return UsageGameCheckProperty();
-        if (prop_no != -1) return UsageGameCheckProperty();
-        pt = PropGame_ReachTarget;
-        break;
-      }
-    case 'A':
-      {
-        if (pt != Prop_NoType) return UsageGameCheckProperty();
-        if (prop_no != -1) return UsageGameCheckProperty();
-        pt = PropGame_AvoidTarget;
-        break;
-      }
-    case 'd':
-      {
-        if (pt != Prop_NoType) return UsageGameCheckProperty();
-        if (prop_no != -1) return UsageGameCheckProperty();
-        pt = PropGame_ReachDeadlock;
-        break;
-      }
-    case 'D':
-      {
-        if (pt != Prop_NoType) return UsageGameCheckProperty();
-        if (prop_no != -1) return UsageGameCheckProperty();
-        pt = PropGame_AvoidDeadlock;
-        break;
-      }
-    case 'l':
-      {
-        if (pt != Prop_NoType) return UsageGameCheckProperty();
-        if (prop_no != -1) return UsageGameCheckProperty();
-        pt = PropGame_LtlGame;
-        break;
-      }
-    case 'b':
-      {
-        if (pt != Prop_NoType) return UsageGameCheckProperty();
-        if (prop_no != -1) return UsageGameCheckProperty();
-        pt = PropGame_BuchiGame;
-        break;
-      }
-    case 'g':
-      {
-        if (pt != Prop_NoType) return UsageGameCheckProperty();
-        if (prop_no != -1) return UsageGameCheckProperty();
-        pt = PropGame_GenReactivity;
-        break;
-      }
-    default:
-      return UsageGameCheckProperty();
     }
-  }
-  if (argc != util_optind) return UsageGameCheckProperty();
+    if (argc != util_optind) return UsageGameCheckProperty();
 
-  /* command hierarchy control */
-  if (Compile_check_if_model_was_built(env,nusmv_stderr, false)) return 1;
+    /* command hierarchy control */
+    if (Compile_check_if_model_was_built(env,nusmv_stderr, false)) return 1;
 
-  if (prop_no != -1) {
-    CATCH(errmgr) {
-      Prop_ptr prop;
+    if (prop_no != -1) {
+        CATCH(errmgr) {
+                Prop_ptr prop;
 
-      /* If this is PropGame_LtlGame, then check whether Boolean model
-         has been built. */
-      prop = PropDb_get_prop_at_index(PropPkg_get_prop_database(), prop_no);
-      if ((prop != PROP(NULL)) && (Prop_get_type(prop) == PropGame_LtlGame)) {
-        if (Compile_check_if_bool_model_was_built(env,nusmv_stderr, false)) {
-          return 1;
-        }
-      }
+                /* If this is PropGame_LtlGame, then check whether Boolean model
+                   has been built. */
+                prop = PropDb_get_prop_at_index(prop_db, prop_no);
+                if ((prop != PROP(NULL)) && (Prop_get_type(prop) == PropGame_LtlGame)) {
+                    if (Compile_check_if_bool_model_was_built(env,nusmv_stderr, false)) {
+                        return 1;
+                    }
+                }
 
-      PropDb_verify_prop_at_index(PropPkg_get_prop_database(), prop_no);
-    }
-    FAIL(errmgr) {
-      return 1;
-    }
-  } else {
-    PropDbGame_ptr pdb = PROP_DB_GAME(PropPkg_get_prop_database());
-    string_ptr player_str = (string_ptr) NULL;
-
-    if (player_no == 1) {
-      player_str = UStringMgr_find_string(USTRING_MGR,PLAYER_NAME_1);
-    } else if (player_no == 2) {
-      player_str = UStringMgr_find_string(USTRING_MGR,PLAYER_NAME_2);
-    } else {
-      nusmv_assert(player_no == 0);
-    }
-
-    CATCH(errmgr) {
-      int i;
-
-      /* If there are PropGame_LtlGame, then check whether Boolean
-         model has been built. */
-      for (i = 0; i < PropDb_get_size(PROP_DB(pdb)); ++i) {
-        PropGame_ptr p = PROP_GAME(PropDb_get_prop_at_index(PROP_DB(pdb), i));
-        if (((pt == Prop_NoType) ||
-             (Prop_get_type(PROP(p)) == pt)) &&
-            ((player_str == (string_ptr) NULL) ||
-             (PropGame_get_player(p) == player_str))) {
-          if ((Prop_get_type(PROP(p)) == PropGame_LtlGame) &&
-              Compile_check_if_bool_model_was_built(env,nusmv_stderr, false)) {
+                PropDb_verify_prop_at_index(prop_db, prop_no);
+            }
+        FAIL(errmgr) {
             return 1;
-          }
         }
-      }
+    } else {
+        PropDbGame_ptr pdb = PROP_DB_GAME(prop_db);
+        string_ptr player_str = (string_ptr) NULL;
 
-      PropDbGame_verify_all_type_player(pdb, pt, player_str);
-    }
-    FAIL(errmgr) {
-      return 1;
-    }
-  }
+        if (player_no == 1) {
+            player_str = UStringMgr_find_string(USTRING_MGR,PLAYER_NAME_1);
+        } else if (player_no == 2) {
+            player_str = UStringMgr_find_string(USTRING_MGR,PLAYER_NAME_2);
+        } else {
+            nusmv_assert(player_no == 0);
+        }
 
-  return 0;
+        CATCH(errmgr) {
+                int i;
+
+                /* If there are PropGame_LtlGame, then check whether Boolean
+                   model has been built. */
+                for (i = 0; i < PropDb_get_size(PROP_DB(pdb)); ++i) {
+                    PropGame_ptr p = PROP_GAME(PropDb_get_prop_at_index(PROP_DB(pdb), i));
+                    if (((pt == Prop_NoType) ||
+                         (Prop_get_type(PROP(p)) == pt)) &&
+                        ((player_str == (string_ptr) NULL) ||
+                         (PropGame_get_player(p) == player_str))) {
+                        if ((Prop_get_type(PROP(p)) == PropGame_LtlGame) &&
+                            Compile_check_if_bool_model_was_built(env,nusmv_stderr, false)) {
+                            return 1;
+                        }
+                    }
+                }
+
+                PropDbGame_verify_all_type_player(pdb, pt, player_str);
+            }
+        FAIL(errmgr) {
+            return 1;
+        }
+    }
+
+    return 0;
 }
 
 static int UsageGameCheckProperty()
 {
-  fprintf(nusmv_stderr, "usage: check_property [-h]\n" \
+    fprintf(nusmv_stderr, "usage: check_property [-h]\n" \
       "       [[-n number] | [[-r 1|2] [-a | -A | -d | -D | -b | -l | -g]]]\n");
-  fprintf(nusmv_stderr, "  -h \t\t Prints the command usage.\n");
-  fprintf(nusmv_stderr, "  -n number \t Checks property number.\n");
-  fprintf(nusmv_stderr, "  -r 1|2 \t Checks properties of player 1|2.\n");
-  fprintf(nusmv_stderr, "  -a \t\t Checks REACHTARGET properties.\n");
-  fprintf(nusmv_stderr, "  -A \t\t Checks AVOIDTARGET properties.\n");
-  fprintf(nusmv_stderr, "  -d \t\t Checks REACHDEADLOCK properties.\n");
-  fprintf(nusmv_stderr, "  -D \t\t Checks AVOIDDEADLOCK properties.\n");
-  fprintf(nusmv_stderr, "  -b \t\t Checks BUCHIGAME properties.\n");
-  fprintf(nusmv_stderr, "  -l \t\t Checks LTLGAME properties.\n");
-  fprintf(nusmv_stderr, "  -g \t\t Checks GENREACTIVITY properties.\n");
-  return 1;
+    fprintf(nusmv_stderr, "  -h \t\t Prints the command usage.\n");
+    fprintf(nusmv_stderr, "  -n number \t Checks property number.\n");
+    fprintf(nusmv_stderr, "  -r 1|2 \t Checks properties of player 1|2.\n");
+    fprintf(nusmv_stderr, "  -a \t\t Checks REACHTARGET properties.\n");
+    fprintf(nusmv_stderr, "  -A \t\t Checks AVOIDTARGET properties.\n");
+    fprintf(nusmv_stderr, "  -d \t\t Checks REACHDEADLOCK properties.\n");
+    fprintf(nusmv_stderr, "  -D \t\t Checks AVOIDDEADLOCK properties.\n");
+    fprintf(nusmv_stderr, "  -b \t\t Checks BUCHIGAME properties.\n");
+    fprintf(nusmv_stderr, "  -l \t\t Checks LTLGAME properties.\n");
+    fprintf(nusmv_stderr, "  -g \t\t Checks GENREACTIVITY properties.\n");
+    return 1;
 }
 
 /**Function********************************************************************
@@ -1556,305 +1557,306 @@ static int UsageGameCheckProperty()
 ******************************************************************************/
 static int CommandGameShowProperty(NuSMVEnv_ptr env,int argc, char** argv)
 {
-  int c;
-  int retval = 0;
-  boolean print_props_num = false;
-  char* outFileName = NIL(char);
-  FILE* old_nusmv_stdout = NULL;
-  int useMore = 0;
-  Prop_Status status = Prop_NoStatus;
-  int prop_no = -1;
-  int player_no = 0; /* Valid values only 1 and 2. */
-  Prop_Type type = Prop_NoType;
-  ErrorMgr_ptr const errmgr =
+    int c;
+    int retval = 0;
+    boolean print_props_num = false;
+    char* outFileName = NIL(char);
+    FILE* old_nusmv_stdout = NULL;
+    int useMore = 0;
+    Prop_Status status = Prop_NoStatus;
+    int prop_no = -1;
+    int player_no = 0; /* Valid values only 1 and 2. */
+    Prop_Type type = Prop_NoType;
+    ErrorMgr_ptr const errmgr =
             ERROR_MGR(NuSMVEnv_get_value(env, ENV_ERROR_MANAGER));
+    PropDb_ptr prop_db  = PROP_DB(NuSMVEnv_get_value(env, ENV_PROP_DB));
 
-  nusmv_assert(opt_game_game(OptsHandler_create()));
+    nusmv_assert(opt_game_game(OptsHandler_create()));
 
-  util_getopt_reset();
-  while((c = util_getopt(argc, argv, "hsmo:utfn:r:aAdDblg")) != EOF) {
-    switch(c){
-    case 'h':
-      {
+    util_getopt_reset();
+    while((c = util_getopt(argc, argv, "hsmo:utfn:r:aAdDblg")) != EOF) {
+        switch(c){
+            case 'h':
+            {
+                if (outFileName != NIL(char)) FREE(outFileName);
+                return UsageGameShowProperty();
+            }
+            case 's':
+            {
+                print_props_num = true;
+                break;
+            }
+            case 'm':
+            {
+                if (outFileName != NIL(char)) {
+                    FREE(outFileName);
+                    return UsageGameShowProperty();
+                }
+                useMore = 1;
+                break;
+            }
+            case 'o':
+            {
+                if (useMore == 1 || outFileName != NIL(char)) {
+                    if (outFileName != NIL(char)) FREE(outFileName);
+                    return UsageGameShowProperty();
+                }
+                outFileName = util_strsav(util_optarg);
+                break;
+            }
+            case 'n':
+            {
+                if ((status != Prop_NoStatus) ||
+                    (type != Prop_NoType)     ||
+                    (player_no != 0)          ||
+                    (prop_no != -1)) {
+                    if (outFileName != NIL(char)) FREE(outFileName);
+                    return UsageGameShowProperty();
+                }
+
+                prop_no = PropDb_get_prop_index_from_string(prop_db,
+                                                            util_optarg);
+                if (prop_no == -1) {
+                    if (outFileName != NIL(char)) FREE(outFileName);
+                    return(1);
+                }
+
+                break;
+            }
+            case 'u':
+            {
+                if ((status != Prop_NoStatus) || (prop_no != -1)) {
+                    if (outFileName != NIL(char)) FREE(outFileName);
+                    return UsageGameShowProperty();
+                }
+                status = Prop_Unchecked;
+                break;
+            }
+            case 't':
+            {
+                if ((status != Prop_NoStatus) || (prop_no != -1)) {
+                    if (outFileName != NIL(char)) FREE(outFileName);
+                    return UsageGameShowProperty();
+                }
+                status = Prop_True;
+                break;
+            }
+            case 'f':
+            {
+                if ((status != Prop_NoStatus) || (prop_no != -1)) {
+                    if (outFileName != NIL(char)) FREE(outFileName);
+                    return UsageGameShowProperty();
+                }
+                status = Prop_False;
+                break;
+            }
+            case 'r':
+            {
+                char* strNumber;
+
+                if ((player_no != 0) || (prop_no != -1)) {
+                    if (outFileName != NIL(char)) FREE(outFileName);
+                    return UsageGameShowProperty();
+                }
+
+                strNumber = util_strsav(util_optarg);
+                if (util_str2int(strNumber, &player_no) != 0) {
+                    FREE(strNumber);
+                    if (outFileName != NIL(char)) FREE(outFileName);
+                    return UsageGameCheckProperty();
+                }
+                if (player_no != 1 && player_no != 2) {
+                    FREE(strNumber);
+                    if (outFileName != NIL(char)) FREE(outFileName);
+                    return UsageGameCheckProperty();
+                }
+
+                FREE(strNumber);
+                break;
+            }
+            case 'a':
+            {
+                if ((type != Prop_NoType) || (prop_no != -1)) {
+                    if (outFileName != NIL(char)) FREE(outFileName);
+                    return UsageGameShowProperty();
+                }
+                type = PropGame_ReachTarget;
+                break;
+            }
+            case 'A':
+            {
+                if ((type != Prop_NoType) || (prop_no != -1)) {
+                    if (outFileName != NIL(char)) FREE(outFileName);
+                    return UsageGameShowProperty();
+                }
+                type = PropGame_AvoidTarget;
+                break;
+            }
+            case 'd':
+            {
+                if ((type != Prop_NoType) || (prop_no != -1)) {
+                    if (outFileName != NIL(char)) FREE(outFileName);
+                    return UsageGameShowProperty();
+                }
+                type = PropGame_ReachDeadlock;
+                break;
+            }
+            case 'D':
+            {
+                if ((type != Prop_NoType) || (prop_no != -1)) {
+                    if (outFileName != NIL(char)) FREE(outFileName);
+                    return UsageGameShowProperty();
+                }
+                type = PropGame_AvoidDeadlock;
+                break;
+            }
+            case 'b':
+            {
+                if ((type != Prop_NoType) || (prop_no != -1)) {
+                    if (outFileName != NIL(char)) FREE(outFileName);
+                    return UsageGameShowProperty();
+                }
+                type = PropGame_BuchiGame;
+                break;
+            }
+            case 'l':
+            {
+                if ((type != Prop_NoType) || (prop_no != -1)) {
+                    if (outFileName != NIL(char)) FREE(outFileName);
+                    return UsageGameShowProperty();
+                }
+                type = PropGame_LtlGame;
+                break;
+            }
+            case 'g':
+            {
+                if ((type != Prop_NoType) || (prop_no != -1)) {
+                    if (outFileName != NIL(char)) FREE(outFileName);
+                    return UsageGameShowProperty();
+                }
+                type = PropGame_GenReactivity;
+                break;
+            }
+            default:
+            {
+                if (outFileName != NIL(char)) FREE(outFileName);
+                return UsageGameShowProperty();
+            }
+        }
+    }
+
+    if (argc != util_optind) {
         if (outFileName != NIL(char)) FREE(outFileName);
         return UsageGameShowProperty();
-      }
-    case 's':
-      {
-        print_props_num = true;
-        break;
-      }
-    case 'm':
-      {
-        if (outFileName != NIL(char)) {
-          FREE(outFileName);
-          return UsageGameShowProperty();
-        }
-        useMore = 1;
-        break;
-      }
-    case 'o':
-      {
-        if (useMore == 1 || outFileName != NIL(char)) {
-          if (outFileName != NIL(char)) FREE(outFileName);
-          return UsageGameShowProperty();
-        }
-        outFileName = util_strsav(util_optarg);
-        break;
-      }
-    case 'n':
-      {
-        if ((status != Prop_NoStatus) ||
-            (type != Prop_NoType)     ||
-            (player_no != 0)          ||
-            (prop_no != -1)) {
-          if (outFileName != NIL(char)) FREE(outFileName);
-          return UsageGameShowProperty();
-        }
+    }
 
-        prop_no = PropDb_get_prop_index_from_string(PropPkg_get_prop_database(),
-                                                    util_optarg);
-        if (prop_no == -1) {
-          if (outFileName != NIL(char)) FREE(outFileName);
-          return(1);
-        }
-
-        break;
-      }
-    case 'u':
-      {
-        if ((status != Prop_NoStatus) || (prop_no != -1)) {
-          if (outFileName != NIL(char)) FREE(outFileName);
-          return UsageGameShowProperty();
-        }
-        status = Prop_Unchecked;
-        break;
-      }
-    case 't':
-      {
-        if ((status != Prop_NoStatus) || (prop_no != -1)) {
-          if (outFileName != NIL(char)) FREE(outFileName);
-          return UsageGameShowProperty();
-        }
-        status = Prop_True;
-        break;
-      }
-    case 'f':
-      {
-        if ((status != Prop_NoStatus) || (prop_no != -1)) {
-          if (outFileName != NIL(char)) FREE(outFileName);
-          return UsageGameShowProperty();
-        }
-        status = Prop_False;
-        break;
-      }
-    case 'r':
-      {
-        char* strNumber;
-
-        if ((player_no != 0) || (prop_no != -1)) {
-          if (outFileName != NIL(char)) FREE(outFileName);
-          return UsageGameShowProperty();
-        }
-
-        strNumber = util_strsav(util_optarg);
-        if (util_str2int(strNumber, &player_no) != 0) {
-          FREE(strNumber);
-          if (outFileName != NIL(char)) FREE(outFileName);
-          return UsageGameCheckProperty();
-        }
-        if (player_no != 1 && player_no != 2) {
-          FREE(strNumber);
-          if (outFileName != NIL(char)) FREE(outFileName);
-          return UsageGameCheckProperty();
-        }
-
-        FREE(strNumber);
-        break;
-      }
-    case 'a':
-      {
-        if ((type != Prop_NoType) || (prop_no != -1)) {
-          if (outFileName != NIL(char)) FREE(outFileName);
-          return UsageGameShowProperty();
-        }
-        type = PropGame_ReachTarget;
-        break;
-      }
-    case 'A':
-      {
-        if ((type != Prop_NoType) || (prop_no != -1)) {
-          if (outFileName != NIL(char)) FREE(outFileName);
-          return UsageGameShowProperty();
-        }
-        type = PropGame_AvoidTarget;
-        break;
-      }
-    case 'd':
-      {
-        if ((type != Prop_NoType) || (prop_no != -1)) {
-          if (outFileName != NIL(char)) FREE(outFileName);
-          return UsageGameShowProperty();
-        }
-        type = PropGame_ReachDeadlock;
-        break;
-      }
-    case 'D':
-      {
-        if ((type != Prop_NoType) || (prop_no != -1)) {
-          if (outFileName != NIL(char)) FREE(outFileName);
-          return UsageGameShowProperty();
-        }
-        type = PropGame_AvoidDeadlock;
-        break;
-      }
-    case 'b':
-      {
-        if ((type != Prop_NoType) || (prop_no != -1)) {
-          if (outFileName != NIL(char)) FREE(outFileName);
-          return UsageGameShowProperty();
-        }
-        type = PropGame_BuchiGame;
-        break;
-      }
-    case 'l':
-      {
-        if ((type != Prop_NoType) || (prop_no != -1)) {
-          if (outFileName != NIL(char)) FREE(outFileName);
-          return UsageGameShowProperty();
-        }
-        type = PropGame_LtlGame;
-        break;
-      }
-    case 'g':
-      {
-        if ((type != Prop_NoType) || (prop_no != -1)) {
-          if (outFileName != NIL(char)) FREE(outFileName);
-          return UsageGameShowProperty();
-        }
-        type = PropGame_GenReactivity;
-        break;
-      }
-    default:
-      {
+    /* command hierarchy control */
+    if (Compile_check_if_flattening_was_built(env,nusmv_stderr)) {
         if (outFileName != NIL(char)) FREE(outFileName);
-        return UsageGameShowProperty();
-      }
+        return 1;
     }
-  }
 
-  if (argc != util_optind) {
-    if (outFileName != NIL(char)) FREE(outFileName);
-    return UsageGameShowProperty();
-  }
-
-  /* command hierarchy control */
-  if (Compile_check_if_flattening_was_built(env,nusmv_stderr)) {
-    if (outFileName != NIL(char)) FREE(outFileName);
-    return 1;
-  }
-
-  if (useMore == 1) {
-    nusmv_assert(outFileName == NIL(char));
-    old_nusmv_stdout = nusmv_stdout;
-    nusmv_stdout = CmdOpenPipe(env,useMore);
-    if (nusmv_stdout == NIL(FILE)) {
-      nusmv_stdout = old_nusmv_stdout;
-      return(1);
-    }
-  }
-  if (outFileName != NIL(char)) {
-    old_nusmv_stdout = nusmv_stdout;
-    nusmv_stdout = CmdOpenFile(env,outFileName);
-    if (nusmv_stdout == NIL(FILE)) {
-      nusmv_stdout = old_nusmv_stdout;
-      FREE(outFileName);
-      return(1);
-    }
-  }
-
-  if (print_props_num) {
-    fprintf(nusmv_stdout, "Current number of stored properties: %d\n",
-            PropDb_get_size(PropPkg_get_prop_database()));
-    if (useMore) {
-      CmdClosePipe(nusmv_stdout);
-      nusmv_stdout = old_nusmv_stdout;
+    if (useMore == 1) {
+        nusmv_assert(outFileName == NIL(char));
+        old_nusmv_stdout = nusmv_stdout;
+        nusmv_stdout = CmdOpenPipe(env,useMore);
+        if (nusmv_stdout == NIL(FILE)) {
+            nusmv_stdout = old_nusmv_stdout;
+            return(1);
+        }
     }
     if (outFileName != NIL(char)) {
-      CmdCloseFile(nusmv_stdout);
-      nusmv_stdout = old_nusmv_stdout;
-      FREE(outFileName);
+        old_nusmv_stdout = nusmv_stdout;
+        nusmv_stdout = CmdOpenFile(env,outFileName);
+        if (nusmv_stdout == NIL(FILE)) {
+            nusmv_stdout = old_nusmv_stdout;
+            FREE(outFileName);
+            return(1);
+        }
     }
-    return 0;
-  }
 
-  PropDb_print_list_header(PropPkg_get_prop_database(), nusmv_stdout);
-  if (prop_no != -1) {
-    retval = PropDb_print_prop_at_index(PropPkg_get_prop_database(),
-                                        nusmv_stdout,
-                                        prop_no);
-  } else {
-    PropDbGame_ptr pdb = PROP_DB_GAME(PropPkg_get_prop_database());
-    string_ptr player_str = (string_ptr) NULL;
+    if (print_props_num) {
+        fprintf(nusmv_stdout, "Current number of stored properties: %d\n",
+                PropDb_get_size(prop_db));
+        if (useMore) {
+            CmdClosePipe(nusmv_stdout);
+            nusmv_stdout = old_nusmv_stdout;
+        }
+        if (outFileName != NIL(char)) {
+            CmdCloseFile(nusmv_stdout);
+            nusmv_stdout = old_nusmv_stdout;
+            FREE(outFileName);
+        }
+        return 0;
+    }
 
-    if (player_no == 1) {
-      player_str = UStringMgr_find_string(USTRING_MGR,PLAYER_NAME_1);
-    } else if (player_no == 2) {
-      player_str = UStringMgr_find_string(USTRING_MGR,PLAYER_NAME_2);
+    PropDb_print_list_header(prop_db, nusmv_stdout);
+    if (prop_no != -1) {
+        retval = PropDb_print_prop_at_index(prop_db,
+                                            nusmv_stdout,
+                                            prop_no);
     } else {
-      nusmv_assert(player_no == 0);
+        PropDbGame_ptr pdb = PROP_DB_GAME(prop_db);
+        string_ptr player_str = (string_ptr) NULL;
+
+        if (player_no == 1) {
+            player_str = UStringMgr_find_string(USTRING_MGR,PLAYER_NAME_1);
+        } else if (player_no == 2) {
+            player_str = UStringMgr_find_string(USTRING_MGR,PLAYER_NAME_2);
+        } else {
+            nusmv_assert(player_no == 0);
+        }
+
+        CATCH(errmgr) {
+                PropDbGame_print_all_type_player_status(pdb,
+                                                        nusmv_stdout,
+                                                        type,
+                                                        player_str,
+                                                        status);
+            }
+        FAIL(errmgr) {
+            return 1;
+        }
     }
 
-    CATCH(errmgr) {
-      PropDbGame_print_all_type_player_status(pdb,
-                                              nusmv_stdout,
-                                              type,
-                                              player_str,
-                                              status);
+    if (useMore) {
+        CmdClosePipe(nusmv_stdout);
+        nusmv_stdout = old_nusmv_stdout;
     }
-    FAIL(errmgr) {
-      return 1;
+    if (outFileName != NIL(char)) {
+        CmdCloseFile(nusmv_stdout);
+        nusmv_stdout = old_nusmv_stdout;
+        FREE(outFileName);
     }
-  }
-
-  if (useMore) {
-    CmdClosePipe(nusmv_stdout);
-    nusmv_stdout = old_nusmv_stdout;
-  }
-  if (outFileName != NIL(char)) {
-    CmdCloseFile(nusmv_stdout);
-    nusmv_stdout = old_nusmv_stdout;
-    FREE(outFileName);
-  }
-  return(retval);
+    return(retval);
 }
 
 static int UsageGameShowProperty()
 {
-  fprintf(nusmv_stderr,
-    "usage: show_property [-h] [-s] [-m | -o output_file]\n" \
+    fprintf(nusmv_stderr,
+            "usage: show_property [-h] [-s] [-m | -o output_file]\n" \
     "       [[-n number] |\n" \
     "        [[-u | -t | -f] [-r 1|2] [-a | -A | -d | -D | -b | -l | -g]]]\n");
-  fprintf(nusmv_stderr, "  -h \t\tPrints the command usage.\n");
-  fprintf(nusmv_stderr, "  -s \t\tPrints the number of stored properties.\n");
-  fprintf(nusmv_stderr,
-    "  -m \t\tPipes output through the program specified by the \"PAGER\"\n");
-  fprintf(nusmv_stderr,
-    "     \t\tenvironment variable if defined, else through UNIX \"more\".\n");
-  fprintf(nusmv_stderr, "  -o file\tWrites the generated output to \"file\".\n");
-  fprintf(nusmv_stderr, "  -u \t\tPrints only unchecked properties.\n");
-  fprintf(nusmv_stderr,
-    "  -t \t\tPrints only those properties found to be true.\n");
-  fprintf(nusmv_stderr,
-    "  -f \t\tPrints only those properties found to be false.\n");
-  fprintf(nusmv_stderr, "  -a \t\tPrints only REACHTARGET properties.\n");
-  fprintf(nusmv_stderr, "  -A \t\tPrints only AVOIDTARGET properties.\n");
-  fprintf(nusmv_stderr, "  -d \t\tPrints only REACHDEADLOCK properties.\n");
-  fprintf(nusmv_stderr, "  -D \t\tPrints only AVOIDDEADLOCK properties.\n");
-  fprintf(nusmv_stderr, "  -b \t\tPrints only BUCHIGAME properties.\n");
-  fprintf(nusmv_stderr, "  -l \t\tPrints only LTLGAME properties.\n");
-  fprintf(nusmv_stderr, "  -g \t\tPrints only GENREACTIVITY properties.\n");
-  return 1;
+    fprintf(nusmv_stderr, "  -h \t\tPrints the command usage.\n");
+    fprintf(nusmv_stderr, "  -s \t\tPrints the number of stored properties.\n");
+    fprintf(nusmv_stderr,
+            "  -m \t\tPipes output through the program specified by the \"PAGER\"\n");
+    fprintf(nusmv_stderr,
+            "     \t\tenvironment variable if defined, else through UNIX \"more\".\n");
+    fprintf(nusmv_stderr, "  -o file\tWrites the generated output to \"file\".\n");
+    fprintf(nusmv_stderr, "  -u \t\tPrints only unchecked properties.\n");
+    fprintf(nusmv_stderr,
+            "  -t \t\tPrints only those properties found to be true.\n");
+    fprintf(nusmv_stderr,
+            "  -f \t\tPrints only those properties found to be false.\n");
+    fprintf(nusmv_stderr, "  -a \t\tPrints only REACHTARGET properties.\n");
+    fprintf(nusmv_stderr, "  -A \t\tPrints only AVOIDTARGET properties.\n");
+    fprintf(nusmv_stderr, "  -d \t\tPrints only REACHDEADLOCK properties.\n");
+    fprintf(nusmv_stderr, "  -D \t\tPrints only AVOIDDEADLOCK properties.\n");
+    fprintf(nusmv_stderr, "  -b \t\tPrints only BUCHIGAME properties.\n");
+    fprintf(nusmv_stderr, "  -l \t\tPrints only LTLGAME properties.\n");
+    fprintf(nusmv_stderr, "  -g \t\tPrints only GENREACTIVITY properties.\n");
+    return 1;
 }
 
 /**Function********************************************************************
@@ -1886,50 +1888,51 @@ static int UsageGameShowProperty()
 ******************************************************************************/
 static int CommandGamePrintUsage(NuSMVEnv_ptr env,int argc, char **argv)
 {
-  int c;
-  PropDbGame_ptr pdb;
+    int c;
+    PropDbGame_ptr pdb;
+    PropDb_ptr prop_db  = PROP_DB(NuSMVEnv_get_value(env, ENV_PROP_DB));
 
-  nusmv_assert(opt_game_game(OptsHandler_create()));
-  nusmv_assert(opt_cone_of_influence(OptsHandler_create()) == false);
+    nusmv_assert(opt_game_game(OptsHandler_create()));
+    nusmv_assert(opt_cone_of_influence(OptsHandler_create()) == false);
 
-  util_getopt_reset();
-  while((c = util_getopt(argc, argv, "h")) != EOF) {
-    switch(c) {
-    case 'h': return UsageGamePrintUsage();
+    util_getopt_reset();
+    while((c = util_getopt(argc, argv, "h")) != EOF) {
+        switch(c) {
+            case 'h': return UsageGamePrintUsage();
 
-    default: return UsageGamePrintUsage();
+            default: return UsageGamePrintUsage();
+        }
     }
-  }
 
-  /* Reporting of statistical information. */
-  fprintf(nusmv_stdout,
-    "######################################################################\n");
-  util_print_cpu_stats(nusmv_stdout);
-  fprintf(nusmv_stdout,
-    "######################################################################\n");
-  fprintf(nusmv_stdout,
-          "BDD statistics\n");
-  fprintf(nusmv_stdout,
-          "--------------------\n");
-  fprintf(nusmv_stdout,
-          "BDD nodes allocated: %d\n",
-          get_dd_nodes_allocated(dd_manager));
-  fprintf(nusmv_stdout,
-          "--------------------\n");
+    /* Reporting of statistical information. */
+    fprintf(nusmv_stdout,
+            "######################################################################\n");
+    util_print_cpu_stats(nusmv_stdout);
+    fprintf(nusmv_stdout,
+            "######################################################################\n");
+    fprintf(nusmv_stdout,
+            "BDD statistics\n");
+    fprintf(nusmv_stdout,
+            "--------------------\n");
+    fprintf(nusmv_stdout,
+            "BDD nodes allocated: %d\n",
+            get_dd_nodes_allocated(dd_manager));
+    fprintf(nusmv_stdout,
+            "--------------------\n");
 
-  pdb = PROP_DB_GAME(PropPkg_get_prop_database());
-  if (PropDbGame_master_get_game_bdd_fsm(pdb) != GAME_BDD_FSM(NULL)) {
-    GameBddFsm_print_info(PropDbGame_master_get_game_bdd_fsm(pdb), nusmv_stdout);
-  }
+    pdb = PROP_DB_GAME(prop_db);
+    if (PropDbGame_master_get_game_bdd_fsm(pdb) != GAME_BDD_FSM(NULL)) {
+        GameBddFsm_print_info(PropDbGame_master_get_game_bdd_fsm(pdb), nusmv_stdout);
+    }
 
-  return 0;
+    return 0;
 }
 
 static int UsageGamePrintUsage()
 {
-  fprintf(nusmv_stderr, "usage: print_usage [-h]\n");
-  fprintf(nusmv_stderr, "   -h \t\tPrints the command usage.\n");
-  return(1);
+    fprintf(nusmv_stderr, "usage: print_usage [-h]\n");
+    fprintf(nusmv_stderr, "   -h \t\tPrints the command usage.\n");
+    return(1);
 }
 
 /**Function********************************************************************
@@ -1988,36 +1991,36 @@ static int UsageGamePrintUsage()
 ******************************************************************************/
 static int CommandCheckReachTargetSpec(NuSMVEnv_ptr env,int argc, char **argv)
 {
-  return game_invoke_game_command(env,argc, argv, PropGame_ReachTarget);
+    return game_invoke_game_command(env,argc, argv, PropGame_ReachTarget);
 }
 
 static int UsageCheckReachTargetSpec()
 {
-  fprintf(nusmv_stderr,
-          "usage: check_reach_target [-h] [-m | -o output-file] "
-          "[-n number]\n"
-          "       [-s] [-d] [-e] [-f strategy-file]\n");
-  fprintf(nusmv_stderr, "   -h \t\t\tPrints the command usage.\n");
-  fprintf(nusmv_stderr, "   -m \t\t\tPipes output through the program "
-          "specified\n");
-  fprintf(nusmv_stderr, "      \t\t\tby the \"PAGER\" environment variable "
-          "if defined,\n");
-  fprintf(nusmv_stderr, "      \t\t\telse through the UNIX command \"more\".\n");
-  fprintf(nusmv_stderr, "   -o output-file\tWrites the generated output to "
-          "\"output-file\".\n");
-  fprintf(nusmv_stderr, "   -n number\t\tChecks the REACHTARGET specification "
-          "with index\n"
-          "      \t\t\t\"number\".\n");
-  fprintf(nusmv_stderr, "   -s \t\t\tRequests strategy printing (default to "
-          "stdout).\n");
-  fprintf(nusmv_stderr, "   -d \t\t\tRequests strategy printing, generate a DAG "
+    fprintf(nusmv_stderr,
+            "usage: check_reach_target [-h] [-m | -o output-file] "
+                    "[-n number]\n"
+                    "       [-s] [-d] [-e] [-f strategy-file]\n");
+    fprintf(nusmv_stderr, "   -h \t\t\tPrints the command usage.\n");
+    fprintf(nusmv_stderr, "   -m \t\t\tPipes output through the program "
+            "specified\n");
+    fprintf(nusmv_stderr, "      \t\t\tby the \"PAGER\" environment variable "
+            "if defined,\n");
+    fprintf(nusmv_stderr, "      \t\t\telse through the UNIX command \"more\".\n");
+    fprintf(nusmv_stderr, "   -o output-file\tWrites the generated output to "
+            "\"output-file\".\n");
+    fprintf(nusmv_stderr, "   -n number\t\tChecks the REACHTARGET specification "
+            "with index\n"
+            "      \t\t\t\"number\".\n");
+    fprintf(nusmv_stderr, "   -s \t\t\tRequests strategy printing (default to "
+            "stdout).\n");
+    fprintf(nusmv_stderr, "   -d \t\t\tRequests strategy printing, generate a DAG "
+            "(implies -s).\n");
+    fprintf(nusmv_stderr, "   -e \t\t\tRequests strategy printing, generate an "
+            "easily readable\n"
+            "      \t\t\toutput (implies -s).\n");
+    fprintf(nusmv_stderr, "   -f strategy-file\tWrites strategy to \"file\" "\
           "(implies -s).\n");
-  fprintf(nusmv_stderr, "   -e \t\t\tRequests strategy printing, generate an "
-          "easily readable\n"
-          "      \t\t\toutput (implies -s).\n");
-  fprintf(nusmv_stderr, "   -f strategy-file\tWrites strategy to \"file\" "\
-          "(implies -s).\n");
-  return 1;
+    return 1;
 }
 
 /**Function********************************************************************
@@ -2080,39 +2083,39 @@ static int UsageCheckReachTargetSpec()
 ******************************************************************************/
 static int CommandCheckAvoidTargetSpec(NuSMVEnv_ptr env,int argc, char **argv)
 {
-  return game_invoke_game_command(env,argc, argv, PropGame_AvoidTarget);
+    return game_invoke_game_command(env,argc, argv, PropGame_AvoidTarget);
 }
 
 static int UsageCheckAvoidTargetSpec()
 {
-  fprintf(nusmv_stderr,
-          "usage: check_avoid_target [-h] [-m | -o output-file] "
-          "[-n number] [-a algorithm]\n"
-          "       [-s] [-d] [-e] [-f strategy-file]\n");
-  fprintf(nusmv_stderr, "   -h \t\t\tPrints the command usage.\n");
-  fprintf(nusmv_stderr, "   -m \t\t\tPipes output through the program "
-          "specified\n");
-  fprintf(nusmv_stderr, "      \t\t\tby the \"PAGER\" environment variable "
-          "if defined,\n");
-  fprintf(nusmv_stderr, "      \t\t\telse through the UNIX command \"more\".\n");
-  fprintf(nusmv_stderr, "   -o output-file\tWrites the generated output to "
-          "\"output-file\".\n");
-  fprintf(nusmv_stderr, "   -n number\t\tChecks the AVOIDTARGET specification "
-          "with index\n"
-          "      \t\t\t\"number\".\n");
-  fprintf(nusmv_stderr, "   -a algorithm\t\tUses algorithm \"algorithm\". "
-          "Available algorithms\n"
-          "      \t\t\tare: default.\n");
-  fprintf(nusmv_stderr, "   -s \t\t\tRequests strategy printing (default to "
-          "stdout).\n");
-  fprintf(nusmv_stderr, "   -d \t\t\tRequests strategy printing, generate a DAG "
+    fprintf(nusmv_stderr,
+            "usage: check_avoid_target [-h] [-m | -o output-file] "
+                    "[-n number] [-a algorithm]\n"
+                    "       [-s] [-d] [-e] [-f strategy-file]\n");
+    fprintf(nusmv_stderr, "   -h \t\t\tPrints the command usage.\n");
+    fprintf(nusmv_stderr, "   -m \t\t\tPipes output through the program "
+            "specified\n");
+    fprintf(nusmv_stderr, "      \t\t\tby the \"PAGER\" environment variable "
+            "if defined,\n");
+    fprintf(nusmv_stderr, "      \t\t\telse through the UNIX command \"more\".\n");
+    fprintf(nusmv_stderr, "   -o output-file\tWrites the generated output to "
+            "\"output-file\".\n");
+    fprintf(nusmv_stderr, "   -n number\t\tChecks the AVOIDTARGET specification "
+            "with index\n"
+            "      \t\t\t\"number\".\n");
+    fprintf(nusmv_stderr, "   -a algorithm\t\tUses algorithm \"algorithm\". "
+            "Available algorithms\n"
+            "      \t\t\tare: default.\n");
+    fprintf(nusmv_stderr, "   -s \t\t\tRequests strategy printing (default to "
+            "stdout).\n");
+    fprintf(nusmv_stderr, "   -d \t\t\tRequests strategy printing, generate a DAG "
+            "(implies -s).\n");
+    fprintf(nusmv_stderr, "   -e \t\t\tRequests strategy printing, generate an "
+            "easily readable\n"
+            "      \t\t\toutput (implies -s).\n");
+    fprintf(nusmv_stderr, "   -f strategy-file\tWrites strategy to \"file\" "\
           "(implies -s).\n");
-  fprintf(nusmv_stderr, "   -e \t\t\tRequests strategy printing, generate an "
-          "easily readable\n"
-          "      \t\t\toutput (implies -s).\n");
-  fprintf(nusmv_stderr, "   -f strategy-file\tWrites strategy to \"file\" "\
-          "(implies -s).\n");
-  return 1;
+    return 1;
 }
 
 /**Function********************************************************************
@@ -2171,36 +2174,36 @@ static int UsageCheckAvoidTargetSpec()
 ******************************************************************************/
 static int CommandCheckReachDeadlockSpec(NuSMVEnv_ptr env,int argc, char **argv)
 {
-  return game_invoke_game_command(env,argc, argv, PropGame_ReachDeadlock);
+    return game_invoke_game_command(env,argc, argv, PropGame_ReachDeadlock);
 }
 
 static int UsageCheckReachDeadlockSpec()
 {
-  fprintf(nusmv_stderr,
-          "usage: check_reach_deadlock [-h] [-m | -o output-file] "
-          "[-n number]\n"
-          "       [-s] [-d] [-e] [-f strategy-file]\n");
-  fprintf(nusmv_stderr, "   -h \t\t\tPrints the command usage.\n");
-  fprintf(nusmv_stderr, "   -m \t\t\tPipes output through the program "
-          "specified\n");
-  fprintf(nusmv_stderr, "      \t\t\tby the \"PAGER\" environment variable "
-          "if defined,\n");
-  fprintf(nusmv_stderr, "      \t\t\telse through the UNIX command \"more\".\n");
-  fprintf(nusmv_stderr, "   -o output-file\tWrites the generated output to "
-          "\"output-file\".\n");
-  fprintf(nusmv_stderr, "   -n number\t\tChecks the REACHDEADLOCK specification "
-          "with index\n"
-          "      \t\t\t\"number\".\n");
-  fprintf(nusmv_stderr, "   -s \t\t\tRequests strategy printing (default to "
-          "stdout).\n");
-  fprintf(nusmv_stderr, "   -d \t\t\tRequests strategy printing, generate a DAG "
+    fprintf(nusmv_stderr,
+            "usage: check_reach_deadlock [-h] [-m | -o output-file] "
+                    "[-n number]\n"
+                    "       [-s] [-d] [-e] [-f strategy-file]\n");
+    fprintf(nusmv_stderr, "   -h \t\t\tPrints the command usage.\n");
+    fprintf(nusmv_stderr, "   -m \t\t\tPipes output through the program "
+            "specified\n");
+    fprintf(nusmv_stderr, "      \t\t\tby the \"PAGER\" environment variable "
+            "if defined,\n");
+    fprintf(nusmv_stderr, "      \t\t\telse through the UNIX command \"more\".\n");
+    fprintf(nusmv_stderr, "   -o output-file\tWrites the generated output to "
+            "\"output-file\".\n");
+    fprintf(nusmv_stderr, "   -n number\t\tChecks the REACHDEADLOCK specification "
+            "with index\n"
+            "      \t\t\t\"number\".\n");
+    fprintf(nusmv_stderr, "   -s \t\t\tRequests strategy printing (default to "
+            "stdout).\n");
+    fprintf(nusmv_stderr, "   -d \t\t\tRequests strategy printing, generate a DAG "
+            "(implies -s).\n");
+    fprintf(nusmv_stderr, "   -e \t\t\tRequests strategy printing, generate an "
+            "easily readable\n"
+            "      \t\t\toutput (implies -s).\n");
+    fprintf(nusmv_stderr, "   -f strategy-file\tWrites strategy to \"file\" "\
           "(implies -s).\n");
-  fprintf(nusmv_stderr, "   -e \t\t\tRequests strategy printing, generate an "
-          "easily readable\n"
-          "      \t\t\toutput (implies -s).\n");
-  fprintf(nusmv_stderr, "   -f strategy-file\tWrites strategy to \"file\" "\
-          "(implies -s).\n");
-  return 1;
+    return 1;
 }
 
 /**Function********************************************************************
@@ -2259,36 +2262,36 @@ static int UsageCheckReachDeadlockSpec()
 ******************************************************************************/
 static int CommandCheckAvoidDeadlockSpec(NuSMVEnv_ptr env,int argc, char **argv)
 {
-  return game_invoke_game_command(env,argc, argv, PropGame_AvoidDeadlock);
+    return game_invoke_game_command(env,argc, argv, PropGame_AvoidDeadlock);
 }
 
 static int UsageCheckAvoidDeadlockSpec()
 {
-  fprintf(nusmv_stderr,
-          "usage: check_avoid_deadlock [-h] [-m | -o output-file] "
-          "[-n number]\n"
-          "       [-s] [-d] [-e] [-f strategy-file]\n");
-  fprintf(nusmv_stderr, "   -h \t\t\tPrints the command usage.\n");
-  fprintf(nusmv_stderr, "   -m \t\t\tPipes output through the program "
-          "specified\n");
-  fprintf(nusmv_stderr, "      \t\t\tby the \"PAGER\" environment variable "
-          "if defined,\n");
-  fprintf(nusmv_stderr, "      \t\t\telse through the UNIX command \"more\".\n");
-  fprintf(nusmv_stderr, "   -o output-file\tWrites the generated output to "
-          "\"output-file\".\n");
-  fprintf(nusmv_stderr, "   -n number\t\tChecks the AVOIDDEADLOCK specification "
-          "with index\n"
-          "      \t\t\t\"number\".\n");
-  fprintf(nusmv_stderr, "   -s \t\t\tRequests strategy printing (default to "
-          "stdout).\n");
-  fprintf(nusmv_stderr, "   -d \t\t\tRequests strategy printing, generate a DAG "
+    fprintf(nusmv_stderr,
+            "usage: check_avoid_deadlock [-h] [-m | -o output-file] "
+                    "[-n number]\n"
+                    "       [-s] [-d] [-e] [-f strategy-file]\n");
+    fprintf(nusmv_stderr, "   -h \t\t\tPrints the command usage.\n");
+    fprintf(nusmv_stderr, "   -m \t\t\tPipes output through the program "
+            "specified\n");
+    fprintf(nusmv_stderr, "      \t\t\tby the \"PAGER\" environment variable "
+            "if defined,\n");
+    fprintf(nusmv_stderr, "      \t\t\telse through the UNIX command \"more\".\n");
+    fprintf(nusmv_stderr, "   -o output-file\tWrites the generated output to "
+            "\"output-file\".\n");
+    fprintf(nusmv_stderr, "   -n number\t\tChecks the AVOIDDEADLOCK specification "
+            "with index\n"
+            "      \t\t\t\"number\".\n");
+    fprintf(nusmv_stderr, "   -s \t\t\tRequests strategy printing (default to "
+            "stdout).\n");
+    fprintf(nusmv_stderr, "   -d \t\t\tRequests strategy printing, generate a DAG "
+            "(implies -s).\n");
+    fprintf(nusmv_stderr, "   -e \t\t\tRequests strategy printing, generate an "
+            "easily readable\n"
+            "      \t\t\toutput (implies -s).\n");
+    fprintf(nusmv_stderr, "   -f strategy-file\tWrites strategy to \"file\" "\
           "(implies -s).\n");
-  fprintf(nusmv_stderr, "   -e \t\t\tRequests strategy printing, generate an "
-          "easily readable\n"
-          "      \t\t\toutput (implies -s).\n");
-  fprintf(nusmv_stderr, "   -f strategy-file\tWrites strategy to \"file\" "\
-          "(implies -s).\n");
-  return 1;
+    return 1;
 }
 
 /**Function********************************************************************
@@ -2347,36 +2350,36 @@ static int UsageCheckAvoidDeadlockSpec()
 ******************************************************************************/
 static int CommandCheckBuchiGameSpec(NuSMVEnv_ptr env,int argc, char **argv)
 {
-  return game_invoke_game_command(env,argc, argv, PropGame_BuchiGame);
+    return game_invoke_game_command(env,argc, argv, PropGame_BuchiGame);
 }
 
 static int UsageCheckBuchiGameSpec()
 {
-  fprintf(nusmv_stderr,
-          "usage: check_buchi_game [-h] [-m | -o output-file] "
-          "[-n number]\n"
-          "       [-s] [-d] [-e] [-f strategy-file]\n");
-  fprintf(nusmv_stderr, "   -h \t\t\tPrints the command usage.\n");
-  fprintf(nusmv_stderr, "   -m \t\t\tPipes output through the program "
-          "specified\n");
-  fprintf(nusmv_stderr, "      \t\t\tby the \"PAGER\" environment variable "
-          "if defined,\n");
-  fprintf(nusmv_stderr, "      \t\t\telse through the UNIX command \"more\".\n");
-  fprintf(nusmv_stderr, "   -o output-file\tWrites the generated output to "
-          "\"output-file\".\n");
-  fprintf(nusmv_stderr, "   -n number\t\tChecks the BUCHIGAME specification "
-          "with index\n"
-          "      \t\t\t\"number\".\n");
-  fprintf(nusmv_stderr, "   -s \t\t\tRequests strategy printing (default to "
-          "stdout).\n");
-  fprintf(nusmv_stderr, "   -d \t\t\tRequests strategy printing, generate a DAG "
+    fprintf(nusmv_stderr,
+            "usage: check_buchi_game [-h] [-m | -o output-file] "
+                    "[-n number]\n"
+                    "       [-s] [-d] [-e] [-f strategy-file]\n");
+    fprintf(nusmv_stderr, "   -h \t\t\tPrints the command usage.\n");
+    fprintf(nusmv_stderr, "   -m \t\t\tPipes output through the program "
+            "specified\n");
+    fprintf(nusmv_stderr, "      \t\t\tby the \"PAGER\" environment variable "
+            "if defined,\n");
+    fprintf(nusmv_stderr, "      \t\t\telse through the UNIX command \"more\".\n");
+    fprintf(nusmv_stderr, "   -o output-file\tWrites the generated output to "
+            "\"output-file\".\n");
+    fprintf(nusmv_stderr, "   -n number\t\tChecks the BUCHIGAME specification "
+            "with index\n"
+            "      \t\t\t\"number\".\n");
+    fprintf(nusmv_stderr, "   -s \t\t\tRequests strategy printing (default to "
+            "stdout).\n");
+    fprintf(nusmv_stderr, "   -d \t\t\tRequests strategy printing, generate a DAG "
+            "(implies -s).\n");
+    fprintf(nusmv_stderr, "   -e \t\t\tRequests strategy printing, generate an "
+            "easily readable\n"
+            "      \t\t\toutput (implies -s).\n");
+    fprintf(nusmv_stderr, "   -f strategy-file\tWrites strategy to \"file\" "\
           "(implies -s).\n");
-  fprintf(nusmv_stderr, "   -e \t\t\tRequests strategy printing, generate an "
-          "easily readable\n"
-          "      \t\t\toutput (implies -s).\n");
-  fprintf(nusmv_stderr, "   -f strategy-file\tWrites strategy to \"file\" "\
-          "(implies -s).\n");
-  return 1;
+    return 1;
 }
 
 /**Function********************************************************************
@@ -2435,36 +2438,36 @@ static int UsageCheckBuchiGameSpec()
 ******************************************************************************/
 static int CommandCheckGenReactivitySpec(NuSMVEnv_ptr env,int argc, char **argv)
 {
-  return game_invoke_game_command(env,argc, argv, PropGame_GenReactivity);
+    return game_invoke_game_command(env,argc, argv, PropGame_GenReactivity);
 }
 
 static int UsageCheckGenReactivitySpec()
 {
-  fprintf(nusmv_stderr,
-          "usage: check_gen_reactivity [-h] [-m | -o output-file] "
-          "[-n number]\n"
-          "       [-s] [-d] [-e] [-f strategy-file]\n");
-  fprintf(nusmv_stderr, "   -h \t\t\tPrints the command usage.\n");
-  fprintf(nusmv_stderr, "   -m \t\t\tPipes output through the program "
-          "specified\n");
-  fprintf(nusmv_stderr, "      \t\t\tby the \"PAGER\" environment variable "
-          "if defined,\n");
-  fprintf(nusmv_stderr, "      \t\t\telse through the UNIX command \"more\".\n");
-  fprintf(nusmv_stderr, "   -o output-file\tWrites the generated output to "
-          "\"output-file\".\n");
-  fprintf(nusmv_stderr, "   -n number\t\tChecks the GENREACTIVITY specification "
-          "with index\n"
-          "      \t\t\t\"number\".\n");
-  fprintf(nusmv_stderr, "   -s \t\t\tRequests strategy printing (default to "
-          "stdout).\n");
-  fprintf(nusmv_stderr, "   -d \t\t\tRequests strategy printing, generate a DAG "
+    fprintf(nusmv_stderr,
+            "usage: check_gen_reactivity [-h] [-m | -o output-file] "
+                    "[-n number]\n"
+                    "       [-s] [-d] [-e] [-f strategy-file]\n");
+    fprintf(nusmv_stderr, "   -h \t\t\tPrints the command usage.\n");
+    fprintf(nusmv_stderr, "   -m \t\t\tPipes output through the program "
+            "specified\n");
+    fprintf(nusmv_stderr, "      \t\t\tby the \"PAGER\" environment variable "
+            "if defined,\n");
+    fprintf(nusmv_stderr, "      \t\t\telse through the UNIX command \"more\".\n");
+    fprintf(nusmv_stderr, "   -o output-file\tWrites the generated output to "
+            "\"output-file\".\n");
+    fprintf(nusmv_stderr, "   -n number\t\tChecks the GENREACTIVITY specification "
+            "with index\n"
+            "      \t\t\t\"number\".\n");
+    fprintf(nusmv_stderr, "   -s \t\t\tRequests strategy printing (default to "
+            "stdout).\n");
+    fprintf(nusmv_stderr, "   -d \t\t\tRequests strategy printing, generate a DAG "
+            "(implies -s).\n");
+    fprintf(nusmv_stderr, "   -e \t\t\tRequests strategy printing, generate an "
+            "easily readable\n"
+            "      \t\t\toutput (implies -s).\n");
+    fprintf(nusmv_stderr, "   -f strategy-file\tWrites strategy to \"file\" "\
           "(implies -s).\n");
-  fprintf(nusmv_stderr, "   -e \t\t\tRequests strategy printing, generate an "
-          "easily readable\n"
-          "      \t\t\toutput (implies -s).\n");
-  fprintf(nusmv_stderr, "   -f strategy-file\tWrites strategy to \"file\" "\
-          "(implies -s).\n");
-  return 1;
+    return 1;
 }
 
 /**Function********************************************************************
@@ -2484,278 +2487,279 @@ static int UsageCheckGenReactivitySpec()
 ******************************************************************************/
 static int game_invoke_game_command(NuSMVEnv_ptr env,int argc, char **argv, PropGame_Type type)
 {
-  int c;
-  int res;
-  int prop_no = -1;
-  int useMore = 0;
-  int strategy_printout = 0;
-  int indented_printout = 0;
-  int strategy_printout_as_dag = 0;
-  char* dbgFileName = NIL(char);
-  char* strategyFileName = NIL(char);
-  FILE* old_nusmv_stdout = (FILE*) NULL;
-  FILE* strategy_stream =(FILE*) NULL;
-  char* algorithm = NIL(char);
+    int c;
+    int res;
+    int prop_no = -1;
+    int useMore = 0;
+    int strategy_printout = 0;
+    int indented_printout = 0;
+    int strategy_printout_as_dag = 0;
+    char* dbgFileName = NIL(char);
+    char* strategyFileName = NIL(char);
+    FILE* old_nusmv_stdout = (FILE*) NULL;
+    FILE* strategy_stream =(FILE*) NULL;
+    char* algorithm = NIL(char);
+    PropDb_ptr prop_db  = PROP_DB(NuSMVEnv_get_value(env, ENV_PROP_DB));
 
-  /* command related parameters */
-  command_function_ptr command_function;
-  int (*command_usage)(void);
-  char* command_options;
-  ErrorMgr_ptr const errmgr =
+    /* command related parameters */
+    command_function_ptr command_function;
+    int (*command_usage)(void);
+    char* command_options;
+    ErrorMgr_ptr const errmgr =
             ERROR_MGR(NuSMVEnv_get_value(env, ENV_ERROR_MANAGER));
 
-  nusmv_assert(opt_game_game(OptsHandler_create()));
+    nusmv_assert(opt_game_game(OptsHandler_create()));
 
-  switch(type) {
-  case PropGame_ReachTarget:
-    command_function = Game_CheckReachTargetSpec;
-    command_usage = UsageCheckReachTargetSpec;
-    command_options = "hmo:n:sf:de";
-    break;
-  case PropGame_ReachDeadlock:
-    command_function = Game_CheckReachDeadlockSpec;
-    command_usage = UsageCheckReachDeadlockSpec;
-    command_options = "hmo:n:sf:de";
-    break;
-  case PropGame_AvoidTarget:
-    command_function = Game_CheckAvoidTargetSpec;
-    command_usage = UsageCheckAvoidTargetSpec;
-    command_options = "ha:mo:n:sf:de";
-    break;
-  case PropGame_AvoidDeadlock:
-    command_function = Game_CheckAvoidDeadlockSpec;
-    command_usage = UsageCheckAvoidDeadlockSpec;
-    command_options = "hmo:n:sf:de";
-    break;
-  case PropGame_BuchiGame:
-    command_function = Game_CheckBuchiGameSpec;
-    command_usage = UsageCheckBuchiGameSpec;
-    command_options = "hmo:n:sf:de";
-    break;
-  case PropGame_GenReactivity:
-    command_function = Game_CheckGenReactivitySpec;
-    command_usage = UsageCheckGenReactivitySpec;
-    command_options = "hmo:n:sf:de";
-    break;
-  default: nusmv_assert(false); /* illegal command's kind */
-  }
+    switch(type) {
+        case PropGame_ReachTarget:
+            command_function = Game_CheckReachTargetSpec;
+            command_usage = UsageCheckReachTargetSpec;
+            command_options = "hmo:n:sf:de";
+            break;
+        case PropGame_ReachDeadlock:
+            command_function = Game_CheckReachDeadlockSpec;
+            command_usage = UsageCheckReachDeadlockSpec;
+            command_options = "hmo:n:sf:de";
+            break;
+        case PropGame_AvoidTarget:
+            command_function = Game_CheckAvoidTargetSpec;
+            command_usage = UsageCheckAvoidTargetSpec;
+            command_options = "ha:mo:n:sf:de";
+            break;
+        case PropGame_AvoidDeadlock:
+            command_function = Game_CheckAvoidDeadlockSpec;
+            command_usage = UsageCheckAvoidDeadlockSpec;
+            command_options = "hmo:n:sf:de";
+            break;
+        case PropGame_BuchiGame:
+            command_function = Game_CheckBuchiGameSpec;
+            command_usage = UsageCheckBuchiGameSpec;
+            command_options = "hmo:n:sf:de";
+            break;
+        case PropGame_GenReactivity:
+            command_function = Game_CheckGenReactivitySpec;
+            command_usage = UsageCheckGenReactivitySpec;
+            command_options = "hmo:n:sf:de";
+            break;
+        default: nusmv_assert(false); /* illegal command's kind */
+    }
 
-  /*  --------  EVALUATING THE OPTIONS OF THE COMMAND --------- */
-  util_getopt_reset();
-  while ((c = util_getopt(argc, argv, command_options)) != EOF) {
-    switch (c) {
-    case 'h':
-      goto game_invoke_game_command_return_usage;
+    /*  --------  EVALUATING THE OPTIONS OF THE COMMAND --------- */
+    util_getopt_reset();
+    while ((c = util_getopt(argc, argv, command_options)) != EOF) {
+        switch (c) {
+            case 'h':
+                goto game_invoke_game_command_return_usage;
 
-    case 'm':
-      if (useMore == 1) goto game_invoke_game_command_return_usage;
-      if (dbgFileName != NIL(char)) goto game_invoke_game_command_return_usage;
-      useMore = 1;
-      break;
+            case 'm':
+                if (useMore == 1) goto game_invoke_game_command_return_usage;
+                if (dbgFileName != NIL(char)) goto game_invoke_game_command_return_usage;
+                useMore = 1;
+                break;
 
-    case 'o':
-      if (dbgFileName != NIL(char)) goto game_invoke_game_command_return_usage;
-      if (useMore == 1) goto game_invoke_game_command_return_usage;
-      dbgFileName = util_strsav(util_optarg);
-      fprintf(nusmv_stdout, "Output to file: %s\n", dbgFileName);
-      break;
+            case 'o':
+                if (dbgFileName != NIL(char)) goto game_invoke_game_command_return_usage;
+                if (useMore == 1) goto game_invoke_game_command_return_usage;
+                dbgFileName = util_strsav(util_optarg);
+                fprintf(nusmv_stdout, "Output to file: %s\n", dbgFileName);
+                break;
 
-    case 'n':
-      if (prop_no != -1) goto game_invoke_game_command_return_usage;
-      prop_no = PropDb_get_prop_index_from_string(PropPkg_get_prop_database(),
-                                                  util_optarg);
-      if (prop_no == -1) goto game_invoke_game_command_return_1;
-      break;
+            case 'n':
+                if (prop_no != -1) goto game_invoke_game_command_return_usage;
+                prop_no = PropDb_get_prop_index_from_string(prop_db,
+                                                            util_optarg);
+                if (prop_no == -1) goto game_invoke_game_command_return_1;
+                break;
 
-    case 'a':
-      if (algorithm != NULL) goto game_invoke_game_command_return_usage;
-      algorithm = util_strsav(util_optarg);
+            case 'a':
+                if (algorithm != NULL) goto game_invoke_game_command_return_usage;
+                algorithm = util_strsav(util_optarg);
 
-      switch (type) { /* check the name of an algorithm */
-      case PropGame_AvoidTarget:
-        if (strcmp("default", algorithm) == 0) {
-          /* do not reset checking function */
+                switch (type) { /* check the name of an algorithm */
+                    case PropGame_AvoidTarget:
+                        if (strcmp("default", algorithm) == 0) {
+                            /* do not reset checking function */
+                        }
+                        else goto game_invoke_game_command_return_usage;
+                        break;
+
+                    default:
+                        nusmv_assert(false);
+                }
+                break;
+
+            case 's':
+                strategy_printout = 1;
+                break;
+
+            case 'd':
+                /* -d implies -s */
+                strategy_printout = 1;
+                strategy_printout_as_dag = 1;
+                break;
+
+            case 'e':
+                /* -e implies -s */
+                strategy_printout = 1;
+                indented_printout = 1;
+                break;
+
+            case 'f':
+                if (strategyFileName != NIL(char)) {
+                    goto game_invoke_game_command_return_usage;
+                }
+                strategyFileName = util_strsav(util_optarg);
+                /* -f implies -s */
+                strategy_printout = 1;
+                break;
+
+            default:
+                goto game_invoke_game_command_return_usage;
         }
-        else goto game_invoke_game_command_return_usage;
-        break;
-
-      default:
-        nusmv_assert(false);
-      }
-      break;
-
-    case 's':
-      strategy_printout = 1;
-      break;
-
-    case 'd':
-      /* -d implies -s */
-      strategy_printout = 1;
-      strategy_printout_as_dag = 1;
-      break;
-
-    case 'e':
-      /* -e implies -s */
-      strategy_printout = 1;
-      indented_printout = 1;
-      break;
-
-    case 'f':
-      if (strategyFileName != NIL(char)) {
-        goto game_invoke_game_command_return_usage;
-      }
-      strategyFileName = util_strsav(util_optarg);
-      /* -f implies -s */
-      strategy_printout = 1;
-      break;
-
-    default:
-      goto game_invoke_game_command_return_usage;
     }
-  }
-  if (argc != util_optind) goto game_invoke_game_command_return_usage;
+    if (argc != util_optind) goto game_invoke_game_command_return_usage;
 
-  /* This command is only available in game mode. That means that a
-     game model has been read. If this statement becomes false at some
-     point, then insert a check for having read a model here. */
+    /* This command is only available in game mode. That means that a
+       game model has been read. If this statement becomes false at some
+       point, then insert a check for having read a model here. */
 
-  if (Compile_check_if_encoding_was_built(env,nusmv_stderr)) {
-    goto game_invoke_game_command_return_1;
-  }
-
-  if (Compile_check_if_model_was_built(env,nusmv_stderr, false)) {
-    goto game_invoke_game_command_return_1;
-  }
-
-  if (useMore) {
-    old_nusmv_stdout = nusmv_stdout;
-    nusmv_stdout = CmdOpenPipe(env,useMore);
-    if (nusmv_stdout == (FILE*) NULL) {
-      goto game_invoke_game_command_return_1;
-    }
-  }
-
-  if (dbgFileName != NIL(char)) {
-    old_nusmv_stdout = nusmv_stdout;
-    nusmv_stdout = CmdOpenFile(env,dbgFileName);
-    if (nusmv_stdout == (FILE*) NULL) {
-      goto game_invoke_game_command_return_1;
-    }
-  }
-
-  if (NIL(char) != strategyFileName) {
-    strategy_stream = CmdOpenFile(env,strategyFileName);
-    if (strategy_stream == (FILE*) NULL) {
-      goto game_invoke_game_command_return_1;
-    }
-  }
-
-  if (strategy_printout) {
-    fprintf(nusmv_stdout,
-            "%s strategy printout enabled (out -> %s, indentation is %s)\n",
-            (strategy_printout_as_dag ? "dag" : "flat"),
-            (NIL(char) != strategyFileName ? strategyFileName : "<stdout>"),
-            (indented_printout ? "enabled" : "disabled"));
-  }
-
-  /* --------- CHECKING THE FORMULA -------------------*/
-
-  /* The formula is specified. */
-  if (prop_no != -1) {
-    Prop_ptr p = PropDb_get_prop_at_index(PropPkg_get_prop_database(), prop_no);
-
-    /* Check its kind. */
-    if (Prop_check_type(p, type) != 0) {
-      goto game_invoke_game_command_return_1;
+    if (Compile_check_if_encoding_was_built(env,nusmv_stderr)) {
+        goto game_invoke_game_command_return_1;
     }
 
-    CATCH(errmgr) {
-      GameParams params;
-      params.strategy_printout = strategy_printout;
-      params.printout_as_dag   = strategy_printout_as_dag;
-      params.indented_printout = indented_printout;
-      params.strategy_stream   = strategy_stream;
-
-      /* strategyFileName == NULL <-> strategy_stream == NULL */
-      nusmv_assert(((strategyFileName == NIL(char)) &&
-                    (strategy_stream == (FILE*) NULL)) ||
-                   ((strategyFileName != NIL(char)) &&
-                    (strategy_stream != (FILE*) NULL)));
-      command_function(PROP_GAME(p), &params);
+    if (Compile_check_if_model_was_built(env,nusmv_stderr, false)) {
+        goto game_invoke_game_command_return_1;
     }
-    FAIL(errmgr) {
-      goto game_invoke_game_command_return_1;
-    }
-  }
-  /* (probably many) formulas are specified. check them all */
-  else {
-    CATCH(errmgr) {
-      int i;
-      int s = PropDb_get_size(PropPkg_get_prop_database());
 
-      GameParams params;
-      params.strategy_printout = strategy_printout;
-      params.printout_as_dag   = strategy_printout_as_dag;
-      params.indented_printout = indented_printout;
-      params.strategy_stream   = strategy_stream;
-
-       /* strategyFileName == NULL <-> strategy_stream == NULL */
-      nusmv_assert(((strategyFileName == NIL(char)) &&
-                    (strategy_stream == (FILE*) NULL)) ||
-                   ((strategyFileName != NIL(char)) &&
-                    (strategy_stream != (FILE*) NULL)));
-      for (i=0; i < s; ++i) {
-        Prop_ptr p = PropDb_get_prop_at_index(PropPkg_get_prop_database(), i);
-
-        if (Prop_get_type(p) == type) {
-          command_function(PROP_GAME(p), &params);
+    if (useMore) {
+        old_nusmv_stdout = nusmv_stdout;
+        nusmv_stdout = CmdOpenPipe(env,useMore);
+        if (nusmv_stdout == (FILE*) NULL) {
+            goto game_invoke_game_command_return_1;
         }
-      }
     }
-    FAIL(errmgr) {
-      goto game_invoke_game_command_return_1;
+
+    if (dbgFileName != NIL(char)) {
+        old_nusmv_stdout = nusmv_stdout;
+        nusmv_stdout = CmdOpenFile(env,dbgFileName);
+        if (nusmv_stdout == (FILE*) NULL) {
+            goto game_invoke_game_command_return_1;
+        }
     }
-  }
 
-  res = 0;
-  goto game_invoke_game_command_cleanup_and_return;
+    if (NIL(char) != strategyFileName) {
+        strategy_stream = CmdOpenFile(env,strategyFileName);
+        if (strategy_stream == (FILE*) NULL) {
+            goto game_invoke_game_command_return_1;
+        }
+    }
 
- game_invoke_game_command_return_1:
-  res = 1;
-  goto game_invoke_game_command_cleanup_and_return;
+    if (strategy_printout) {
+        fprintf(nusmv_stdout,
+                "%s strategy printout enabled (out -> %s, indentation is %s)\n",
+                (strategy_printout_as_dag ? "dag" : "flat"),
+                (NIL(char) != strategyFileName ? strategyFileName : "<stdout>"),
+                (indented_printout ? "enabled" : "disabled"));
+    }
 
- game_invoke_game_command_return_usage:
-  res = -1;
-  goto game_invoke_game_command_cleanup_and_return;
+    /* --------- CHECKING THE FORMULA -------------------*/
 
- game_invoke_game_command_cleanup_and_return:
-  if (useMore) {
-    if (nusmv_stdout != (FILE*) NULL) CmdClosePipe(nusmv_stdout);
-    nusmv_stdout = old_nusmv_stdout;
-  }
-  if (dbgFileName != NIL(char)) {
-    if (nusmv_stdout != (FILE*) NULL) CmdCloseFile(nusmv_stdout);
-    nusmv_stdout = old_nusmv_stdout;
-    FREE(dbgFileName);
-  }
-  if (algorithm != NIL(char)) {
-    FREE(algorithm);
-  }
-  if (strategyFileName != NIL(char)) {
-    if (strategy_stream != (FILE*) NULL) CmdCloseFile(strategy_stream);
-    FREE(strategyFileName);
-  }
+    /* The formula is specified. */
+    if (prop_no != -1) {
+        Prop_ptr p = PropDb_get_prop_at_index(prop_db, prop_no);
 
-  switch(res) {
-  case 0:
-    /* fall through */
-  case 1:
-    return res;
-  case -1:
-    return command_usage();
-  default:
-    nusmv_assert(false);
-  }
+        /* Check its kind. */
+        if (Prop_check_type(p, type) != 0) {
+            goto game_invoke_game_command_return_1;
+        }
+
+        CATCH(errmgr) {
+                GameParams params;
+                params.strategy_printout = strategy_printout;
+                params.printout_as_dag   = strategy_printout_as_dag;
+                params.indented_printout = indented_printout;
+                params.strategy_stream   = strategy_stream;
+
+                /* strategyFileName == NULL <-> strategy_stream == NULL */
+                nusmv_assert(((strategyFileName == NIL(char)) &&
+                             (strategy_stream == (FILE*) NULL)) ||
+                             ((strategyFileName != NIL(char)) &&
+                             (strategy_stream != (FILE*) NULL)));
+                command_function(PROP_GAME(p), &params);
+            }
+        FAIL(errmgr) {
+            goto game_invoke_game_command_return_1;
+        }
+    }
+        /* (probably many) formulas are specified. check them all */
+    else {
+        CATCH(errmgr) {
+                int i;
+                int s = PropDb_get_size(prop_db);
+
+                GameParams params;
+                params.strategy_printout = strategy_printout;
+                params.printout_as_dag   = strategy_printout_as_dag;
+                params.indented_printout = indented_printout;
+                params.strategy_stream   = strategy_stream;
+
+                /* strategyFileName == NULL <-> strategy_stream == NULL */
+                nusmv_assert(((strategyFileName == NIL(char)) &&
+                             (strategy_stream == (FILE*) NULL)) ||
+                             ((strategyFileName != NIL(char)) &&
+                             (strategy_stream != (FILE*) NULL)));
+                for (i=0; i < s; ++i) {
+                    Prop_ptr p = PropDb_get_prop_at_index(prop_db, i);
+
+                    if (Prop_get_type(p) == type) {
+                        command_function(PROP_GAME(p), &params);
+                    }
+                }
+            }
+        FAIL(errmgr) {
+            goto game_invoke_game_command_return_1;
+        }
+    }
+
+    res = 0;
+    goto game_invoke_game_command_cleanup_and_return;
+
+    game_invoke_game_command_return_1:
+    res = 1;
+    goto game_invoke_game_command_cleanup_and_return;
+
+    game_invoke_game_command_return_usage:
+    res = -1;
+    goto game_invoke_game_command_cleanup_and_return;
+
+    game_invoke_game_command_cleanup_and_return:
+    if (useMore) {
+        if (nusmv_stdout != (FILE*) NULL) CmdClosePipe(nusmv_stdout);
+        nusmv_stdout = old_nusmv_stdout;
+    }
+    if (dbgFileName != NIL(char)) {
+        if (nusmv_stdout != (FILE*) NULL) CmdCloseFile(nusmv_stdout);
+        nusmv_stdout = old_nusmv_stdout;
+        FREE(dbgFileName);
+    }
+    if (algorithm != NIL(char)) {
+        FREE(algorithm);
+    }
+    if (strategyFileName != NIL(char)) {
+        if (strategy_stream != (FILE*) NULL) CmdCloseFile(strategy_stream);
+        FREE(strategyFileName);
+    }
+
+    switch(res) {
+        case 0:
+            /* fall through */
+        case 1:
+            return res;
+        case -1:
+            return command_usage();
+        default:
+            nusmv_assert(false);
+    }
 }
 
 /**Function********************************************************************
@@ -2855,342 +2859,343 @@ static int game_invoke_game_command(NuSMVEnv_ptr env,int argc, char **argv, Prop
 ******************************************************************************/
 static int CommandCheckLtlGameSpecSF07(NuSMVEnv_ptr env,int argc, char **argv)
 {
-  int c;
-  int prop_no = -1;
-  int status;
-  int useMore = 0;
-  int strategy_printout = 0;
-  int indented_printout = 0;
-  int strategy_printout_as_dag = 0;
-  char* dbgFileName = NIL(char);
-  char* strategyFileName = NIL(char);
-  FILE* old_nusmv_stdout = (FILE*) NULL;
-  FILE* strategy_stream =(FILE*) NULL;
-  int kmin = -1;
-  int kmax = -1;
-  Game_Who w = GAME_WHO_INVALID;
-  ErrorMgr_ptr const errmgr =
+    int c;
+    int prop_no = -1;
+    int status;
+    int useMore = 0;
+    int strategy_printout = 0;
+    int indented_printout = 0;
+    int strategy_printout_as_dag = 0;
+    char* dbgFileName = NIL(char);
+    char* strategyFileName = NIL(char);
+    FILE* old_nusmv_stdout = (FILE*) NULL;
+    FILE* strategy_stream =(FILE*) NULL;
+    int kmin = -1;
+    int kmax = -1;
+    Game_Who w = GAME_WHO_INVALID;
+    ErrorMgr_ptr const errmgr =
             ERROR_MGR(NuSMVEnv_get_value(env, ENV_ERROR_MANAGER));
+    PropDb_ptr prop_db  = PROP_DB(NuSMVEnv_get_value(env, ENV_PROP_DB));
 
-  nusmv_assert(opt_game_game(OptsHandler_create()));
+    nusmv_assert(opt_game_game(OptsHandler_create()));
 
-  /*  --------  EVALUATING THE OPTIONS OF THE COMMAND --------- */
-  util_getopt_reset();
-  while ((c = util_getopt(argc, argv, "hmo:n:sf:dek:K:w:")) != EOF) {
-    switch (c) {
-    case 'h': goto CommandCheckLtlGameSpecSF07_return_usage;
-    case 'm':
-      if (dbgFileName != NIL(char)) {
-        goto CommandCheckLtlGameSpecSF07_return_usage;
-      }
-      useMore = 1;
-      break;
-    case 'o':
-      if (useMore == 1) { goto CommandCheckLtlGameSpecSF07_return_usage; }
-      dbgFileName = util_strsav(util_optarg);
-      fprintf(nusmv_stdout, "Output to file: %s\n", dbgFileName);
-      break;
-    case 'n':
-      if (prop_no != -1) { goto CommandCheckLtlGameSpecSF07_return_usage; }
-      prop_no = PropDb_get_prop_index_from_string(PropPkg_get_prop_database(),
-                                                  util_optarg);
-      if (prop_no == -1) { goto CommandCheckLtlGameSpecSF07_return_1; }
-      break;
-    case 's':
-      strategy_printout = 1;
-      break;
-    case 'f':
-      strategyFileName = util_strsav(util_optarg);
-      /* -f implies -s */
-      strategy_printout = 1;
-      break;
-    case 'd':
-      strategy_printout_as_dag = 1;
-       /* -d implies -s */
-      strategy_printout = 1;
-      break;
-    case 'e':
-      indented_printout = 1;
-      /* -e implies -s */
-      strategy_printout = 1;
-      break;
-    case 'k':
-      {
-        char* strNumber;
-        if (kmin != -1) { goto CommandCheckLtlGameSpecSF07_return_usage; }
-        strNumber = util_strsav(util_optarg);
-        if (util_str2int(strNumber, &kmin) != 0) {
-          FREE(strNumber);
-          goto CommandCheckLtlGameSpecSF07_return_usage;
+    /*  --------  EVALUATING THE OPTIONS OF THE COMMAND --------- */
+    util_getopt_reset();
+    while ((c = util_getopt(argc, argv, "hmo:n:sf:dek:K:w:")) != EOF) {
+        switch (c) {
+            case 'h': goto CommandCheckLtlGameSpecSF07_return_usage;
+            case 'm':
+                if (dbgFileName != NIL(char)) {
+                    goto CommandCheckLtlGameSpecSF07_return_usage;
+                }
+                useMore = 1;
+                break;
+            case 'o':
+                if (useMore == 1) { goto CommandCheckLtlGameSpecSF07_return_usage; }
+                dbgFileName = util_strsav(util_optarg);
+                fprintf(nusmv_stdout, "Output to file: %s\n", dbgFileName);
+                break;
+            case 'n':
+                if (prop_no != -1) { goto CommandCheckLtlGameSpecSF07_return_usage; }
+                prop_no = PropDb_get_prop_index_from_string(prop_db,
+                                                            util_optarg);
+                if (prop_no == -1) { goto CommandCheckLtlGameSpecSF07_return_1; }
+                break;
+            case 's':
+                strategy_printout = 1;
+                break;
+            case 'f':
+                strategyFileName = util_strsav(util_optarg);
+                /* -f implies -s */
+                strategy_printout = 1;
+                break;
+            case 'd':
+                strategy_printout_as_dag = 1;
+                /* -d implies -s */
+                strategy_printout = 1;
+                break;
+            case 'e':
+                indented_printout = 1;
+                /* -e implies -s */
+                strategy_printout = 1;
+                break;
+            case 'k':
+            {
+                char* strNumber;
+                if (kmin != -1) { goto CommandCheckLtlGameSpecSF07_return_usage; }
+                strNumber = util_strsav(util_optarg);
+                if (util_str2int(strNumber, &kmin) != 0) {
+                    FREE(strNumber);
+                    goto CommandCheckLtlGameSpecSF07_return_usage;
+                }
+                if (kmin<0) {
+                    FREE(strNumber);
+                    goto CommandCheckLtlGameSpecSF07_return_usage;
+                }
+                FREE(strNumber);
+            }
+                break;
+            case 'K':
+            {
+                char* strNumber;
+                if (kmax != -1) { goto CommandCheckLtlGameSpecSF07_return_usage; }
+                strNumber = util_strsav(util_optarg);
+                if (util_str2int(strNumber, &kmax) != 0) {
+                    FREE(strNumber);
+                    goto CommandCheckLtlGameSpecSF07_return_usage;
+                }
+                if (kmax<0) {
+                    FREE(strNumber);
+                    goto CommandCheckLtlGameSpecSF07_return_usage;
+                }
+                FREE(strNumber);
+            }
+                break;
+            case 'w':
+            {
+                char* strWhom;
+                if (w != GAME_WHO_INVALID) {
+                    goto CommandCheckLtlGameSpecSF07_return_usage;
+                }
+                strWhom = util_strsav(util_optarg);
+                w = Game_Who_from_string(strWhom);
+                if (w != GAME_WHO_PROTAGONIST &&
+                    w != GAME_WHO_ANTAGONIST &&
+                    w != GAME_WHO_BOTH &&
+                    w != GAME_WHO_PLAYER_1 &&
+                    w != GAME_WHO_PLAYER_2) {
+                    FREE(strWhom);
+                    goto CommandCheckLtlGameSpecSF07_return_usage;
+                }
+                FREE(strWhom);
+            }
+                break;
+            default: goto CommandCheckLtlGameSpecSF07_return_usage;
         }
-        if (kmin<0) {
-          FREE(strNumber);
-          goto CommandCheckLtlGameSpecSF07_return_usage;
+    }
+
+    if (argc != util_optind) { goto CommandCheckLtlGameSpecSF07_return_usage; }
+
+    /* This command is only available in game mode. That means that a
+       game model has been read. If this statement becomes false at some
+       point, then insert a check for having read a model here. */
+
+    if (Compile_check_if_encoding_was_built(env,nusmv_stderr)) {
+        goto CommandCheckLtlGameSpecSF07_return_1;
+    }
+
+    if (Compile_check_if_model_was_built(env,nusmv_stderr, false)) {
+        goto CommandCheckLtlGameSpecSF07_return_1;
+    }
+
+    if (Compile_check_if_bool_model_was_built(env,nusmv_stderr, false)) {
+        goto CommandCheckLtlGameSpecSF07_return_1;
+    }
+
+    if (opt_game_game_initial_condition(OptsHandler_create()) != 'N') {
+        fprintf(nusmv_stderr,
+                "Command check_ltlgame_sf07 only supports \'N\' as initial game "
+                        "condition.\n");
+    }
+
+    if (useMore) {
+        old_nusmv_stdout = nusmv_stdout;
+        nusmv_stdout = CmdOpenPipe(env,useMore);
+        if (nusmv_stdout==(FILE*) NULL) {
+            nusmv_stdout=old_nusmv_stdout;
+            old_nusmv_stdout = (FILE*) NULL;
+            goto CommandCheckLtlGameSpecSF07_return_1;
         }
-        FREE(strNumber);
-      }
-      break;
-    case 'K':
-      {
-        char* strNumber;
-        if (kmax != -1) { goto CommandCheckLtlGameSpecSF07_return_usage; }
-        strNumber = util_strsav(util_optarg);
-        if (util_str2int(strNumber, &kmax) != 0) {
-          FREE(strNumber);
-          goto CommandCheckLtlGameSpecSF07_return_usage;
+    }
+
+    if (dbgFileName != NIL(char)) {
+        old_nusmv_stdout = nusmv_stdout;
+        nusmv_stdout = CmdOpenFile(env,dbgFileName);
+        if (nusmv_stdout==(FILE*) NULL) {
+            nusmv_stdout = old_nusmv_stdout;
+            old_nusmv_stdout = (FILE*) NULL;
+            goto CommandCheckLtlGameSpecSF07_return_1;
         }
-        if (kmax<0) {
-          FREE(strNumber);
-          goto CommandCheckLtlGameSpecSF07_return_usage;
+    }
+
+    if (NIL(char) != strategyFileName) {
+        strategy_stream = CmdOpenFile(env,strategyFileName);
+        if ((FILE*) NULL == strategy_stream) {
+            goto CommandCheckLtlGameSpecSF07_return_1;
         }
-        FREE(strNumber);
-      }
-      break;
-    case 'w':
-      {
-        char* strWhom;
-        if (w != GAME_WHO_INVALID) {
-          goto CommandCheckLtlGameSpecSF07_return_usage;
+    }
+
+    if (kmin == -1) { kmin = DEFAULT_GAME_CHECK_LTL_GAME_SPEC_SF07_KMIN; }
+    if (kmax == -1) { kmax = DEFAULT_GAME_CHECK_LTL_GAME_SPEC_SF07_KMAX; }
+    if (kmax < kmin) { goto CommandCheckLtlGameSpecSF07_return_usage; }
+
+    if (w == GAME_WHO_INVALID) { w = DEFAULT_GAME_CHECK_LTL_GAME_SPEC_SF07_W; }
+
+    if (strategy_printout) {
+        fprintf(
+                nusmv_stdout,
+                "%s strategy printout enabled (out -> %s, indentation is %s)\n",
+
+                strategy_printout_as_dag
+                ? "dag"
+                : "flat",
+
+                NIL(char) != strategyFileName
+                ? strategyFileName
+                : "<stdout>",
+
+                indented_printout
+                ? "enabled"
+                : "disabled");
+    }
+
+    /* --------- CHECKING THE FORMULA -------------------*/
+
+    /* the formula is specified. check its kind */
+    if (prop_no != -1) {
+        if (Prop_check_type(PropDb_get_prop_at_index(prop_db,
+                                                     prop_no),
+                            PropGame_LtlGame) != 0) {
+            goto CommandCheckLtlGameSpecSF07_return_1;
         }
-        strWhom = util_strsav(util_optarg);
-        w = Game_Who_from_string(strWhom);
-        if (w != GAME_WHO_PROTAGONIST &&
-            w != GAME_WHO_ANTAGONIST &&
-            w != GAME_WHO_BOTH &&
-            w != GAME_WHO_PLAYER_1 &&
-            w != GAME_WHO_PLAYER_2) {
-          FREE(strWhom);
-          goto CommandCheckLtlGameSpecSF07_return_usage;
+    }
+
+    /* one formula is specified. check it alone */
+    if (prop_no != -1) {
+        CATCH(errmgr) {
+                Prop_ptr p = PropDb_get_prop_at_index(prop_db,
+                                                      prop_no);
+                nusmv_assert(Prop_get_type(p) == PropGame_LtlGame);
+
+                GameParams params;
+                params.strategy_printout = strategy_printout;
+                params.printout_as_dag = strategy_printout_as_dag;
+                params.indented_printout = indented_printout;
+                params.strategy_stream = strategy_stream;
+
+                /* strategyFileName == NULL <-> strategy_stream == NULL */
+                nusmv_assert(
+                        (NIL(char) != strategyFileName ||
+                (FILE*) NULL == strategy_stream) &&
+                (NIL(char) == strategyFileName ||
+                (FILE*) NULL != strategy_stream) );
+
+                Game_CheckLtlGameSpecSF07(PROP_GAME(p), &params, kmin, kmax, w);
+            }
+        FAIL(errmgr) {
+            goto CommandCheckLtlGameSpecSF07_return_1;
         }
-        FREE(strWhom);
-      }
-      break;
-    default: goto CommandCheckLtlGameSpecSF07_return_usage;
     }
-  }
+        /* (probably many) formulas are specified. check them all */
+    else {
+        CATCH(errmgr) {
+                int i;
+                int s = PropDb_get_size(prop_db);
 
-  if (argc != util_optind) { goto CommandCheckLtlGameSpecSF07_return_usage; }
+                GameParams params;
+                params.strategy_printout = strategy_printout;
+                params.printout_as_dag = strategy_printout_as_dag;
+                params.indented_printout = indented_printout;
+                params.strategy_stream = strategy_stream;
 
-  /* This command is only available in game mode. That means that a
-     game model has been read. If this statement becomes false at some
-     point, then insert a check for having read a model here. */
+                /* strategyFileName == NULL <-> strategy_stream == NULL */
+                nusmv_assert(
+                        (NIL(char) != strategyFileName ||
+                (FILE*) NULL == strategy_stream) &&
+                (NIL(char) == strategyFileName ||
+                (FILE*) NULL != strategy_stream) );
 
-  if (Compile_check_if_encoding_was_built(env,nusmv_stderr)) {
-    goto CommandCheckLtlGameSpecSF07_return_1;
-  }
+                for (i=0; i < s; ++i) {
+                    Prop_ptr p = PropDb_get_prop_at_index(prop_db, i);
 
-  if (Compile_check_if_model_was_built(env,nusmv_stderr, false)) {
-    goto CommandCheckLtlGameSpecSF07_return_1;
-  }
-
-  if (Compile_check_if_bool_model_was_built(env,nusmv_stderr, false)) {
-    goto CommandCheckLtlGameSpecSF07_return_1;
-  }
-
-  if (opt_game_game_initial_condition(OptsHandler_create()) != 'N') {
-    fprintf(nusmv_stderr,
-            "Command check_ltlgame_sf07 only supports \'N\' as initial game "
-            "condition.\n");
-  }
-
-  if (useMore) {
-    old_nusmv_stdout = nusmv_stdout;
-    nusmv_stdout = CmdOpenPipe(env,useMore);
-    if (nusmv_stdout==(FILE*) NULL) {
-      nusmv_stdout=old_nusmv_stdout;
-      old_nusmv_stdout = (FILE*) NULL;
-      goto CommandCheckLtlGameSpecSF07_return_1;
-    }
-  }
-
-  if (dbgFileName != NIL(char)) {
-    old_nusmv_stdout = nusmv_stdout;
-    nusmv_stdout = CmdOpenFile(env,dbgFileName);
-    if (nusmv_stdout==(FILE*) NULL) {
-      nusmv_stdout = old_nusmv_stdout;
-      old_nusmv_stdout = (FILE*) NULL;
-      goto CommandCheckLtlGameSpecSF07_return_1;
-    }
-  }
-
-  if (NIL(char) != strategyFileName) {
-    strategy_stream = CmdOpenFile(env,strategyFileName);
-    if ((FILE*) NULL == strategy_stream) {
-      goto CommandCheckLtlGameSpecSF07_return_1;
-    }
-  }
-
-  if (kmin == -1) { kmin = DEFAULT_GAME_CHECK_LTL_GAME_SPEC_SF07_KMIN; }
-  if (kmax == -1) { kmax = DEFAULT_GAME_CHECK_LTL_GAME_SPEC_SF07_KMAX; }
-  if (kmax < kmin) { goto CommandCheckLtlGameSpecSF07_return_usage; }
-
-  if (w == GAME_WHO_INVALID) { w = DEFAULT_GAME_CHECK_LTL_GAME_SPEC_SF07_W; }
-
-  if (strategy_printout) {
-    fprintf(
-            nusmv_stdout,
-            "%s strategy printout enabled (out -> %s, indentation is %s)\n",
-
-            strategy_printout_as_dag
-            ? "dag"
-            : "flat",
-
-            NIL(char) != strategyFileName
-            ? strategyFileName
-            : "<stdout>",
-
-            indented_printout
-            ? "enabled"
-            : "disabled");
-  }
-
-  /* --------- CHECKING THE FORMULA -------------------*/
-
-  /* the formula is specified. check its kind */
-  if (prop_no != -1) {
-    if (Prop_check_type(PropDb_get_prop_at_index(PropPkg_get_prop_database(),
-                                                 prop_no),
-                        PropGame_LtlGame) != 0) {
-      goto CommandCheckLtlGameSpecSF07_return_1;
-    }
-  }
-
-  /* one formula is specified. check it alone */
-  if (prop_no != -1) {
-    CATCH(errmgr) {
-      Prop_ptr p = PropDb_get_prop_at_index(PropPkg_get_prop_database(),
-                                            prop_no);
-      nusmv_assert(Prop_get_type(p) == PropGame_LtlGame);
-
-      GameParams params;
-      params.strategy_printout = strategy_printout;
-      params.printout_as_dag = strategy_printout_as_dag;
-      params.indented_printout = indented_printout;
-      params.strategy_stream = strategy_stream;
-
-      /* strategyFileName == NULL <-> strategy_stream == NULL */
-      nusmv_assert(
-                   (NIL(char) != strategyFileName ||
-                    (FILE*) NULL == strategy_stream) &&
-                   (NIL(char) == strategyFileName ||
-                    (FILE*) NULL != strategy_stream) );
-
-      Game_CheckLtlGameSpecSF07(PROP_GAME(p), &params, kmin, kmax, w);
-    }
-    FAIL(errmgr) {
-      goto CommandCheckLtlGameSpecSF07_return_1;
-    }
-  }
-  /* (probably many) formulas are specified. check them all */
-  else {
-    CATCH(errmgr) {
-      int i;
-      int s = PropDb_get_size(PropPkg_get_prop_database());
-
-      GameParams params;
-      params.strategy_printout = strategy_printout;
-      params.printout_as_dag = strategy_printout_as_dag;
-      params.indented_printout = indented_printout;
-      params.strategy_stream = strategy_stream;
-
-       /* strategyFileName == NULL <-> strategy_stream == NULL */
-      nusmv_assert(
-                   (NIL(char) != strategyFileName ||
-                    (FILE*) NULL == strategy_stream) &&
-                   (NIL(char) == strategyFileName ||
-                    (FILE*) NULL != strategy_stream) );
-
-      for (i=0; i < s; ++i) {
-        Prop_ptr p = PropDb_get_prop_at_index(PropPkg_get_prop_database(), i);
-
-        if (Prop_get_type(p) == PropGame_LtlGame) {
-          Game_CheckLtlGameSpecSF07(PROP_GAME(p), &params, kmin, kmax, w);
+                    if (Prop_get_type(p) == PropGame_LtlGame) {
+                        Game_CheckLtlGameSpecSF07(PROP_GAME(p), &params, kmin, kmax, w);
+                    }
+                }
+            }
+        FAIL(errmgr) {
+            goto CommandCheckLtlGameSpecSF07_return_1;
         }
-      }
     }
-    FAIL(errmgr) {
-      goto CommandCheckLtlGameSpecSF07_return_1;
+    goto CommandCheckLtlGameSpecSF07_return_0;
+
+    CommandCheckLtlGameSpecSF07_return_usage:
+    status = -1;
+    goto CommandCheckLtlGameSpecSF07_cleanup_and_return;
+
+    CommandCheckLtlGameSpecSF07_return_0:
+    status = 0;
+    goto CommandCheckLtlGameSpecSF07_cleanup_and_return;
+
+    CommandCheckLtlGameSpecSF07_return_1:
+    status = 1;
+    goto CommandCheckLtlGameSpecSF07_cleanup_and_return;
+
+    CommandCheckLtlGameSpecSF07_cleanup_and_return:
+    if ((FILE*) NULL != strategy_stream) {
+        CmdCloseFile(strategy_stream);
     }
-  }
-  goto CommandCheckLtlGameSpecSF07_return_0;
-
- CommandCheckLtlGameSpecSF07_return_usage:
-  status = -1;
-  goto CommandCheckLtlGameSpecSF07_cleanup_and_return;
-
- CommandCheckLtlGameSpecSF07_return_0:
-  status = 0;
-  goto CommandCheckLtlGameSpecSF07_cleanup_and_return;
-
- CommandCheckLtlGameSpecSF07_return_1:
-  status = 1;
-  goto CommandCheckLtlGameSpecSF07_cleanup_and_return;
-
- CommandCheckLtlGameSpecSF07_cleanup_and_return:
-  if ((FILE*) NULL != strategy_stream) {
-    CmdCloseFile(strategy_stream);
-  }
-  if (strategyFileName != NIL(char)) {
-    FREE(strategyFileName);
-  }
-  if (useMore) {
-    if (old_nusmv_stdout != (FILE*) NULL) {
-      CmdClosePipe(nusmv_stdout);
-      nusmv_stdout = old_nusmv_stdout;
+    if (strategyFileName != NIL(char)) {
+        FREE(strategyFileName);
     }
-  }
-  if (dbgFileName != NIL(char)) {
-    if (old_nusmv_stdout != (FILE*) NULL) {
-      CmdCloseFile(nusmv_stdout);
-      nusmv_stdout = old_nusmv_stdout;
+    if (useMore) {
+        if (old_nusmv_stdout != (FILE*) NULL) {
+            CmdClosePipe(nusmv_stdout);
+            nusmv_stdout = old_nusmv_stdout;
+        }
     }
-    FREE(dbgFileName);
-  }
-  if (status == -1) {
-    return UsageCheckLtlGameSpecSF07();
-  } else {
-    return status;
-  }
+    if (dbgFileName != NIL(char)) {
+        if (old_nusmv_stdout != (FILE*) NULL) {
+            CmdCloseFile(nusmv_stdout);
+            nusmv_stdout = old_nusmv_stdout;
+        }
+        FREE(dbgFileName);
+    }
+    if (status == -1) {
+        return UsageCheckLtlGameSpecSF07();
+    } else {
+        return status;
+    }
 }
 
 static int UsageCheckLtlGameSpecSF07()
 {
-  fprintf(nusmv_stderr,
-          "usage: check_ltlgame_sf07 [-h] [-m | -o file] [-n number] [-s]\n");
-  fprintf(nusmv_stderr,
-          "                          [-f strategy-file] [-d] [-e]\n");
-  fprintf(nusmv_stderr,
-"                          [-k number] [-K number] [-w p|a|b|1|2]\n");
-  fprintf(nusmv_stderr, "   -h \t\t\tPrints the command usage.\n");
-  fprintf(nusmv_stderr,
-          "   -m \t\t\tPipes output through the program specified\n");
-  fprintf(nusmv_stderr,
-          "      \t\t\tby the \"PAGER\" environment variable if defined,\n");
-  fprintf(nusmv_stderr, "      \t\t\telse through the UNIX command \"more\".\n");
-  fprintf(nusmv_stderr,
-          "   -o file\t\tWrites the generated output to \"file\".\n");
-  fprintf(nusmv_stderr,
-          "   -n number\t\tChecks LTLGAME specification with the given\n");
-  fprintf(nusmv_stderr, "      \t\t\tindex number.\n");
-  fprintf(nusmv_stderr,
-          "   -s \t\t\tRequires strategy printout (default to stdout).\n");
-  fprintf(nusmv_stderr,
-          "   -f file\t\tWrites strategy printout to \"file\" (implies -s).\n");
-  fprintf(nusmv_stderr,
-          "   -d \t\t\tRequires strategy printout, generate a DAG printout.\n");
-  fprintf(nusmv_stderr, "      \t\t\t(implies -s)\n");
-  fprintf(nusmv_stderr,
-          "   -e \t\t\tRequires strategy printout, generate an easy readable\n");
-  fprintf(nusmv_stderr, "      \t\t\tprintout. (implies -s)\n");
-  fprintf(nusmv_stderr, "   -k \t\t\tStart value for k (default 0).\n");
-  fprintf(nusmv_stderr, "   -K \t\t\tEnd value for k (default 20).\n");
-  fprintf(nusmv_stderr,
-          "   -w \t\t\tWhom games are played for: (p)rotagonist, "
-          "(a)ntagonist,\n");
-  fprintf(nusmv_stderr,
-          "      \t\t\t(b)oth, player (1), or player (2). Default: b.\n");
+    fprintf(nusmv_stderr,
+            "usage: check_ltlgame_sf07 [-h] [-m | -o file] [-n number] [-s]\n");
+    fprintf(nusmv_stderr,
+            "                          [-f strategy-file] [-d] [-e]\n");
+    fprintf(nusmv_stderr,
+            "                          [-k number] [-K number] [-w p|a|b|1|2]\n");
+    fprintf(nusmv_stderr, "   -h \t\t\tPrints the command usage.\n");
+    fprintf(nusmv_stderr,
+            "   -m \t\t\tPipes output through the program specified\n");
+    fprintf(nusmv_stderr,
+            "      \t\t\tby the \"PAGER\" environment variable if defined,\n");
+    fprintf(nusmv_stderr, "      \t\t\telse through the UNIX command \"more\".\n");
+    fprintf(nusmv_stderr,
+            "   -o file\t\tWrites the generated output to \"file\".\n");
+    fprintf(nusmv_stderr,
+            "   -n number\t\tChecks LTLGAME specification with the given\n");
+    fprintf(nusmv_stderr, "      \t\t\tindex number.\n");
+    fprintf(nusmv_stderr,
+            "   -s \t\t\tRequires strategy printout (default to stdout).\n");
+    fprintf(nusmv_stderr,
+            "   -f file\t\tWrites strategy printout to \"file\" (implies -s).\n");
+    fprintf(nusmv_stderr,
+            "   -d \t\t\tRequires strategy printout, generate a DAG printout.\n");
+    fprintf(nusmv_stderr, "      \t\t\t(implies -s)\n");
+    fprintf(nusmv_stderr,
+            "   -e \t\t\tRequires strategy printout, generate an easy readable\n");
+    fprintf(nusmv_stderr, "      \t\t\tprintout. (implies -s)\n");
+    fprintf(nusmv_stderr, "   -k \t\t\tStart value for k (default 0).\n");
+    fprintf(nusmv_stderr, "   -K \t\t\tEnd value for k (default 20).\n");
+    fprintf(nusmv_stderr,
+            "   -w \t\t\tWhom games are played for: (p)rotagonist, "
+                    "(a)ntagonist,\n");
+    fprintf(nusmv_stderr,
+            "      \t\t\t(b)oth, player (1), or player (2). Default: b.\n");
 
-  return 1;
+    return 1;
 }
 
 /**Function********************************************************************
@@ -3293,363 +3298,363 @@ static int UsageCheckLtlGameSpecSF07()
 ******************************************************************************/
 static int CommandExtractUnrealizableCore(NuSMVEnv_ptr env,int argc, char **argv)
 {
-  int c;
-  int useMore = 0;
-  char* dbgFileName = NIL(char);
-  FILE* old_nusmv_stdout = (FILE*) NULL;
-  int prop_no = -1;
-  Game_UnrealizableCore_Algorithm algo =
-    GAME_UNREALIZABLE_CORE_ALGORITHM_INVALID;
-  Game_UnrealizableCore_CoreType ct =
-    GAME_UNREALIZABLE_CORE_CORE_TYPE_INVALID;
-  boolean min_init = true;
-  boolean min_invar = true;
-  boolean min_trans = true;
-  boolean min_prop = true;
-  Game_Who w = GAME_WHO_INVALID;
-  int N = -1;
-  int status;
-  ErrorMgr_ptr const errmgr =
+    int c;
+    int useMore = 0;
+    char* dbgFileName = NIL(char);
+    FILE* old_nusmv_stdout = (FILE*) NULL;
+    int prop_no = -1;
+    Game_UnrealizableCore_Algorithm algo =
+            GAME_UNREALIZABLE_CORE_ALGORITHM_INVALID;
+    Game_UnrealizableCore_CoreType ct =
+            GAME_UNREALIZABLE_CORE_CORE_TYPE_INVALID;
+    boolean min_init = true;
+    boolean min_invar = true;
+    boolean min_trans = true;
+    boolean min_prop = true;
+    Game_Who w = GAME_WHO_INVALID;
+    int N = -1;
+    int status;
+    ErrorMgr_ptr const errmgr =
             ERROR_MGR(NuSMVEnv_get_value(env, ENV_ERROR_MANAGER));
+    PropDb_ptr prop_db  = PROP_DB(NuSMVEnv_get_value(env, ENV_PROP_DB));
 
+    nusmv_assert(opt_game_game(OptsHandler_create()));
 
-  nusmv_assert(opt_game_game(OptsHandler_create()));
+    /*  Evaluate options. */
 
-  /*  Evaluate options. */
-
-  util_getopt_reset();
-  while ((c = util_getopt(argc, argv, "hmo:n:a:c:ivtpw:N:")) != EOF) {
-    switch (c) {
-    case 'h': goto CommandExtractUnrealizableCore_return_usage;
-    case 'm':
-      if (dbgFileName != NIL(char)) {
-        goto CommandExtractUnrealizableCore_return_usage;
-      }
-      useMore = 1;
-      break;
-    case 'o':
-      if (useMore == 1) { goto CommandExtractUnrealizableCore_return_usage; }
-      dbgFileName = util_strsav(util_optarg);
-      fprintf(nusmv_stdout, "Output to file: %s\n", dbgFileName);
-      break;
-    case 'n':
-      if (prop_no != -1) { goto CommandExtractUnrealizableCore_return_usage; }
-      prop_no = PropDb_get_prop_index_from_string(PropPkg_get_prop_database(),
-                                                  util_optarg);
-      if (prop_no == -1) { goto CommandExtractUnrealizableCore_return_1; }
-      break;
-    case 'a':
-      {
-        char* strAlgo;
-        if (algo != GAME_UNREALIZABLE_CORE_ALGORITHM_INVALID) {
-          goto CommandExtractUnrealizableCore_return_usage;
+    util_getopt_reset();
+    while ((c = util_getopt(argc, argv, "hmo:n:a:c:ivtpw:N:")) != EOF) {
+        switch (c) {
+            case 'h': goto CommandExtractUnrealizableCore_return_usage;
+            case 'm':
+                if (dbgFileName != NIL(char)) {
+                    goto CommandExtractUnrealizableCore_return_usage;
+                }
+                useMore = 1;
+                break;
+            case 'o':
+                if (useMore == 1) { goto CommandExtractUnrealizableCore_return_usage; }
+                dbgFileName = util_strsav(util_optarg);
+                fprintf(nusmv_stdout, "Output to file: %s\n", dbgFileName);
+                break;
+            case 'n':
+                if (prop_no != -1) { goto CommandExtractUnrealizableCore_return_usage; }
+                prop_no = PropDb_get_prop_index_from_string(prop_db,
+                                                            util_optarg);
+                if (prop_no == -1) { goto CommandExtractUnrealizableCore_return_1; }
+                break;
+            case 'a':
+            {
+                char* strAlgo;
+                if (algo != GAME_UNREALIZABLE_CORE_ALGORITHM_INVALID) {
+                    goto CommandExtractUnrealizableCore_return_usage;
+                }
+                strAlgo = util_strsav(util_optarg);
+                algo = Game_UnrealizableCore_Algorithm_from_string(strAlgo);
+                if (algo == GAME_UNREALIZABLE_CORE_ALGORITHM_INVALID) {
+                    goto CommandExtractUnrealizableCore_return_usage;
+                }
+                FREE(strAlgo);
+            }
+                break;
+            case 'c':
+            {
+                char* strType;
+                if (ct != GAME_UNREALIZABLE_CORE_CORE_TYPE_INVALID) {
+                    goto CommandExtractUnrealizableCore_return_usage;
+                }
+                strType = util_strsav(util_optarg);
+                ct = Game_UnrealizableCore_CoreType_from_string(strType);
+                if (ct == GAME_UNREALIZABLE_CORE_CORE_TYPE_INVALID) {
+                    goto CommandExtractUnrealizableCore_return_usage;
+                }
+                FREE(strType);
+            }
+                break;
+            case 'i':
+                if (!min_init) { goto CommandExtractUnrealizableCore_return_usage; }
+                min_init = false;
+                break;
+            case 'v':
+                if (!min_invar) { goto CommandExtractUnrealizableCore_return_usage; }
+                min_invar = false;
+                break;
+            case 't':
+                if (!min_trans) { goto CommandExtractUnrealizableCore_return_usage; }
+                min_trans = false;
+                break;
+            case 'p':
+                if (!min_prop) { goto CommandExtractUnrealizableCore_return_usage; }
+                min_prop = false;
+                break;
+            case 'w':
+            {
+                char* strWho;
+                if (w != GAME_WHO_INVALID) {
+                    goto CommandExtractUnrealizableCore_return_usage;
+                }
+                strWho = util_strsav(util_optarg);
+                w = Game_Who_from_string(strWho);
+                if (w != GAME_WHO_LOSER &&
+                    w != GAME_WHO_BOTH &&
+                    w != GAME_WHO_PLAYER_1 &&
+                    w != GAME_WHO_PLAYER_2) {
+                    FREE(strWho);
+                    goto CommandExtractUnrealizableCore_return_usage;
+                }
+                FREE(strWho);
+            }
+                break;
+            case 'N':
+            {
+                char* strNumber;
+                if (N != -1) { goto CommandExtractUnrealizableCore_return_usage; }
+                strNumber = util_strsav(util_optarg);
+                if (util_str2int(strNumber, &N) != 0) {
+                    FREE(strNumber);
+                    goto CommandExtractUnrealizableCore_return_usage;
+                }
+                if (N<0) {
+                    FREE(strNumber);
+                    goto CommandExtractUnrealizableCore_return_usage;
+                }
+                FREE(strNumber);
+            }
+                break;
+            default: goto CommandExtractUnrealizableCore_return_usage;
         }
-        strAlgo = util_strsav(util_optarg);
-        algo = Game_UnrealizableCore_Algorithm_from_string(strAlgo);
-        if (algo == GAME_UNREALIZABLE_CORE_ALGORITHM_INVALID) {
-          goto CommandExtractUnrealizableCore_return_usage;
-        }
-        FREE(strAlgo);
-      }
-      break;
-    case 'c':
-      {
-        char* strType;
-        if (ct != GAME_UNREALIZABLE_CORE_CORE_TYPE_INVALID) {
-          goto CommandExtractUnrealizableCore_return_usage;
-        }
-        strType = util_strsav(util_optarg);
-        ct = Game_UnrealizableCore_CoreType_from_string(strType);
-        if (ct == GAME_UNREALIZABLE_CORE_CORE_TYPE_INVALID) {
-          goto CommandExtractUnrealizableCore_return_usage;
-        }
-        FREE(strType);
-      }
-      break;
-    case 'i':
-      if (!min_init) { goto CommandExtractUnrealizableCore_return_usage; }
-      min_init = false;
-      break;
-    case 'v':
-      if (!min_invar) { goto CommandExtractUnrealizableCore_return_usage; }
-      min_invar = false;
-      break;
-    case 't':
-      if (!min_trans) { goto CommandExtractUnrealizableCore_return_usage; }
-      min_trans = false;
-      break;
-    case 'p':
-      if (!min_prop) { goto CommandExtractUnrealizableCore_return_usage; }
-      min_prop = false;
-      break;
-    case 'w':
-      {
-        char* strWho;
-        if (w != GAME_WHO_INVALID) {
-          goto CommandExtractUnrealizableCore_return_usage;
-        }
-        strWho = util_strsav(util_optarg);
-        w = Game_Who_from_string(strWho);
-        if (w != GAME_WHO_LOSER &&
-            w != GAME_WHO_BOTH &&
-            w != GAME_WHO_PLAYER_1 &&
-            w != GAME_WHO_PLAYER_2) {
-          FREE(strWho);
-          goto CommandExtractUnrealizableCore_return_usage;
-        }
-        FREE(strWho);
-      }
-      break;
-    case 'N':
-      {
-        char* strNumber;
-        if (N != -1) { goto CommandExtractUnrealizableCore_return_usage; }
-        strNumber = util_strsav(util_optarg);
-        if (util_str2int(strNumber, &N) != 0) {
-          FREE(strNumber);
-          goto CommandExtractUnrealizableCore_return_usage;
-        }
-        if (N<0) {
-          FREE(strNumber);
-          goto CommandExtractUnrealizableCore_return_usage;
-        }
-        FREE(strNumber);
-      }
-      break;
-    default: goto CommandExtractUnrealizableCore_return_usage;
     }
-  }
 
-  /*  Check option values. */
+    /*  Check option values. */
 
-  if (argc != util_optind) { goto CommandExtractUnrealizableCore_return_usage; }
+    if (argc != util_optind) { goto CommandExtractUnrealizableCore_return_usage; }
 
-  if (algo == GAME_UNREALIZABLE_CORE_ALGORITHM_INVALID) {
-    algo = DEFAULT_GAME_UNREALIZABLE_CORE_ALGORITHM;
-  }
-
-  if (ct == GAME_UNREALIZABLE_CORE_CORE_TYPE_INVALID) {
-    ct = GAME_UNREALIZABLE_CORE_CORE_TYPE_CORE;
-  }
-
-  switch (algo) {
-  case GAME_UNREALIZABLE_CORE_ALGORITHM_ACTIVATION_VARIABLES:
-    if (w == GAME_WHO_INVALID) {
-      w = GAME_WHO_BOTH;
-    } else if (w != GAME_WHO_PLAYER_1 &&
-               w != GAME_WHO_PLAYER_2 &&
-               w != GAME_WHO_BOTH) {
-      goto CommandExtractUnrealizableCore_return_usage;
+    if (algo == GAME_UNREALIZABLE_CORE_ALGORITHM_INVALID) {
+        algo = DEFAULT_GAME_UNREALIZABLE_CORE_ALGORITHM;
     }
-    if (N == -1) {
-      N = DEFAULT_GAME_UNREALIZABLE_CORE_N;
+
+    if (ct == GAME_UNREALIZABLE_CORE_CORE_TYPE_INVALID) {
+        ct = GAME_UNREALIZABLE_CORE_CORE_TYPE_CORE;
     }
-    break;
-  case GAME_UNREALIZABLE_CORE_ALGORITHM_EXPLICIT:
-    if (w == GAME_WHO_INVALID) {
-      w = GAME_WHO_LOSER;
-    } else if (w != GAME_WHO_LOSER &&
-               w != GAME_WHO_BOTH) {
-      goto CommandExtractUnrealizableCore_return_usage;
+
+    switch (algo) {
+        case GAME_UNREALIZABLE_CORE_ALGORITHM_ACTIVATION_VARIABLES:
+            if (w == GAME_WHO_INVALID) {
+                w = GAME_WHO_BOTH;
+            } else if (w != GAME_WHO_PLAYER_1 &&
+                       w != GAME_WHO_PLAYER_2 &&
+                       w != GAME_WHO_BOTH) {
+                goto CommandExtractUnrealizableCore_return_usage;
+            }
+            if (N == -1) {
+                N = DEFAULT_GAME_UNREALIZABLE_CORE_N;
+            }
+            break;
+        case GAME_UNREALIZABLE_CORE_ALGORITHM_EXPLICIT:
+            if (w == GAME_WHO_INVALID) {
+                w = GAME_WHO_LOSER;
+            } else if (w != GAME_WHO_LOSER &&
+                       w != GAME_WHO_BOTH) {
+                goto CommandExtractUnrealizableCore_return_usage;
+            }
+            if (ct != GAME_UNREALIZABLE_CORE_CORE_TYPE_CORE) {
+                goto CommandExtractUnrealizableCore_return_usage;
+            }
+            if (N != -1) {
+                goto CommandExtractUnrealizableCore_return_usage;
+            }
+            break;
+        default:
+            nusmv_assert(false);
     }
-    if (ct != GAME_UNREALIZABLE_CORE_CORE_TYPE_CORE) {
-      goto CommandExtractUnrealizableCore_return_usage;
-    }
-    if (N != -1) {
-      goto CommandExtractUnrealizableCore_return_usage;
-    }
-    break;
-  default:
-    nusmv_assert(false);
-  }
 
-  /* Check preparations. */
+    /* Check preparations. */
 
-  /* This command is only available in game mode. That means that a
-     game model has been read. If this statement becomes false at some
-     point, then insert a check for having read a model here. */
+    /* This command is only available in game mode. That means that a
+       game model has been read. If this statement becomes false at some
+       point, then insert a check for having read a model here. */
 
-  if (Compile_check_if_encoding_was_built(env,nusmv_stderr)) {
-    goto CommandExtractUnrealizableCore_return_1;
-  }
-
-  if (Compile_check_if_model_was_built(env,nusmv_stderr, false)) {
-    goto CommandExtractUnrealizableCore_return_1;
-  }
-
-  if (useMore) {
-    old_nusmv_stdout = nusmv_stdout;
-    nusmv_stdout = CmdOpenPipe(env,useMore);
-    if (nusmv_stdout==(FILE*) NULL) {
-      nusmv_stdout=old_nusmv_stdout;
-      old_nusmv_stdout = (FILE*) NULL;
-      goto CommandExtractUnrealizableCore_return_1;
-    }
-  }
-
-  if (dbgFileName != NIL(char)) {
-    old_nusmv_stdout = nusmv_stdout;
-    nusmv_stdout = CmdOpenFile(env,dbgFileName);
-    if (nusmv_stdout==(FILE*) NULL) {
-      nusmv_stdout = old_nusmv_stdout;
-      old_nusmv_stdout = (FILE*) NULL;
-      goto CommandExtractUnrealizableCore_return_1;
-    }
-  }
-
-  /* Do the work. */
-
-  /* One formula is specified. Process it. */
-  if (prop_no != -1) {
-    CATCH(errmgr) {
-      Prop_ptr p = PropDb_get_prop_at_index(PropPkg_get_prop_database(),
-                                            prop_no);
-
-      PROP_CHECK_INSTANCE(p);
-      if (Prop_get_type(p) != PropGame_GenReactivity) {
-        fprintf(nusmv_stderr,
-                "Error: currently unrealizable core extraction is only "
-                "available for GENREACTIVITY\n"
-                "properties.\n");
+    if (Compile_check_if_encoding_was_built(env,nusmv_stderr)) {
         goto CommandExtractUnrealizableCore_return_1;
-      }
-      Game_CheckGameSpecAndComputeCores(PROP_GAME(p),
-                                        algo,
-                                        ct,
-                                        min_init,
-                                        min_invar,
-                                        min_trans,
-                                        min_prop,
-                                        w,
-                                        N);
     }
-    FAIL(errmgr) {
-      goto CommandExtractUnrealizableCore_return_1;
+
+    if (Compile_check_if_model_was_built(env,nusmv_stderr, false)) {
+        goto CommandExtractUnrealizableCore_return_1;
     }
-  }
-  /* (probably many) formulas are specified. check them all */
-  else {
-    CATCH(errmgr) {
-      int i;
-      int s = PropDb_get_size(PropPkg_get_prop_database());
 
-      for (i = 0; i < s; ++i) {
-        Prop_ptr p = PropDb_get_prop_at_index(PropPkg_get_prop_database(), i);
-
-        PROP_CHECK_INSTANCE(p);
-        if (Prop_get_type(p) != PropGame_GenReactivity) {
-          fprintf(nusmv_stderr,
-                  "Warning: currently unrealizable core extraction is only "
-                  "available for GENREACTIVITY\n"
-                  "properties. Skipping property %d.\n", i);
-        } else {
-          Game_CheckGameSpecAndComputeCores(PROP_GAME(p),
-                                            algo,
-                                            ct,
-                                            min_init,
-                                            min_invar,
-                                            min_trans,
-                                            min_prop,
-                                            w,
-                                            N);
+    if (useMore) {
+        old_nusmv_stdout = nusmv_stdout;
+        nusmv_stdout = CmdOpenPipe(env,useMore);
+        if (nusmv_stdout==(FILE*) NULL) {
+            nusmv_stdout=old_nusmv_stdout;
+            old_nusmv_stdout = (FILE*) NULL;
+            goto CommandExtractUnrealizableCore_return_1;
         }
-      }
     }
-    FAIL(errmgr) {
-      goto CommandExtractUnrealizableCore_return_1;
+
+    if (dbgFileName != NIL(char)) {
+        old_nusmv_stdout = nusmv_stdout;
+        nusmv_stdout = CmdOpenFile(env,dbgFileName);
+        if (nusmv_stdout==(FILE*) NULL) {
+            nusmv_stdout = old_nusmv_stdout;
+            old_nusmv_stdout = (FILE*) NULL;
+            goto CommandExtractUnrealizableCore_return_1;
+        }
     }
-  }
-  goto CommandExtractUnrealizableCore_return_0;
 
- CommandExtractUnrealizableCore_return_usage:
-  status = -1;
-  goto CommandExtractUnrealizableCore_cleanup_and_return;
+    /* Do the work. */
 
- CommandExtractUnrealizableCore_return_0:
-  status = 0;
-  goto CommandExtractUnrealizableCore_cleanup_and_return;
+    /* One formula is specified. Process it. */
+    if (prop_no != -1) {
+        CATCH(errmgr) {
+                Prop_ptr p = PropDb_get_prop_at_index(prop_db,
+                                                      prop_no);
 
- CommandExtractUnrealizableCore_return_1:
-  status = 1;
-  goto CommandExtractUnrealizableCore_cleanup_and_return;
-
- CommandExtractUnrealizableCore_cleanup_and_return:
-  if (useMore) {
-    if (old_nusmv_stdout != (FILE*) NULL) {
-      CmdClosePipe(nusmv_stdout);
-      nusmv_stdout = old_nusmv_stdout;
+                PROP_CHECK_INSTANCE(p);
+                if (Prop_get_type(p) != PropGame_GenReactivity) {
+                    fprintf(nusmv_stderr,
+                            "Error: currently unrealizable core extraction is only "
+                                    "available for GENREACTIVITY\n"
+                                    "properties.\n");
+                    goto CommandExtractUnrealizableCore_return_1;
+                }
+                Game_CheckGameSpecAndComputeCores(PROP_GAME(p),
+                                                  algo,
+                                                  ct,
+                                                  min_init,
+                                                  min_invar,
+                                                  min_trans,
+                                                  min_prop,
+                                                  w,
+                                                  N);
+            }
+        FAIL(errmgr) {
+            goto CommandExtractUnrealizableCore_return_1;
+        }
     }
-  }
-  if (dbgFileName != NIL(char)) {
-    if (old_nusmv_stdout != (FILE*) NULL) {
-      CmdCloseFile(nusmv_stdout);
-      nusmv_stdout = old_nusmv_stdout;
+        /* (probably many) formulas are specified. check them all */
+    else {
+        CATCH(errmgr) {
+                int i;
+                int s = PropDb_get_size(prop_db);
+
+                for (i = 0; i < s; ++i) {
+                    Prop_ptr p = PropDb_get_prop_at_index(prop_db, i);
+
+                    PROP_CHECK_INSTANCE(p);
+                    if (Prop_get_type(p) != PropGame_GenReactivity) {
+                        fprintf(nusmv_stderr,
+                                "Warning: currently unrealizable core extraction is only "
+                                        "available for GENREACTIVITY\n"
+                                        "properties. Skipping property %d.\n", i);
+                    } else {
+                        Game_CheckGameSpecAndComputeCores(PROP_GAME(p),
+                                                          algo,
+                                                          ct,
+                                                          min_init,
+                                                          min_invar,
+                                                          min_trans,
+                                                          min_prop,
+                                                          w,
+                                                          N);
+                    }
+                }
+            }
+        FAIL(errmgr) {
+            goto CommandExtractUnrealizableCore_return_1;
+        }
     }
-    FREE(dbgFileName);
-  }
-  if (status == -1) {
-    return UsageExtractUnrealizableCore();
-  } else {
-    return status;
-  }
+    goto CommandExtractUnrealizableCore_return_0;
+
+    CommandExtractUnrealizableCore_return_usage:
+    status = -1;
+    goto CommandExtractUnrealizableCore_cleanup_and_return;
+
+    CommandExtractUnrealizableCore_return_0:
+    status = 0;
+    goto CommandExtractUnrealizableCore_cleanup_and_return;
+
+    CommandExtractUnrealizableCore_return_1:
+    status = 1;
+    goto CommandExtractUnrealizableCore_cleanup_and_return;
+
+    CommandExtractUnrealizableCore_cleanup_and_return:
+    if (useMore) {
+        if (old_nusmv_stdout != (FILE*) NULL) {
+            CmdClosePipe(nusmv_stdout);
+            nusmv_stdout = old_nusmv_stdout;
+        }
+    }
+    if (dbgFileName != NIL(char)) {
+        if (old_nusmv_stdout != (FILE*) NULL) {
+            CmdCloseFile(nusmv_stdout);
+            nusmv_stdout = old_nusmv_stdout;
+        }
+        FREE(dbgFileName);
+    }
+    if (status == -1) {
+        return UsageExtractUnrealizableCore();
+    } else {
+        return status;
+    }
 }
 
 static int UsageExtractUnrealizableCore()
 {
-  fprintf(nusmv_stderr,
-          "usage: extract_unrealizable_core [-h] [-m | -o file] [-n number]\n");
-  fprintf(nusmv_stderr,
-          "                                 [-a algorithm] [-c type]\n");
-  fprintf(nusmv_stderr,
-          "                                 [-i] [-v] [-t] [-p]\n");
-  fprintf(nusmv_stderr,
-          "                                 [-w l|b|1|2] [-N number]\n");
-  fprintf(nusmv_stderr,"   -h \t\t\tPrints the command usage.\n");
-  fprintf(nusmv_stderr,
-          "   -m \t\t\tPipes output through the program specified\n");
-  fprintf(nusmv_stderr,
-          "      \t\t\tby the \"PAGER\" environment variable if defined,\n");
-  fprintf(nusmv_stderr, "      \t\t\telse through the UNIX command \"more\".\n");
-  fprintf(nusmv_stderr,
-          "   -o file\t\tWrites the generated output to \"file\".\n");
-  fprintf(nusmv_stderr,
-          "   -n number\t\tExtracts the core of the property with the given\n");
-  fprintf(nusmv_stderr, "      \t\t\tindex number.\n");
-  fprintf(nusmv_stderr,
-          "   -a algorithm\t\tUses algorithm \"algorithm\". Available "
-          "algorithms are\n");
-  fprintf(nusmv_stderr,
-          "      \t\t\tactvars and explicit (default explicit).\n");
-  fprintf(nusmv_stderr,
-          "   -c type\t\tProduces core type \"type\". Available types are core "
-          "and\n");
-  fprintf(nusmv_stderr,
-          "      \t\t\tfix (only for algorithm actvars) (default core).\n");
-  fprintf(nusmv_stderr, "   -i \t\t\tDoesn't minimize INIT constraints.\n");
-  fprintf(nusmv_stderr, "   -v \t\t\tDoesn't minimize INVAR constraints.\n");
-  fprintf(nusmv_stderr, "   -t \t\t\tDoesn't minimize TRANS constraints.\n");
-  fprintf(nusmv_stderr, "   -p \t\t\tDoesn't minimize the property.\n");
-  fprintf(nusmv_stderr,
-          "   -w l|b|1|2\t\tWho is minimized: (l)oser, (b)oth, player (1), "
-          "or\n");
-  fprintf(nusmv_stderr,
-          "      \t\t\tplayer (2). With algorithm actvars \'1\', \'2\', and "
-          "\'b\'\n");
-  fprintf(nusmv_stderr,
-          "      \t\t\tare available (default \'b\'). With algorithm explicit "
-          "\'l\'\n");
-  fprintf(nusmv_stderr,
-          "      \t\t\tand \'b\' are available (default \'l\').\n");
-  fprintf(nusmv_stderr,
-          "   -N number\t\tWith algorithm actvars this specifies how many\n");
-  fprintf(nusmv_stderr,
-          "      \t\t\tconstraints are guarded by a single activation "
-          "variable.\n");
-  fprintf(nusmv_stderr,
-          "      \t\t\t0 means no activation variales are introduced. "
-          "Default:\n");
-  fprintf(nusmv_stderr, "      \t\t\t1.\n");
-  return 1;
+    fprintf(nusmv_stderr,
+            "usage: extract_unrealizable_core [-h] [-m | -o file] [-n number]\n");
+    fprintf(nusmv_stderr,
+            "                                 [-a algorithm] [-c type]\n");
+    fprintf(nusmv_stderr,
+            "                                 [-i] [-v] [-t] [-p]\n");
+    fprintf(nusmv_stderr,
+            "                                 [-w l|b|1|2] [-N number]\n");
+    fprintf(nusmv_stderr,"   -h \t\t\tPrints the command usage.\n");
+    fprintf(nusmv_stderr,
+            "   -m \t\t\tPipes output through the program specified\n");
+    fprintf(nusmv_stderr,
+            "      \t\t\tby the \"PAGER\" environment variable if defined,\n");
+    fprintf(nusmv_stderr, "      \t\t\telse through the UNIX command \"more\".\n");
+    fprintf(nusmv_stderr,
+            "   -o file\t\tWrites the generated output to \"file\".\n");
+    fprintf(nusmv_stderr,
+            "   -n number\t\tExtracts the core of the property with the given\n");
+    fprintf(nusmv_stderr, "      \t\t\tindex number.\n");
+    fprintf(nusmv_stderr,
+            "   -a algorithm\t\tUses algorithm \"algorithm\". Available "
+                    "algorithms are\n");
+    fprintf(nusmv_stderr,
+            "      \t\t\tactvars and explicit (default explicit).\n");
+    fprintf(nusmv_stderr,
+            "   -c type\t\tProduces core type \"type\". Available types are core "
+                    "and\n");
+    fprintf(nusmv_stderr,
+            "      \t\t\tfix (only for algorithm actvars) (default core).\n");
+    fprintf(nusmv_stderr, "   -i \t\t\tDoesn't minimize INIT constraints.\n");
+    fprintf(nusmv_stderr, "   -v \t\t\tDoesn't minimize INVAR constraints.\n");
+    fprintf(nusmv_stderr, "   -t \t\t\tDoesn't minimize TRANS constraints.\n");
+    fprintf(nusmv_stderr, "   -p \t\t\tDoesn't minimize the property.\n");
+    fprintf(nusmv_stderr,
+            "   -w l|b|1|2\t\tWho is minimized: (l)oser, (b)oth, player (1), "
+                    "or\n");
+    fprintf(nusmv_stderr,
+            "      \t\t\tplayer (2). With algorithm actvars \'1\', \'2\', and "
+                    "\'b\'\n");
+    fprintf(nusmv_stderr,
+            "      \t\t\tare available (default \'b\'). With algorithm explicit "
+                    "\'l\'\n");
+    fprintf(nusmv_stderr,
+            "      \t\t\tand \'b\' are available (default \'l\').\n");
+    fprintf(nusmv_stderr,
+            "   -N number\t\tWith algorithm actvars this specifies how many\n");
+    fprintf(nusmv_stderr,
+            "      \t\t\tconstraints are guarded by a single activation "
+                    "variable.\n");
+    fprintf(nusmv_stderr,
+            "      \t\t\t0 means no activation variales are introduced. "
+                    "Default:\n");
+    fprintf(nusmv_stderr, "      \t\t\t1.\n");
+    return 1;
 }
 
 /**Function********************************************************************
@@ -3666,13 +3671,13 @@ static int UsageExtractUnrealizableCore()
 static NodeList_ptr game_cmd_init_commands_list(CommandDescr_t *commands,
                                                 int len)
 {
-  NodeList_ptr res;
-  int i;
+    NodeList_ptr res;
+    int i;
 
-  res = NodeList_create();
-  for (i = 0; i < len; i++) {
-    NodeList_append(res, NODE_PTR(&(commands[i])));
-  }
+    res = NodeList_create();
+    for (i = 0; i < len; i++) {
+        NodeList_append(res, NODE_PTR(&(commands[i])));
+    }
 
-  return res;
+    return res;
 }

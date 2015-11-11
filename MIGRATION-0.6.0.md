@@ -191,6 +191,12 @@ Nitin Yadav - nitin.yadav@rmit.edu.au
             NuSMVEnv_ptr const env = EnvObject_get_environment(ENV_OBJECT(self->symb_table));  ( ONLY IF 'env' IS NOT DECLARED )
             ErrorMgr_ptr const errmgr =
                         ERROR_MGR(NuSMVEnv_get_value(env, ENV_ERROR_MANAGER));
+                        
+22.Warning: gameCmd.c: implicit declaration of function ‘PropPkg_get_prop_database’
+
+    *   replaced with variable "prop_db" and declaration
+    
+            PropDb_ptr prop_db  = PROP_DB(NuSMVEnv_get_value(env, ENV_PROP_DB));
 
 ================================================================================
 EOF
