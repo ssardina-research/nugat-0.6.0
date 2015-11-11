@@ -964,21 +964,18 @@ bdd_ptr GameStrategy_get_moves(GameStrategy_ptr self)
   SeeAlso     [ ]
 
 ******************************************************************************/
-void GameStrategy_print_module(const NuSMVEnv_ptr env,
-                               GameStrategy_ptr self,
+void GameStrategy_print_module(GameStrategy_ptr self,
                                NodeList_ptr vars,
                                NodeList_ptr vars_to_decl,
                                gameParams_ptr params)
 {
   /* an internal static autoincrement variable */
   static int module_incr_number = 0;
-  const MasterPrinter_ptr wffprint =
-            MASTER_PRINTER(NuSMVEnv_get_value(env, ENV_WFF_PRINTER));
-
   SymbTable_ptr st;
   FILE* out;
   boolean do_sharing;
   boolean do_indentation;
+  NuSMVEnv_ptr env;
 
   GAME_STRATEGY_CHECK_INSTANCE(self);
   NODE_LIST_CHECK_INSTANCE(vars);
@@ -993,6 +990,11 @@ void GameStrategy_print_module(const NuSMVEnv_ptr env,
                 params->printout_as_dag);
   do_indentation = ((params != (gameParams_ptr) NULL) &&
                     params->indented_printout);
+
+  env = EnvObject_get_environment(ENV_OBJECT(st));
+
+  const MasterPrinter_ptr wffprint =
+            MASTER_PRINTER(NuSMVEnv_get_value(env, ENV_WFF_PRINTER));
 
   fprintf(out, "MODULE STRATEGY_MODULE%d\n\n", ++module_incr_number);
 
@@ -1010,7 +1012,7 @@ void GameStrategy_print_module(const NuSMVEnv_ptr env,
       fprintf(out, "  ");
       print_node(wffprint,out, var_name);
       fprintf(out, ": ");
-      SymbType_print(var_type, out);
+      SymbType_print(var_type,wffprint, out);
       fprintf(out, ";\n");
     }
     fprintf(out, "\n");

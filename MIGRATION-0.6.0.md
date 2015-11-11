@@ -110,13 +110,13 @@ Nitin Yadav - nitin.yadav@rmit.edu.au
 16.Warning: GameStrategy.c: passing argument 1 of ‘print_node’ from incompatible pointer type
    
            -replace print_node(...) with print_node(wffprint,...)
+           -replaced SymbType_print(...) with SymbType_print(... , wffprint , ...)
            
-   changed this functions in GameStrategy(.c/.h)
-   
-           GameStrategy_print_module(const NuSMVEnv_ptr env,...)
-           
-           -added this line in head of GameStrategy_print_module() 
+   changed this functions in GameStrategy.c and gameCheckLTLSF07.c
+              
+           -added this lines in head of GameStrategy_print_module() 
                    
+                   env = EnvObject_get_environment(ENV_OBJECT(st));
                    const MasterPrinter_ptr wffprint = _PRINTER(NuSMVEnv_get_value(env, ENV_WFF_PRINTER));
    
    
@@ -150,9 +150,7 @@ Nitin Yadav - nitin.yadav@rmit.edu.au
                            set_pp_list(...,env)
                            UsagePrint(env,...)
                            
-17.Warning: GameStrategy.c: passing argument 2 of ‘SymbType_print’ from incompatible pointer type
 
-    *   
 
 
 

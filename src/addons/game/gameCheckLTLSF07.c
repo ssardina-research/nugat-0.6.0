@@ -2378,6 +2378,8 @@ static void Game_SF07_StructCheckLTLGameSF07_print_strategy_monitor_bdd
   array_t* layers_to_decl;
   NodeList_ptr vars;
   NodeList_ptr vars_to_decl;
+  NuSMVEnv_ptr env;
+
 
   GAME_SF07_STRUCT_CHECK_LTL_GAME_SF07_CHECK_INSTANCE(self);
   GAME_STRATEGY_CHECK_INSTANCE(self->strategy);
@@ -2387,6 +2389,11 @@ static void Game_SF07_StructCheckLTLGameSF07_print_strategy_monitor_bdd
     nusmv_assert((m == GAME_SF07_STRATEGY_PRINTING_MODE_BDD_SEPARATE) ||
                  (m == GAME_SF07_STRATEGY_PRINTING_MODE_BDD_CONJOINED));
   }
+
+  env = EnvObject_get_environment(ENV_OBJECT(self->symb_table));
+
+  const MasterPrinter_ptr wffprint =
+            MASTER_PRINTER(NuSMVEnv_get_value(env, ENV_WFF_PRINTER));
 
   module_incr_number++;
   out = ((self->params != (gameParams_ptr) NULL) &&
@@ -2468,9 +2475,9 @@ static void Game_SF07_StructCheckLTLGameSF07_print_strategy_monitor_bdd
         var_name = NodeList_get_elem_at(vars_to_decl, iter);
         var_type = SymbTable_get_var_type(self->symb_table, var_name);
         fprintf(out, "  ");
-        print_node(out, var_name);
+        print_node(wffprint,out, var_name);
         fprintf(out, ": ");
-        SymbType_print(var_type, out);
+        SymbType_print(var_type,wffprint, out);
         fprintf(out, ";\n");
       }
       fprintf(out, "\n");

@@ -14,10 +14,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="270c3bb5-5a79-42ad-ba25-a8665d2f47cb" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/MIGRATION-0.6.0.md" afterPath="$PROJECT_DIR$/MIGRATION-0.6.0.md" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/addons/game/GameStrategy.c" afterPath="$PROJECT_DIR$/src/addons/game/GameStrategy.c" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/addons/game/GameStrategy.h" afterPath="$PROJECT_DIR$/src/addons/game/GameStrategy.h" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/smgame/smgameMain.c" afterPath="$PROJECT_DIR$/src/smgame/smgameMain.c" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/addons/game/gameCheckLTLSF07.c" afterPath="$PROJECT_DIR$/src/addons/game/gameCheckLTLSF07.c" />
     </list>
     <ignored path="NuGaT-0.54.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -43,24 +44,24 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="MIGRATION-0.6.0.md" pinned="false" current-in-tab="true">
+      <file leaf-file-name="MIGRATION-0.6.0.md" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/MIGRATION-0.6.0.md">
           <provider editor-type-id="MarkdownPreviewEditor">
             <state />
           </provider>
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.5854801">
-              <caret line="154" column="8" selection-start-line="154" selection-start-column="8" selection-end-line="154" selection-end-column="8" />
+            <state vertical-scroll-proportion="-8.5">
+              <caret line="123" column="41" selection-start-line="123" selection-start-column="41" selection-end-line="123" selection-end-column="41" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="GameStrategy.c" pinned="false" current-in-tab="false">
+      <file leaf-file-name="GameStrategy.c" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/addons/game/GameStrategy.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-3.7627118">
-              <caret line="1010" column="17" selection-start-line="1010" selection-start-column="6" selection-end-line="1010" selection-end-column="17" />
+            <state vertical-scroll-proportion="0.79298246">
+              <caret line="1007" column="28" selection-start-line="1007" selection-start-column="28" selection-end-line="1007" selection-end-column="28" />
               <folding>
                 <element signature="e#1438#1455#0" expanded="true" />
               </folding>
@@ -78,31 +79,31 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="gameWriteModel.c" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/addons/game/gameWriteModel.c">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-8.933333">
-              <caret line="217" column="64" selection-start-line="217" selection-start-column="64" selection-end-line="217" selection-end-column="64" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="gameCheckGenReactivityBuchiSpec.c" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/addons/game/gameCheckGenReactivityBuchiSpec.c">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-8.566667">
-              <caret line="483" column="0" selection-start-line="483" selection-start-column="0" selection-end-line="483" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="gameCheckLTLSF07.c" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/addons/game/gameCheckLTLSF07.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-6.0666666">
-              <caret line="404" column="30" selection-start-line="404" selection-start-column="5" selection-end-line="404" selection-end-column="30" />
+            <state vertical-scroll-proportion="-4.5666666">
+              <caret line="2392" column="64" selection-start-line="2392" selection-start-column="2" selection-end-line="2392" selection-end-column="64" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="gameGeneral.c" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/addons/game/gameGeneral.c">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="267" column="6" selection-start-line="267" selection-start-column="6" selection-end-line="267" selection-end-column="6" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="newError.log" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/newError.log">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="1252" column="7" selection-start-line="1252" selection-start-column="7" selection-end-line="1252" selection-end-column="7" />
               <folding />
             </state>
           </provider>
@@ -132,7 +133,7 @@
         <entry file="file://$PROJECT_DIR$/src/addons/game/GameStrategy.h">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="130" column="0" selection-start-line="130" selection-start-column="0" selection-end-line="130" selection-end-column="0" />
+              <caret line="134" column="37" selection-start-line="134" selection-start-column="37" selection-end-line="134" selection-end-column="37" />
               <folding />
             </state>
           </provider>
@@ -198,7 +199,6 @@
         <option value="$PROJECT_DIR$/src/addons/game/gameCmd.c" />
         <option value="$PROJECT_DIR$/src/addons/game/fsm/GameBddFsm.h" />
         <option value="$PROJECT_DIR$/CMakeLists.txt" />
-        <option value="$PROJECT_DIR$/src/addons/game/gameCheckLTLSF07.c" />
         <option value="$PROJECT_DIR$/src/addons/game/gameCheckReachAvoidSpec.c" />
         <option value="$PROJECT_DIR$/src/addons/game/gameUnrealCore.c" />
         <option value="$PROJECT_DIR$/src/addons/game/gameVarEncoding.c" />
@@ -207,8 +207,9 @@
         <option value="$PROJECT_DIR$/src/addons/game/gameWriteModel.c" />
         <option value="$PROJECT_DIR$/src/smgame/smgameMain.c" />
         <option value="$PROJECT_DIR$/src/addons/game/GameStrategy.h" />
-        <option value="$PROJECT_DIR$/src/addons/game/GameStrategy.c" />
+        <option value="$PROJECT_DIR$/src/addons/game/gameCheckLTLSF07.c" />
         <option value="$PROJECT_DIR$/MIGRATION-0.6.0.md" />
+        <option value="$PROJECT_DIR$/src/addons/game/GameStrategy.c" />
       </list>
     </option>
   </component>
@@ -837,18 +838,18 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-1" y="0" width="961" height="1060" extended-state="4" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.30128205" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.30128205" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32978722" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3290735" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="CMake" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3258786" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="true" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.35569754" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33013844" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.33013844" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24893162" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.4824281" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4824281" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -897,13 +898,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/addons/game/walkers/PrinterSexpGame_private.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="111" column="0" selection-start-line="111" selection-start-column="0" selection-end-line="111" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/addons/addons.h">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1028,6 +1022,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.33260393">
           <caret line="52" column="36" selection-start-line="52" selection-start-column="27" selection-end-line="52" selection-end-column="36" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1141,14 +1136,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/newError.log">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="75" column="19" selection-start-line="75" selection-start-column="19" selection-end-line="75" selection-end-column="19" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/addons/game/fsm/GameBddFsm.h">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1246,14 +1233,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/addons/game/gameCheckLTLSF07.c">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-6.0666666">
-          <caret line="404" column="30" selection-start-line="404" selection-start-column="5" selection-end-line="404" selection-end-column="30" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/addons/game/PropGame.c">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1288,14 +1267,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/addons/game/GameStrategy.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="130" column="0" selection-start-line="130" selection-start-column="0" selection-end-line="130" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../NuSMV-2.6.0/NuSMV/code/nusmv/core/node/printers/MasterPrinter.h">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1304,13 +1275,35 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/addons/game/GameStrategy.c">
+    <entry file="file://$PROJECT_DIR$/newError.log">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-3.7627118">
-          <caret line="1010" column="17" selection-start-line="1010" selection-start-column="6" selection-end-line="1010" selection-end-column="17" />
-          <folding>
-            <element signature="e#1438#1455#0" expanded="true" />
-          </folding>
+        <state vertical-scroll-proportion="0.0">
+          <caret line="1252" column="7" selection-start-line="1252" selection-start-column="7" selection-end-line="1252" selection-end-column="7" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/addons/game/gameGeneral.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="267" column="6" selection-start-line="267" selection-start-column="6" selection-end-line="267" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/addons/game/GameStrategy.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="134" column="37" selection-start-line="134" selection-start-column="37" selection-end-line="134" selection-end-column="37" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/addons/game/gameCheckLTLSF07.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-4.5666666">
+          <caret line="2392" column="64" selection-start-line="2392" selection-start-column="2" selection-end-line="2392" selection-end-column="64" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1319,9 +1312,19 @@
         <state />
       </provider>
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5854801">
-          <caret line="154" column="8" selection-start-line="154" selection-start-column="8" selection-end-line="154" selection-end-column="8" />
+        <state vertical-scroll-proportion="-8.5">
+          <caret line="123" column="41" selection-start-line="123" selection-start-column="41" selection-end-line="123" selection-end-column="41" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/addons/game/GameStrategy.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.79298246">
+          <caret line="1007" column="28" selection-start-line="1007" selection-start-column="28" selection-end-line="1007" selection-end-column="28" />
+          <folding>
+            <element signature="e#1438#1455#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
