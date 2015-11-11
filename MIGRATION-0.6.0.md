@@ -161,6 +161,28 @@ Nitin Yadav - nitin.yadav@rmit.edu.au
         
             static int Command...(NuSMVEnv_ptr env,...)
 
+19.Error: gameCmd.c:  ‘nusmv_stderr’ undeclared (first use in this function)
+
+    *   added declaration in "Variable Declaration" section
+    
+20.Warning: gameCmd.c:  implicit declaration of function ‘nusmv_exit’ 
+
+    *   replaced all 'nusmv_exit' with 'ErrorMgr_nusmv_exit(errmgr,'
+    *   added this lines in head where nusmv_exit is replaced
+    
+            const NuSMVEnv_ptr env = EnvObject_get_environment(ENV_OBJECT(...));
+            const ErrorMgr_ptr errmgr = 
+                    ERROR_MGR(NuSMVEnv_get_value(env, ENV_ERROR_MANAGER));
+                    
+    *   added as first parameter "env" to :
+            
+            Compile_check_if_flattening_was_built
+            Compile_check_if_encoding_was_built
+            Compile_check_if_model_was_built
+            Compile_check_if_bool_model_was_built
+            Compile_check_if_flattening_was_built
+            CmdOpenPipe
+            CmdOpenFile
 
 ================================================================================
 EOF

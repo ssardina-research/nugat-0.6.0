@@ -144,6 +144,9 @@ static NodeList_ptr game_cmd_init_commands_list ARGS((CommandDescr_t *commands,
 /* Variable declarations                                                     */
 /*---------------------------------------------------------------------------*/
 
+EXTERN FILE* nusmv_stdout;
+EXTERN FILE* nusmv_stderr;
+
 /**Variable********************************************************************
 
   Synopsis    [ These are the generic commands, i.e., those that apply
@@ -415,6 +418,8 @@ static int CommandReadRatFile(NuSMVEnv_ptr env,int argc, char** argv)
 #else
   int c;
   char* input_file_name = (char*) NULL;
+  const ErrorMgr_ptr errmgr =
+                    ERROR_MGR(NuSMVEnv_get_value(env, ENV_ERROR_MANAGER));
 
   util_getopt_reset();
   while((c = util_getopt(argc, argv, "hi:")) != EOF) {
@@ -477,7 +482,7 @@ static int CommandReadRatFile(NuSMVEnv_ptr env,int argc, char** argv)
 
  CommandReadRatFile_exit_1:
   if (input_file_name != (char*) NULL) FREE(input_file_name);
-  nusmv_exit(1);
+  ErrorMgr_nusmv_exit(errmgr,1);
 
  CommandReadRatFile_return_1:
   if (input_file_name != (char*) NULL) FREE(input_file_name);
@@ -638,7 +643,7 @@ static int CommandGameEncodeVariables(NuSMVEnv_ptr env,int argc, char** argv)
   }
 
   /* pre-conditions: */
-  if (Compile_check_if_flattening_was_built(nusmv_stderr)) {
+  if (Compile_check_if_flattening_was_built(env,nusmv_stderr)) {
     goto command_game_encode_variables_return_1;
   }
 
@@ -742,7 +747,7 @@ static int CommandGameBuildModel(NuSMVEnv_ptr env,int argc, char** argv)
   }
 
   /* pre-conditions: */
-  if (Compile_check_if_encoding_was_built(nusmv_stderr)) {
+  if (Compile_check_if_encoding_was_built(env,nusmv_stderr)) {
     goto command_game_build_model_return_1;
   }
 
@@ -856,7 +861,7 @@ static int CommandGameBuildFlatModel(NuSMVEnv_ptr env,int argc, char** argv)
   if (argc != util_optind) return(UsageGameBuildFlatModel());
 
   /* pre-conditions: */
-  if (Compile_check_if_flattening_was_built(nusmv_stderr)) return 1;
+  if (Compile_check_if_flattening_was_built(env,nusmv_stderr)) return 1;
 
   if (cmp_struct_get_build_flat_model(cmps)) {
     fprintf(nusmv_stderr,
@@ -932,7 +937,7 @@ static int CommandGameBuildBooleanModel(NuSMVEnv_ptr env,int argc, char ** argv)
   if (argc != util_optind) return(UsageGameBuildBooleanModel());
 
   /* pre-conditions: */
-  if (Compile_check_if_encoding_was_built(nusmv_stderr)) return 1;
+  if (Compile_check_if_encoding_was_built(env,nusmv_stderr)) return 1;
 
   if (cmp_struct_get_build_bool_model(cmps) && !forced) {
     fprintf(nusmv_stderr,
@@ -1044,7 +1049,7 @@ static int CommandGameWriteModelFlat(NuSMVEnv_ptr env,int argc, char **argv)
   }
 
   /* pre-conditions: */
-  if (Compile_check_if_flattening_was_built(nusmv_stderr)) {
+  if (Compile_check_if_flattening_was_built(env,nusmv_stderr)) {
     goto command_game_write_model_flat_return_1;
   }
 
@@ -1192,7 +1197,7 @@ static int CommandGameWriteModelFlatBool(NuSMVEnv_ptr env,int argc, char** argv)
     }
   }
 
-  if (Compile_check_if_bool_model_was_built(nusmv_stderr, true)) {
+  if (Compile_check_if_bool_model_was_built(env,nusmv_stderr, true)) {
     if (ofileid != nusmv_stdout) {
       fclose(ofileid);
       if (bSpecifiedFilename == TRUE) FREE(output_file);
@@ -1381,7 +1386,7 @@ static int CommandGameCheckProperty(NuSMVEnv_ptr env,int argc, char** argv)
   if (argc != util_optind) return UsageGameCheckProperty();
 
   /* command hierarchy control */
-  if (Compile_check_if_model_was_built(nusmv_stderr, false)) return 1;
+  if (Compile_check_if_model_was_built(env,nusmv_stderr, false)) return 1;
 
   if (prop_no != -1) {
     CATCH {
@@ -1391,7 +1396,7 @@ static int CommandGameCheckProperty(NuSMVEnv_ptr env,int argc, char** argv)
          has been built. */
       prop = PropDb_get_prop_at_index(PropPkg_get_prop_database(), prop_no);
       if ((prop != PROP(NULL)) && (Prop_get_type(prop) == PropGame_LtlGame)) {
-        if (Compile_check_if_bool_model_was_built(nusmv_stderr, false)) {
+        if (Compile_check_if_bool_model_was_built(env,nusmv_stderr, false)) {
           return 1;
         }
       }
@@ -1425,7 +1430,7 @@ static int CommandGameCheckProperty(NuSMVEnv_ptr env,int argc, char** argv)
             ((player_str == (string_ptr) NULL) ||
              (PropGame_get_player(p) == player_str))) {
           if ((Prop_get_type(PROP(p)) == PropGame_LtlGame) &&
-              Compile_check_if_bool_model_was_built(nusmv_stderr, false)) {
+              Compile_check_if_bool_model_was_built(env,nusmv_stderr, false)) {
             return 1;
           }
         }
@@ -1735,7 +1740,7 @@ static int CommandGameShowProperty(NuSMVEnv_ptr env,int argc, char** argv)
   }
 
   /* command hierarchy control */
-  if (Compile_check_if_flattening_was_built(nusmv_stderr)) {
+  if (Compile_check_if_flattening_was_built(env,nusmv_stderr)) {
     if (outFileName != NIL(char)) FREE(outFileName);
     return 1;
   }
@@ -1743,7 +1748,7 @@ static int CommandGameShowProperty(NuSMVEnv_ptr env,int argc, char** argv)
   if (useMore == 1) {
     nusmv_assert(outFileName == NIL(char));
     old_nusmv_stdout = nusmv_stdout;
-    nusmv_stdout = CmdOpenPipe(useMore);
+    nusmv_stdout = CmdOpenPipe(env,useMore);
     if (nusmv_stdout == NIL(FILE)) {
       nusmv_stdout = old_nusmv_stdout;
       return(1);
@@ -1751,7 +1756,7 @@ static int CommandGameShowProperty(NuSMVEnv_ptr env,int argc, char** argv)
   }
   if (outFileName != NIL(char)) {
     old_nusmv_stdout = nusmv_stdout;
-    nusmv_stdout = CmdOpenFile(outFileName);
+    nusmv_stdout = CmdOpenFile(env,outFileName);
     if (nusmv_stdout == NIL(FILE)) {
       nusmv_stdout = old_nusmv_stdout;
       FREE(outFileName);
@@ -2603,17 +2608,17 @@ static int game_invoke_game_command(int argc, char **argv, PropGame_Type type)
      game model has been read. If this statement becomes false at some
      point, then insert a check for having read a model here. */
 
-  if (Compile_check_if_encoding_was_built(nusmv_stderr)) {
+  if (Compile_check_if_encoding_was_built(env,nusmv_stderr)) {
     goto game_invoke_game_command_return_1;
   }
 
-  if (Compile_check_if_model_was_built(nusmv_stderr, false)) {
+  if (Compile_check_if_model_was_built(env,nusmv_stderr, false)) {
     goto game_invoke_game_command_return_1;
   }
 
   if (useMore) {
     old_nusmv_stdout = nusmv_stdout;
-    nusmv_stdout = CmdOpenPipe(useMore);
+    nusmv_stdout = CmdOpenPipe(env,useMore);
     if (nusmv_stdout == (FILE*) NULL) {
       goto game_invoke_game_command_return_1;
     }
@@ -2621,14 +2626,14 @@ static int game_invoke_game_command(int argc, char **argv, PropGame_Type type)
 
   if (dbgFileName != NIL(char)) {
     old_nusmv_stdout = nusmv_stdout;
-    nusmv_stdout = CmdOpenFile(dbgFileName);
+    nusmv_stdout = CmdOpenFile(env,dbgFileName);
     if (nusmv_stdout == (FILE*) NULL) {
       goto game_invoke_game_command_return_1;
     }
   }
 
   if (NIL(char) != strategyFileName) {
-    strategy_stream = CmdOpenFile(strategyFileName);
+    strategy_stream = CmdOpenFile(env,strategyFileName);
     if (strategy_stream == (FILE*) NULL) {
       goto game_invoke_game_command_return_1;
     }
@@ -2957,15 +2962,15 @@ static int CommandCheckLtlGameSpecSF07(NuSMVEnv_ptr env,int argc, char **argv)
      game model has been read. If this statement becomes false at some
      point, then insert a check for having read a model here. */
 
-  if (Compile_check_if_encoding_was_built(nusmv_stderr)) {
+  if (Compile_check_if_encoding_was_built(env,nusmv_stderr)) {
     goto CommandCheckLtlGameSpecSF07_return_1;
   }
 
-  if (Compile_check_if_model_was_built(nusmv_stderr, false)) {
+  if (Compile_check_if_model_was_built(env,nusmv_stderr, false)) {
     goto CommandCheckLtlGameSpecSF07_return_1;
   }
 
-  if (Compile_check_if_bool_model_was_built(nusmv_stderr, false)) {
+  if (Compile_check_if_bool_model_was_built(env,nusmv_stderr, false)) {
     goto CommandCheckLtlGameSpecSF07_return_1;
   }
 
@@ -2977,7 +2982,7 @@ static int CommandCheckLtlGameSpecSF07(NuSMVEnv_ptr env,int argc, char **argv)
 
   if (useMore) {
     old_nusmv_stdout = nusmv_stdout;
-    nusmv_stdout = CmdOpenPipe(useMore);
+    nusmv_stdout = CmdOpenPipe(env,useMore);
     if (nusmv_stdout==(FILE*) NULL) {
       nusmv_stdout=old_nusmv_stdout;
       old_nusmv_stdout = (FILE*) NULL;
@@ -2987,7 +2992,7 @@ static int CommandCheckLtlGameSpecSF07(NuSMVEnv_ptr env,int argc, char **argv)
 
   if (dbgFileName != NIL(char)) {
     old_nusmv_stdout = nusmv_stdout;
-    nusmv_stdout = CmdOpenFile(dbgFileName);
+    nusmv_stdout = CmdOpenFile(env,dbgFileName);
     if (nusmv_stdout==(FILE*) NULL) {
       nusmv_stdout = old_nusmv_stdout;
       old_nusmv_stdout = (FILE*) NULL;
@@ -2996,7 +3001,7 @@ static int CommandCheckLtlGameSpecSF07(NuSMVEnv_ptr env,int argc, char **argv)
   }
 
   if (NIL(char) != strategyFileName) {
-    strategy_stream = CmdOpenFile(strategyFileName);
+    strategy_stream = CmdOpenFile(env,strategyFileName);
     if ((FILE*) NULL == strategy_stream) {
       goto CommandCheckLtlGameSpecSF07_return_1;
     }
@@ -3448,17 +3453,17 @@ static int CommandExtractUnrealizableCore(NuSMVEnv_ptr env,int argc, char **argv
      game model has been read. If this statement becomes false at some
      point, then insert a check for having read a model here. */
 
-  if (Compile_check_if_encoding_was_built(nusmv_stderr)) {
+  if (Compile_check_if_encoding_was_built(env,nusmv_stderr)) {
     goto CommandExtractUnrealizableCore_return_1;
   }
 
-  if (Compile_check_if_model_was_built(nusmv_stderr, false)) {
+  if (Compile_check_if_model_was_built(env,nusmv_stderr, false)) {
     goto CommandExtractUnrealizableCore_return_1;
   }
 
   if (useMore) {
     old_nusmv_stdout = nusmv_stdout;
-    nusmv_stdout = CmdOpenPipe(useMore);
+    nusmv_stdout = CmdOpenPipe(env,useMore);
     if (nusmv_stdout==(FILE*) NULL) {
       nusmv_stdout=old_nusmv_stdout;
       old_nusmv_stdout = (FILE*) NULL;
@@ -3468,7 +3473,7 @@ static int CommandExtractUnrealizableCore(NuSMVEnv_ptr env,int argc, char **argv
 
   if (dbgFileName != NIL(char)) {
     old_nusmv_stdout = nusmv_stdout;
-    nusmv_stdout = CmdOpenFile(dbgFileName);
+    nusmv_stdout = CmdOpenFile(env,dbgFileName);
     if (nusmv_stdout==(FILE*) NULL) {
       nusmv_stdout = old_nusmv_stdout;
       old_nusmv_stdout = (FILE*) NULL;

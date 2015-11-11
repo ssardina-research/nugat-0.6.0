@@ -98,6 +98,10 @@ void Smgame_BatchMain()
 {
   OptsHandler_ptr oh = OptsHandler_create();
 
+  const NuSMVEnv_ptr env = EnvObject_get_environment(ENV_OBJECT(oh));
+  const ErrorMgr_ptr errmgr =
+        ERROR_MGR(NuSMVEnv_get_value(env, ENV_ERROR_MANAGER));
+
   /* Necessary to have standard behavior in the batch mode */
   util_resetlongjmp();
   CATCH {
@@ -105,28 +109,28 @@ void Smgame_BatchMain()
   /* ================================================== */
   /*   1: Read the model                                */
   /* ================================================== */
-  if (Cmd_CommandExecute("read_model")) nusmv_exit(1);
+  if (Cmd_CommandExecute("read_model")) ErrorMgr_nusmv_exit(errmgr,1);
 
   /* ================================================== */
   /*  2: Flatten hierarchy                              */
   /* ================================================== */
-  if (Cmd_CommandExecute("flatten_hierarchy")) nusmv_exit(1);
+  if (Cmd_CommandExecute("flatten_hierarchy")) ErrorMgr_nusmv_exit(errmgr,1);
 
   /* If the -lp option is used, list the properties and exit */
   if (opt_list_properties(oh) == true) {
-    if (Cmd_CommandExecute("show_property")) nusmv_exit(1);
+    if (Cmd_CommandExecute("show_property")) ErrorMgr_nusmv_exit(errmgr,1);
     return;
   }
 
   /* ================================================== */
   /*  3: Builds the encodings                           */
   /* ================================================== */
-  if (Cmd_CommandExecute("encode_variables")) nusmv_exit(1);
+  if (Cmd_CommandExecute("encode_variables")) ErrorMgr_nusmv_exit(errmgr,1);
 
   /* ================================================== */
   /*  4: Builds the flat FSMs                           */
   /* ================================================== */
-  if (Cmd_CommandExecute("build_flat_model")) nusmv_exit(1);
+  if (Cmd_CommandExecute("build_flat_model")) ErrorMgr_nusmv_exit(errmgr,1);
 
 
 
@@ -134,12 +138,12 @@ void Smgame_BatchMain()
   /*  Write the flat and bool FSMs (if required)         */
   /* ----------------------------------------------------*/
   if (get_output_flatten_model_file(oh) != NIL(char)) {
-    if (Cmd_CommandExecute("write_flat_model")) nusmv_exit(1);
+    if (Cmd_CommandExecute("write_flat_model")) ErrorMgr_nusmv_exit(errmgr,1);
   }
 
   if (get_output_boolean_model_file(oh) != NIL(char)) {
-    if (Cmd_CommandExecute("build_boolean_model")) nusmv_exit(1);
-    if (Cmd_CommandExecute("write_boolean_model")) nusmv_exit(1);
+    if (Cmd_CommandExecute("build_boolean_model")) ErrorMgr_nusmv_exit(errmgr,1);
+    if (Cmd_CommandExecute("write_boolean_model")) ErrorMgr_nusmv_exit(errmgr,1);
   }
 
 #if HAVE_SAT_SOLVER
@@ -159,12 +163,12 @@ void Smgame_BatchMain()
     /* build_boolean_model may have been already called if the output
        boolean model was specified in the argument list. */
     if (Compile_check_if_bool_model_was_built(NULL, false)) {
-      if (Cmd_CommandExecute("build_boolean_model")) nusmv_exit(1);
+      if (Cmd_CommandExecute("build_boolean_model")) ErrorMgr_nusmv_exit(errmgr,1);
     }
 
     /* Initializes the bmc package, and commits both the model and the
        determinization layers: */
-    if (Cmd_CommandExecute("bmc_setup")) nusmv_exit(1);
+    if (Cmd_CommandExecute("bmc_setup")) ErrorMgr_nusmv_exit(errmgr,1);
 
     if (get_prop_no(oh) != -1) {
       int prop_no = get_prop_no(oh);
@@ -179,7 +183,7 @@ void Smgame_BatchMain()
         fprintf(nusmv_stderr,
                 "Error: \"%d\" is not a valid property index\n",
                 prop_no);
-        nusmv_exit(1);
+        ErrorMgr_nusmv_exit(errmgr,1);
       }
 
       prop = PropDb_get_prop_at_index(PropPkg_get_prop_database(), prop_no);
@@ -230,7 +234,7 @@ void Smgame_BatchMain()
         fprintf(nusmv_stderr,
                 "Error: only LTL, PSL and INVAR properties can be checked in "
                 "BMC mode\n");
-        nusmv_exit(1);
+        ErrorMgr_nusmv_exit(errmgr,1);
       } /* switch on type */
 
     }
@@ -329,7 +333,7 @@ void Smgame_BatchMain()
      every property will have its one instance of a BDD FSM.
   */
   if (opt_cone_of_influence(oh) == false) {
-    if (Cmd_CommandExecute("build_model")) nusmv_exit(1);
+    if (Cmd_CommandExecute("build_model")) ErrorMgr_nusmv_exit(errmgr,1);
   }
 
   /* checks the fsm if required */
@@ -340,7 +344,7 @@ void Smgame_BatchMain()
               "currently\n"
               "performed in batch mode if the cone of influence reduction has "
               "been enabled.\n");
-      nusmv_exit(1);
+      ErrorMgr_nusmv_exit(errmgr,1);
     }
 #if HAVE_GAME
 
@@ -349,7 +353,7 @@ void Smgame_BatchMain()
       fprintf(nusmv_stderr,
       "WARNING: Check for totality of the Game transition relations cannot \n"
               "currently performed.\n");
-      nusmv_exit(1);
+      ErrorMgr_nusmv_exit(errmgr,1);
     }
  #endif
     BddFsm_check_machine(PropDb_master_get_bdd_fsm(PropPkg_get_prop_database()));
@@ -367,7 +371,7 @@ void Smgame_BatchMain()
                                       get_prop_no(oh));
       if (Prop_get_type(prop) == PropGame_LtlGame) {
         if (Compile_check_if_bool_model_was_built(NULL, false)) {
-          if (Cmd_CommandExecute("build_boolean_model")) nusmv_exit(1);
+          if (Cmd_CommandExecute("build_boolean_model")) ErrorMgr_nusmv_exit(errmgr,1);
         }
       }
     }
@@ -375,7 +379,7 @@ void Smgame_BatchMain()
 
     sprintf(command, "check_property -n %d", get_prop_no(oh));
 
-    if (Cmd_CommandExecute(command)) nusmv_exit(1);
+    if (Cmd_CommandExecute(command)) ErrorMgr_nusmv_exit(errmgr,1);
   }
   else {
 
@@ -423,7 +427,7 @@ void Smgame_BatchMain()
                                      PropGame_LtlGame);
       if (lsLength(tmp) > 0) {
         if (Compile_check_if_bool_model_was_built(NULL, false)) {
-          if (Cmd_CommandExecute("build_boolean_model")) nusmv_exit(1);
+          if (Cmd_CommandExecute("build_boolean_model")) ErrorMgr_nusmv_exit(errmgr,1);
         }
       }
       lsDestroy(tmp, NULL);
@@ -436,7 +440,7 @@ void Smgame_BatchMain()
 
   /* Reporting of statistical information. */
   if (opt_verbose_level_gt(oh, 0)) {
-    if (Cmd_CommandExecute("print_usage")) nusmv_exit(1);
+    if (Cmd_CommandExecute("print_usage")) ErrorMgr_nusmv_exit(errmgr,1);
   }
 
   /* Computing and Reporting of the Effect of Reordering */
@@ -445,10 +449,10 @@ void Smgame_BatchMain()
     dd_reorder(dd_manager, get_reorder_method(oh), DEFAULT_MINSIZE);
     fprintf(nusmv_stdout, "\n========= after reordering ============\n");
     if (opt_verbose_level_gt(oh, 0)) {
-      if (Cmd_CommandExecute("print_usage")) nusmv_exit(1);
+      if (Cmd_CommandExecute("print_usage")) ErrorMgr_nusmv_exit(errmgr,1);
     }
 
-    if (Cmd_CommandExecute("write_order")) nusmv_exit(1);
+    if (Cmd_CommandExecute("write_order")) ErrorMgr_nusmv_exit(errmgr,1);
   }
 
   /* Reporting of Reachable States */
@@ -459,7 +463,7 @@ void Smgame_BatchMain()
               "available\n"
               "in batch mode if cone of influence reduction has been "
               "enabled.\n");
-      nusmv_exit(1);
+      ErrorMgr_nusmv_exit(errmgr,1);
     }
 #if HAVE_GAME
     /* The Game FSM cannot be checked */
@@ -467,7 +471,7 @@ void Smgame_BatchMain()
       fprintf(nusmv_stderr,
       "WARNING: Statistics of reachable states is not currently available\n"
               "for Game transition relations.\n");
-      nusmv_exit(1);
+      ErrorMgr_nusmv_exit(errmgr,1);
     }
 #endif
 
@@ -480,6 +484,6 @@ void Smgame_BatchMain()
 
   } FAIL {
     fprintf(nusmv_stderr, "\nNuGaT terminated by a signal\n");
-    nusmv_exit(1);
+    ErrorMgr_nusmv_exit(errmgr,1);
   }
 }
