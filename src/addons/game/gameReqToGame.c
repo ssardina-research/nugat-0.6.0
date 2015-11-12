@@ -175,7 +175,8 @@ static node_ptr game_combine_two_next ARGS((node_ptr exp1,
                                             node_ptr exp2,
                                             int op));
 
-static exp_kind game_property_to_game ARGS((node_ptr* exp,
+static exp_kind game_property_to_game ARGS((NodeMgr_ptr nodemgr,
+                                            node_ptr* exp,
                                             expected_value value,
                                             node_ptr* varList,
                                             node_ptr* init,
@@ -240,7 +241,8 @@ boolean Game_PropertyToGame(node_ptr* inputVars,
                             node_ptr exp_2,
                             node_ptr* init_2,
                             node_ptr* trans_2,
-                            node_ptr* property)
+                            node_ptr* property,
+                            NodeMgr_ptr nodemgr)
 {
   node_ptr req_1 = Nil;
   node_ptr req_2 = Nil;
@@ -252,6 +254,9 @@ boolean Game_PropertyToGame(node_ptr* inputVars,
                                being added to the front. */
   node_ptr exp_1_orig;      /* Stores the original unPSL-ed exp_1. */
   node_ptr exp_2_orig;      /* Stores the original unPSL-ed exp_2. */
+
+    const NuSMVEnv_ptr env = EnvObject_get_environment(ENV_OBJECT(NULL));
+    const NodeMgr_ptr nodemgr = NODE_MGR(NuSMVEnv_get_value(env, ENV_NODE_MGR));
 
   nameToType = new_assoc();
   expToKind = new_assoc();
@@ -278,7 +283,8 @@ boolean Game_PropertyToGame(node_ptr* inputVars,
 //    /* debugging printing */
 //    fprintf(nusmv_stderr,"\n-- SIMPLIFIED:"); print_node(nusmv_stderr, exp_1);
 
-    game_property_to_game(&exp_1,
+    game_property_to_game(nodemgr,
+                          &exp_1,
                           TOP_LEVEL,
                           inputVars,
                           init_1,
@@ -292,7 +298,8 @@ boolean Game_PropertyToGame(node_ptr* inputVars,
 //    /* debugging printing */
 //    fprintf(nusmv_stderr,"\n-- SIMPLIFIED:"); print_node(nusmv_stderr, exp_2);
 
-    game_property_to_game(&exp_2,
+    game_property_to_game(nodemgr,
+                          &exp_2,
                           TOP_LEVEL,
                           outputVars,
                           init_2,
@@ -319,21 +326,21 @@ boolean Game_PropertyToGame(node_ptr* inputVars,
 
     /* Check if both reqs are Nil => create an avoid-deadlock game. */
     if (Nil == req_1 && Nil == req_2) {
-      *property = new_node(NODE_MGR,AVOIDDEADLOCK, NODE_FROM_INT(2), Nil);
+      *property = new_node(nodemgr,AVOIDDEADLOCK, NODE_FROM_INT(2), Nil);
       success = true;
     }
     /* Check if this is a reachability game. */
     if ((!success) &&
         (Nil == req_1 && Nil != req_2 && OP_FUTURE == node_get_type(req_2) &&
          PURE_PROPOSITIONAL == game_get_expression_kind(car(req_2)))) {
-      *property = new_node(NODE_MGR,REACHTARGET, NODE_FROM_INT(2), car(req_2));
+      *property = new_node(nodemgr,REACHTARGET, NODE_FROM_INT(2), car(req_2));
       success = true;
     }
     /* Check if this is an avoidance game. */
     if ((!success) &&
         (Nil == req_2 && Nil != req_1 && OP_FUTURE == node_get_type(req_1) &&
          PURE_PROPOSITIONAL == game_get_expression_kind(car(req_1)))) {
-      *property = new_node(NODE_MGR,REACHTARGET, NODE_FROM_INT(1), car(req_1));
+      *property = new_node(nodemgr,REACHTARGET, NODE_FROM_INT(1), car(req_1));
       success = true;
     }
     /* Check if this is a buchi or gen-reactivity game. */
@@ -370,9 +377,9 @@ boolean Game_PropertyToGame(node_ptr* inputVars,
       }
       /* Here req 2 must be not Nil. Create dummy requirement: "G F true". */
       if (Nil == req_2) {
-        req_2 = cons(NODE_MGR,new_node(NODE_MGR,OP_GLOBAL,
-                              new_node(NODE_MGR,OP_FUTURE,
-                                       new_node(NODE_MGR,TRUEEXP, Nil, Nil),
+        req_2 = cons(NODE_MGR,new_node(nodemgr,OP_GLOBAL,
+                              new_node(nodemgr,OP_FUTURE,
+                                       new_node(nodemgr,TRUEEXP, Nil, Nil),
                                        Nil),
                               Nil),
                      Nil);
@@ -415,12 +422,12 @@ boolean Game_PropertyToGame(node_ptr* inputVars,
       /* Create the property, buchi or gen-reactivity. */
       if (success) {
         if (Nil == req_1) {
-          *property = new_node(NODE_MGR,BUCHIGAME, (2),
-                               new_node(NODE_MGR,GAME_EXP_LIST, req_2, Nil));
+          *property = new_node(nodemgr,BUCHIGAME, (2),
+                               new_node(nodemgr,GAME_EXP_LIST, req_2, Nil));
         }
         else {
-          *property = new_node(NODE_MGR,GENREACTIVITY, (2),
-                               new_node(NODE_MGR,GAME_TWO_EXP_LISTS, req_1, req_2));
+          *property = new_node(nodemgr,GENREACTIVITY, (2),
+                               new_node(nodemgr,GAME_TWO_EXP_LISTS, req_1, req_2));
         }
       }
 
@@ -462,9 +469,9 @@ boolean Game_PropertyToGame(node_ptr* inputVars,
         }
       }
 
-      *property = new_node(NODE_MGR,LTLGAME,
+      *property = new_node(nodemgr,LTLGAME,
                            (2),
-                           new_node(NODE_MGR,IMPLIES,
+                           new_node(nodemgr,IMPLIES,
                                     exp_1_orig,
                                     exp_2_orig));
     }
@@ -574,7 +581,7 @@ static node_ptr game_create_new_var(node_ptr* list, node_ptr type)
 
   name = game_create_unique_name(); /* name is already find_atom-ed */
   insert_assoc(nameToType, name, type);
-  *list = cons(NODE_MGR,new_node(NODE_MGR,COLON, name, type), *list);
+  *list = cons(NODE_MGR,new_node(nodemgr,COLON, name, type), *list);
 
   return name;
 }
@@ -1293,7 +1300,8 @@ static node_ptr game_normalize_syntactically(node_ptr exp, boolean negated)
   SeeAlso     [ game_normalize_syntactically ]
 
 ******************************************************************************/
-exp_kind game_property_to_game(node_ptr* exp,
+exp_kind game_property_to_game(NodeMgr_ptr nodemgr,
+                               node_ptr* exp,
                                expected_value value,
                                node_ptr* varList,
                                node_ptr* init,
@@ -1349,8 +1357,8 @@ exp_kind game_property_to_game(node_ptr* exp,
       node_ptr exp2 = cdr(*exp);
       exp_kind kind1, kind2;
 
-      kind1 = game_property_to_game(&exp1, value, varList, init, trans, reqs);
-      kind2 = game_property_to_game(&exp2, value, varList, init, trans, reqs);
+      kind1 = game_property_to_game(nodemgr,&exp1, value, varList, init, trans, reqs);
+      kind2 = game_property_to_game(nodemgr,&exp2, value, varList, init, trans, reqs);
       node_node_setcar((*exp), exp1);
       node_node_setcdr((*exp), exp2);
 
@@ -1374,7 +1382,8 @@ exp_kind game_property_to_game(node_ptr* exp,
       if ((TOP_LEVEL == value || DETERMINISTIC_TRUE == value)) {
         /* no need to process propositional expressions */
         if (PURE_PROPOSITIONAL == game_get_expression_kind(exp1)) {
-          kind = game_property_to_game(&exp2,
+          kind = game_property_to_game(nodemgr,
+                                       &exp2,
                                        DETERMINISTIC_TRUE,
                                        varList,
                                        init,
@@ -1384,7 +1393,8 @@ exp_kind game_property_to_game(node_ptr* exp,
           break; /* check if this is a top level expression */
         }
         else if (PURE_PROPOSITIONAL == game_get_expression_kind(exp2)) {
-          kind = game_property_to_game(&exp1,
+          kind = game_property_to_game(nodemgr,
+                                       &exp1,
                                        DETERMINISTIC_TRUE,
                                        varList,
                                        init,
@@ -1412,13 +1422,15 @@ exp_kind game_property_to_game(node_ptr* exp,
       exp_kind kind1, kind2;
       if ((TOP_LEVEL == value || DETERMINISTIC_TRUE == value) &&
           PURE_PROPOSITIONAL == game_get_expression_kind(cond)) {
-        kind1 = game_property_to_game(&then,
+        kind1 = game_property_to_game(nodemgr,
+                                      &then,
                                       DETERMINISTIC_TRUE,
                                       varList,
                                       init,
                                       trans,
                                       reqs);
-        kind2 = game_property_to_game(&tail,
+        kind2 = game_property_to_game(nodemgr,
+                                      &tail,
                                       DETERMINISTIC_TRUE,
                                       varList,
                                       init,
@@ -1464,17 +1476,17 @@ exp_kind game_property_to_game(node_ptr* exp,
       yylineno = line; /* All newly created nodes will have this line info. */
 
       res = car(car(*exp));
-      newVar = game_create_new_var(varList, new_node(NODE_MGR,BOOLEAN, Nil, Nil));
+      newVar = game_create_new_var(varList, new_node(nodemgr,BOOLEAN, Nil, Nil));
       *exp = newVar;
-      *trans = game_and_exp(new_node(NODE_MGR,IMPLIES,
+      *trans = game_and_exp(new_node(nodemgr,IMPLIES,
                                      newVar,
-                                     new_node(NODE_MGR,NEXT, newVar, Nil)),
+                                     new_node(nodemgr,NEXT, newVar, Nil)),
                             *trans);
-      *reqs = game_and_exp(new_node(NODE_MGR,OP_GLOBAL,
-                                    new_node(NODE_MGR,OP_FUTURE,
-                                             new_node(NODE_MGR,OR,
+      *reqs = game_and_exp(new_node(nodemgr,OP_GLOBAL,
+                                    new_node(nodemgr,OP_FUTURE,
+                                             new_node(nodemgr,OR,
                                                       res,
-                                                      new_node(NODE_MGR,NOT,
+                                                      new_node(nodemgr,NOT,
                                                                newVar,
                                                                Nil)),
                                              Nil),
@@ -1487,7 +1499,8 @@ exp_kind game_property_to_game(node_ptr* exp,
        value (except that subexpression cannot be at top level).
     */
     res = car(*exp);
-    kind = game_property_to_game(&res,
+    kind = game_property_to_game(nodemgr,
+                                 &res,
                                  TOP_LEVEL == value ? DETERMINISTIC_TRUE : value,
                                  varList,
                                  init,
@@ -1504,7 +1517,7 @@ exp_kind game_property_to_game(node_ptr* exp,
          => INIT += res, TRANS += next(res) */
       if (PURE_PROPOSITIONAL == kind) {
         *init = game_and_exp(res, *init);
-        *trans = game_and_exp(new_node(NODE_MGR,NEXT, res, Nil), *trans);
+        *trans = game_and_exp(new_node(nodemgr,NEXT, res, Nil), *trans);
       }
       /* subexpression is with next => TRANS += res */
       else if (ONCE_NEXT == kind) {
@@ -1530,11 +1543,11 @@ exp_kind game_property_to_game(node_ptr* exp,
       */
       if (PURE_PROPOSITIONAL == kind) {
         node_ptr newVar = game_create_new_var(varList,
-                                              new_node(NODE_MGR,BOOLEAN, Nil, Nil));
-        res = new_node(NODE_MGR,AND, newVar, res);
+                                              new_node(nodemgr,BOOLEAN, Nil, Nil));
+        res = new_node(nodemgr,AND, newVar, res);
         *exp = res;
-        res = new_node(NODE_MGR,NEXT, res, Nil);
-        *trans = game_and_exp(new_node(NODE_MGR,IMPLIES, newVar, res), *trans);
+        res = new_node(nodemgr,NEXT, res, Nil);
+        *trans = game_and_exp(new_node(nodemgr,IMPLIES, newVar, res), *trans);
         return PURE_PROPOSITIONAL;
       }
       /* subexpression is with one next =>
@@ -1546,10 +1559,10 @@ exp_kind game_property_to_game(node_ptr* exp,
       */
       else if (ONCE_NEXT == kind) {
         node_ptr newVar = game_create_new_var(varList,
-                                              new_node(NODE_MGR,BOOLEAN, Nil, Nil));
+                                              new_node(nodemgr,BOOLEAN, Nil, Nil));
         *exp = newVar;
-        res = new_node(NODE_MGR,AND, new_node(NODE_MGR,NEXT, newVar, Nil), res);
-        *trans = game_and_exp(new_node(NODE_MGR,IMPLIES, newVar, res), *trans);
+        res = new_node(nodemgr,AND, new_node(nodemgr,NEXT, newVar, Nil), res);
+        *trans = game_and_exp(new_node(nodemgr,IMPLIES, newVar, res), *trans);
         return PURE_PROPOSITIONAL;
       }
       /* a complex temporal subexpression => return it as it is */
@@ -1591,14 +1604,14 @@ exp_kind game_property_to_game(node_ptr* exp,
       */
       if (PURE_PROPOSITIONAL == kind) {
         node_ptr newVar = game_create_new_var(varList,
-                                              new_node(NODE_MGR,BOOLEAN, Nil, Nil));
-        res = new_node(NODE_MGR,OR, newVar, res);
+                                              new_node(nodemgr,BOOLEAN, Nil, Nil));
+        res = new_node(nodemgr,OR, newVar, res);
         *init = game_and_exp(res, *init);
-        res = new_node(NODE_MGR,NEXT, res, Nil);
-        *trans = game_and_exp(new_node(NODE_MGR,IMPLIES, newVar, res), *trans);
-        *reqs = game_and_exp(new_node(NODE_MGR,OP_GLOBAL,
-                                      new_node(NODE_MGR,OP_FUTURE,
-                                               new_node(NODE_MGR,NOT,
+        res = new_node(nodemgr,NEXT, res, Nil);
+        *trans = game_and_exp(new_node(nodemgr,IMPLIES, newVar, res), *trans);
+        *reqs = game_and_exp(new_node(nodemgr,OP_GLOBAL,
+                                      new_node(nodemgr,OP_FUTURE,
+                                               new_node(nodemgr,NOT,
                                                         newVar,
                                                         Nil),
                                                Nil),
@@ -1630,14 +1643,14 @@ exp_kind game_property_to_game(node_ptr* exp,
       */
       if (PURE_PROPOSITIONAL == kind) {
         node_ptr newVar = game_create_new_var(varList,
-                                              new_node(NODE_MGR,BOOLEAN, Nil, Nil));
-        res = new_node(NODE_MGR,OR, newVar, res);
+                                              new_node(nodemgr,BOOLEAN, Nil, Nil));
+        res = new_node(nodemgr,OR, newVar, res);
         *exp = res;
-        res = new_node(NODE_MGR,NEXT, res, Nil);
-        *trans = game_and_exp(new_node(NODE_MGR,IMPLIES, newVar, res), *trans);
-        *reqs = game_and_exp(new_node(NODE_MGR,OP_GLOBAL,
-                                      new_node(NODE_MGR,OP_FUTURE,
-                                               new_node(NODE_MGR,NOT,
+        res = new_node(nodemgr,NEXT, res, Nil);
+        *trans = game_and_exp(new_node(nodemgr,IMPLIES, newVar, res), *trans);
+        *reqs = game_and_exp(new_node(nodemgr,OP_GLOBAL,
+                                      new_node(nodemgr,OP_FUTURE,
+                                               new_node(nodemgr,NOT,
                                                         newVar,
                                                         Nil),
                                                Nil),
@@ -1676,7 +1689,8 @@ exp_kind game_property_to_game(node_ptr* exp,
        value (except that subexpression cannot be at top level).
     */
     res = car(*exp);
-    kind = game_property_to_game(&res,
+    kind = game_property_to_game(nodemgr,
+                                 &res,
                                  TOP_LEVEL == value ? DETERMINISTIC_TRUE : value,
                                  varList,
                                  init,
@@ -1704,8 +1718,8 @@ exp_kind game_property_to_game(node_ptr* exp,
       */
       /* only booleans are expected here */
       node_ptr newVar = game_create_new_var(varList,
-                                            new_node(NODE_MGR,BOOLEAN, Nil, Nil));
-      *trans = game_and_exp(new_node(NODE_MGR,IMPLIES, newVar, res), *trans);
+                                            new_node(nodemgr,BOOLEAN, Nil, Nil));
+      *trans = game_and_exp(new_node(nodemgr,IMPLIES, newVar, res), *trans);
       node_node_setcar((*exp), newVar);
       break; /* Check for being top-level. The kind remains ONCE_NEXT. */
     }
@@ -1745,16 +1759,16 @@ exp_kind game_property_to_game(node_ptr* exp,
          REQS += G F !n
          Here n means: exp must be satisfied in the next state.
       */
-      newVar = game_create_new_var(varList, new_node(NODE_MGR,BOOLEAN, Nil, Nil));
-      res = new_node(NODE_MGR,OR, exp2, new_node(NODE_MGR,AND, exp1, newVar));
+      newVar = game_create_new_var(varList, new_node(nodemgr,BOOLEAN, Nil, Nil));
+      res = new_node(nodemgr,OR, exp2, new_node(nodemgr,AND, exp1, newVar));
       *exp = res;
-      *trans = game_and_exp(new_node(NODE_MGR,IMPLIES,
+      *trans = game_and_exp(new_node(nodemgr,IMPLIES,
                                      newVar,
-                                     new_node(NODE_MGR,NEXT, res, Nil)),
+                                     new_node(nodemgr,NEXT, res, Nil)),
                             *trans);
-      *reqs = game_and_exp(new_node(NODE_MGR,OP_GLOBAL,
-                                    new_node(NODE_MGR,OP_FUTURE,
-                                             new_node(NODE_MGR,NOT,
+      *reqs = game_and_exp(new_node(nodemgr,OP_GLOBAL,
+                                    new_node(nodemgr,OP_FUTURE,
+                                             new_node(nodemgr,NOT,
                                                       newVar,
                                                       Nil),
                                              Nil),
@@ -1792,11 +1806,11 @@ exp_kind game_property_to_game(node_ptr* exp,
          Here n means: a occurs in the current state or the whole exp
          must be true in the next state.
       */
-      newVar = game_create_new_var(varList, new_node(NODE_MGR,BOOLEAN, Nil, Nil));
-      res = new_node(NODE_MGR,AND, exp2, newVar);
+      newVar = game_create_new_var(varList, new_node(nodemgr,BOOLEAN, Nil, Nil));
+      res = new_node(nodemgr,AND, exp2, newVar);
       *exp = res;
-      res = new_node(NODE_MGR,OR, exp1, new_node(NODE_MGR,NEXT, res, Nil));
-      *trans = game_and_exp(new_node(NODE_MGR,IMPLIES, newVar, res), *trans);
+      res = new_node(nodemgr,OR, exp1, new_node(nodemgr,NEXT, res, Nil));
+      *trans = game_and_exp(new_node(nodemgr,IMPLIES, newVar, res), *trans);
       kind = PURE_PROPOSITIONAL;
       break; /* Check for being top-level */
     }
@@ -1854,7 +1868,7 @@ exp_kind game_property_to_game(node_ptr* exp,
       {
         /* create a new var v,  INIT += v, TRANS += v -> exp */
         node_ptr newVar = game_create_new_var(varList,
-                                              new_node(NODE_MGR,BOOLEAN, Nil, Nil));
+                                              new_node(nodemgr,BOOLEAN, Nil, Nil));
         *init = game_and_exp(newVar, *init);
         *trans = game_and_exp(new_lined_node(NODE_MGR,IMPLIES,
                                              newVar,

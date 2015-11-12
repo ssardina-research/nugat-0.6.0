@@ -1123,6 +1123,9 @@ static void Game_SF07_StructCheckLTLGameSF07_construct_monitor_sexp
   char* module_name;
   node_ptr monitor;
 
+    const NuSMVEnv_ptr env = EnvObject_get_environment(ENV_OBJECT(self));
+    const NodeMgr_ptr nodemgr = NODE_MGR(NuSMVEnv_get_value(env, ENV_NODE_MGR));
+
   GAME_SF07_STRUCT_CHECK_LTL_GAME_SF07_CHECK_INSTANCE(self);
   if (self->curr_player == PLAYER_1) {
     GAME_SF07_GBA_CHECK_INSTANCE(self->player1_ba);
@@ -1158,11 +1161,11 @@ static void Game_SF07_StructCheckLTLGameSF07_construct_monitor_sexp
     monitor = append(monitor, trans_statements);
     monitor = append(monitor, init_statements);
     if (var_decls != Nil) {
-      monitor = new_node(NODE_MGR,CONS, var_decls, monitor);
+      monitor = new_node(nodemgr,CONS, var_decls, monitor);
     }
-    monitor = new_node(NODE_MGR,MODULE,
-                       new_node(NODE_MGR,MODTYPE,
-                                new_node(NODE_MGR,ATOM,
+    monitor = new_node(nodemgr,MODULE,
+                       new_node(nodemgr,MODTYPE,
+                                new_node(nodemgr,ATOM,
                                          (node_ptr) UStringMgr_find_string(USTRING_MGR,module_name),
                                          Nil),
                                 Nil),
@@ -1201,9 +1204,9 @@ static void Game_SF07_StructCheckLTLGameSF07_construct_monitor_sexp
             self->curr_unique_number);
 
     /* Construct empty module. */
-    monitor = new_node(NODE_MGR,MODULE,
-                       new_node(NODE_MGR,MODTYPE,
-                                new_node(NODE_MGR,ATOM,
+    monitor = new_node(nodemgr,MODULE,
+                       new_node(nodemgr,MODTYPE,
+                                new_node(nodemgr,ATOM,
                                          (node_ptr) UStringMgr_find_string(USTRING_MGR,module_name),
                                          Nil),
                                 Nil),
@@ -1255,6 +1258,9 @@ static node_ptr Game_SF07_StructCheckLTLGameSF07_construct_monitor_var_decls
   node_ptr var_decls;
   node_ptr res;
 
+    const NuSMVEnv_ptr env = EnvObject_get_environment(ENV_OBJECT(self));
+    const NodeMgr_ptr nodemgr = NODE_MGR(NuSMVEnv_get_value(env, ENV_NODE_MGR));
+
   GAME_SF07_STRUCT_CHECK_LTL_GAME_SF07_CHECK_INSTANCE(self);
   if (self->curr_player == PLAYER_1) {
     GAME_SF07_GBA_CHECK_INSTANCE(self->player1_ba);
@@ -1284,12 +1290,12 @@ static node_ptr Game_SF07_StructCheckLTLGameSF07_construct_monitor_var_decls
     state = GAME_SF07_GBA_STATE(Siter_element(s_iter));
     state_var_name =
       Game_SF07_StructCheckLTLGameSF07_gba_state_to_var_name(self, state);
-    var_decl = new_node(NODE_MGR,COLON, state_var_name, var_type);
-    var_decls = new_node(NODE_MGR,CONS, var_decl, var_decls);
+    var_decl = new_node(nodemgr,COLON, state_var_name, var_type);
+    var_decls = new_node(nodemgr,CONS, var_decl, var_decls);
   }
 
   if (var_decls != Nil) {
-    res = new_node(NODE_MGR,VAR, reverse(var_decls), Nil);
+    res = new_node(nodemgr,VAR, reverse(var_decls), Nil);
   } else {
     res = Nil;
   }
@@ -1341,6 +1347,9 @@ Game_SF07_StructCheckLTLGameSF07_construct_monitor_init_statements
   node_ptr init_statements;
   node_ptr res;
 
+    const NuSMVEnv_ptr env = EnvObject_get_environment(ENV_OBJECT(self));
+    const NodeMgr_ptr nodemgr = NODE_MGR(NuSMVEnv_get_value(env, ENV_NODE_MGR));
+
   GAME_SF07_STRUCT_CHECK_LTL_GAME_SF07_CHECK_INSTANCE(self);
   if (self->curr_player == PLAYER_1) {
     GAME_SF07_GBA_CHECK_INSTANCE(self->player1_ba);
@@ -1368,7 +1377,7 @@ Game_SF07_StructCheckLTLGameSF07_construct_monitor_init_statements
       Game_SF07_StructCheckLTLGameSF07_gba_state_to_var_name(self, state);
 
     if (!Game_SF07_gba_is_state_initial(ba, state)) {
-      init_statement = new_node(NODE_MGR,INIT,
+      init_statement = new_node(nodemgr,INIT,
                                 find_node(NODE_MGR,EQUAL,
                                           state_var_name,
                                           find_node_number(-1)),
@@ -1400,14 +1409,14 @@ Game_SF07_StructCheckLTLGameSF07_construct_monitor_init_statements
                            find_node(NODE_MGR,EQUAL,
                                      state_var_name,
                                      find_node_number(inv_true_init_value)));
-      init_statement = new_node(NODE_MGR,INIT,
+      init_statement = new_node(nodemgr,INIT,
                                 find_node(NODE_MGR,AND,
                                           inv_false,
                                           inv_true),
                                 Nil);
     }
 
-    init_statements = new_node(NODE_MGR,CONS, init_statement, init_statements);
+    init_statements = new_node(nodemgr,CONS, init_statement, init_statements);
   }
 
   res = reverse(init_statements);
@@ -1511,6 +1520,9 @@ Game_SF07_StructCheckLTLGameSF07_construct_monitor_trans_statements
   node_ptr trans_statements;
   node_ptr res;
 
+    const NuSMVEnv_ptr env = EnvObject_get_environment(ENV_OBJECT(self));
+    const NodeMgr_ptr nodemgr = NODE_MGR(NuSMVEnv_get_value(env, ENV_NODE_MGR));
+
   GAME_SF07_STRUCT_CHECK_LTL_GAME_SF07_CHECK_INSTANCE(self);
   if (self->curr_player == PLAYER_1) {
     GAME_SF07_GBA_CHECK_INSTANCE(self->player1_ba);
@@ -1596,13 +1608,13 @@ Game_SF07_StructCheckLTLGameSF07_construct_monitor_trans_statements
                                           rhs));
       }
 
-      i_trans = new_node(NODE_MGR,TRANS,
+      i_trans = new_node(nodemgr,TRANS,
                          find_node(NODE_MGR,IMPLIES,
                                    i_lhs,
                                    i_conjuncts),
                          Nil);
 
-      trans_statements = new_node(NODE_MGR,CONS, i_trans, trans_statements);
+      trans_statements = new_node(nodemgr,CONS, i_trans, trans_statements);
     }
 
     /* handle incoming transitions */
@@ -1690,13 +1702,13 @@ Game_SF07_StructCheckLTLGameSF07_construct_monitor_trans_statements
         i_rhs = find_node(NODE_MGR,FALSEEXP, Nil, Nil);
       }
 
-      i_trans = new_node(NODE_MGR,TRANS,
+      i_trans = new_node(nodemgr,TRANS,
                          find_node(NODE_MGR,IMPLIES,
                                    i_lhs,
                                    i_rhs),
                          Nil);
 
-      trans_statements = new_node(NODE_MGR,CONS, i_trans, trans_statements);
+      trans_statements = new_node(nodemgr,CONS, i_trans, trans_statements);
     }
   }
 

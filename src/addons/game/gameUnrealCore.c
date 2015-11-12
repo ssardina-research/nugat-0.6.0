@@ -402,7 +402,7 @@ ARGS((Game_UnrealizableCore_Struct_ptr self));
 static void Game_UnrealizableCore_Struct_restore_flat_hierarchies
 ARGS((Game_UnrealizableCore_Struct_ptr self));
 
-static node_ptr copy_opposite_list ARGS((node_ptr l));
+static node_ptr copy_opposite_list ARGS((NodeMgr_ptr nodemgr,node_ptr l));
 static void free_opposite_list ARGS((node_ptr l));
 static node_ptr opposite_reverse ARGS((node_ptr x));
 
@@ -835,6 +835,9 @@ static void Game_UnrealizableCore_Struct_save_flat_hierarchies(
   FlatHierarchy_ptr fh1;
   FlatHierarchy_ptr fh2;
 
+    const NuSMVEnv_ptr env = EnvObject_get_environment(ENV_OBJECT(self));
+    const NodeMgr_ptr nodemgr = NODE_MGR(NuSMVEnv_get_value(env, ENV_NODE_MGR));
+
   GAME_UNREALIZABLE_CORE_STRUCT_CHECK_INSTANCE(self);
   nusmv_assert(self->init1 == Nil);
   nusmv_assert(self->invar1 == Nil);
@@ -849,18 +852,18 @@ static void Game_UnrealizableCore_Struct_save_flat_hierarchies(
   fh2 = GameHierarchy_get_player_2(self->gh);
 
   self->init1 = FlatHierarchy_get_init(fh1);
-  FlatHierarchy_set_init(fh1, copy_opposite_list(self->init1));
+  FlatHierarchy_set_init(fh1, copy_opposite_list(nodemgr,self->init1));
   self->invar1 = FlatHierarchy_get_invar(fh1);
-  FlatHierarchy_set_invar(fh1, copy_opposite_list(self->invar1));
+  FlatHierarchy_set_invar(fh1, copy_opposite_list(nodemgr,self->invar1));
   self->trans1 = FlatHierarchy_get_trans(fh1);
-  FlatHierarchy_set_trans(fh1, copy_opposite_list(self->trans1));
+  FlatHierarchy_set_trans(fh1, copy_opposite_list(nodemgr,self->trans1));
 
   self->init2 = FlatHierarchy_get_init(fh2);
-  FlatHierarchy_set_init(fh2, copy_opposite_list(self->init2));
+  FlatHierarchy_set_init(fh2, copy_opposite_list(nodemgr,self->init2));
   self->invar2 = FlatHierarchy_get_invar(fh2);
-  FlatHierarchy_set_invar(fh2, copy_opposite_list(self->invar2));
+  FlatHierarchy_set_invar(fh2, copy_opposite_list(nodemgr,self->invar2));
   self->trans2 = FlatHierarchy_get_trans(fh2);
-  FlatHierarchy_set_trans(fh2, copy_opposite_list(self->trans2));
+  FlatHierarchy_set_trans(fh2, copy_opposite_list(nodemgr,self->trans2));
 
   Game_UnrealizableCore_Struct_save_assign_hashes(self);
 }
@@ -925,13 +928,13 @@ static void Game_UnrealizableCore_Struct_restore_flat_hierarchies(
   SeeAlso     [ free_opposite_list ]
 
 ******************************************************************************/
-node_ptr copy_opposite_list(node_ptr list)
+node_ptr copy_opposite_list(NodeMgr_ptr nodemgr,node_ptr list)
 {
   node_ptr new_list;
 
   /* create a reversed copy of the list */
   for (new_list = Nil; list != Nil; list = car(list)) {
-    new_list = new_node(NODE_MGR,node_get_type(list), new_list, cdr(list));
+    new_list = new_node(nodemgr,node_get_type(list), new_list, cdr(list));
   }
 
   /* reverse the created list */
@@ -1178,7 +1181,7 @@ static node_ptr game_create_new_param(Game_UnrealizableCore_Struct_ptr self,
 
   /* Wrap the expression into its high level kind. */
   node_ptr old_exp = find_assoc(self->parameter2expression, var);
-  old_exp = cons(NODE_MGR,new_node(NODE_MGR,kind, expr, Nil), old_exp);
+  old_exp = cons(NODE_MGR,new_node(nodemgr,kind, expr, Nil), old_exp);
   insert_assoc(self->parameter2expression, var, old_exp);
 
   if (player == PLAYER_1) ++(self->constraints_1_guarded_num);
@@ -1218,8 +1221,7 @@ static void game_guard_exprs_by_parameters(Game_UnrealizableCore_Struct_ptr self
   node_ptr iter;
 
     const NuSMVEnv_ptr env = EnvObject_get_environment(ENV_OBJECT(self));
-    const NodeMgr_ptr NODE_MGR =
-            NODE_MGR(NuSMVEnv_get_value(env, ENV_NODE_MGR));
+    const NodeMgr_ptr nodemgr = NODE_MGR(NuSMVEnv_get_value(env, ENV_NODE_MGR));
 
   /* The expected format of exprs is a list connected by AND, right
      child is a head, left child is a tail, the last element is
@@ -1233,7 +1235,7 @@ static void game_guard_exprs_by_parameters(Game_UnrealizableCore_Struct_ptr self
     exp = cdr(iter);
     param = game_create_new_param(self, exp, kind, player);
     if (param != NULL) {
-      exp = new_node(NODE_MGR,IMPLIES, param, exp);
+      exp = new_node(nodemgr,IMPLIES, param, exp);
       setcdr(iter, exp);
     }
   }
@@ -2452,6 +2454,10 @@ static boolean game_minimize_players_constraints(
                                                  boolean just_check,
                                                  game_is_game_still_correct fun)
 {
+
+    const NuSMVEnv_ptr env = EnvObject_get_environment(ENV_OBJECT(self));
+    const NodeMgr_ptr nodemgr = NODE_MGR(NuSMVEnv_get_value(env, ENV_NODE_MGR));
+
   node_ptr trueConst = find_node(NODE_MGR,TRUEEXP, Nil, Nil);
 
   boolean somethingChanged = false;
@@ -2489,7 +2495,7 @@ static boolean game_minimize_players_constraints(
     for (iter_orig = FlatHierarchy_get_init(playerModified);
          iter_orig != Nil;
          iter_orig = car(iter_orig)) {
-      bdd_inits = new_node(NODE_MGR,AND,
+      bdd_inits = new_node(nodemgr,AND,
                            bdd_inits,
                            (node_ptr) BddEnc_expr_to_bdd(self->bdd_enc,
                                                          cdr(iter_orig),
@@ -2497,9 +2503,9 @@ static boolean game_minimize_players_constraints(
     }
 
     /* construct a list of bdd: i2^..^iN, i3^..^iN , .. , iN, true */
-    bdd_conjuncts = new_node(NODE_MGR,AND, Nil, (node_ptr) bdd_true(self->dd_manager));
+    bdd_conjuncts = new_node(nodemgr,AND, Nil, (node_ptr) bdd_true(self->dd_manager));
     for (iter_init = bdd_inits; iter_init != Nil; iter_init = car(iter_init)) {
-      bdd_conjuncts = new_node(NODE_MGR,AND,
+      bdd_conjuncts = new_node(nodemgr,AND,
                                bdd_conjuncts,
                                (node_ptr) bdd_and(self->dd_manager,
                                                   (bdd_ptr) cdr(bdd_conjuncts),
@@ -2996,6 +3002,9 @@ static void game_compute_core_switching_constraints(
   GameGameFsms_ptr fsm;
   GamePlayer playerToModify;
 
+    const NuSMVEnv_ptr env = EnvObject_get_environment(ENV_OBJECT(self));
+    const NodeMgr_ptr nodemgr = NODE_MGR(NuSMVEnv_get_value(env, ENV_NODE_MGR));
+
   node_ptr spec = Prop_get_expr_core(PROP(self->prop));
   /* the prop has not been used yet */
   nusmv_assert(GAME_BDD_FSM(NULL) == PropGame_get_game_bdd_fsm(self->prop));
@@ -3034,7 +3043,7 @@ static void game_compute_core_switching_constraints(
   FlatHierarchy_clear_var_expr_associations(p1);
   FlatHierarchy_clear_var_expr_associations(p2);
 
-  spec = new_node(NODE_MGR,node_get_type(spec),
+  spec = new_node(nodemgr,node_get_type(spec),
                   copy_list(0,car(spec)),
                   copy_list(0,cdr(spec)));
 

@@ -46,7 +46,12 @@ Nitin Yadav - nitin.yadav@rmit.edu.au
 
 7.Warning: grammar.y.: implicit declaration of function ‘yylex’,‘yyerror’ and ‘yyerror_lined’
 
-    *   changed content in src/config.status -> S["YFLAGS"]="-d -p nusmv_yy"
+     *   change in parser/Makefile(.am and .in)
+        
+            **  the flags
+                AM_YFLAGS = -d -p nusmv_yy
+                AM_LFLAGS = -l -Pnusmv_yy
+
     *   replace in grammar.y.2.55 'yyerror_lined' with 'nusmv_yyerror_lined'
         
 8.Error: grammar.y : function 'find_string' not found
@@ -54,14 +59,9 @@ Nitin Yadav - nitin.yadav@rmit.edu.au
     *   'find_string' has been replaced by 'UStringMgr_find_string(USTRING_MGR,' and in grammar.y.2.55 with 'UStringMgr_find_string(USTRING_MGR(NuSMVEnv_get_value(__nusmv_parser_env__, ENV_STRING_MGR)),'
     
 9.Error : input.l: ‘nusmv_yytext’ undeclared (first use in this function) ------------- ^"#"" "[0-9]+.*\n       sscanf(nusmv_yytext,"# %d",&nusmv_yylineno); 
-
-    *   change in parser/Makefile(.am and .in)
-    
-        **  the flags
-            AM_YFLAGS = -d -p nusmv_yy
-            AM_LFLAGS = -l -Pnusmv_yy
             
-        **  added this variable after this 2 flags
+    *   added this variable after 'AM_LFLAGS' in the parser/Makefile(.am and .in)
+        
             LEX_OUTPUT_ROOT = lex.nusmv_yy
        
 10.Error: input.l : ‘yylval’ undeclared (first use in this function)
