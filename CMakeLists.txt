@@ -65,6 +65,7 @@ set(SOURCE_FILES
     src/addons/addonsPkg.c
     src/parser/grammar.y.1.55
     src/parser/grammar.y.2.55
+    src/parser/input.l.1.55
     src/parser/input.l.2.55
     src/parser/Makefile.am
     src/parser/Makefile.in

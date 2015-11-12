@@ -285,6 +285,9 @@ game_flatten_game_hierarchy(SymbTable_ptr symbol_table,
   node_ptr ltlgame = Nil;
   node_ptr genreactivity = Nil;
 
+  const NuSMVEnv_ptr env = EnvObject_get_environment(ENV_OBJECT(symbol_table));
+  const NodeMgr_ptr nodemgr = NODE_MGR(NuSMVEnv_get_value(env, ENV_NODE_MGR));
+
   FlatHierarchy_ptr player_1 = FlatHierarchy_create(symbol_table);
   FlatHierarchy_ptr player_2 = FlatHierarchy_create(symbol_table);
   hash_ptr instances = new_assoc();
@@ -369,19 +372,19 @@ game_flatten_game_hierarchy(SymbTable_ptr symbol_table,
 
     switch (node_get_type(spec)) {
     case SPEC:
-      ctlspec = cons(NODE_MGR,find_node(CONTEXT, Nil, car(spec)), ctlspec);
+      ctlspec = cons(nodemgr,find_node(CONTEXT, Nil, car(spec)), ctlspec);
       break;
     case LTLSPEC:
-      ltlspec = cons(NODE_MGR,find_node(CONTEXT, Nil, car(spec)), ltlspec);
+      ltlspec = cons(nodemgr,find_node(CONTEXT, Nil, car(spec)), ltlspec);
       break;
     case INVARSPEC:
-      invarspec = cons(NODE_MGR,find_node(CONTEXT, Nil, car(spec)), invarspec);
+      invarspec = cons(nodemgr,find_node(CONTEXT, Nil, car(spec)), invarspec);
       break;
     case PSLSPEC:
-      pslspec = cons(NODE_MGR,PslNode_new_context(PSL_NULL, car(spec)), pslspec);
+      pslspec = cons(nodemgr,PslNode_new_context(PSL_NULL, car(spec)), pslspec);
       break;
     case COMPUTE:
-      compute = cons(NODE_MGR,find_node(CONTEXT, Nil, car(spec)), compute);
+      compute = cons(nodemgr,find_node(CONTEXT, Nil, car(spec)), compute);
       break;
 
     /* The true game spec is dealt below, outside of switch statement. */
@@ -407,7 +410,7 @@ game_flatten_game_hierarchy(SymbTable_ptr symbol_table,
                                    PLAYER_NAME_1 :
                                    PLAYER_NAME_2)),
                        cdr(spec));
-      *list = cons(NODE_MGR,spec, *list);
+      *list = cons(nodemgr,spec, *list);
     }
   } /* for */
 

@@ -48,6 +48,7 @@
 #include "utils/assoc.h"
 #include "utils/error.h"
 #include "utils/ustring.h"
+#include "gameInt.h"
 
 #include <stdio.h>
 #include <code/nusmv/core/compile/type_checking/checkers/CheckerBase.h>
@@ -157,7 +158,7 @@ static void game_fill_in_var_hash_table ARGS((node_ptr inVarList,
 
 static node_ptr game_create_unique_name ARGS((void));
 
-static node_ptr game_create_new_var ARGS((node_ptr* list, node_ptr type));
+static node_ptr game_create_new_var ARGS((NodeMgr_ptr nodemgr,node_ptr* list, node_ptr type));
 
 static exp_kind game_set_expression_kind ARGS((node_ptr exp,
                                                exp_kind kind));
@@ -233,7 +234,8 @@ static exp_kind game_property_to_game ARGS((NodeMgr_ptr nodemgr,
   SeeAlso     [ ]
 
 ******************************************************************************/
-boolean Game_PropertyToGame(node_ptr* inputVars,
+boolean Game_PropertyToGame(NodeMgr_ptr nodemgr,
+                            node_ptr* inputVars,
                             node_ptr* outputVars,
                             node_ptr exp_1,
                             node_ptr* init_1,
@@ -241,8 +243,7 @@ boolean Game_PropertyToGame(node_ptr* inputVars,
                             node_ptr exp_2,
                             node_ptr* init_2,
                             node_ptr* trans_2,
-                            node_ptr* property,
-                            NodeMgr_ptr nodemgr)
+                            node_ptr* property)
 {
   node_ptr req_1 = Nil;
   node_ptr req_2 = Nil;
@@ -254,9 +255,6 @@ boolean Game_PropertyToGame(node_ptr* inputVars,
                                being added to the front. */
   node_ptr exp_1_orig;      /* Stores the original unPSL-ed exp_1. */
   node_ptr exp_2_orig;      /* Stores the original unPSL-ed exp_2. */
-
-    const NuSMVEnv_ptr env = EnvObject_get_environment(ENV_OBJECT(NULL));
-    const NodeMgr_ptr nodemgr = NODE_MGR(NuSMVEnv_get_value(env, ENV_NODE_MGR));
 
   nameToType = new_assoc();
   expToKind = new_assoc();
@@ -359,7 +357,7 @@ boolean Game_PropertyToGame(node_ptr* inputVars,
             node_set_type(iter, CONS);
           }
           node_set_type(iter, CONS);
-          node_node_setcdr(iter, cons(NODE_MGR,cdr(iter), Nil));
+          node_node_setcdr(iter, cons(nodemgr,cdr(iter), Nil));
         }
       }
 
@@ -372,12 +370,12 @@ boolean Game_PropertyToGame(node_ptr* inputVars,
             node_set_type(iter, CONS);
           }
           node_set_type(iter, CONS);
-          node_node_setcdr(iter, cons(NODE_MGR,cdr(iter), Nil));
+          node_node_setcdr(iter, cons(nodemgr,cdr(iter), Nil));
         }
       }
       /* Here req 2 must be not Nil. Create dummy requirement: "G F true". */
       if (Nil == req_2) {
-        req_2 = cons(NODE_MGR,new_node(nodemgr,OP_GLOBAL,
+        req_2 = cons(nodemgr,new_node(nodemgr,OP_GLOBAL,
                               new_node(nodemgr,OP_FUTURE,
                                        new_node(nodemgr,TRUEEXP, Nil, Nil),
                                        Nil),
@@ -575,13 +573,13 @@ static node_ptr game_create_unique_name(void)
   SeeAlso     [ ]
 
 ******************************************************************************/
-static node_ptr game_create_new_var(node_ptr* list, node_ptr type)
+static node_ptr game_create_new_var(NodeMgr_ptr nodemgr,node_ptr* list, node_ptr type)
 {
   node_ptr name;
 
   name = game_create_unique_name(); /* name is already find_atom-ed */
   insert_assoc(nameToType, name, type);
-  *list = cons(NODE_MGR,new_node(nodemgr,COLON, name, type), *list);
+  *list = cons(nodemgr,new_node(nodemgr,COLON, name, type), *list);
 
   return name;
 }
@@ -1476,7 +1474,7 @@ exp_kind game_property_to_game(NodeMgr_ptr nodemgr,
       yylineno = line; /* All newly created nodes will have this line info. */
 
       res = car(car(*exp));
-      newVar = game_create_new_var(varList, new_node(nodemgr,BOOLEAN, Nil, Nil));
+      newVar = game_create_new_var(nodemgr,varList, new_node(nodemgr,BOOLEAN, Nil, Nil));
       *exp = newVar;
       *trans = game_and_exp(new_node(nodemgr,IMPLIES,
                                      newVar,
@@ -1542,7 +1540,7 @@ exp_kind game_property_to_game(NodeMgr_ptr nodemgr,
          Meaning of "n" is that "G res" must be true in the next state.
       */
       if (PURE_PROPOSITIONAL == kind) {
-        node_ptr newVar = game_create_new_var(varList,
+        node_ptr newVar = game_create_new_var(nodemgr,varList,
                                               new_node(nodemgr,BOOLEAN, Nil, Nil));
         res = new_node(nodemgr,AND, newVar, res);
         *exp = res;
@@ -1558,7 +1556,7 @@ exp_kind game_property_to_game(NodeMgr_ptr nodemgr,
          because res contains NEXT and can be violated only over a transition.
       */
       else if (ONCE_NEXT == kind) {
-        node_ptr newVar = game_create_new_var(varList,
+        node_ptr newVar = game_create_new_var(nodemgr,varList,
                                               new_node(nodemgr,BOOLEAN, Nil, Nil));
         *exp = newVar;
         res = new_node(nodemgr,AND, new_node(nodemgr,NEXT, newVar, Nil), res);
@@ -1603,7 +1601,7 @@ exp_kind game_property_to_game(NodeMgr_ptr nodemgr,
          "n" here means "F res" must be true in next state.
       */
       if (PURE_PROPOSITIONAL == kind) {
-        node_ptr newVar = game_create_new_var(varList,
+        node_ptr newVar = game_create_new_var(nodemgr,varList,
                                               new_node(nodemgr,BOOLEAN, Nil, Nil));
         res = new_node(nodemgr,OR, newVar, res);
         *init = game_and_exp(res, *init);
@@ -1642,7 +1640,7 @@ exp_kind game_property_to_game(NodeMgr_ptr nodemgr,
          res is in returned exp, otherwise "G F !n" may never be true.
       */
       if (PURE_PROPOSITIONAL == kind) {
-        node_ptr newVar = game_create_new_var(varList,
+        node_ptr newVar = game_create_new_var(nodemgr,varList,
                                               new_node(nodemgr,BOOLEAN, Nil, Nil));
         res = new_node(nodemgr,OR, newVar, res);
         *exp = res;
@@ -1717,7 +1715,7 @@ exp_kind game_property_to_game(NodeMgr_ptr nodemgr,
          "X b" ==> X n, TRANS += "n -> b".
       */
       /* only booleans are expected here */
-      node_ptr newVar = game_create_new_var(varList,
+      node_ptr newVar = game_create_new_var(nodemgr,varList,
                                             new_node(nodemgr,BOOLEAN, Nil, Nil));
       *trans = game_and_exp(new_node(nodemgr,IMPLIES, newVar, res), *trans);
       node_node_setcar((*exp), newVar);
@@ -1759,7 +1757,7 @@ exp_kind game_property_to_game(NodeMgr_ptr nodemgr,
          REQS += G F !n
          Here n means: exp must be satisfied in the next state.
       */
-      newVar = game_create_new_var(varList, new_node(nodemgr,BOOLEAN, Nil, Nil));
+      newVar = game_create_new_var(nodemgr,varList, new_node(nodemgr,BOOLEAN, Nil, Nil));
       res = new_node(nodemgr,OR, exp2, new_node(nodemgr,AND, exp1, newVar));
       *exp = res;
       *trans = game_and_exp(new_node(nodemgr,IMPLIES,
@@ -1806,7 +1804,7 @@ exp_kind game_property_to_game(NodeMgr_ptr nodemgr,
          Here n means: a occurs in the current state or the whole exp
          must be true in the next state.
       */
-      newVar = game_create_new_var(varList, new_node(nodemgr,BOOLEAN, Nil, Nil));
+      newVar = game_create_new_var(nodemgr,varList, new_node(nodemgr,BOOLEAN, Nil, Nil));
       res = new_node(nodemgr,AND, exp2, newVar);
       *exp = res;
       res = new_node(nodemgr,OR, exp1, new_node(nodemgr,NEXT, res, Nil));
@@ -1867,7 +1865,7 @@ exp_kind game_property_to_game(NodeMgr_ptr nodemgr,
     case ONCE_NEXT:
       {
         /* create a new var v,  INIT += v, TRANS += v -> exp */
-        node_ptr newVar = game_create_new_var(varList,
+        node_ptr newVar = game_create_new_var(nodemgr,varList,
                                               new_node(nodemgr,BOOLEAN, Nil, Nil));
         *init = game_and_exp(newVar, *init);
         *trans = game_and_exp(new_lined_node(NODE_MGR,IMPLIES,

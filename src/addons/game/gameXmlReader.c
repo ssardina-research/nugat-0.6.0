@@ -392,7 +392,8 @@ int Game_RatFileToGame(const char *filename)
        Transformations are applied to try and fit more
        assumptions/guarantees into the init or trans categories.
     */
-    Game_PropertyToGame(&parseResult->input_vars,
+    Game_PropertyToGame(nodemgr,
+                        &parseResult->input_vars,
                         &parseResult->output_vars,
                         parseResult->assumptions,
                         &init1,
@@ -400,27 +401,26 @@ int Game_RatFileToGame(const char *filename)
                         parseResult->guarantees,
                         &init2,
                         &trans2,
-                        &property,
-                        nodemgr);
+                        &property);
 
     if (Nil != parseResult->input_vars) {
-      module1 = cons(NODE_MGR,new_node(nodemgr,VAR, parseResult->input_vars, Nil), module1);
+      module1 = cons(nodemgr,new_node(nodemgr,VAR, parseResult->input_vars, Nil), module1);
     }
     if (Nil != init1) {
-      module1 = cons(NODE_MGR,new_node(nodemgr,INIT, init1, Nil), module1);
+      module1 = cons(nodemgr,new_node(nodemgr,INIT, init1, Nil), module1);
     }
     if (Nil != trans1) {
-      module1 = cons(NODE_MGR,new_node(nodemgr,TRANS, trans1, Nil), module1);
+      module1 = cons(nodemgr,new_node(nodemgr,TRANS, trans1, Nil), module1);
     }
 
     if (Nil != parseResult->output_vars) {
-      module2 = cons(NODE_MGR,new_node(nodemgr,VAR, parseResult->output_vars, Nil), module2);
+      module2 = cons(nodemgr,new_node(nodemgr,VAR, parseResult->output_vars, Nil), module2);
     }
     if (Nil != init2) {
-      module2 = cons(NODE_MGR,new_node(nodemgr,INIT, init2, Nil), module2);
+      module2 = cons(nodemgr,new_node(nodemgr,INIT, init2, Nil), module2);
     }
     if (Nil != trans2) {
-      module2 = cons(NODE_MGR,new_node(nodemgr,TRANS, trans2, Nil), module2);
+      module2 = cons(nodemgr,new_node(nodemgr,TRANS, trans2, Nil), module2);
     }
 
     /* Create the players\' MODULE (the same as NuGaT parser does). */
@@ -441,9 +441,9 @@ int Game_RatFileToGame(const char *filename)
 
     /* Create a GAME structure as the NuGaT parser does it. */
     parsed_tree = new_node(nodemgr,GAME,
-                           cons(NODE_MGR,property, Nil),
-                           cons(NODE_MGR,module1,
-                                cons(NODE_MGR,module2,
+                           cons(nodemgr,property, Nil),
+                           cons(nodemgr,module1,
+                                cons(nodemgr,module2,
                                      Nil /*module list is empty*/)));
 
 //     /* debugging printing */
@@ -710,7 +710,7 @@ static node_ptr game_xml_reader_parse_type(const char* text) {
       }
       else rpterr("Invalid constant list in type");
 
-      listOfVals = cons(NODE_MGR,newNode, listOfVals);
+      listOfVals = cons(nodemgr,newNode, listOfVals);
     } /* while */
 
     if (text[0] != '\0') rpterr("Incorrect XML file (list of type constants)");
@@ -873,7 +873,7 @@ static void game_xml_reader_tag_begin(void* data,
       rpterr("Unexpected XML element attribute: %s", atts[0]);
     }
 
-    parseResult->stack = cons(NODE_MGR,new_node(nodemgr,tag, Nil, Nil), parseResult->stack);
+    parseResult->stack = cons(nodemgr,new_node(nodemgr,tag, Nil, Nil), parseResult->stack);
     return;
 
   /* Tags which are to be ignored. */
@@ -911,7 +911,7 @@ static void game_xml_reader_tag_begin(void* data,
   case XML_AUTO_SIGNAL:
 
   case XML_NOTES:
-    parseResult->stack = cons(NODE_MGR,new_node(nodemgr,tag, Nil, Nil), parseResult->stack);
+    parseResult->stack = cons(nodemgr,new_node(nodemgr,tag, Nil, Nil), parseResult->stack);
     parseResult->isIgnore = true;
     return;
   } /* switch */
@@ -1016,10 +1016,10 @@ static void game_xml_reader_tag_end(void* data, const char *string)
       signal = new_node(nodemgr,COLON, car(name), car(type));
 
       if ('E' == PTR_TO_INT(car(kind))) {
-        parseResult->input_vars = cons(NODE_MGR,signal, parseResult->input_vars);
+        parseResult->input_vars = cons(nodemgr,signal, parseResult->input_vars);
       }
       else if ('S' == PTR_TO_INT(car(kind))) {
-        parseResult->output_vars = cons(NODE_MGR,signal, parseResult->output_vars);
+        parseResult->output_vars = cons(nodemgr,signal, parseResult->output_vars);
       }
       else {
         rpterr("The value of kind of a signal can only be E or S (found: %c).",
@@ -1323,7 +1323,7 @@ static void game_xml_reader_char_handler(void* data, const char *txt, int len)
   }
   else {
     text_node = new_node(nodemgr,XML_TEXT, Nil, Nil);
-    parseResult->stack = cons(NODE_MGR,text_node, parseResult->stack);
+    parseResult->stack = cons(nodemgr,text_node, parseResult->stack);
   }
 
   buffer = (char*) car(text_node);

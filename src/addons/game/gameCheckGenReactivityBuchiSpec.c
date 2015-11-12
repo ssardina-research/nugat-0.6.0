@@ -139,6 +139,9 @@ void Game_CheckGenReactivitySpec(PropGame_ptr prop, gameParams_ptr params)
   node_ptr varList1 = Nil;
   node_ptr varList2 = Nil;
 
+  const NuSMVEnv_ptr env = EnvObject_get_environment(ENV_OBJECT(prop));
+  const NodeMgr_ptr nodemgr = NODE_MGR(NuSMVEnv_get_value(env, ENV_NODE_MGR));
+
   /* The given property must be a general reactivity(1) property.
      Such a property has GAME_TWO_EXPR_LIST at top (see the
      parser). */
@@ -161,12 +164,12 @@ void Game_CheckGenReactivitySpec(PropGame_ptr prop, gameParams_ptr params)
                              &var);
 
     if (UStringMgr_find_string(USTRING_MGR,PLAYER_NAME_1) == PropGame_get_player(prop)) {
-      varList1 = cons(NODE_MGR,var, Nil);
+      varList1 = cons(nodemgr,var, Nil);
       varList2 = Nil;
     }
     else {
       varList1 = Nil;
-      varList2 = cons(NODE_MGR,var, Nil);
+      varList2 = cons(nodemgr,var, Nil);
     }
   }
 
@@ -221,6 +224,9 @@ void Game_CheckBuchiGameSpec(PropGame_ptr prop, gameParams_ptr params)
   node_ptr varList1 = Nil;
   node_ptr varList2 = Nil;
 
+  const NuSMVEnv_ptr env = EnvObject_get_environment(ENV_OBJECT(prop));
+  const NodeMgr_ptr nodemgr = NODE_MGR(NuSMVEnv_get_value(env, ENV_NODE_MGR));
+
   /* The given property must be a buchi game property. Such a
      property is a list of expressions (CONS at top) (see the
      parser). */
@@ -242,12 +248,12 @@ void Game_CheckBuchiGameSpec(PropGame_ptr prop, gameParams_ptr params)
                              &var);
 
     if (UStringMgr_find_string(USTRING_MGR,PLAYER_NAME_1) == PropGame_get_player(prop)) {
-      varList1 = cons(NODE_MGR,var, Nil);
+      varList1 = cons(nodemgr,var, Nil);
       varList2 = Nil;
     }
     else {
       varList1 = Nil;
-      varList2 = cons(NODE_MGR,var, Nil);
+      varList2 = cons(nodemgr,var, Nil);
     }
   }
 
@@ -571,6 +577,7 @@ static boolean game_compute_gen_reactivity(node_ptr specExp,
   BddEnc_ptr enc = BddFsm_get_bdd_encoding(BDD_FSM(fsm));
   DDMgr_ptr dd_manager = BddEnc_get_dd_manager(enc);
   const NuSMVEnv_ptr env = EnvObject_get_environment(ENV_OBJECT(dd_manager));
+  const NodeMgr_ptr nodemgr = NODE_MGR(NuSMVEnv_get_value(env, ENV_NODE_MGR));
   OptsHandler_ptr oh = OptsHandler_create();
 
   bdd_ptr init_1, init_2, invar_1, invar_2;
@@ -848,8 +855,8 @@ static boolean game_compute_gen_reactivity(node_ptr specExp,
           bdd_free(dd_manager, notAssumption);
         } /* for i = 0 ... */
 
-        xResults[j] = cons(NODE_MGR,(node_ptr)xArray, xResults[j]);
-        yResults[j] = cons(NODE_MGR,(node_ptr)bdd_dup(Y), yResults[j]);
+        xResults[j] = cons(nodemgr,(node_ptr)xArray, xResults[j]);
+        yResults[j] = cons(nodemgr,(node_ptr)bdd_dup(Y), yResults[j]);
 
         /* Note: if after the first iteration Y = 0, the second
            iteration is not executed. This is OK and the game is
@@ -880,11 +887,11 @@ static boolean game_compute_gen_reactivity(node_ptr specExp,
           /* create an copy of last elements in xResults and yResults.
              (These elements will be removed at the end)
           */
-          yResults[j] = cons(NODE_MGR,(node_ptr)(bdd_dup(Y)), yResults[j]);
+          yResults[j] = cons(nodemgr,(node_ptr)(bdd_dup(Y)), yResults[j]);
 
           newXArray = ALLOC(bdd_ptr, assumptionsN);
           for (i = 0; i < assumptionsN; ++i) newXArray[i] = bdd_dup(xArray[i]);
-          xResults[j] = cons(NODE_MGR,(node_ptr)newXArray, xResults[j]);
+          xResults[j] = cons(nodemgr,(node_ptr)newXArray, xResults[j]);
         }
 
         bdd_free(dd_manager, previousY);
@@ -1372,7 +1379,7 @@ static boolean game_compute_buchi_game(PropGame_ptr prop,
 
       /* free the previously remembered results and create a new one */
       game_free_list_of_bdd(dd_manager, yResults[j]);
-      yResults[j] = cons(NODE_MGR,(node_ptr)Y, Nil); /* BDD does not belong to
+      yResults[j] = cons(nodemgr,(node_ptr)Y, Nil); /* BDD does not belong to
                                                Y anymore */
 
       while (!isYFixpointReached) { /* --- Y least fix point loop */
@@ -1380,7 +1387,7 @@ static boolean game_compute_buchi_game(PropGame_ptr prop,
         Y = GameBddFsm_get_strong_backward_image(fsm, Y, player);
         bdd_or_accumulate(dd_manager, &Y, preImageZAndBuchi);
 
-        yResults[j] = cons(NODE_MGR,(node_ptr)Y, yResults[j]);
+        yResults[j] = cons(nodemgr,(node_ptr)Y, yResults[j]);
 
         if (previousY == Y) { /* fixpoint is reached */
           isYFixpointReached = true;

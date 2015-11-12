@@ -299,6 +299,7 @@ Game_RealizabilityStatus Game_UseStrongReachabilityAlgorithm(PropGame_ptr prop,
   BddEnc_ptr enc = BddFsm_get_bdd_encoding(BDD_FSM(fsm));
   DDMgr_ptr dd_manager = BddEnc_get_dd_manager(enc);
   const NuSMVEnv_ptr env = EnvObject_get_environment(ENV_OBJECT(dd_manager));
+  const NodeMgr_ptr nodemgr = NODE_MGR(NuSMVEnv_get_value(env, ENV_NODE_MGR));
   OptsHandler_ptr oh = OptsHandler_create();
 
   PROP_GAME_CHECK_INSTANCE(prop);
@@ -364,7 +365,7 @@ Game_RealizabilityStatus Game_UseStrongReachabilityAlgorithm(PropGame_ptr prop,
   }
 
   allReachStates = bdd_dup(originalTarget);
-  reachStateList = cons(NODE_MGR,(node_ptr)bdd_dup(originalTarget), Nil);
+  reachStateList = cons(nodemgr,(node_ptr)bdd_dup(originalTarget), Nil);
 
   /* check whether the target can be reached at the initial state */
   isTargetReached = GameBddFsm_can_player_satisfy(fsm, init_1, init_2,
@@ -434,7 +435,7 @@ Game_RealizabilityStatus Game_UseStrongReachabilityAlgorithm(PropGame_ptr prop,
     }
 
     /* add to the list of reach states sets */
-    reachStateList = cons(NODE_MGR,(node_ptr)bdd_dup(allReachStates), reachStateList);
+    reachStateList = cons(nodemgr,(node_ptr)bdd_dup(allReachStates), reachStateList);
     pathLength++;
 
     bdd_free(dd_manager, preImage);
@@ -482,7 +483,7 @@ Game_RealizabilityStatus Game_UseStrongReachabilityAlgorithm(PropGame_ptr prop,
         bdd_ptr not_prev = bdd_not(dd_manager, (bdd_ptr)car(cdr(iter)));
         bdd_ptr and = bdd_and(dd_manager, (bdd_ptr)car(iter), not_prev);
         bdd_free(dd_manager, not_prev);
-        diffReachStateList = cons(NODE_MGR,(node_ptr)and, diffReachStateList);
+        diffReachStateList = cons(nodemgr,(node_ptr)and, diffReachStateList);
       }
       diffReachStateList = reverse(diffReachStateList);
 

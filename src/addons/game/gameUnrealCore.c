@@ -1119,6 +1119,10 @@ static node_ptr game_create_new_param(Game_UnrealizableCore_Struct_ptr self,
                                       int kind,
                                       GamePlayer player)
 {
+
+    const NuSMVEnv_ptr env = EnvObject_get_environment(ENV_OBJECT(self));
+    const NodeMgr_ptr nodemgr = NODE_MGR(NuSMVEnv_get_value(env, ENV_NODE_MGR));
+
   if (player == PLAYER_1) ++(self->constraints_1_total_num);
   else ++(self->constraints_2_total_num);
 
@@ -1181,7 +1185,7 @@ static node_ptr game_create_new_param(Game_UnrealizableCore_Struct_ptr self,
 
   /* Wrap the expression into its high level kind. */
   node_ptr old_exp = find_assoc(self->parameter2expression, var);
-  old_exp = cons(NODE_MGR,new_node(nodemgr,kind, expr, Nil), old_exp);
+  old_exp = cons(nodemgr,new_node(nodemgr,kind, expr, Nil), old_exp);
   insert_assoc(self->parameter2expression, var, old_exp);
 
   if (player == PLAYER_1) ++(self->constraints_1_guarded_num);

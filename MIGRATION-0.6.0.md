@@ -72,6 +72,7 @@ Nitin Yadav - nitin.yadav@rmit.edu.au
 
     *   added a new file parser/input.l.1.55 with '#include "grammar.h"' 
     *   included this file (input.l.1.55) in parser/Makefile(.am and .in) after input.l.1.50
+    *   added 'src/parser/input.l.1.55' in CMakeList.txt
 
 12.Error: gameOpt.c : too few arguments to function ‘OptsHandler_register_option’
 
