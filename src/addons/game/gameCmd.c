@@ -145,9 +145,6 @@ static int CommandGameBuildBooleanModel ARGS((NuSMVEnv_ptr env,int argc, char **
 /* Variable declarations                                                     */
 /*---------------------------------------------------------------------------*/
 
-                                        EXTERN FILE* nusmv_stdout;
-EXTERN FILE* nusmv_stderr;
-
 /**Variable********************************************************************
 
   Synopsis    [ These are the generic commands, i.e., those that apply
@@ -412,7 +409,7 @@ NodeList_ptr Game_cmd_get_specific_commands()
 static int CommandReadRatFile(NuSMVEnv_ptr env,int argc, char** argv)
 {
 #if ! HAVE_LIBEXPAT
-    fprintf(nusmv_stderr,
+    fprintf(stderr,
             "The Expat XML library seems not to be avialable.\n"
                     "NuGaT cannot parse XML files without Expat.\n");
     return 1;
@@ -439,7 +436,7 @@ static int CommandReadRatFile(NuSMVEnv_ptr env,int argc, char** argv)
   if (argc != util_optind) goto CommandReadRatFile_return_usage;
 
   if (cmp_struct_get_read_model(cmps)) {
-    fprintf(nusmv_stderr,
+    fprintf(stderr,
             "A model appears to be already read from file: %s.\n",
             get_input_file(OptsHandler_create()));
     goto CommandReadRatFile_return_1;
@@ -450,7 +447,7 @@ static int CommandReadRatFile(NuSMVEnv_ptr env,int argc, char** argv)
   }
 
   if (get_input_file(OptsHandler_create()) == (char*) NULL) {
-    fprintf(nusmv_stderr,
+    fprintf(stderr,
             "Input file is (null). You must set the input file before.\n");
     goto CommandReadRatFile_return_1;
   }
@@ -458,10 +455,10 @@ static int CommandReadRatFile(NuSMVEnv_ptr env,int argc, char** argv)
   /* Parse the input file. */
 
   if (opt_verbose_level_gt(OptsHandler_create(), 0)) {
-    fprintf(nusmv_stderr,
+    fprintf(stderr,
             "Parsing RAT file \"%s\" ..... ",
             get_input_file(OptsHandler_create()));
-    fflush(nusmv_stderr);
+    fflush(stderr);
   }
 
   if (Game_RatFileToGame(get_input_file(OptsHandler_create()))) {
@@ -469,8 +466,8 @@ static int CommandReadRatFile(NuSMVEnv_ptr env,int argc, char** argv)
   }
 
   if (opt_verbose_level_gt(OptsHandler_create(), 0)) {
-    fprintf(nusmv_stderr, "done.\n");
-    fflush(nusmv_stderr);
+    fprintf(stderr, "done.\n");
+    fflush(stderr);
   }
 
   cmp_struct_set_read_model(cmps);
@@ -497,9 +494,9 @@ static int CommandReadRatFile(NuSMVEnv_ptr env,int argc, char** argv)
 
 static int UsageReadRatFile()
 {
-    fprintf(nusmv_stderr, "usage: read_rat_file [-h] [-i <file>]\n");
-    fprintf(nusmv_stderr, "   -h \t\tPrints the command usage.\n");
-    fprintf(nusmv_stderr, "   -i <file> \tReads the model from the specified "
+    fprintf(stderr, "usage: read_rat_file [-h] [-i <file>]\n");
+    fprintf(stderr, "   -h \t\tPrints the command usage.\n");
+    fprintf(stderr, "   -i <file> \tReads the model from the specified "
             "RATSY project file.\n");
     return(1);
 }
@@ -549,13 +546,13 @@ static int CommandGameFlattenHierarchy(NuSMVEnv_ptr env,int argc, char** argv)
     if (argc != util_optind) return UsageGameFlattenHierarchy();
 
     if (cmp_struct_get_read_model(cmps) == 0) {
-        fprintf(nusmv_stderr,
+        fprintf(stderr,
                 "A model must be read before. Use the \"read_model\" command.\n");
         return 1;
     }
 
     if (cmp_struct_get_flatten_hrc(cmps)) {
-        fprintf(nusmv_stderr, "The hierarchy has already been flattened.\n");
+        fprintf(stderr, "The hierarchy has already been flattened.\n");
         return 1;
     }
 
@@ -564,8 +561,8 @@ static int CommandGameFlattenHierarchy(NuSMVEnv_ptr env,int argc, char** argv)
 
 static int UsageGameFlattenHierarchy()
 {
-    fprintf(nusmv_stderr, "usage: flatten_hierarchy [-h]\n");
-    fprintf(nusmv_stderr, "   -h \t\tPrints the command usage\n");
+    fprintf(stderr, "usage: flatten_hierarchy [-h]\n");
+    fprintf(stderr, "   -h \t\tPrints the command usage\n");
     return 1;
 }
 
@@ -644,12 +641,12 @@ static int CommandGameEncodeVariables(NuSMVEnv_ptr env,int argc, char** argv)
     }
 
     /* pre-conditions: */
-    if (Compile_check_if_flattening_was_built(env,nusmv_stderr)) {
+    if (Compile_check_if_flattening_was_built(env,stderr)) {
         goto command_game_encode_variables_return_1;
     }
 
     if (cmp_struct_get_encode_variables(cmps)) {
-        fprintf(nusmv_stderr, "The variables appear to be already built.\n");
+        fprintf(stderr, "The variables appear to be already built.\n");
         goto command_game_encode_variables_return_1;
     }
 
@@ -669,9 +666,9 @@ static int CommandGameEncodeVariables(NuSMVEnv_ptr env,int argc, char** argv)
 
 static int UsageGameEncodeVariables()
 {
-    fprintf(nusmv_stderr, "usage: encode_variables [-h] [-i <file>]\n");
-    fprintf(nusmv_stderr, "   -h \t\tPrints the command usage.\n");
-    fprintf(nusmv_stderr, "   -i <file> \tReads variable ordering from file "
+    fprintf(stderr, "usage: encode_variables [-h] [-i <file>]\n");
+    fprintf(stderr, "   -h \t\tPrints the command usage.\n");
+    fprintf(stderr, "   -i <file> \tReads variable ordering from file "
             "<file>.\n");
     return 1;
 }
@@ -748,12 +745,12 @@ static int CommandGameBuildModel(NuSMVEnv_ptr env,int argc, char** argv)
     }
 
     /* pre-conditions: */
-    if (Compile_check_if_encoding_was_built(env,nusmv_stderr)) {
+    if (Compile_check_if_encoding_was_built(env,stderr)) {
         goto command_game_build_model_return_1;
     }
 
     if (!force_build && cmp_struct_get_build_model(cmps)) {
-        fprintf(nusmv_stderr,
+        fprintf(stderr,
                 "A model appears to be already built from file: %s.\n",
                 get_input_file(OptsHandler_create()));
         goto command_game_build_model_return_1;
@@ -765,7 +762,7 @@ static int CommandGameBuildModel(NuSMVEnv_ptr env,int argc, char** argv)
                 (TransType_from_string(partition_method) ==
                  get_partition_method(OptsHandler_create()))) {
                 if (cmp_struct_get_build_model(cmps)) {
-                    fprintf(nusmv_stderr,
+                    fprintf(stderr,
                             "A model for the chosen method has already been "
                                     "constructed.\n");
                     goto command_game_build_model_return_1;
@@ -774,10 +771,10 @@ static int CommandGameBuildModel(NuSMVEnv_ptr env,int argc, char** argv)
             set_partition_method(OptsHandler_create(),
                                  TransType_from_string(partition_method));
         } else {
-            fprintf(nusmv_stderr,
+            fprintf(stderr,
                     "The only possible values for \"-m\" option are:\n\t");
-            print_partition_method(nusmv_stderr);
-            fprintf(nusmv_stderr, "\n");
+            print_partition_method(stderr);
+            fprintf(stderr, "\n");
             goto command_game_build_model_return_1;
         }
     }
@@ -789,7 +786,7 @@ static int CommandGameBuildModel(NuSMVEnv_ptr env,int argc, char** argv)
     cmp_struct_set_build_model(cmps);
 
     if (opt_verbose_level_gt(OptsHandler_create(), 0)) {
-        fprintf(nusmv_stderr,
+        fprintf(stderr,
                 "\nThe model has been built from file %s.\n",
                 get_input_file(OptsHandler_create()));
     }
@@ -808,14 +805,14 @@ static int CommandGameBuildModel(NuSMVEnv_ptr env,int argc, char** argv)
 
 static int UsageGameBuildModel()
 {
-    fprintf(nusmv_stderr, "usage: build_model [-h] [-f] [-m Method]\n");
-    fprintf(nusmv_stderr, "   -h \t\tPrints the command usage\n");
-    fprintf(nusmv_stderr, "   -m Method \tUses \"Method\" as partitioning method, "
+    fprintf(stderr, "usage: build_model [-h] [-f] [-m Method]\n");
+    fprintf(stderr, "   -h \t\tPrints the command usage\n");
+    fprintf(stderr, "   -m Method \tUses \"Method\" as partitioning method, "
             "and set it as default method\n");
-    fprintf(nusmv_stderr, "\t\tto be used in the following image computations.\n");
-    fprintf(nusmv_stderr, "\t\tThe currently available methods are:\n\t\t");
-    print_partition_method(nusmv_stderr);
-    fprintf(nusmv_stderr, "\n   -f \t\tForces the model re-construction, even if "
+    fprintf(stderr, "\t\tto be used in the following image computations.\n");
+    fprintf(stderr, "\t\tThe currently available methods are:\n\t\t");
+    print_partition_method(stderr);
+    fprintf(stderr, "\n   -f \t\tForces the model re-construction, even if "
             "a model has already been built\n");
     return 1;
 }
@@ -862,10 +859,10 @@ static int CommandGameBuildFlatModel(NuSMVEnv_ptr env,int argc, char** argv)
     if (argc != util_optind) return(UsageGameBuildFlatModel());
 
     /* pre-conditions: */
-    if (Compile_check_if_flattening_was_built(env,nusmv_stderr)) return 1;
+    if (Compile_check_if_flattening_was_built(env,stderr)) return 1;
 
     if (cmp_struct_get_build_flat_model(cmps)) {
-        fprintf(nusmv_stderr,
+        fprintf(stderr,
                 "A model appears to be already built from file: %s.\n",
                 get_input_file(OptsHandler_create()));
         return 1;
@@ -875,7 +872,7 @@ static int CommandGameBuildFlatModel(NuSMVEnv_ptr env,int argc, char** argv)
     cmp_struct_set_build_flat_model(cmps);
 
     if (opt_verbose_level_gt(OptsHandler_create(), 0)) {
-        fprintf(nusmv_stderr,
+        fprintf(stderr,
                 "\nThe sexp model has been built from file %s.\n",
                 get_input_file(OptsHandler_create()));
     }
@@ -885,8 +882,8 @@ static int CommandGameBuildFlatModel(NuSMVEnv_ptr env,int argc, char** argv)
 
 static int UsageGameBuildFlatModel()
 {
-    fprintf(nusmv_stderr, "usage: build_flat_model [-h]\n");
-    fprintf(nusmv_stderr, "   -h \t\tPrints the command usage.\n");
+    fprintf(stderr, "usage: build_flat_model [-h]\n");
+    fprintf(stderr, "   -h \t\tPrints the command usage.\n");
     return 1;
 }
 
@@ -938,10 +935,10 @@ static int CommandGameBuildBooleanModel(NuSMVEnv_ptr env,int argc, char ** argv)
     if (argc != util_optind) return(UsageGameBuildBooleanModel());
 
     /* pre-conditions: */
-    if (Compile_check_if_encoding_was_built(env,nusmv_stderr)) return 1;
+    if (Compile_check_if_encoding_was_built(env,stderr)) return 1;
 
     if (cmp_struct_get_build_bool_model(cmps) && !forced) {
-        fprintf(nusmv_stderr,
+        fprintf(stderr,
                 "A model appears to be already built from file: %s.\n",
                 get_input_file(OptsHandler_create()));
         return 1;
@@ -954,7 +951,7 @@ static int CommandGameBuildBooleanModel(NuSMVEnv_ptr env,int argc, char ** argv)
     cmp_struct_set_build_bool_model(cmps);
 
     if (opt_verbose_level_gt(OptsHandler_create(), 0)) {
-        fprintf(nusmv_stderr,
+        fprintf(stderr,
                 "\nThe boolean sexp model has been built from file %s.\n",
                 get_input_file(OptsHandler_create()));
     }
@@ -964,9 +961,9 @@ static int CommandGameBuildBooleanModel(NuSMVEnv_ptr env,int argc, char ** argv)
 
 static int UsageGameBuildBooleanModel()
 {
-    fprintf(nusmv_stderr, "usage: build_boolean_model [-h][-f]\n");
-    fprintf(nusmv_stderr, "   -h \t\tPrints the command usage.\n");
-    fprintf(nusmv_stderr, "   -f \t\tForces the boolean model construction.\n");
+    fprintf(stderr, "usage: build_boolean_model [-h][-f]\n");
+    fprintf(stderr, "   -h \t\tPrints the command usage.\n");
+    fprintf(stderr, "   -f \t\tForces the boolean model construction.\n");
     return 1;
 }
 
@@ -1042,22 +1039,22 @@ static int CommandGameWriteModelFlat(NuSMVEnv_ptr env,int argc, char **argv)
         output_file = get_output_flatten_model_file(OptsHandler_create());
     }
     if (output_file == NIL(char)) {
-        ofileid = nusmv_stdout;
+        ofileid = stdout;
     } else {
         ofileid = fopen(output_file, "w");
         if (ofileid == NULL) {
-            fprintf(nusmv_stderr, "Unable to open file \"%s\".\n", output_file);
+            fprintf(stderr, "Unable to open file \"%s\".\n", output_file);
             goto command_game_write_model_flat_return_1;
         }
     }
 
     /* pre-conditions: */
-    if (Compile_check_if_flattening_was_built(env,nusmv_stderr)) {
+    if (Compile_check_if_flattening_was_built(env,stderr)) {
         goto command_game_write_model_flat_return_1;
     }
 
     if (opt_verbose_level_gt(OptsHandler_create(), 0)) {
-        fprintf(nusmv_stderr, "Writing flat model into file \"%s\"..",
+        fprintf(stderr, "Writing flat model into file \"%s\"..",
                 output_file == (char *)NULL ? "stdout" : output_file);
     }
 
@@ -1065,7 +1062,7 @@ static int CommandGameWriteModelFlat(NuSMVEnv_ptr env,int argc, char **argv)
             Game_CommandWriteFlatModel(ofileid);
 
             if (opt_verbose_level_gt(OptsHandler_create(), 0)) {
-                fprintf(nusmv_stderr, ".. done.\n");
+                fprintf(stderr, ".. done.\n");
             }
         }
     FAIL(errmgr) {
@@ -1073,21 +1070,21 @@ static int CommandGameWriteModelFlat(NuSMVEnv_ptr env,int argc, char **argv)
     }
     fflush(ofileid);
 
-    if (ofileid != nusmv_stdout) {
+    if (ofileid != stdout) {
         fclose(ofileid);
         if (bSpecifiedFilename) FREE(output_file);
     }
     return rv;
 
     command_game_write_model_flat_return_1:
-    if (ofileid != nusmv_stdout) {
+    if (ofileid != stdout) {
         fclose(ofileid);
         if (bSpecifiedFilename == TRUE) FREE(output_file);
     }
     return 1;
 
     command_game_write_model_flat_return_usage:
-    if (ofileid != nusmv_stdout) {
+    if (ofileid != stdout) {
         fclose(ofileid);
         if (bSpecifiedFilename == TRUE) FREE(output_file);
     }
@@ -1096,9 +1093,9 @@ static int CommandGameWriteModelFlat(NuSMVEnv_ptr env,int argc, char **argv)
 
 static int UsageGameWriteModelFlat(void)
 {
-    fprintf(nusmv_stderr, "usage: write_flat_model [-h] [-o filename]\n");
-    fprintf(nusmv_stderr, "  -h \t\tPrints the command usage.\n");
-    fprintf(nusmv_stderr, "  -o filename\tWrites output to \"filename\"\n");
+    fprintf(stderr, "usage: write_flat_model [-h] [-o filename]\n");
+    fprintf(stderr, "  -h \t\tPrints the command usage.\n");
+    fprintf(stderr, "  -o filename\tWrites output to \"filename\"\n");
     return 1;
 }
 
@@ -1192,18 +1189,18 @@ static int CommandGameWriteModelFlatBool(NuSMVEnv_ptr env,int argc, char** argv)
     }
 
     if (output_file == NIL(char)) {
-        ofileid = nusmv_stdout;
+        ofileid = stdout;
     } else {
         ofileid = fopen(output_file, "w");
         if (ofileid == NULL) {
-            fprintf(nusmv_stderr, "Unable to open file \"%s\".\n", output_file);
+            fprintf(stderr, "Unable to open file \"%s\".\n", output_file);
             if (bSpecifiedFilename == TRUE)  FREE(output_file);
             return 1;
         }
     }
 
-    if (Compile_check_if_bool_model_was_built(env,nusmv_stderr, true)) {
-        if (ofileid != nusmv_stdout) {
+    if (Compile_check_if_bool_model_was_built(env,stderr, true)) {
+        if (ofileid != stdout) {
             fclose(ofileid);
             if (bSpecifiedFilename == TRUE) FREE(output_file);
         }
@@ -1211,7 +1208,7 @@ static int CommandGameWriteModelFlatBool(NuSMVEnv_ptr env,int argc, char** argv)
     }
 
     if (opt_verbose_level_gt(OptsHandler_create(), 0)) {
-        fprintf(nusmv_stderr,
+        fprintf(stderr,
                 "Writing boolean model into file \"%s\"..",
                 output_file == (char *)NULL ? "stdout" : output_file);
     }
@@ -1220,14 +1217,14 @@ static int CommandGameWriteModelFlatBool(NuSMVEnv_ptr env,int argc, char** argv)
             Game_CommandWriteBooleanModel(ofileid);
 
             if (opt_verbose_level_gt(OptsHandler_create(), 0)) {
-                fprintf(nusmv_stderr, ".. done.\n");
+                fprintf(stderr, ".. done.\n");
             }
         } FAIL(errmgr) {
         rv = 1;
     }
     fflush(ofileid);
 
-    if (ofileid != nusmv_stdout) {
+    if (ofileid != stdout) {
         fclose(ofileid);
         if (bSpecifiedFilename == TRUE)  FREE(output_file);
     }
@@ -1236,9 +1233,9 @@ static int CommandGameWriteModelFlatBool(NuSMVEnv_ptr env,int argc, char** argv)
 
 static int UsageGameWriteModelFlatBool(void)
 {
-    fprintf(nusmv_stderr, "usage: write_boolean_model [-h] [-o filename]\n");
-    fprintf(nusmv_stderr, "  -h \t\tPrints the command usage.\n");
-    fprintf(nusmv_stderr, "  -o filename\tWrites output to \"filename\".\n");
+    fprintf(stderr, "usage: write_boolean_model [-h] [-o filename]\n");
+    fprintf(stderr, "  -h \t\tPrints the command usage.\n");
+    fprintf(stderr, "  -o filename\tWrites output to \"filename\".\n");
     return 1;
 }
 
@@ -1394,7 +1391,7 @@ static int CommandGameCheckProperty(NuSMVEnv_ptr env,int argc, char** argv)
     if (argc != util_optind) return UsageGameCheckProperty();
 
     /* command hierarchy control */
-    if (Compile_check_if_model_was_built(env,nusmv_stderr, false)) return 1;
+    if (Compile_check_if_model_was_built(env,stderr, false)) return 1;
 
     if (prop_no != -1) {
         CATCH(errmgr) {
@@ -1404,7 +1401,7 @@ static int CommandGameCheckProperty(NuSMVEnv_ptr env,int argc, char** argv)
                    has been built. */
                 prop = PropDb_get_prop_at_index(prop_db, prop_no);
                 if ((prop != PROP(NULL)) && (Prop_get_type(prop) == PropGame_LtlGame)) {
-                    if (Compile_check_if_bool_model_was_built(env,nusmv_stderr, false)) {
+                    if (Compile_check_if_bool_model_was_built(env,stderr, false)) {
                         return 1;
                     }
                 }
@@ -1438,7 +1435,7 @@ static int CommandGameCheckProperty(NuSMVEnv_ptr env,int argc, char** argv)
                         ((player_str == (string_ptr) NULL) ||
                          (PropGame_get_player(p) == player_str))) {
                         if ((Prop_get_type(PROP(p)) == PropGame_LtlGame) &&
-                            Compile_check_if_bool_model_was_built(env,nusmv_stderr, false)) {
+                            Compile_check_if_bool_model_was_built(env,stderr, false)) {
                             return 1;
                         }
                     }
@@ -1456,18 +1453,18 @@ static int CommandGameCheckProperty(NuSMVEnv_ptr env,int argc, char** argv)
 
 static int UsageGameCheckProperty()
 {
-    fprintf(nusmv_stderr, "usage: check_property [-h]\n" \
+    fprintf(stderr, "usage: check_property [-h]\n" \
       "       [[-n number] | [[-r 1|2] [-a | -A | -d | -D | -b | -l | -g]]]\n");
-    fprintf(nusmv_stderr, "  -h \t\t Prints the command usage.\n");
-    fprintf(nusmv_stderr, "  -n number \t Checks property number.\n");
-    fprintf(nusmv_stderr, "  -r 1|2 \t Checks properties of player 1|2.\n");
-    fprintf(nusmv_stderr, "  -a \t\t Checks REACHTARGET properties.\n");
-    fprintf(nusmv_stderr, "  -A \t\t Checks AVOIDTARGET properties.\n");
-    fprintf(nusmv_stderr, "  -d \t\t Checks REACHDEADLOCK properties.\n");
-    fprintf(nusmv_stderr, "  -D \t\t Checks AVOIDDEADLOCK properties.\n");
-    fprintf(nusmv_stderr, "  -b \t\t Checks BUCHIGAME properties.\n");
-    fprintf(nusmv_stderr, "  -l \t\t Checks LTLGAME properties.\n");
-    fprintf(nusmv_stderr, "  -g \t\t Checks GENREACTIVITY properties.\n");
+    fprintf(stderr, "  -h \t\t Prints the command usage.\n");
+    fprintf(stderr, "  -n number \t Checks property number.\n");
+    fprintf(stderr, "  -r 1|2 \t Checks properties of player 1|2.\n");
+    fprintf(stderr, "  -a \t\t Checks REACHTARGET properties.\n");
+    fprintf(stderr, "  -A \t\t Checks AVOIDTARGET properties.\n");
+    fprintf(stderr, "  -d \t\t Checks REACHDEADLOCK properties.\n");
+    fprintf(stderr, "  -D \t\t Checks AVOIDDEADLOCK properties.\n");
+    fprintf(stderr, "  -b \t\t Checks BUCHIGAME properties.\n");
+    fprintf(stderr, "  -l \t\t Checks LTLGAME properties.\n");
+    fprintf(stderr, "  -g \t\t Checks GENREACTIVITY properties.\n");
     return 1;
 }
 
@@ -1561,7 +1558,7 @@ static int CommandGameShowProperty(NuSMVEnv_ptr env,int argc, char** argv)
     int retval = 0;
     boolean print_props_num = false;
     char* outFileName = NIL(char);
-    FILE* old_nusmv_stdout = NULL;
+    FILE* old_stdout = NULL;
     int useMore = 0;
     Prop_Status status = Prop_NoStatus;
     int prop_no = -1;
@@ -1751,45 +1748,45 @@ static int CommandGameShowProperty(NuSMVEnv_ptr env,int argc, char** argv)
     }
 
     /* command hierarchy control */
-    if (Compile_check_if_flattening_was_built(env,nusmv_stderr)) {
+    if (Compile_check_if_flattening_was_built(env,stderr)) {
         if (outFileName != NIL(char)) FREE(outFileName);
         return 1;
     }
 
     if (useMore == 1) {
         nusmv_assert(outFileName == NIL(char));
-        old_nusmv_stdout = nusmv_stdout;
-        nusmv_stdout = CmdOpenPipe(env,useMore);
-        if (nusmv_stdout == NIL(FILE)) {
-            nusmv_stdout = old_nusmv_stdout;
+        old_stdout = stdout;
+        stdout = CmdOpenPipe(env,useMore);
+        if (stdout == NIL(FILE)) {
+            stdout = old_stdout;
             return(1);
         }
     }
     if (outFileName != NIL(char)) {
-        old_nusmv_stdout = nusmv_stdout;
-        nusmv_stdout = CmdOpenFile(env,outFileName);
-        if (nusmv_stdout == NIL(FILE)) {
-            nusmv_stdout = old_nusmv_stdout;
+        old_stdout = stdout;
+        stdout = CmdOpenFile(env,outFileName);
+        if (stdout == NIL(FILE)) {
+            stdout = old_stdout;
             FREE(outFileName);
             return(1);
         }
     }
 
     if (print_props_num) {
-        fprintf(nusmv_stdout, "Current number of stored properties: %d\n",
+        fprintf(stdout, "Current number of stored properties: %d\n",
                 PropDb_get_size(prop_db));
         if (useMore) {
-            CmdClosePipe(nusmv_stdout);
-            nusmv_stdout = old_nusmv_stdout;
+            CmdClosePipe(stdout);
+            stdout = old_stdout;
         }
         if (outFileName != NIL(char)) {
-            CmdCloseFile(nusmv_stdout);
-            nusmv_stdout = old_nusmv_stdout;
+            CmdCloseFile(stdout);
+            stdout = old_stdout;
             FREE(outFileName);
         }
         return 0;
     }
-    OStream_ptr ostream_ptr_nusmv_output = OStream_create(nusmv_stdout);
+    OStream_ptr ostream_ptr_nusmv_output = OStream_create(stdout);
     PropDb_print_list_header(prop_db, ostream_ptr_nusmv_output);
     if (prop_no != -1) {
         retval = PropDb_print_prop_at_index(prop_db,
@@ -1809,7 +1806,7 @@ static int CommandGameShowProperty(NuSMVEnv_ptr env,int argc, char** argv)
 
         CATCH(errmgr) {
                 PropDbGame_print_all_type_player_status(pdb,
-                                                        nusmv_stdout,
+                                                        stdout,
                                                         type,
                                                         player_str,
                                                         status);
@@ -1820,12 +1817,12 @@ static int CommandGameShowProperty(NuSMVEnv_ptr env,int argc, char** argv)
     }
 
     if (useMore) {
-        CmdClosePipe(nusmv_stdout);
-        nusmv_stdout = old_nusmv_stdout;
+        CmdClosePipe(stdout);
+        stdout = old_stdout;
     }
     if (outFileName != NIL(char)) {
-        CmdCloseFile(nusmv_stdout);
-        nusmv_stdout = old_nusmv_stdout;
+        CmdCloseFile(stdout);
+        stdout = old_stdout;
         FREE(outFileName);
     }
     return(retval);
@@ -1833,29 +1830,29 @@ static int CommandGameShowProperty(NuSMVEnv_ptr env,int argc, char** argv)
 
 static int UsageGameShowProperty()
 {
-    fprintf(nusmv_stderr,
+    fprintf(stderr,
             "usage: show_property [-h] [-s] [-m | -o output_file]\n" \
     "       [[-n number] |\n" \
     "        [[-u | -t | -f] [-r 1|2] [-a | -A | -d | -D | -b | -l | -g]]]\n");
-    fprintf(nusmv_stderr, "  -h \t\tPrints the command usage.\n");
-    fprintf(nusmv_stderr, "  -s \t\tPrints the number of stored properties.\n");
-    fprintf(nusmv_stderr,
+    fprintf(stderr, "  -h \t\tPrints the command usage.\n");
+    fprintf(stderr, "  -s \t\tPrints the number of stored properties.\n");
+    fprintf(stderr,
             "  -m \t\tPipes output through the program specified by the \"PAGER\"\n");
-    fprintf(nusmv_stderr,
+    fprintf(stderr,
             "     \t\tenvironment variable if defined, else through UNIX \"more\".\n");
-    fprintf(nusmv_stderr, "  -o file\tWrites the generated output to \"file\".\n");
-    fprintf(nusmv_stderr, "  -u \t\tPrints only unchecked properties.\n");
-    fprintf(nusmv_stderr,
+    fprintf(stderr, "  -o file\tWrites the generated output to \"file\".\n");
+    fprintf(stderr, "  -u \t\tPrints only unchecked properties.\n");
+    fprintf(stderr,
             "  -t \t\tPrints only those properties found to be true.\n");
-    fprintf(nusmv_stderr,
+    fprintf(stderr,
             "  -f \t\tPrints only those properties found to be false.\n");
-    fprintf(nusmv_stderr, "  -a \t\tPrints only REACHTARGET properties.\n");
-    fprintf(nusmv_stderr, "  -A \t\tPrints only AVOIDTARGET properties.\n");
-    fprintf(nusmv_stderr, "  -d \t\tPrints only REACHDEADLOCK properties.\n");
-    fprintf(nusmv_stderr, "  -D \t\tPrints only AVOIDDEADLOCK properties.\n");
-    fprintf(nusmv_stderr, "  -b \t\tPrints only BUCHIGAME properties.\n");
-    fprintf(nusmv_stderr, "  -l \t\tPrints only LTLGAME properties.\n");
-    fprintf(nusmv_stderr, "  -g \t\tPrints only GENREACTIVITY properties.\n");
+    fprintf(stderr, "  -a \t\tPrints only REACHTARGET properties.\n");
+    fprintf(stderr, "  -A \t\tPrints only AVOIDTARGET properties.\n");
+    fprintf(stderr, "  -d \t\tPrints only REACHDEADLOCK properties.\n");
+    fprintf(stderr, "  -D \t\tPrints only AVOIDDEADLOCK properties.\n");
+    fprintf(stderr, "  -b \t\tPrints only BUCHIGAME properties.\n");
+    fprintf(stderr, "  -l \t\tPrints only LTLGAME properties.\n");
+    fprintf(stderr, "  -g \t\tPrints only GENREACTIVITY properties.\n");
     return 1;
 }
 
@@ -1906,24 +1903,24 @@ static int CommandGamePrintUsage(NuSMVEnv_ptr env,int argc, char **argv)
     }
 
     /* Reporting of statistical information. */
-    fprintf(nusmv_stdout,
+    fprintf(stdout,
             "######################################################################\n");
-    util_print_cpu_stats(nusmv_stdout);
-    fprintf(nusmv_stdout,
+    util_print_cpu_stats(stdout);
+    fprintf(stdout,
             "######################################################################\n");
-    fprintf(nusmv_stdout,
+    fprintf(stdout,
             "BDD statistics\n");
-    fprintf(nusmv_stdout,
+    fprintf(stdout,
             "--------------------\n");
-    fprintf(nusmv_stdout,
+    fprintf(stdout,
             "BDD nodes allocated: %d\n",
             get_dd_nodes_allocated(dd_manager));
-    fprintf(nusmv_stdout,
+    fprintf(stdout,
             "--------------------\n");
 
     pdb = PROP_DB_GAME(prop_db);
     if (PropDbGame_master_get_game_bdd_fsm(pdb) != GAME_BDD_FSM(NULL)) {
-        GameBddFsm_print_info(PropDbGame_master_get_game_bdd_fsm(pdb), nusmv_stdout);
+        GameBddFsm_print_info(PropDbGame_master_get_game_bdd_fsm(pdb), stdout);
     }
 
     return 0;
@@ -1931,8 +1928,8 @@ static int CommandGamePrintUsage(NuSMVEnv_ptr env,int argc, char **argv)
 
 static int UsageGamePrintUsage()
 {
-    fprintf(nusmv_stderr, "usage: print_usage [-h]\n");
-    fprintf(nusmv_stderr, "   -h \t\tPrints the command usage.\n");
+    fprintf(stderr, "usage: print_usage [-h]\n");
+    fprintf(stderr, "   -h \t\tPrints the command usage.\n");
     return(1);
 }
 
@@ -1997,29 +1994,29 @@ static int CommandCheckReachTargetSpec(NuSMVEnv_ptr env,int argc, char **argv)
 
 static int UsageCheckReachTargetSpec()
 {
-    fprintf(nusmv_stderr,
+    fprintf(stderr,
             "usage: check_reach_target [-h] [-m | -o output-file] "
                     "[-n number]\n"
                     "       [-s] [-d] [-e] [-f strategy-file]\n");
-    fprintf(nusmv_stderr, "   -h \t\t\tPrints the command usage.\n");
-    fprintf(nusmv_stderr, "   -m \t\t\tPipes output through the program "
+    fprintf(stderr, "   -h \t\t\tPrints the command usage.\n");
+    fprintf(stderr, "   -m \t\t\tPipes output through the program "
             "specified\n");
-    fprintf(nusmv_stderr, "      \t\t\tby the \"PAGER\" environment variable "
+    fprintf(stderr, "      \t\t\tby the \"PAGER\" environment variable "
             "if defined,\n");
-    fprintf(nusmv_stderr, "      \t\t\telse through the UNIX command \"more\".\n");
-    fprintf(nusmv_stderr, "   -o output-file\tWrites the generated output to "
+    fprintf(stderr, "      \t\t\telse through the UNIX command \"more\".\n");
+    fprintf(stderr, "   -o output-file\tWrites the generated output to "
             "\"output-file\".\n");
-    fprintf(nusmv_stderr, "   -n number\t\tChecks the REACHTARGET specification "
+    fprintf(stderr, "   -n number\t\tChecks the REACHTARGET specification "
             "with index\n"
             "      \t\t\t\"number\".\n");
-    fprintf(nusmv_stderr, "   -s \t\t\tRequests strategy printing (default to "
+    fprintf(stderr, "   -s \t\t\tRequests strategy printing (default to "
             "stdout).\n");
-    fprintf(nusmv_stderr, "   -d \t\t\tRequests strategy printing, generate a DAG "
+    fprintf(stderr, "   -d \t\t\tRequests strategy printing, generate a DAG "
             "(implies -s).\n");
-    fprintf(nusmv_stderr, "   -e \t\t\tRequests strategy printing, generate an "
+    fprintf(stderr, "   -e \t\t\tRequests strategy printing, generate an "
             "easily readable\n"
             "      \t\t\toutput (implies -s).\n");
-    fprintf(nusmv_stderr, "   -f strategy-file\tWrites strategy to \"file\" "\
+    fprintf(stderr, "   -f strategy-file\tWrites strategy to \"file\" "\
           "(implies -s).\n");
     return 1;
 }
@@ -2089,32 +2086,32 @@ static int CommandCheckAvoidTargetSpec(NuSMVEnv_ptr env,int argc, char **argv)
 
 static int UsageCheckAvoidTargetSpec()
 {
-    fprintf(nusmv_stderr,
+    fprintf(stderr,
             "usage: check_avoid_target [-h] [-m | -o output-file] "
                     "[-n number] [-a algorithm]\n"
                     "       [-s] [-d] [-e] [-f strategy-file]\n");
-    fprintf(nusmv_stderr, "   -h \t\t\tPrints the command usage.\n");
-    fprintf(nusmv_stderr, "   -m \t\t\tPipes output through the program "
+    fprintf(stderr, "   -h \t\t\tPrints the command usage.\n");
+    fprintf(stderr, "   -m \t\t\tPipes output through the program "
             "specified\n");
-    fprintf(nusmv_stderr, "      \t\t\tby the \"PAGER\" environment variable "
+    fprintf(stderr, "      \t\t\tby the \"PAGER\" environment variable "
             "if defined,\n");
-    fprintf(nusmv_stderr, "      \t\t\telse through the UNIX command \"more\".\n");
-    fprintf(nusmv_stderr, "   -o output-file\tWrites the generated output to "
+    fprintf(stderr, "      \t\t\telse through the UNIX command \"more\".\n");
+    fprintf(stderr, "   -o output-file\tWrites the generated output to "
             "\"output-file\".\n");
-    fprintf(nusmv_stderr, "   -n number\t\tChecks the AVOIDTARGET specification "
+    fprintf(stderr, "   -n number\t\tChecks the AVOIDTARGET specification "
             "with index\n"
             "      \t\t\t\"number\".\n");
-    fprintf(nusmv_stderr, "   -a algorithm\t\tUses algorithm \"algorithm\". "
+    fprintf(stderr, "   -a algorithm\t\tUses algorithm \"algorithm\". "
             "Available algorithms\n"
             "      \t\t\tare: default.\n");
-    fprintf(nusmv_stderr, "   -s \t\t\tRequests strategy printing (default to "
+    fprintf(stderr, "   -s \t\t\tRequests strategy printing (default to "
             "stdout).\n");
-    fprintf(nusmv_stderr, "   -d \t\t\tRequests strategy printing, generate a DAG "
+    fprintf(stderr, "   -d \t\t\tRequests strategy printing, generate a DAG "
             "(implies -s).\n");
-    fprintf(nusmv_stderr, "   -e \t\t\tRequests strategy printing, generate an "
+    fprintf(stderr, "   -e \t\t\tRequests strategy printing, generate an "
             "easily readable\n"
             "      \t\t\toutput (implies -s).\n");
-    fprintf(nusmv_stderr, "   -f strategy-file\tWrites strategy to \"file\" "\
+    fprintf(stderr, "   -f strategy-file\tWrites strategy to \"file\" "\
           "(implies -s).\n");
     return 1;
 }
@@ -2180,29 +2177,29 @@ static int CommandCheckReachDeadlockSpec(NuSMVEnv_ptr env,int argc, char **argv)
 
 static int UsageCheckReachDeadlockSpec()
 {
-    fprintf(nusmv_stderr,
+    fprintf(stderr,
             "usage: check_reach_deadlock [-h] [-m | -o output-file] "
                     "[-n number]\n"
                     "       [-s] [-d] [-e] [-f strategy-file]\n");
-    fprintf(nusmv_stderr, "   -h \t\t\tPrints the command usage.\n");
-    fprintf(nusmv_stderr, "   -m \t\t\tPipes output through the program "
+    fprintf(stderr, "   -h \t\t\tPrints the command usage.\n");
+    fprintf(stderr, "   -m \t\t\tPipes output through the program "
             "specified\n");
-    fprintf(nusmv_stderr, "      \t\t\tby the \"PAGER\" environment variable "
+    fprintf(stderr, "      \t\t\tby the \"PAGER\" environment variable "
             "if defined,\n");
-    fprintf(nusmv_stderr, "      \t\t\telse through the UNIX command \"more\".\n");
-    fprintf(nusmv_stderr, "   -o output-file\tWrites the generated output to "
+    fprintf(stderr, "      \t\t\telse through the UNIX command \"more\".\n");
+    fprintf(stderr, "   -o output-file\tWrites the generated output to "
             "\"output-file\".\n");
-    fprintf(nusmv_stderr, "   -n number\t\tChecks the REACHDEADLOCK specification "
+    fprintf(stderr, "   -n number\t\tChecks the REACHDEADLOCK specification "
             "with index\n"
             "      \t\t\t\"number\".\n");
-    fprintf(nusmv_stderr, "   -s \t\t\tRequests strategy printing (default to "
+    fprintf(stderr, "   -s \t\t\tRequests strategy printing (default to "
             "stdout).\n");
-    fprintf(nusmv_stderr, "   -d \t\t\tRequests strategy printing, generate a DAG "
+    fprintf(stderr, "   -d \t\t\tRequests strategy printing, generate a DAG "
             "(implies -s).\n");
-    fprintf(nusmv_stderr, "   -e \t\t\tRequests strategy printing, generate an "
+    fprintf(stderr, "   -e \t\t\tRequests strategy printing, generate an "
             "easily readable\n"
             "      \t\t\toutput (implies -s).\n");
-    fprintf(nusmv_stderr, "   -f strategy-file\tWrites strategy to \"file\" "\
+    fprintf(stderr, "   -f strategy-file\tWrites strategy to \"file\" "\
           "(implies -s).\n");
     return 1;
 }
@@ -2268,29 +2265,29 @@ static int CommandCheckAvoidDeadlockSpec(NuSMVEnv_ptr env,int argc, char **argv)
 
 static int UsageCheckAvoidDeadlockSpec()
 {
-    fprintf(nusmv_stderr,
+    fprintf(stderr,
             "usage: check_avoid_deadlock [-h] [-m | -o output-file] "
                     "[-n number]\n"
                     "       [-s] [-d] [-e] [-f strategy-file]\n");
-    fprintf(nusmv_stderr, "   -h \t\t\tPrints the command usage.\n");
-    fprintf(nusmv_stderr, "   -m \t\t\tPipes output through the program "
+    fprintf(stderr, "   -h \t\t\tPrints the command usage.\n");
+    fprintf(stderr, "   -m \t\t\tPipes output through the program "
             "specified\n");
-    fprintf(nusmv_stderr, "      \t\t\tby the \"PAGER\" environment variable "
+    fprintf(stderr, "      \t\t\tby the \"PAGER\" environment variable "
             "if defined,\n");
-    fprintf(nusmv_stderr, "      \t\t\telse through the UNIX command \"more\".\n");
-    fprintf(nusmv_stderr, "   -o output-file\tWrites the generated output to "
+    fprintf(stderr, "      \t\t\telse through the UNIX command \"more\".\n");
+    fprintf(stderr, "   -o output-file\tWrites the generated output to "
             "\"output-file\".\n");
-    fprintf(nusmv_stderr, "   -n number\t\tChecks the AVOIDDEADLOCK specification "
+    fprintf(stderr, "   -n number\t\tChecks the AVOIDDEADLOCK specification "
             "with index\n"
             "      \t\t\t\"number\".\n");
-    fprintf(nusmv_stderr, "   -s \t\t\tRequests strategy printing (default to "
+    fprintf(stderr, "   -s \t\t\tRequests strategy printing (default to "
             "stdout).\n");
-    fprintf(nusmv_stderr, "   -d \t\t\tRequests strategy printing, generate a DAG "
+    fprintf(stderr, "   -d \t\t\tRequests strategy printing, generate a DAG "
             "(implies -s).\n");
-    fprintf(nusmv_stderr, "   -e \t\t\tRequests strategy printing, generate an "
+    fprintf(stderr, "   -e \t\t\tRequests strategy printing, generate an "
             "easily readable\n"
             "      \t\t\toutput (implies -s).\n");
-    fprintf(nusmv_stderr, "   -f strategy-file\tWrites strategy to \"file\" "\
+    fprintf(stderr, "   -f strategy-file\tWrites strategy to \"file\" "\
           "(implies -s).\n");
     return 1;
 }
@@ -2356,29 +2353,29 @@ static int CommandCheckBuchiGameSpec(NuSMVEnv_ptr env,int argc, char **argv)
 
 static int UsageCheckBuchiGameSpec()
 {
-    fprintf(nusmv_stderr,
+    fprintf(stderr,
             "usage: check_buchi_game [-h] [-m | -o output-file] "
                     "[-n number]\n"
                     "       [-s] [-d] [-e] [-f strategy-file]\n");
-    fprintf(nusmv_stderr, "   -h \t\t\tPrints the command usage.\n");
-    fprintf(nusmv_stderr, "   -m \t\t\tPipes output through the program "
+    fprintf(stderr, "   -h \t\t\tPrints the command usage.\n");
+    fprintf(stderr, "   -m \t\t\tPipes output through the program "
             "specified\n");
-    fprintf(nusmv_stderr, "      \t\t\tby the \"PAGER\" environment variable "
+    fprintf(stderr, "      \t\t\tby the \"PAGER\" environment variable "
             "if defined,\n");
-    fprintf(nusmv_stderr, "      \t\t\telse through the UNIX command \"more\".\n");
-    fprintf(nusmv_stderr, "   -o output-file\tWrites the generated output to "
+    fprintf(stderr, "      \t\t\telse through the UNIX command \"more\".\n");
+    fprintf(stderr, "   -o output-file\tWrites the generated output to "
             "\"output-file\".\n");
-    fprintf(nusmv_stderr, "   -n number\t\tChecks the BUCHIGAME specification "
+    fprintf(stderr, "   -n number\t\tChecks the BUCHIGAME specification "
             "with index\n"
             "      \t\t\t\"number\".\n");
-    fprintf(nusmv_stderr, "   -s \t\t\tRequests strategy printing (default to "
+    fprintf(stderr, "   -s \t\t\tRequests strategy printing (default to "
             "stdout).\n");
-    fprintf(nusmv_stderr, "   -d \t\t\tRequests strategy printing, generate a DAG "
+    fprintf(stderr, "   -d \t\t\tRequests strategy printing, generate a DAG "
             "(implies -s).\n");
-    fprintf(nusmv_stderr, "   -e \t\t\tRequests strategy printing, generate an "
+    fprintf(stderr, "   -e \t\t\tRequests strategy printing, generate an "
             "easily readable\n"
             "      \t\t\toutput (implies -s).\n");
-    fprintf(nusmv_stderr, "   -f strategy-file\tWrites strategy to \"file\" "\
+    fprintf(stderr, "   -f strategy-file\tWrites strategy to \"file\" "\
           "(implies -s).\n");
     return 1;
 }
@@ -2444,29 +2441,29 @@ static int CommandCheckGenReactivitySpec(NuSMVEnv_ptr env,int argc, char **argv)
 
 static int UsageCheckGenReactivitySpec()
 {
-    fprintf(nusmv_stderr,
+    fprintf(stderr,
             "usage: check_gen_reactivity [-h] [-m | -o output-file] "
                     "[-n number]\n"
                     "       [-s] [-d] [-e] [-f strategy-file]\n");
-    fprintf(nusmv_stderr, "   -h \t\t\tPrints the command usage.\n");
-    fprintf(nusmv_stderr, "   -m \t\t\tPipes output through the program "
+    fprintf(stderr, "   -h \t\t\tPrints the command usage.\n");
+    fprintf(stderr, "   -m \t\t\tPipes output through the program "
             "specified\n");
-    fprintf(nusmv_stderr, "      \t\t\tby the \"PAGER\" environment variable "
+    fprintf(stderr, "      \t\t\tby the \"PAGER\" environment variable "
             "if defined,\n");
-    fprintf(nusmv_stderr, "      \t\t\telse through the UNIX command \"more\".\n");
-    fprintf(nusmv_stderr, "   -o output-file\tWrites the generated output to "
+    fprintf(stderr, "      \t\t\telse through the UNIX command \"more\".\n");
+    fprintf(stderr, "   -o output-file\tWrites the generated output to "
             "\"output-file\".\n");
-    fprintf(nusmv_stderr, "   -n number\t\tChecks the GENREACTIVITY specification "
+    fprintf(stderr, "   -n number\t\tChecks the GENREACTIVITY specification "
             "with index\n"
             "      \t\t\t\"number\".\n");
-    fprintf(nusmv_stderr, "   -s \t\t\tRequests strategy printing (default to "
+    fprintf(stderr, "   -s \t\t\tRequests strategy printing (default to "
             "stdout).\n");
-    fprintf(nusmv_stderr, "   -d \t\t\tRequests strategy printing, generate a DAG "
+    fprintf(stderr, "   -d \t\t\tRequests strategy printing, generate a DAG "
             "(implies -s).\n");
-    fprintf(nusmv_stderr, "   -e \t\t\tRequests strategy printing, generate an "
+    fprintf(stderr, "   -e \t\t\tRequests strategy printing, generate an "
             "easily readable\n"
             "      \t\t\toutput (implies -s).\n");
-    fprintf(nusmv_stderr, "   -f strategy-file\tWrites strategy to \"file\" "\
+    fprintf(stderr, "   -f strategy-file\tWrites strategy to \"file\" "\
           "(implies -s).\n");
     return 1;
 }
@@ -2497,7 +2494,7 @@ static int game_invoke_game_command(NuSMVEnv_ptr env,int argc, char **argv, Prop
     int strategy_printout_as_dag = 0;
     char* dbgFileName = NIL(char);
     char* strategyFileName = NIL(char);
-    FILE* old_nusmv_stdout = (FILE*) NULL;
+    FILE* old_stdout = (FILE*) NULL;
     FILE* strategy_stream =(FILE*) NULL;
     char* algorithm = NIL(char);
     PropDb_ptr prop_db  = PROP_DB(NuSMVEnv_get_value(env, ENV_PROP_DB));
@@ -2562,7 +2559,7 @@ static int game_invoke_game_command(NuSMVEnv_ptr env,int argc, char **argv, Prop
                 if (dbgFileName != NIL(char)) goto game_invoke_game_command_return_usage;
                 if (useMore == 1) goto game_invoke_game_command_return_usage;
                 dbgFileName = util_strsav(util_optarg);
-                fprintf(nusmv_stdout, "Output to file: %s\n", dbgFileName);
+                fprintf(stdout, "Output to file: %s\n", dbgFileName);
                 break;
 
             case 'n':
@@ -2624,26 +2621,26 @@ static int game_invoke_game_command(NuSMVEnv_ptr env,int argc, char **argv, Prop
        game model has been read. If this statement becomes false at some
        point, then insert a check for having read a model here. */
 
-    if (Compile_check_if_encoding_was_built(env,nusmv_stderr)) {
+    if (Compile_check_if_encoding_was_built(env,stderr)) {
         goto game_invoke_game_command_return_1;
     }
 
-    if (Compile_check_if_model_was_built(env,nusmv_stderr, false)) {
+    if (Compile_check_if_model_was_built(env,stderr, false)) {
         goto game_invoke_game_command_return_1;
     }
 
     if (useMore) {
-        old_nusmv_stdout = nusmv_stdout;
-        nusmv_stdout = CmdOpenPipe(env,useMore);
-        if (nusmv_stdout == (FILE*) NULL) {
+        old_stdout = stdout;
+        stdout = CmdOpenPipe(env,useMore);
+        if (stdout == (FILE*) NULL) {
             goto game_invoke_game_command_return_1;
         }
     }
 
     if (dbgFileName != NIL(char)) {
-        old_nusmv_stdout = nusmv_stdout;
-        nusmv_stdout = CmdOpenFile(env,dbgFileName);
-        if (nusmv_stdout == (FILE*) NULL) {
+        old_stdout = stdout;
+        stdout = CmdOpenFile(env,dbgFileName);
+        if (stdout == (FILE*) NULL) {
             goto game_invoke_game_command_return_1;
         }
     }
@@ -2656,7 +2653,7 @@ static int game_invoke_game_command(NuSMVEnv_ptr env,int argc, char **argv, Prop
     }
 
     if (strategy_printout) {
-        fprintf(nusmv_stdout,
+        fprintf(stdout,
                 "%s strategy printout enabled (out -> %s, indentation is %s)\n",
                 (strategy_printout_as_dag ? "dag" : "flat"),
                 (NIL(char) != strategyFileName ? strategyFileName : "<stdout>"),
@@ -2735,12 +2732,12 @@ static int game_invoke_game_command(NuSMVEnv_ptr env,int argc, char **argv, Prop
 
     game_invoke_game_command_cleanup_and_return:
     if (useMore) {
-        if (nusmv_stdout != (FILE*) NULL) CmdClosePipe(nusmv_stdout);
-        nusmv_stdout = old_nusmv_stdout;
+        if (stdout != (FILE*) NULL) CmdClosePipe(stdout);
+        stdout = old_stdout;
     }
     if (dbgFileName != NIL(char)) {
-        if (nusmv_stdout != (FILE*) NULL) CmdCloseFile(nusmv_stdout);
-        nusmv_stdout = old_nusmv_stdout;
+        if (stdout != (FILE*) NULL) CmdCloseFile(stdout);
+        stdout = old_stdout;
         FREE(dbgFileName);
     }
     if (algorithm != NIL(char)) {
@@ -2869,7 +2866,7 @@ static int CommandCheckLtlGameSpecSF07(NuSMVEnv_ptr env,int argc, char **argv)
     int strategy_printout_as_dag = 0;
     char* dbgFileName = NIL(char);
     char* strategyFileName = NIL(char);
-    FILE* old_nusmv_stdout = (FILE*) NULL;
+    FILE* old_stdout = (FILE*) NULL;
     FILE* strategy_stream =(FILE*) NULL;
     int kmin = -1;
     int kmax = -1;
@@ -2894,7 +2891,7 @@ static int CommandCheckLtlGameSpecSF07(NuSMVEnv_ptr env,int argc, char **argv)
             case 'o':
                 if (useMore == 1) { goto CommandCheckLtlGameSpecSF07_return_usage; }
                 dbgFileName = util_strsav(util_optarg);
-                fprintf(nusmv_stdout, "Output to file: %s\n", dbgFileName);
+                fprintf(stdout, "Output to file: %s\n", dbgFileName);
                 break;
             case 'n':
                 if (prop_no != -1) { goto CommandCheckLtlGameSpecSF07_return_usage; }
@@ -2981,40 +2978,40 @@ static int CommandCheckLtlGameSpecSF07(NuSMVEnv_ptr env,int argc, char **argv)
        game model has been read. If this statement becomes false at some
        point, then insert a check for having read a model here. */
 
-    if (Compile_check_if_encoding_was_built(env,nusmv_stderr)) {
+    if (Compile_check_if_encoding_was_built(env,stderr)) {
         goto CommandCheckLtlGameSpecSF07_return_1;
     }
 
-    if (Compile_check_if_model_was_built(env,nusmv_stderr, false)) {
+    if (Compile_check_if_model_was_built(env,stderr, false)) {
         goto CommandCheckLtlGameSpecSF07_return_1;
     }
 
-    if (Compile_check_if_bool_model_was_built(env,nusmv_stderr, false)) {
+    if (Compile_check_if_bool_model_was_built(env,stderr, false)) {
         goto CommandCheckLtlGameSpecSF07_return_1;
     }
 
     if (opt_game_game_initial_condition(OptsHandler_create()) != 'N') {
-        fprintf(nusmv_stderr,
+        fprintf(stderr,
                 "Command check_ltlgame_sf07 only supports \'N\' as initial game "
                         "condition.\n");
     }
 
     if (useMore) {
-        old_nusmv_stdout = nusmv_stdout;
-        nusmv_stdout = CmdOpenPipe(env,useMore);
-        if (nusmv_stdout==(FILE*) NULL) {
-            nusmv_stdout=old_nusmv_stdout;
-            old_nusmv_stdout = (FILE*) NULL;
+        old_stdout = stdout;
+        stdout = CmdOpenPipe(env,useMore);
+        if (stdout==(FILE*) NULL) {
+            stdout=old_stdout;
+            old_stdout = (FILE*) NULL;
             goto CommandCheckLtlGameSpecSF07_return_1;
         }
     }
 
     if (dbgFileName != NIL(char)) {
-        old_nusmv_stdout = nusmv_stdout;
-        nusmv_stdout = CmdOpenFile(env,dbgFileName);
-        if (nusmv_stdout==(FILE*) NULL) {
-            nusmv_stdout = old_nusmv_stdout;
-            old_nusmv_stdout = (FILE*) NULL;
+        old_stdout = stdout;
+        stdout = CmdOpenFile(env,dbgFileName);
+        if (stdout==(FILE*) NULL) {
+            stdout = old_stdout;
+            old_stdout = (FILE*) NULL;
             goto CommandCheckLtlGameSpecSF07_return_1;
         }
     }
@@ -3034,7 +3031,7 @@ static int CommandCheckLtlGameSpecSF07(NuSMVEnv_ptr env,int argc, char **argv)
 
     if (strategy_printout) {
         fprintf(
-                nusmv_stdout,
+                stdout,
                 "%s strategy printout enabled (out -> %s, indentation is %s)\n",
 
                 strategy_printout_as_dag
@@ -3140,15 +3137,15 @@ static int CommandCheckLtlGameSpecSF07(NuSMVEnv_ptr env,int argc, char **argv)
         FREE(strategyFileName);
     }
     if (useMore) {
-        if (old_nusmv_stdout != (FILE*) NULL) {
-            CmdClosePipe(nusmv_stdout);
-            nusmv_stdout = old_nusmv_stdout;
+        if (old_stdout != (FILE*) NULL) {
+            CmdClosePipe(stdout);
+            stdout = old_stdout;
         }
     }
     if (dbgFileName != NIL(char)) {
-        if (old_nusmv_stdout != (FILE*) NULL) {
-            CmdCloseFile(nusmv_stdout);
-            nusmv_stdout = old_nusmv_stdout;
+        if (old_stdout != (FILE*) NULL) {
+            CmdCloseFile(stdout);
+            stdout = old_stdout;
         }
         FREE(dbgFileName);
     }
@@ -3161,39 +3158,39 @@ static int CommandCheckLtlGameSpecSF07(NuSMVEnv_ptr env,int argc, char **argv)
 
 static int UsageCheckLtlGameSpecSF07()
 {
-    fprintf(nusmv_stderr,
+    fprintf(stderr,
             "usage: check_ltlgame_sf07 [-h] [-m | -o file] [-n number] [-s]\n");
-    fprintf(nusmv_stderr,
+    fprintf(stderr,
             "                          [-f strategy-file] [-d] [-e]\n");
-    fprintf(nusmv_stderr,
+    fprintf(stderr,
             "                          [-k number] [-K number] [-w p|a|b|1|2]\n");
-    fprintf(nusmv_stderr, "   -h \t\t\tPrints the command usage.\n");
-    fprintf(nusmv_stderr,
+    fprintf(stderr, "   -h \t\t\tPrints the command usage.\n");
+    fprintf(stderr,
             "   -m \t\t\tPipes output through the program specified\n");
-    fprintf(nusmv_stderr,
+    fprintf(stderr,
             "      \t\t\tby the \"PAGER\" environment variable if defined,\n");
-    fprintf(nusmv_stderr, "      \t\t\telse through the UNIX command \"more\".\n");
-    fprintf(nusmv_stderr,
+    fprintf(stderr, "      \t\t\telse through the UNIX command \"more\".\n");
+    fprintf(stderr,
             "   -o file\t\tWrites the generated output to \"file\".\n");
-    fprintf(nusmv_stderr,
+    fprintf(stderr,
             "   -n number\t\tChecks LTLGAME specification with the given\n");
-    fprintf(nusmv_stderr, "      \t\t\tindex number.\n");
-    fprintf(nusmv_stderr,
+    fprintf(stderr, "      \t\t\tindex number.\n");
+    fprintf(stderr,
             "   -s \t\t\tRequires strategy printout (default to stdout).\n");
-    fprintf(nusmv_stderr,
+    fprintf(stderr,
             "   -f file\t\tWrites strategy printout to \"file\" (implies -s).\n");
-    fprintf(nusmv_stderr,
+    fprintf(stderr,
             "   -d \t\t\tRequires strategy printout, generate a DAG printout.\n");
-    fprintf(nusmv_stderr, "      \t\t\t(implies -s)\n");
-    fprintf(nusmv_stderr,
+    fprintf(stderr, "      \t\t\t(implies -s)\n");
+    fprintf(stderr,
             "   -e \t\t\tRequires strategy printout, generate an easy readable\n");
-    fprintf(nusmv_stderr, "      \t\t\tprintout. (implies -s)\n");
-    fprintf(nusmv_stderr, "   -k \t\t\tStart value for k (default 0).\n");
-    fprintf(nusmv_stderr, "   -K \t\t\tEnd value for k (default 20).\n");
-    fprintf(nusmv_stderr,
+    fprintf(stderr, "      \t\t\tprintout. (implies -s)\n");
+    fprintf(stderr, "   -k \t\t\tStart value for k (default 0).\n");
+    fprintf(stderr, "   -K \t\t\tEnd value for k (default 20).\n");
+    fprintf(stderr,
             "   -w \t\t\tWhom games are played for: (p)rotagonist, "
                     "(a)ntagonist,\n");
-    fprintf(nusmv_stderr,
+    fprintf(stderr,
             "      \t\t\t(b)oth, player (1), or player (2). Default: b.\n");
 
     return 1;
@@ -3302,7 +3299,7 @@ static int CommandExtractUnrealizableCore(NuSMVEnv_ptr env,int argc, char **argv
     int c;
     int useMore = 0;
     char* dbgFileName = NIL(char);
-    FILE* old_nusmv_stdout = (FILE*) NULL;
+    FILE* old_stdout = (FILE*) NULL;
     int prop_no = -1;
     Game_UnrealizableCore_Algorithm algo =
             GAME_UNREALIZABLE_CORE_ALGORITHM_INVALID;
@@ -3336,7 +3333,7 @@ static int CommandExtractUnrealizableCore(NuSMVEnv_ptr env,int argc, char **argv
             case 'o':
                 if (useMore == 1) { goto CommandExtractUnrealizableCore_return_usage; }
                 dbgFileName = util_strsav(util_optarg);
-                fprintf(nusmv_stdout, "Output to file: %s\n", dbgFileName);
+                fprintf(stdout, "Output to file: %s\n", dbgFileName);
                 break;
             case 'n':
                 if (prop_no != -1) { goto CommandExtractUnrealizableCore_return_usage; }
@@ -3475,30 +3472,30 @@ static int CommandExtractUnrealizableCore(NuSMVEnv_ptr env,int argc, char **argv
        game model has been read. If this statement becomes false at some
        point, then insert a check for having read a model here. */
 
-    if (Compile_check_if_encoding_was_built(env,nusmv_stderr)) {
+    if (Compile_check_if_encoding_was_built(env,stderr)) {
         goto CommandExtractUnrealizableCore_return_1;
     }
 
-    if (Compile_check_if_model_was_built(env,nusmv_stderr, false)) {
+    if (Compile_check_if_model_was_built(env,stderr, false)) {
         goto CommandExtractUnrealizableCore_return_1;
     }
 
     if (useMore) {
-        old_nusmv_stdout = nusmv_stdout;
-        nusmv_stdout = CmdOpenPipe(env,useMore);
-        if (nusmv_stdout==(FILE*) NULL) {
-            nusmv_stdout=old_nusmv_stdout;
-            old_nusmv_stdout = (FILE*) NULL;
+        old_stdout = stdout;
+        stdout = CmdOpenPipe(env,useMore);
+        if (stdout==(FILE*) NULL) {
+            stdout=old_stdout;
+            old_stdout = (FILE*) NULL;
             goto CommandExtractUnrealizableCore_return_1;
         }
     }
 
     if (dbgFileName != NIL(char)) {
-        old_nusmv_stdout = nusmv_stdout;
-        nusmv_stdout = CmdOpenFile(env,dbgFileName);
-        if (nusmv_stdout==(FILE*) NULL) {
-            nusmv_stdout = old_nusmv_stdout;
-            old_nusmv_stdout = (FILE*) NULL;
+        old_stdout = stdout;
+        stdout = CmdOpenFile(env,dbgFileName);
+        if (stdout==(FILE*) NULL) {
+            stdout = old_stdout;
+            old_stdout = (FILE*) NULL;
             goto CommandExtractUnrealizableCore_return_1;
         }
     }
@@ -3513,7 +3510,7 @@ static int CommandExtractUnrealizableCore(NuSMVEnv_ptr env,int argc, char **argv
 
                 PROP_CHECK_INSTANCE(p);
                 if (Prop_get_type(p) != PropGame_GenReactivity) {
-                    fprintf(nusmv_stderr,
+                    fprintf(stderr,
                             "Error: currently unrealizable core extraction is only "
                                     "available for GENREACTIVITY\n"
                                     "properties.\n");
@@ -3544,7 +3541,7 @@ static int CommandExtractUnrealizableCore(NuSMVEnv_ptr env,int argc, char **argv
 
                     PROP_CHECK_INSTANCE(p);
                     if (Prop_get_type(p) != PropGame_GenReactivity) {
-                        fprintf(nusmv_stderr,
+                        fprintf(stderr,
                                 "Warning: currently unrealizable core extraction is only "
                                         "available for GENREACTIVITY\n"
                                         "properties. Skipping property %d.\n", i);
@@ -3581,15 +3578,15 @@ static int CommandExtractUnrealizableCore(NuSMVEnv_ptr env,int argc, char **argv
 
     CommandExtractUnrealizableCore_cleanup_and_return:
     if (useMore) {
-        if (old_nusmv_stdout != (FILE*) NULL) {
-            CmdClosePipe(nusmv_stdout);
-            nusmv_stdout = old_nusmv_stdout;
+        if (old_stdout != (FILE*) NULL) {
+            CmdClosePipe(stdout);
+            stdout = old_stdout;
         }
     }
     if (dbgFileName != NIL(char)) {
-        if (old_nusmv_stdout != (FILE*) NULL) {
-            CmdCloseFile(nusmv_stdout);
-            nusmv_stdout = old_nusmv_stdout;
+        if (old_stdout != (FILE*) NULL) {
+            CmdCloseFile(stdout);
+            stdout = old_stdout;
         }
         FREE(dbgFileName);
     }
@@ -3602,59 +3599,59 @@ static int CommandExtractUnrealizableCore(NuSMVEnv_ptr env,int argc, char **argv
 
 static int UsageExtractUnrealizableCore()
 {
-    fprintf(nusmv_stderr,
+    fprintf(stderr,
             "usage: extract_unrealizable_core [-h] [-m | -o file] [-n number]\n");
-    fprintf(nusmv_stderr,
+    fprintf(stderr,
             "                                 [-a algorithm] [-c type]\n");
-    fprintf(nusmv_stderr,
+    fprintf(stderr,
             "                                 [-i] [-v] [-t] [-p]\n");
-    fprintf(nusmv_stderr,
+    fprintf(stderr,
             "                                 [-w l|b|1|2] [-N number]\n");
-    fprintf(nusmv_stderr,"   -h \t\t\tPrints the command usage.\n");
-    fprintf(nusmv_stderr,
+    fprintf(stderr,"   -h \t\t\tPrints the command usage.\n");
+    fprintf(stderr,
             "   -m \t\t\tPipes output through the program specified\n");
-    fprintf(nusmv_stderr,
+    fprintf(stderr,
             "      \t\t\tby the \"PAGER\" environment variable if defined,\n");
-    fprintf(nusmv_stderr, "      \t\t\telse through the UNIX command \"more\".\n");
-    fprintf(nusmv_stderr,
+    fprintf(stderr, "      \t\t\telse through the UNIX command \"more\".\n");
+    fprintf(stderr,
             "   -o file\t\tWrites the generated output to \"file\".\n");
-    fprintf(nusmv_stderr,
+    fprintf(stderr,
             "   -n number\t\tExtracts the core of the property with the given\n");
-    fprintf(nusmv_stderr, "      \t\t\tindex number.\n");
-    fprintf(nusmv_stderr,
+    fprintf(stderr, "      \t\t\tindex number.\n");
+    fprintf(stderr,
             "   -a algorithm\t\tUses algorithm \"algorithm\". Available "
                     "algorithms are\n");
-    fprintf(nusmv_stderr,
+    fprintf(stderr,
             "      \t\t\tactvars and explicit (default explicit).\n");
-    fprintf(nusmv_stderr,
+    fprintf(stderr,
             "   -c type\t\tProduces core type \"type\". Available types are core "
                     "and\n");
-    fprintf(nusmv_stderr,
+    fprintf(stderr,
             "      \t\t\tfix (only for algorithm actvars) (default core).\n");
-    fprintf(nusmv_stderr, "   -i \t\t\tDoesn't minimize INIT constraints.\n");
-    fprintf(nusmv_stderr, "   -v \t\t\tDoesn't minimize INVAR constraints.\n");
-    fprintf(nusmv_stderr, "   -t \t\t\tDoesn't minimize TRANS constraints.\n");
-    fprintf(nusmv_stderr, "   -p \t\t\tDoesn't minimize the property.\n");
-    fprintf(nusmv_stderr,
+    fprintf(stderr, "   -i \t\t\tDoesn't minimize INIT constraints.\n");
+    fprintf(stderr, "   -v \t\t\tDoesn't minimize INVAR constraints.\n");
+    fprintf(stderr, "   -t \t\t\tDoesn't minimize TRANS constraints.\n");
+    fprintf(stderr, "   -p \t\t\tDoesn't minimize the property.\n");
+    fprintf(stderr,
             "   -w l|b|1|2\t\tWho is minimized: (l)oser, (b)oth, player (1), "
                     "or\n");
-    fprintf(nusmv_stderr,
+    fprintf(stderr,
             "      \t\t\tplayer (2). With algorithm actvars \'1\', \'2\', and "
                     "\'b\'\n");
-    fprintf(nusmv_stderr,
+    fprintf(stderr,
             "      \t\t\tare available (default \'b\'). With algorithm explicit "
                     "\'l\'\n");
-    fprintf(nusmv_stderr,
+    fprintf(stderr,
             "      \t\t\tand \'b\' are available (default \'l\').\n");
-    fprintf(nusmv_stderr,
+    fprintf(stderr,
             "   -N number\t\tWith algorithm actvars this specifies how many\n");
-    fprintf(nusmv_stderr,
+    fprintf(stderr,
             "      \t\t\tconstraints are guarded by a single activation "
                     "variable.\n");
-    fprintf(nusmv_stderr,
+    fprintf(stderr,
             "      \t\t\t0 means no activation variales are introduced. "
                     "Default:\n");
-    fprintf(nusmv_stderr, "      \t\t\t1.\n");
+    fprintf(stderr, "      \t\t\t1.\n");
     return 1;
 }
 

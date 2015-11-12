@@ -163,12 +163,8 @@ Nitin Yadav - nitin.yadav@rmit.edu.au
             static int Command...(NuSMVEnv_ptr env,...)
 
 19.Error: gameCmd.c:  ‘nusmv_stderr’ undeclared (first use in this function) 
-    [ TODO : replace nusmv_stdout with stdout and nusmv_stderr with stderr ]
 
-    *   added declaration in "Variable Declaration" section
-    
-            EXTERN FILE* nusmv_stdout;
-            EXTERN FILE* nusmv_stderr;
+    *   replaced 'nusmv_stdout' with 'stdout' and 'nusmv_stderr' with 'stderr'
     
 20.Warning: gameCmd.c:  implicit declaration of function ‘nusmv_exit’ 
     [ TODO : check and if need replace nusmv_exit with exit ]
