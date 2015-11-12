@@ -112,6 +112,9 @@ boolean TypeCheckerGame_check_property(TypeChecker_ptr self,
   boolean isOK;
   node_ptr exp;
 
+  const NuSMVEnv_ptr env = EnvObject_get_environment(ENV_OBJECT(self));
+  const NodeMgr_ptr nodemgr = NODE_MGR(NuSMVEnv_get_value(env, ENV_NODE_MGR));
+
   TYPE_CHECKER_CHECK_INSTANCE(self);
 
   switch (Prop_get_type(property)) {
@@ -132,7 +135,7 @@ boolean TypeCheckerGame_check_property(TypeChecker_ptr self,
   } /* switch */
 
   yylineno = node_get_lineno(Prop_get_expr(property));
-  exp = find_node(kind, Prop_get_expr(property), Nil);
+  exp = find_node(nodemgr,kind, Prop_get_expr(property), Nil);
 
   isOK = TypeChecker_is_specification_wellformed(self, exp);
 

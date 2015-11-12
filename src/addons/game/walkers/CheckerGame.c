@@ -211,7 +211,10 @@ static SymbType_ptr checker_game_check_expr(CheckerBase_ptr self,
      handler.
   */
   node_ptr ctx_expr;
-  if (context != Nil) ctx_expr = find_node(CONTEXT, context, expr);
+  const NuSMVEnv_ptr env = EnvObject_get_environment(ENV_OBJECT(self));
+  const NodeMgr_ptr nodemgr = NODE_MGR(NuSMVEnv_get_value(env, ENV_NODE_MGR));
+
+  if (context != Nil) ctx_expr = find_node(nodemgr,CONTEXT, context, expr);
   else ctx_expr = expr;
 
   { /* checks memoizing */
@@ -333,7 +336,7 @@ static SymbType_ptr checker_game_check_expr(CheckerBase_ptr self,
                     (context is not Nil) then before providing the
                     expression to this function the expression should
                     be wrapped into context, i.e., with
-                    find_node(CONEXT, context, expr). ]
+                    find_node(nodemgr,CONEXT, context, expr). ]
 
   SideEffects [ ]
 

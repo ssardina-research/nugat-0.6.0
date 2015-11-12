@@ -840,6 +840,7 @@ void Game_SF07_gba_wring_parse_output_file(Game_SF07_gba_wring_ptr self)
   NuSMVEnv_ptr const env = EnvObject_get_environment(ENV_OBJECT(self->gba));
   ErrorMgr_ptr const errmgr =
             ERROR_MGR(NuSMVEnv_get_value(env, ENV_ERROR_MANAGER));
+  const NodeMgr_ptr nodemgr = NODE_MGR(NuSMVEnv_get_value(env, ENV_NODE_MGR));
 
   /* Open output file. */
   self->output_file = fopen(self->output_file_name, "r");
@@ -974,7 +975,7 @@ void Game_SF07_gba_wring_parse_output_file(Game_SF07_gba_wring_ptr self)
 
       /* A set of literals. Needed. */
       {
-        label = find_node(TRUEEXP, Nil, Nil);
+        label = find_node(nodemgr,TRUEEXP, Nil, Nil);
 
         res = game_sf07_gba_wring_read_token(self,
                                              GAME_SF07_GBA_WRING_TOKEN_LCB);
@@ -991,13 +992,13 @@ void Game_SF07_gba_wring_parse_output_file(Game_SF07_gba_wring_ptr self)
             negative = (self->po_s[strlen(self->po_s) - 1] == '0');
             /* Remove =0/1 part. */
             self->po_s[strlen(self->po_s) - 2] = '\0';
-            res = game_sf07_gba_wring_varnamestring2nodeptr(self->po_s,
+            res = game_sf07_gba_wring_varnamestring2nodeptr(nodemgr,self->po_s,
                                                             false,
                                                             &pos,
                                                             &literal);
             if (res != 0) { goto ERROR_PARSER; }
-            if (negative) { literal = find_node(NOT, literal, Nil); }
-            label = find_node(AND, label, literal);
+            if (negative) { literal = find_node(nodemgr,NOT, literal, Nil); }
+            label = find_node(nodemgr,AND, label, literal);
           }
           game_sf07_gba_wring_clear_po_s(self);
 
@@ -2174,7 +2175,8 @@ static void game_sf07_gba_wring_wif_rec_id(Game_SF07_gba_wring_ptr self,
   SeeAlso     [ game_sf07_gba_wring_wif_rec_nodeptr ]
 
 ******************************************************************************/
-static int game_sf07_gba_wring_varnamestring2nodeptr(char* s,
+static int game_sf07_gba_wring_varnamestring2nodeptr(NodeMgr_ptr nodemgr,
+                                                     char* s,
                                                      boolean delimiters,
                                                      int* pos,
                                                      node_ptr* literal)
@@ -2210,10 +2212,10 @@ static int game_sf07_gba_wring_varnamestring2nodeptr(char* s,
         goto game_sf07_gba_wring_varnamestring2nodeptr_return_1;
       }
       *pos += 2;
-      if (game_sf07_gba_wring_varnamestring2nodeptr(s, true, pos, &lhs) != 0) {
+      if (game_sf07_gba_wring_varnamestring2nodeptr(nodemgr,s, true, pos, &lhs) != 0) {
         goto game_sf07_gba_wring_varnamestring2nodeptr_return_1;
       }
-      if (game_sf07_gba_wring_varnamestring2nodeptr(s, true, pos, &rhs) != 0) {
+      if (game_sf07_gba_wring_varnamestring2nodeptr(nodemgr,s, true, pos, &rhs) != 0) {
         goto game_sf07_gba_wring_varnamestring2nodeptr_return_1;
       }
     } else if (strncmp(&(s[*pos]), "ATOM", 4) == 0) {
@@ -2246,7 +2248,7 @@ static int game_sf07_gba_wring_varnamestring2nodeptr(char* s,
         }
         *pos += 2;
       }
-      if (game_sf07_gba_wring_varnamestring2nodeptr(s, true, pos, &rhs) != 0) {
+      if (game_sf07_gba_wring_varnamestring2nodeptr(nodemgr,s, true, pos, &rhs) != 0) {
         goto game_sf07_gba_wring_varnamestring2nodeptr_return_1;
       }
       if (rhs != Nil) {
@@ -2259,7 +2261,7 @@ static int game_sf07_gba_wring_varnamestring2nodeptr(char* s,
         goto game_sf07_gba_wring_varnamestring2nodeptr_return_1;
       }
       *pos += 2;
-      if (game_sf07_gba_wring_varnamestring2nodeptr(s, true, pos, &lhs) != 0) {
+      if (game_sf07_gba_wring_varnamestring2nodeptr(nodemgr,s, true, pos, &lhs) != 0) {
         goto game_sf07_gba_wring_varnamestring2nodeptr_return_1;
       }
       if (lhs == Nil) {
@@ -2306,10 +2308,10 @@ static int game_sf07_gba_wring_varnamestring2nodeptr(char* s,
         goto game_sf07_gba_wring_varnamestring2nodeptr_return_1;
       }
       *pos += 2;
-      if (game_sf07_gba_wring_varnamestring2nodeptr(s, true, pos, &lhs) != 0) {
+      if (game_sf07_gba_wring_varnamestring2nodeptr(nodemgr,s, true, pos, &lhs) != 0) {
         goto game_sf07_gba_wring_varnamestring2nodeptr_return_1;
       }
-      if (game_sf07_gba_wring_varnamestring2nodeptr(s, true, pos, &rhs) != 0) {
+      if (game_sf07_gba_wring_varnamestring2nodeptr(nodemgr,s, true, pos, &rhs) != 0) {
         goto game_sf07_gba_wring_varnamestring2nodeptr_return_1;
       }
     } else if (strncmp(&(s[*pos]), "NUMBER", 6) == 0) {
@@ -2353,7 +2355,7 @@ static int game_sf07_gba_wring_varnamestring2nodeptr(char* s,
         }
         *pos += 2;
       }
-      if (game_sf07_gba_wring_varnamestring2nodeptr(s, true, pos, &rhs) != 0) {
+      if (game_sf07_gba_wring_varnamestring2nodeptr(nodemgr,s, true, pos, &rhs) != 0) {
         goto game_sf07_gba_wring_varnamestring2nodeptr_return_1;
       }
       if (rhs != Nil) {
@@ -2363,7 +2365,7 @@ static int game_sf07_gba_wring_varnamestring2nodeptr(char* s,
       nusmv_assert(false);
     }
 
-    res = find_node(type, lhs, rhs);
+    res = find_node(nodemgr,type, lhs, rhs);
   }
 
   if (delimiters) {

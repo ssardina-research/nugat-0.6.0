@@ -333,6 +333,10 @@ static bool game_split_and_print_spec(FILE* out,
                                       BddEnc_ptr enc,
                                       SymbLayer_ptr det_layer)
 {
+
+  const NuSMVEnv_ptr env = EnvObject_get_environment(ENV_OBJECT(specs));
+  const NodeMgr_ptr nodemgr = NODE_MGR(NuSMVEnv_get_value(env, ENV_NODE_MGR));
+
   if (Nil == specs) return false; /* there are no specifications */
 
   for (; specs != Nil; specs = cdr(specs)) {
@@ -349,9 +353,9 @@ static bool game_split_and_print_spec(FILE* out,
             node_ptr res;
             nusmv_assert(car(cdr(spec)) != Nil);
             res = Compile_expr2bexpr(enc, det_layer, car(cdr(spec)));
-            spec = find_node(GAME_SPEC_WRAPPER,
+            spec = find_node(nodemgr,GAME_SPEC_WRAPPER,
                              car(spec),
-                             find_node(GAME_EXP_LIST,
+                             find_node(nodemgr,GAME_EXP_LIST,
                                        res,
                                        Nil));
             break;
@@ -363,9 +367,9 @@ static bool game_split_and_print_spec(FILE* out,
             nusmv_assert(cdr(cdr(spec)) != Nil);
             resl = Compile_expr2bexpr(enc, det_layer, car(cdr(spec)));
             resr = Compile_expr2bexpr(enc, det_layer, cdr(cdr(spec)));
-            spec = find_node(GAME_SPEC_WRAPPER,
+            spec = find_node(nodemgr,GAME_SPEC_WRAPPER,
                              car(spec),
-                             find_node(GAME_TWO_EXP_LISTS,
+                             find_node(nodemgr,GAME_TWO_EXP_LISTS,
                                        resl,
                                        resr));
             break;
@@ -377,7 +381,7 @@ static bool game_split_and_print_spec(FILE* out,
             node_ptr res;
             nusmv_assert(cdr(spec) != Nil);
             res = Compile_expr2bexpr(enc, det_layer, cdr(spec));
-            spec = find_node(GAME_SPEC_WRAPPER, car(spec), res);
+            spec = find_node(nodemgr,GAME_SPEC_WRAPPER, car(spec), res);
             break;
           }
         }

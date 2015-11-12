@@ -40,7 +40,8 @@ Nitin Yadav - nitin.yadav@rmit.edu.au
     .1 "new_node" requires 4 arguments, but only 3 given
     .2 "cons" requires 3 arguments, but only 2 given
     .3 "new_lined_node" requires 5 arguments, but only 4 given
-    .4 {and others functions} 
+    .4 "find_node" requires ...
+    .5 {and others functions} 
     
     *   added this 2 lines before the usage of 'nodemgr' 
 

@@ -156,7 +156,7 @@ static node_ptr game_and_exp ARGS((node_ptr exp1, node_ptr exp2));
 static void game_fill_in_var_hash_table ARGS((node_ptr inVarList,
                                               node_ptr outVarList));
 
-static node_ptr game_create_unique_name ARGS((void));
+static node_ptr game_create_unique_name ARGS((NodeMgr_ptr nodemgr));
 
 static node_ptr game_create_new_var ARGS((NodeMgr_ptr nodemgr,node_ptr* list, node_ptr type));
 
@@ -445,25 +445,25 @@ boolean Game_PropertyToGame(NodeMgr_ptr nodemgr,
 
       /* Terminate AND chains with TRUEEXP. */
       if (exp_1_orig == Nil) {
-        exp_1_orig = find_node(NODE_MGR,TRUEEXP, Nil, Nil);
+        exp_1_orig = find_node(nodemgr,TRUEEXP, Nil, Nil);
       } else {
         node_ptr iter = exp_1_orig;
         if (node_get_type(iter) == AND) {
           while(cdr(iter) != Nil) {
             iter = cdr(iter);
           }
-          node_node_setcdr(iter, find_node(TRUEEXP, Nil, Nil));
+          node_node_setcdr(iter, find_node(nodemgr,TRUEEXP, Nil, Nil));
         }
       }
       if (exp_2_orig == Nil) {
-        exp_2_orig = find_node(NODE_MGR,TRUEEXP, Nil, Nil);
+        exp_2_orig = find_node(nodemgr,TRUEEXP, Nil, Nil);
       } else {
         node_ptr iter = exp_2_orig;
         if (node_get_type(iter) == AND) {
           while(cdr(iter) != Nil) {
             iter = cdr(iter);
           }
-          node_node_setcdr(iter, find_node(TRUEEXP, Nil, Nil));
+          node_node_setcdr(iter, find_node(nodemgr,TRUEEXP, Nil, Nil));
         }
       }
 
@@ -546,7 +546,7 @@ static void game_fill_in_var_hash_table(node_ptr inVarList, node_ptr outVarList)
   SeeAlso     [ ]
 
 ******************************************************************************/
-static node_ptr game_create_unique_name(void)
+static node_ptr game_create_unique_name(NodeMgr_ptr nodemgr)
 {
   static int i= 0;
   char buffer[100]; /* Should be able to hold longest value of i + 5. */
@@ -554,7 +554,7 @@ static node_ptr game_create_unique_name(void)
 
   do {
     sprintf(buffer, "_un_%i", ++i);
-    res = find_node(NODE_MGR,ATOM, (node_ptr) UStringMgr_find_string(USTRING_MGR,buffer), Nil);
+    res = find_node(nodemgr,ATOM, (node_ptr) UStringMgr_find_string(USTRING_MGR,buffer), Nil);
   } while(Nil != find_assoc(nameToType, res));
 
   return res;
@@ -577,7 +577,7 @@ static node_ptr game_create_new_var(NodeMgr_ptr nodemgr,node_ptr* list, node_ptr
 {
   node_ptr name;
 
-  name = game_create_unique_name(); /* name is already find_atom-ed */
+  name = game_create_unique_name(nodemgr); /* name is already find_atom-ed */
   insert_assoc(nameToType, name, type);
   *list = cons(nodemgr,new_node(nodemgr,COLON, name, type), *list);
 
