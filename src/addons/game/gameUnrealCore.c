@@ -1845,8 +1845,7 @@ void game_process_unrealizable_core_with_params(
   boolean is_realizable;
 
     const NuSMVEnv_ptr env = EnvObject_get_environment(ENV_OBJECT(self));
-    const NodeMgr_ptr NODE_MGR =
-            NODE_MGR(NuSMVEnv_get_value(env, ENV_NODE_MGR));
+    const MasterPrinter_ptr wffprint = MASTER_PRINTER(NuSMVEnv_get_value(env, ENV_WFF_PRINTER));
 
   nusmv_assert(PropGame_PropGame_Type_First < Prop_get_type(PROP(self->prop)) &&
                PropGame_PropGame_Type_Last > Prop_get_type(PROP(self->prop)));
@@ -1874,7 +1873,7 @@ void game_process_unrealizable_core_with_params(
   /* Output the specification and whether it is realizable or not. */
   {
     fprintf(nusmv_stdout, "--   ");
-    game_output_spec_without_params(self, nusmv_stdout);
+    game_output_spec_without_params(self, wffprint, nusmv_stdout);
     fprintf(nusmv_stdout,
             is_realizable ?
             " : the strategy has been found\n" :
@@ -1943,7 +1942,7 @@ void game_process_unrealizable_core_with_params(
           int kind = node_get_type(car(exp_list));
           node_ptr exp = car(car(exp_list));
 
-          print_node(0,nusmv_stdout, param);
+          print_node(wffprint,nusmv_stdout, param);
           fprintf(nusmv_stdout, " \t");
           switch (kind) {
           case INIT:
@@ -1978,7 +1977,7 @@ void game_process_unrealizable_core_with_params(
           default: nusmv_assert(false); /* unsupported kind */
           }
 
-          print_node(0,nusmv_stdout, exp);
+          print_node(wffprint,nusmv_stdout, exp);
           fprintf(nusmv_stdout, "\n");
         } /* for (exp_list) */
       } /* for (activation vars)*/
@@ -2104,7 +2103,7 @@ void game_process_unrealizable_core_with_params(
            constraints of the opponent. */
         if ((remove && zero_number == exp) || (!remove && one_number == exp))  {
           if (something_printed) fprintf(nusmv_stdout, ",");
-          print_node(0,nusmv_stdout, var);
+          print_node(wffprint,nusmv_stdout, var);
           something_printed = true;
 
           /* collect BDDs of all used assignments */
@@ -2237,7 +2236,8 @@ static void game_compute_core_using_parameters(
 ******************************************************************************/
 static void game_output_spec_without_params(
                                           Game_UnrealizableCore_Struct_ptr self,
-                                            FILE* out)
+                                          MasterPrinter_ptr wffprint,
+                                          FILE* out)
 {
   node_ptr exp = Prop_get_expr(PROP(self->prop));
   node_ptr iter;
@@ -2274,14 +2274,14 @@ static void game_output_spec_without_params(
                    ' ' == get_text((string_ptr)car(cdr(car(exp))))[0]);
       /* act.var was introduced if
          exp is implication with act.var as left child */
-      print_node(0,out, cdr(exp)); /* remove the parameter */
+      print_node(wffprint,out, cdr(exp)); /* remove the parameter */
     }
     else {
       nusmv_assert(IMPLIES != node_get_type(exp) ||
                    DOT != node_get_type(car(exp)) ||
                    ATOM != node_get_type(cdr(car(exp))) ||
                    ' ' != get_text((string_ptr)car(cdr(car(exp))))[0]);
-      print_node(0,out, exp);
+      print_node(wffprint,out, exp);
     }
     break;
 
@@ -2297,14 +2297,14 @@ static void game_output_spec_without_params(
                    ' ' == get_text((string_ptr)car(cdr(car(exp))))[0]);
       /* act.var was introduced if exp is
          conjunct with parameter as left child */
-      print_node(0,out, cdr(exp)); /* remove the parameter */
+      print_node(wffprint,out, cdr(exp)); /* remove the parameter */
     }
     else {
       nusmv_assert(AND != node_get_type(exp) ||
                    DOT != node_get_type(car(exp)) ||
                    ATOM != node_get_type(cdr(car(exp))) ||
                    ' ' != get_text((string_ptr)car(cdr(car(exp))))[0]);
-      print_node(0,out, exp);
+      print_node(wffprint,out, exp);
     }
     break;
 
@@ -2329,14 +2329,14 @@ static void game_output_spec_without_params(
                      ' ' == get_text((string_ptr)car(cdr(car(cond))))[0]);
         /* act.var was introduced if exp is
            an implication with parameter as left child */
-        print_node(0,out, cdr(cond)); /* remove the parameter */
+        print_node(wffprint,out, cdr(cond)); /* remove the parameter */
       }
       else {
         nusmv_assert(IMPLIES != node_get_type(cond) ||
                      DOT != node_get_type(car(cond)) ||
                      ATOM != node_get_type(cdr(car(cond))) ||
                      ' ' != get_text((string_ptr)car(cdr(car(cond))))[0]);
-        print_node(0,out, cond);
+        print_node(wffprint,out, cond);
       }
 
       if (cdr(iter)) fprintf(out, ", ");
@@ -2362,14 +2362,14 @@ static void game_output_spec_without_params(
                      ' ' == get_text((string_ptr)car(cdr(car(cond))))[0]);
         /* act.var was introduced if exp is
            an implication with parameter as left child */
-        print_node(0,out, cdr(cond)); /* remove the parameter */
+        print_node(wffprint,out, cdr(cond)); /* remove the parameter */
       }
       else {
         nusmv_assert(IMPLIES != node_get_type(cond) ||
                      DOT != node_get_type(car(cond)) ||
                      ATOM != node_get_type(cdr(car(cond))) ||
                      ' ' != get_text((string_ptr)car(cdr(car(cond))))[0]);
-        print_node(0,out, cond);
+        print_node(wffprint,out, cond);
       }
       if (cdr(iter)) fprintf(out, ", ");
     }
@@ -2388,14 +2388,14 @@ static void game_output_spec_without_params(
                      ' ' == get_text((string_ptr)car(cdr(car(cond))))[0]);
         /* act.var was introduced if exp is
            an implication with parameter as left child */
-        print_node(0,out, cdr(cond)); /* remove the parameter */
+        print_node(wffprint,out, cdr(cond)); /* remove the parameter */
       }
       else {
         nusmv_assert(IMPLIES != node_get_type(cond) ||
                      DOT != node_get_type(car(cond)) ||
                      ATOM != node_get_type(cdr(car(cond))) ||
                      ' ' != get_text((string_ptr)car(cdr(car(cond))))[0]);
-        print_node(0,out, cond);
+        print_node(wffprint,out, cond);
       }
       if (cdr(iter)) fprintf(out, ", ");
     }
@@ -2466,6 +2466,7 @@ static boolean game_minimize_players_constraints(
 
     const NuSMVEnv_ptr env = EnvObject_get_environment(ENV_OBJECT(self));
     const NodeMgr_ptr nodemgr = NODE_MGR(NuSMVEnv_get_value(env, ENV_NODE_MGR));
+    const MasterPrinter_ptr wffprint = MASTER_PRINTER(NuSMVEnv_get_value(env, ENV_WFF_PRINTER));
 
   node_ptr trueConst = find_node(nodemgr,TRUEEXP, Nil, Nil);
 
@@ -2595,7 +2596,7 @@ static boolean game_minimize_players_constraints(
 
           if (opt_verbose_level_ge(self->oh, 2)) {
             fprintf(nusmv_stderr, "\nINIT ");
-            print_node(0,nusmv_stderr, exp);
+            print_node(wffprint,nusmv_stderr, exp);
             fprintf(nusmv_stderr, " is removed\n");
           }
         }
@@ -2749,7 +2750,7 @@ static boolean game_minimize_players_constraints(
 
             if (opt_verbose_level_ge(self->oh, 2)) {
               fprintf(nusmv_stderr, "\n%s ", function[i].name);
-              print_node(0,nusmv_stderr, exp);
+              print_node(wffprint,nusmv_stderr, exp);
               fprintf(nusmv_stderr, " is removed\n");
             }
           }
@@ -2863,7 +2864,8 @@ static void game_output_game_after_minimization(
                                            Game_UnrealizableCore_Struct_ptr self,
                                                 boolean realizable,
                                                 GamePlayer explanation,
-                                                node_ptr property)
+                                                node_ptr property,
+                                                MasterPrinter_ptr wffprint)
 {
   nusmv_assert(node_get_type(property) == GAME_TWO_EXP_LISTS);
 
@@ -2962,7 +2964,7 @@ static void game_output_game_after_minimization(
         if (node_get_type(exp) != TRUEEXP ||
             !function[i].doMinimize) { /* this exp has not been removed */
           fprintf(nusmv_stdout, "%s ", function[i].name);
-          print_node(0,nusmv_stdout, exp);
+          print_node(wffprint,nusmv_stdout, exp);
           fprintf(nusmv_stdout, "\n");
           something_was_printed = true;
           ++remainedConstr;
@@ -3013,6 +3015,7 @@ static void game_compute_core_switching_constraints(
 
     const NuSMVEnv_ptr env = EnvObject_get_environment(ENV_OBJECT(self));
     const NodeMgr_ptr nodemgr = NODE_MGR(NuSMVEnv_get_value(env, ENV_NODE_MGR));
+    const MasterPrinter_ptr wffprint = MASTER_PRINTER(NuSMVEnv_get_value(env, ENV_WFF_PRINTER));
 
   node_ptr spec = Prop_get_expr_core(PROP(self->prop));
   /* the prop has not been used yet */
@@ -3160,7 +3163,8 @@ static void game_compute_core_switching_constraints(
   game_output_game_after_minimization(self,
                                       realizable,
                                       playerToModify,
-                                      spec);
+                                      spec,
+                                      wffprint);
 
   /* Restore flat hierarchies. */
   Game_UnrealizableCore_Struct_restore_flat_hierarchies(self);

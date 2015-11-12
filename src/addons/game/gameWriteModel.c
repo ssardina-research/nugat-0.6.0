@@ -336,6 +336,7 @@ static bool game_split_and_print_spec(FILE* out,
 
   const NuSMVEnv_ptr env = EnvObject_get_environment(ENV_OBJECT(specs));
   const NodeMgr_ptr nodemgr = NODE_MGR(NuSMVEnv_get_value(env, ENV_NODE_MGR));
+  const MasterPrinter_ptr wffprint = MASTER_PRINTER(NuSMVEnv_get_value(env, ENV_WFF_PRINTER));
 
   if (Nil == specs) return false; /* there are no specifications */
 
@@ -398,7 +399,7 @@ static bool game_split_and_print_spec(FILE* out,
 
     /* print the expression */
     fprintf(out, "\n%s \n", str);
-    print_node(out, spec);
+    print_node(wffprint,out, spec);
     fprintf(out, "\n");
   }
 

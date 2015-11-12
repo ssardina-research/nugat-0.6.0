@@ -916,8 +916,8 @@ static void Game_SF07_StructCheckLTLGameSF07_construct_ba
 
   NuSMVEnv_ptr const env = EnvObject_get_environment(ENV_OBJECT(self->symb_table));
   const NodeMgr_ptr nodemgr = NODE_MGR(NuSMVEnv_get_value(env, ENV_NODE_MGR));
-  ErrorMgr_ptr const errmgr =
-            ERROR_MGR(NuSMVEnv_get_value(env, ENV_ERROR_MANAGER));
+  ErrorMgr_ptr const errmgr = ERROR_MGR(NuSMVEnv_get_value(env, ENV_ERROR_MANAGER));
+  const MasterPrinter_ptr wffprint = MASTER_PRINTER(NuSMVEnv_get_value(env, ENV_WFF_PRINTER));
 
   /* Has the ba already been constructed? */
   if (((self->curr_player == PLAYER_1) &&
@@ -972,7 +972,7 @@ static void Game_SF07_StructCheckLTLGameSF07_construct_ba
       fprintf(nusmv_stderr,
               "\nGame_SF07_StructCheckLTLGameSF07_construct_ba: booleanized, "
               "nnfed formula is:\n");
-      print_node(NODE_MGR,nusmv_stderr, nnfed);
+      print_node(wffprint,nusmv_stderr, nnfed);
       fprintf(nusmv_stderr,
               "\nGame_SF07_StructCheckLTLGameSF07_construct_ba: end "
               "booleanized, nnfed formula\n");
@@ -1129,6 +1129,7 @@ static void Game_SF07_StructCheckLTLGameSF07_construct_monitor_sexp
 
     const NuSMVEnv_ptr env = EnvObject_get_environment(ENV_OBJECT(self));
     const NodeMgr_ptr nodemgr = NODE_MGR(NuSMVEnv_get_value(env, ENV_NODE_MGR));
+    const MasterPrinter_ptr wffprint = MASTER_PRINTER(NuSMVEnv_get_value(env, ENV_WFF_PRINTER));
 
   GAME_SF07_STRUCT_CHECK_LTL_GAME_SF07_CHECK_INSTANCE(self);
   if (self->curr_player == PLAYER_1) {
@@ -1179,7 +1180,8 @@ static void Game_SF07_StructCheckLTLGameSF07_construct_monitor_sexp
       fprintf(nusmv_stderr,
               "\nGame_SF07_StructCheckLTLGameSF07_construct_monitor_sexp: "
               "player 2 monitor is:\n");
-      Game_SF07_StructCheckLTLGameSF07_print_monitor(nusmv_stderr,
+      Game_SF07_StructCheckLTLGameSF07_print_monitor(wffprint,
+                                                     nusmv_stderr,
                                                      monitor,
                                                      false);
       fprintf(nusmv_stderr,
@@ -1220,7 +1222,8 @@ static void Game_SF07_StructCheckLTLGameSF07_construct_monitor_sexp
       fprintf(nusmv_stderr,
               "\nGame_SF07_StructCheckLTLGameSF07_construct_monitor_sexp: "
               "player 1 monitor is:\n");
-      Game_SF07_StructCheckLTLGameSF07_print_monitor(nusmv_stderr,
+      Game_SF07_StructCheckLTLGameSF07_print_monitor(wffprint,
+                                                     nusmv_stderr,
                                                      monitor,
                                                      false);
       fprintf(nusmv_stderr,
@@ -2206,7 +2209,7 @@ static node_ptr find_node_number(NodeMgr_ptr nodemgr, int n)
 
 ******************************************************************************/
 static void Game_SF07_StructCheckLTLGameSF07_print_monitor
-(FILE* ostream, node_ptr module, boolean body_only)
+(MasterPrinter_ptr wffprint,FILE* ostream, node_ptr module, boolean body_only)
 {
   node_ptr iter;
 
@@ -2244,9 +2247,9 @@ static void Game_SF07_StructCheckLTLGameSF07_print_monitor
             fprintf(ostream,
                     "  %s : ",
                     get_text((string_ptr)car(car(car(var)))));
-            print_node(NODE_MGR,ostream, car(cdr(car(var))));
+            print_node(wffprint,ostream, car(cdr(car(var))));
             fprintf(ostream, "..");
-            print_node(NODE_MGR,ostream, cdr(cdr(car(var))));
+            print_node(wffprint,ostream, cdr(cdr(car(var))));
             fprintf(ostream, ";\n");
 
             var = cdr(var);
@@ -2258,13 +2261,13 @@ static void Game_SF07_StructCheckLTLGameSF07_print_monitor
 
     case INIT: /* INIT declarations */
       fprintf(ostream, "INIT\n  ");
-      print_node(NODE_MGR,ostream, car(car(iter)));
+      print_node(wffprint,ostream, car(car(iter)));
       fprintf(ostream, "\n");
       break;
 
     case TRANS: /* TRANS declarations */
       fprintf(ostream, "TRANS\n  ");
-      print_node(NODE_MGR,ostream, car(car(iter)));
+      print_node(wffprint,ostream, car(car(iter)));
       fprintf(ostream, "\n");
       break;
 
@@ -2297,6 +2300,8 @@ static void Game_SF07_StructCheckLTLGameSF07_print_strategy_monitor_sexp
   array_t* layers_to_decl = array_alloc(char*, 2);
   NodeList_ptr vars;
   NodeList_ptr vars_to_decl;
+  const NuSMVEnv_ptr env = EnvObject_get_environment(ENV_OBJECT(self));
+  const MasterPrinter_ptr wffprint = MASTER_PRINTER(NuSMVEnv_get_value(env, ENV_WFF_PRINTER));
 
   GAME_STRATEGY_CHECK_INSTANCE(self->strategy);
   {
@@ -2353,6 +2358,7 @@ static void Game_SF07_StructCheckLTLGameSF07_print_strategy_monitor_sexp
     FILE* out;
     node_ptr monitor_body;
 
+
     GameStrategy_print_module(self->strategy,
                               vars,
                               vars_to_decl,
@@ -2363,7 +2369,7 @@ static void Game_SF07_StructCheckLTLGameSF07_print_strategy_monitor_sexp
            : nusmv_stdout);
     monitor_body =
       cdr(self->curr_player2_monitor_sexp_copy);
-    Game_SF07_StructCheckLTLGameSF07_print_monitor(out,  monitor_body, true);
+    Game_SF07_StructCheckLTLGameSF07_print_monitor(wffprint, out,  monitor_body, true);
   }
 
   /* Clean up. */

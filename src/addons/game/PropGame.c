@@ -577,7 +577,7 @@ void prop_game_print(const PropGame_ptr self, FILE* file)
 
   if (context != Nil) {
     fprintf(file, "IN ");
-    print_node(file, context);
+    print_node(wffprint,file, context);
   }
 }
 
@@ -611,7 +611,7 @@ void prop_game_print_db(const PropGame_ptr self, FILE* file)
   if ((PROP(self))->trace == 0) fprintf(file, "N/A    ");
   else fprintf(file, "%-7d", (PROP(self))->trace);
 
-  if ((PROP(self))->name != Nil) print_node(file, (PROP(self))->name);
+  if ((PROP(self))->name != Nil) print_node(wffprint,file, (PROP(self))->name);
   else fprintf(file, "N/A");
   fprintf(file, "]\n");
 }

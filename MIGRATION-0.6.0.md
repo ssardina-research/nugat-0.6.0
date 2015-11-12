@@ -37,11 +37,12 @@ Nitin Yadav - nitin.yadav@rmit.edu.au
     *   Rename all calls to OptsHandler_get_instance with OptsHandler_create in NuGat code.
 
 6.Warning: macro ...  [ replace with 'nodemgr' and 'env' ]
-    .1 "new_node" requires 4 arguments, but only 3 given
-    .2 "cons" requires 3 arguments, but only 2 given
-    .3 "new_lined_node" requires 5 arguments, but only 4 given
-    .4 "find_node" requires ...
-    .5 {and others functions} 
+    .1 "new_node" requires 4 arguments, but only 3 given -> added 'nodemgr' parameter
+    .2 "cons" requires 3 arguments, but only 2 given -> added 'nodemgr' parameter
+    .3 "new_lined_node" requires 5 arguments, but only 4 given -> added 'nodemgr' parameter
+    .4 "find_node" requires ... -> added 'nodemgr' parameter
+    .5 "print_node" requires ... -> added 'wffprint' parameter
+    . {and others functions} 
     
     *   added this 2 lines before the usage of 'nodemgr' 
 
