@@ -25,7 +25,7 @@ Nitin Yadav - nitin.yadav@rmit.edu.au
 
 4.Error: statement EXTERN is missing 
     
-    *   added this 2 lines in <config.h.in>
+    *   added this 2 lines in config.h.in
     
             /* Define to 1 if the system has EXTERN and ARGS */
             #define HAVE_EXTERN_ARGS_MACROS 1
@@ -36,26 +36,26 @@ Nitin Yadav - nitin.yadav@rmit.edu.au
     *   This is because NuSMV has renamed  OptsHandler_get_instance with OptsHandler_create
     *   Rename all calls to OptsHandler_get_instance with OptsHandler_create in NuGat code.
 
-6.Warning: macro ... 
+6.Warning: macro ...  [ replace with 'nodemgr' and 'env' ]
     .1 "new_node" requires 4 arguments, but only 3 given
     .2 "cons" requires 3 arguments, but only 2 given
     .3 "new_lined_node" requires 5 arguments, but only 4 given
     .4 {and others functions} 
     
-    *   added this 2 lines before the usage of 'nodemgr'
+    *   added this 2 lines before the usage of 'nodemgr' 
 
 7.Warning: grammar.y.: implicit declaration of function ‘yylex’,‘yyerror’ and ‘yyerror_lined’
 
-    *   changed content in <src/config.status> -> S["YFLAGS"]="-d -p nusmv_yy"
-    *   replace in <grammar.y.2.55> 'yyerror_lined' with 'nusmv_yyerror_lined'
+    *   changed content in src/config.status -> S["YFLAGS"]="-d -p nusmv_yy"
+    *   replace in grammar.y.2.55 'yyerror_lined' with 'nusmv_yyerror_lined'
         
 8.Error: grammar.y : function 'find_string' not found
 
-    *   'find_string' has been replaced by 'UStringMgr_find_string(USTRING_MGR,' and in <grammar.y.2.55> with 'UStringMgr_find_string(USTRING_MGR(NuSMVEnv_get_value(__nusmv_parser_env__, ENV_STRING_MGR)),'
+    *   'find_string' has been replaced by 'UStringMgr_find_string(USTRING_MGR,' and in grammar.y.2.55 with 'UStringMgr_find_string(USTRING_MGR(NuSMVEnv_get_value(__nusmv_parser_env__, ENV_STRING_MGR)),'
     
 9.Error : input.l: ‘nusmv_yytext’ undeclared (first use in this function) ------------- ^"#"" "[0-9]+.*\n       sscanf(nusmv_yytext,"# %d",&nusmv_yylineno); 
 
-    *   change in <parser/Makefile(.am and .in)>
+    *   change in parser/Makefile(.am and .in)
     
         **  the flags
             AM_YFLAGS = -d -p nusmv_yy
@@ -66,16 +66,17 @@ Nitin Yadav - nitin.yadav@rmit.edu.au
        
 10.Error: input.l : ‘yylval’ undeclared (first use in this function)
 
-    *   replaced in <input.2.55> the string 'yylval' with 'nusmv_yylval' and 'yylineno' with 'nusmv_yylineno'
+    *   replaced in input.2.55 the string 'yylval' with 'nusmv_yylval' and 'yylineno' with 'nusmv_yylineno'
 
-11.Error: input.l : ‘TOK_GAME’ undeclared (first use in this function) [ TODO : FIND ANOTHER SOLUTION? )]
+11.Error: input.l : ‘TOK_GAME’ undeclared (first use in this function) 
 
-    *   commented the file <input.l.2.55>   
+    *   added a new file parser/input.l.1.55 with '#include "grammar.h"' 
+    *   included this file (input.l.1.55) in parser/Makefile(.am and .in) after input.l.1.50
 
 12.Error: gameOpt.c : too few arguments to function ‘OptsHandler_register_option’
 
-    *   added argument to Game_init_opt(NuSMVEnv_ptr const env) in <gameInt.h> and <gameOpt.c> 
-    *   in <gamePkg.c>
+    *   added argument to Game_init_opt(NuSMVEnv_ptr const env) in gameInt.h and gameOpt.c 
+    *   in gamePkg.c
             -added in head 'NuSMVEnv_ptr env = NuSMVEnv_create();' and update 'Game_init_opt();' with 'Game_init_opt(env);' in 'void Game_Init(void)'
             -append these 2 libraries
             
@@ -109,10 +110,10 @@ Nitin Yadav - nitin.yadav@rmit.edu.au
                 
 16.Warning: GameStrategy.c: passing argument 1 of ‘print_node’ from incompatible pointer type
    
-           -replace print_node(...) with print_node(wffprint,...)
-           -replaced SymbType_print(...) with SymbType_print(... , wffprint , ...)
+    *   replace print_node(...) with print_node(wffprint,...)
+        replaced SymbType_print(...) with SymbType_print(... , wffprint , ...)
            
-   changed this functions in GameStrategy.c and gameCheckLTLSF07.c
+        changed this functions in GameStrategy.c and gameCheckLTLSF07.c
               
            -added this lines in head of GameStrategy_print_module() 
                    
@@ -120,7 +121,7 @@ Nitin Yadav - nitin.yadav@rmit.edu.au
                    const MasterPrinter_ptr wffprint = _PRINTER(NuSMVEnv_get_value(env, ENV_WFF_PRINTER));
    
    
-   changed this functions in smgameMain.c
+        changed this functions in smgameMain.c
    
            main()
                    -insert in head
@@ -161,11 +162,17 @@ Nitin Yadav - nitin.yadav@rmit.edu.au
         
             static int Command...(NuSMVEnv_ptr env,...)
 
-19.Error: gameCmd.c:  ‘nusmv_stderr’ undeclared (first use in this function)
+19.Error: gameCmd.c:  ‘nusmv_stderr’ undeclared (first use in this function) 
+    [ TODO : replace nusmv_stdout with stdout and nusmv_stderr with stderr ]
 
     *   added declaration in "Variable Declaration" section
     
+            EXTERN FILE* nusmv_stdout;
+            EXTERN FILE* nusmv_stderr;
+    
 20.Warning: gameCmd.c:  implicit declaration of function ‘nusmv_exit’ 
+    [ TODO : check and if need replace nusmv_exit with exit ]
+    
 
     *   replaced all 'nusmv_exit' with 'ErrorMgr_nusmv_exit(errmgr,'
     *   added this lines in head where nusmv_exit is replaced
@@ -211,6 +218,16 @@ Nitin Yadav - nitin.yadav@rmit.edu.au
 25.Error: gameCmd.c:  ‘dd_manager’ undeclared (first use in this function)
 
     *   added declaration "DDMgr_ptr dd_manager = (DDMgr_ptr )NuSMVEnv_get_value(env, ENV_DD_MGR);"
+    
+26.Warning: gamePkg.c: implicit declaration of function
+
+    *   all this functions are replaced
+    
+            ‘node_pkg_get_global_master_wff_printer’ with 'MASTER_PRINTER(NuSMVEnv_get_value(env, ENV_WFF_PRINTER))'
+            ‘node_pkg_get_global_master_sexp_printer’ with 'MASTER_PRINTER(NuSMVEnv_get_value(env, ENV_SEXP_PRINTER));'
+            ‘Compile_get_global_symb_table’ with 'symb_table'
+            ‘PropPkg_get_prop_database’ with ...    
+    
 
 ================================================================================
 EOF

@@ -1,4 +1,4 @@
-  /* **************************************************************  -*-C-*-  **
+  /* **************************************************************  -*-C-*-  ***/
 
 "GAME"                  {nusmv_yylval.lineno = nusmv_yylineno; return(TOK_GAME);}
 "PLAYER_1"              {nusmv_yylval.lineno = nusmv_yylineno; return(TOK_PLAYER_1);}
@@ -11,4 +11,3 @@
 "LTLGAME"               {nusmv_yylval.lineno = nusmv_yylineno; return(TOK_LTLGAME);}
 "GENREACTIVITY"         {nusmv_yylval.lineno = nusmv_yylineno; return(TOK_GENREACTIVITY);}
 
-*/
