@@ -480,7 +480,7 @@ static int CommandReadRatFile(NuSMVEnv_ptr env,int argc, char** argv)
 
  CommandReadRatFile_exit_1:
   if (input_file_name != (char*) NULL) FREE(input_file_name);
-  ErrorMgr_nusmv_exit(errmgr,1);
+  exit(1);
 
  CommandReadRatFile_return_1:
   if (input_file_name != (char*) NULL) FREE(input_file_name);

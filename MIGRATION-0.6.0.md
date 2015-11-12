@@ -167,15 +167,11 @@ Nitin Yadav - nitin.yadav@rmit.edu.au
     *   replaced 'nusmv_stdout' with 'stdout' and 'nusmv_stderr' with 'stderr'
     
 20.Warning: gameCmd.c:  implicit declaration of function ‘nusmv_exit’ 
-    [ TODO : check and if need replace nusmv_exit with exit ]
-    
 
-    *   replaced all 'nusmv_exit' with 'ErrorMgr_nusmv_exit(errmgr,'
-    *   added this lines in head where nusmv_exit is replaced
+    *   replaced all 'nusmv_exit' with 'exit'
+    *   added this line in head where 'env' is added
     
             const NuSMVEnv_ptr env = EnvObject_get_environment(ENV_OBJECT(...));
-            const ErrorMgr_ptr errmgr = 
-                    ERROR_MGR(NuSMVEnv_get_value(env, ENV_ERROR_MANAGER));
                     
     *   added as first parameter "env" to :
             
@@ -188,12 +184,11 @@ Nitin Yadav - nitin.yadav@rmit.edu.au
             CmdOpenFile
 
 21.Error: gameCmd.c:  ‘CATCH’ undeclared (first use in this function)
-
+                         
     *   replaced "CATCH" with "CATCH(errmgr)" and "FAIL" with "FAIL(errmgr)" and added this lines of declaration
     
             NuSMVEnv_ptr const env = EnvObject_get_environment(ENV_OBJECT(self->symb_table));  ( ONLY IF 'env' IS NOT DECLARED )
-            ErrorMgr_ptr const errmgr =
-                        ERROR_MGR(NuSMVEnv_get_value(env, ENV_ERROR_MANAGER));
+            ErrorMgr_ptr const errmgr = ERROR_MGR(NuSMVEnv_get_value(env, ENV_ERROR_MANAGER));
                         
 22.Warning: gameCmd.c: implicit declaration of function ‘PropPkg_get_prop_database’
 
