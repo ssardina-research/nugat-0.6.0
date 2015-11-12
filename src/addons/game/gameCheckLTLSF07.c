@@ -380,7 +380,7 @@ ARGS((Game_SF07_StructCheckLTLGameSF07_ptr self));
 static void Game_SF07_StructCheckLTLGameSF07_print_strategy_monitor_bdd
 ARGS((Game_SF07_StructCheckLTLGameSF07_ptr self));
 
-static node_ptr Game_SF07_StructCheckLTLGameSF07_copy_node ARGS((node_ptr node));
+static node_ptr Game_SF07_StructCheckLTLGameSF07_copy_node ARGS((NodeMgr_ptr nodemgr, node_ptr node));
 
 static void Game_SF07_StructCheckLTLGameSF07_free_node ARGS((node_ptr node));
 
@@ -1189,7 +1189,7 @@ static void Game_SF07_StructCheckLTLGameSF07_construct_monitor_sexp
     /* Store and copy (for later use in strategy printing). */
     self->curr_player2_monitor_sexp = monitor;
     self->curr_player2_monitor_sexp_copy =
-      Game_SF07_StructCheckLTLGameSF07_copy_node(monitor);
+      Game_SF07_StructCheckLTLGameSF07_copy_node(nodemgr,monitor);
   }
 
   /* player 1 */
@@ -2623,7 +2623,7 @@ static void Game_SF07_StructCheckLTLGameSF07_print_strategy_monitor_bdd
   SeeAlso     [ Game_SF07_StructCheckLTLGameSF07_free_node ]
 
 ******************************************************************************/
-static node_ptr Game_SF07_StructCheckLTLGameSF07_copy_node(node_ptr node) {
+static node_ptr Game_SF07_StructCheckLTLGameSF07_copy_node(NodeMgr_ptr nodemgr, node_ptr node) {
   if (node == Nil) {
     return Nil;
   } else {
@@ -2642,10 +2642,10 @@ static node_ptr Game_SF07_StructCheckLTLGameSF07_copy_node(node_ptr node) {
     case ATOM:
     case NUMBER:
       nusmv_assert(rhs == Nil);
-      return new_lined_node(NODE_MGR,type, lhs, rhs, lineno);
+      return new_lined_node(nodemgr,type, lhs, rhs, lineno);
     case BIT:
-      return new_lined_node(NODE_MGR,type,
-                            Game_SF07_StructCheckLTLGameSF07_copy_node(lhs),
+      return new_lined_node(nodemgr,type,
+                            Game_SF07_StructCheckLTLGameSF07_copy_node(nodemgr,lhs),
                             rhs,
                             lineno);
       /* Just copied. */
@@ -2673,9 +2673,9 @@ static node_ptr Game_SF07_StructCheckLTLGameSF07_copy_node(node_ptr node) {
     case TWODOTS:
     case UMINUS:
     case VAR:
-      return new_lined_node(NODE_MGR,type,
-                            Game_SF07_StructCheckLTLGameSF07_copy_node(lhs),
-                            Game_SF07_StructCheckLTLGameSF07_copy_node(rhs),
+      return new_lined_node(nodemgr,type,
+                            Game_SF07_StructCheckLTLGameSF07_copy_node(nodemgr,lhs),
+                            Game_SF07_StructCheckLTLGameSF07_copy_node(nodemgr,rhs),
                             lineno);
       /* Catch errors. */
     default:

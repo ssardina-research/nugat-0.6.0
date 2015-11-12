@@ -188,7 +188,8 @@ EXTERN void Game_CheckLtlGameSpecSF07 ARGS((PropGame_ptr prop,
 EXTERN void
 Game_CheckGenReactivitySpec ARGS((PropGame_ptr prop, gameParams_ptr params));
 
-EXTERN int Game_CheckGameSpecAndComputeCores ARGS((PropGame_ptr prop,
+EXTERN int Game_CheckGameSpecAndComputeCores ARGS((NodeMgr_ptr nodemgr,
+                                                   PropGame_ptr prop,
                                            Game_UnrealizableCore_Algorithm algo,
                                               Game_UnrealizableCore_CoreType ct,
                                                    boolean doInit,

@@ -466,7 +466,8 @@ ARGS((Game_UnrealizableCore_Struct_ptr self, FILE* out));
   SeeAlso     [ ]
 
 ******************************************************************************/
-int Game_CheckGameSpecAndComputeCores(PropGame_ptr prop,
+int Game_CheckGameSpecAndComputeCores(NodeMgr_ptr nodemgr,
+                                      PropGame_ptr prop,
                                       Game_UnrealizableCore_Algorithm algo,
                                       Game_UnrealizableCore_CoreType ct,
                                       boolean min_init,
@@ -1272,6 +1273,10 @@ static void game_guard_exprs_by_parameters(Game_UnrealizableCore_Struct_ptr self
 static void game_guard_gamespecs_by_parameters(
                                           Game_UnrealizableCore_Struct_ptr self)
 {
+
+  const NuSMVEnv_ptr env = EnvObject_get_environment(ENV_OBJECT(self));
+  const NodeMgr_ptr nodemgr = NODE_MGR(NuSMVEnv_get_value(env, ENV_NODE_MGR));
+
   node_ptr exp;
   node_ptr param;
   node_ptr rhs;
@@ -1301,7 +1306,7 @@ static void game_guard_gamespecs_by_parameters(
     }
     param = game_create_new_param(self, cdr(exp), kind, self->player);
     if (param != Nil) {
-      rhs = new_lined_node(NODE_MGR,IMPLIES,
+      rhs = new_lined_node(nodemgr,IMPLIES,
                            param,
                            cdr(exp),
                            node_get_lineno(car(exp)));
@@ -1315,7 +1320,7 @@ static void game_guard_gamespecs_by_parameters(
     kind = AVOIDTARGET;
     param = game_create_new_param(self, cdr(exp), kind, self->player);
     if (param != Nil) {
-      rhs = new_lined_node(NODE_MGR,AND,
+      rhs = new_lined_node(nodemgr,AND,
                            param,
                            cdr(exp),
                            node_get_lineno(car(exp)));
@@ -1343,7 +1348,7 @@ static void game_guard_gamespecs_by_parameters(
         node_ptr cond = car(iter);
         param = game_create_new_param(self, cond, kind, self->player);
         if (param != Nil) {
-          cond = new_lined_node(NODE_MGR,IMPLIES,
+          cond = new_lined_node(nodemgr,IMPLIES,
                                 param,
                                 cond,
                                 node_get_lineno(cond));
@@ -1373,7 +1378,7 @@ static void game_guard_gamespecs_by_parameters(
           node_ptr cond = car(iter);
           param = game_create_new_param(self, cond, kind, p);
           if (param != Nil) {
-            cond = new_lined_node(NODE_MGR,IMPLIES,
+            cond = new_lined_node(nodemgr,IMPLIES,
                                   param,
                                   cond,
                                   node_get_lineno(cond));
