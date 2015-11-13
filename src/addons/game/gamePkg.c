@@ -389,6 +389,7 @@ static void game_pkg_switch_to_game_cmds(NuSMVEnv_ptr env,
   Set_t names_gen_dep_set;
   Set_t names_specific_set;
   UStringMgr_ptr strings = USTRING_MGR(NuSMVEnv_get_value(env, ENV_STRING_MGR));
+  avl_tree* commandTable = (avl_tree*)NuSMVEnv_get_value(env, ENV_CMD_COMMAND_TABLE);
 
   nusmv_assert(generic != NODE_LIST(NULL));
   nusmv_assert(dependent != NODE_LIST(NULL));
@@ -445,7 +446,7 @@ static void game_pkg_switch_to_game_cmds(NuSMVEnv_ptr env,
     char* key;
 
     names_specific_set = Set_MakeEmpty();
-    avl_foreach_item(cmdCommandTable, gen, AVL_FORWARD, &key, (char**) NULL) {
+    avl_foreach_item(commandTable, gen, AVL_FORWARD, &key, (char**) NULL) {
       if (!Set_IsMember(names_gen_dep_set, (Set_Element_t) UStringMgr_find_string(strings,key))) {
         names_specific_set = Set_AddMember(names_specific_set,
                                            (Set_Element_t) UStringMgr_find_string(strings,key));

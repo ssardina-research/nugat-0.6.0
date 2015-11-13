@@ -248,6 +248,10 @@ Nitin Yadav - nitin.yadav@rmit.edu.au
                     
             'PropPkg_set_prop_database(PROP_DB(dbg))' with 'NuSMVEnv_set_value(env, ENV_PROP_DB,PROP_DB(dbg))'
     
+27.Error: gamePkg.c: ‘cmdCommandTable’ undeclared (first use in this function)
+    
+        *   replaced with 'commandTable' and added declaration 'avl_tree* commandTable = (avl_tree*)NuSMVEnv_get_value(env, ENV_CMD_COMMAND_TABLE);'
+
 
 ================================================================================
 EOF
