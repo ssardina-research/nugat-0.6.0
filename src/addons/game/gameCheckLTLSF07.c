@@ -2146,7 +2146,7 @@ static node_ptr Game_SF07_StructCheckLTLGameSF07_gba_state_to_var_name
   GAME_SF07_GBA_STATE_CHECK_INSTANCE(state);
   nusmv_assert(self->curr_unique_number < 1000000000);
 
-  state_id_s = get_text(Game_SF07_gba_state_get_id(state));
+  state_id_s = (char*)UStringMgr_get_string_text(Game_SF07_gba_state_get_id(state));
   /* 10 digits + 2 underscores + 1 '\0' */
   res_s = ALLOC(char,
                 (strlen(GAME_SF07_MONITOR_STATE_BASE_NAME) +

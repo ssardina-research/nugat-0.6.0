@@ -251,7 +251,10 @@ Nitin Yadav - nitin.yadav@rmit.edu.au
 27.Error: gamePkg.c: ‘cmdCommandTable’ undeclared (first use in this function)
     
         *   replaced with 'commandTable' and added declaration 'avl_tree* commandTable = (avl_tree*)NuSMVEnv_get_value(env, ENV_CMD_COMMAND_TABLE);'
+        
+28.Warning: gamePkg.c: implicit declaration of function ‘get_text(’
 
+        *   replaced with '(char*)UStringMgr_get_string_text('
 
 ================================================================================
 EOF

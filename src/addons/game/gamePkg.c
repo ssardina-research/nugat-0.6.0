@@ -462,7 +462,7 @@ static void game_pkg_switch_to_game_cmds(NuSMVEnv_ptr env,
     stored_dependent = NodeList_create();
     SET_FOREACH(names_dependent_set, iter) {
       string_ptr name = (string_ptr) Set_GetMember(names_dependent_set, iter);
-      game_pkg_store_remove_cmd(get_text(name), stored_dependent);
+      game_pkg_store_remove_cmd((char*)UStringMgr_get_string_text(name), stored_dependent);
     }
   }
 
@@ -477,7 +477,7 @@ static void game_pkg_switch_to_game_cmds(NuSMVEnv_ptr env,
     stored_specific = NodeList_create();
     SET_FOREACH(names_specific_set, iter) {
       string_ptr name = (string_ptr) Set_GetMember(names_specific_set, iter);
-      game_pkg_store_remove_cmd(get_text(name), stored_specific);
+      game_pkg_store_remove_cmd((char*)UStringMgr_get_string_text(name), stored_specific);
     }
   }
 

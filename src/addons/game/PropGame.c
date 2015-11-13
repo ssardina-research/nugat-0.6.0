@@ -571,7 +571,7 @@ void prop_game_print(const PropGame_ptr self, FILE* file)
   fprintf(file,
           " %s %s ",
           Prop_get_type_as_string(PROP(self)),
-          get_text(PropGame_get_player(self)));
+          (char*)UStringMgr_get_string_text(PropGame_get_player(self)));
 
   indent_node(file, "", p, " ");
 

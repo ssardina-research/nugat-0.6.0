@@ -2258,7 +2258,7 @@ static void game_output_spec_without_params(
   fprintf(out,
           " %s %s ",
           Prop_get_type_as_string(PROP(self->prop)),
-          get_text(PropGame_get_player(self->prop)));
+          (char*)UStringMgr_get_string_text(PropGame_get_player(self->prop)));
 
   switch (Prop_get_type(PROP(self->prop))) {
   case PropGame_ReachTarget:
