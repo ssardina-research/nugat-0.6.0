@@ -113,10 +113,10 @@ void NuGaTAddons_Init(void)
   SeeAlso     [ ]
 
 ******************************************************************************/
-void NuGaTAddons_Quit(void)
+void NuGaTAddons_Quit(NuSMVEnv_ptr env)
 {
 #if HAVE_GAME
-   Game_Quit();
+   Game_Quit(env);
 #endif
 }
 

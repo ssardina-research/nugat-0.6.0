@@ -130,7 +130,7 @@ int main(int  argc, char ** argv)
   //main_init_custom_cmd_options();
 
 
-  Smgame_Init();
+  Smgame_Init(env);
 
   int quit_flag;
   quit_flag = 0;
@@ -192,19 +192,19 @@ int main(int  argc, char ** argv)
   }
   if (quit_flag == -2) {
     /*    Hrc_ManagerFree(globalHmgr); */
-    Smgame_End();
+    Smgame_End(env);
   }
   else if (quit_flag == -3) {
     /* Script failed and on_failure_script_quits is set */
     /*    Hrc_ManagerFree(globalHmgr); */
-    Smgame_End();
+    Smgame_End(env);
     status = -1;
   }
   else if (quit_flag == -4) {
     /* exits quickly and silently */
   }
   else {
-    Smgame_End();
+    Smgame_End(env);
   }
 
   exit(status);

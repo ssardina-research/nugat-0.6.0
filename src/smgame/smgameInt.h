@@ -77,11 +77,11 @@
 /*---------------------------------------------------------------------------*/
 /* Function prototypes                                                       */
 /*---------------------------------------------------------------------------*/
-EXTERN void Smgame_Init ARGS((void));
-EXTERN void Smgame_End ARGS((void));
-EXTERN void Smgame_Reset ARGS((void));
+EXTERN void Smgame_Init ARGS((NuSMVEnv_ptr env));
+EXTERN void Smgame_End ARGS((NuSMVEnv_ptr env));
+EXTERN void Smgame_Reset ARGS((NuSMVEnv_ptr env));
 EXTERN void Smgame_BatchMain ARGS(());
-EXTERN void Smgame_AddCmd ARGS((void));
+EXTERN void Smgame_AddCmd ARGS((NuSMVEnv_ptr env));
 EXTERN char* Smgame_NuGaTReadVersion ARGS((void));
 
 #endif /* __SMGAME_INT_H__ */

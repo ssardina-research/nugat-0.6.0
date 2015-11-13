@@ -116,12 +116,13 @@ static void game_pkg_switch_to_prop_db ARGS((NuSMVEnv_ptr env));
 static void game_pkg_switch_to_game_cmds ARGS((NuSMVEnv_ptr env,NodeList_ptr generic,
                                                NodeList_ptr dependent,
                                                NodeList_ptr specific));
-static void game_pkg_switch_from_game_cmds ARGS((NodeList_ptr dependent,
+static void game_pkg_switch_from_game_cmds ARGS((NuSMVEnv_ptr env,
+                                                 NodeList_ptr dependent,
                                                  NodeList_ptr specific));
-static void game_pkg_add_cmds ARGS((NodeList_ptr commands));
-static void game_pkg_remove_cmds ARGS((NodeList_ptr commands));
-static void game_pkg_store_remove_cmd ARGS((char* name, NodeList_ptr stored));
-static void game_pkg_restore_cmds ARGS((NodeList_ptr* stored));
+static void game_pkg_add_cmds ARGS((NuSMVEnv_ptr env, NodeList_ptr commands));
+static void game_pkg_remove_cmds ARGS((NuSMVEnv_ptr env,NodeList_ptr commands));
+static void game_pkg_store_remove_cmd ARGS((NuSMVEnv_ptr env,char* name, NodeList_ptr stored));
+static void game_pkg_restore_cmds ARGS((NuSMVEnv_ptr env,NodeList_ptr* stored));
 
 /*---------------------------------------------------------------------------*/
 /* Definition of exported functions                                          */
@@ -157,7 +158,7 @@ void Game_Init(void)
   set_pgm_name(OptsHandler_create(), PACKAGE_NAME); //NEW
   Game_init_opt(env);
   Game_init_cmd();
-  game_pkg_add_cmds(Game_cmd_get_generic_commands());
+  game_pkg_add_cmds(env,Game_cmd_get_generic_commands());
 
   { /* walkers */
     MasterPrinter_ptr mp = MASTER_PRINTER(NuSMVEnv_get_value(env, ENV_WFF_PRINTER));
@@ -206,7 +207,7 @@ void Game_Quit(NuSMVEnv_ptr env)
     Game_Mode_Exit(env);
   }
 
-  game_pkg_remove_cmds(Game_cmd_get_generic_commands());
+  game_pkg_remove_cmds(env, Game_cmd_get_generic_commands());
   Game_quit_cmd();
 
   nusmv_assert(GAME_HIERARCHY(NULL) == mainGameHierarchy);
@@ -276,7 +277,8 @@ void Game_Mode_Exit(NuSMVEnv_ptr env)
     mainGameHierarchy = GAME_HIERARCHY(NULL);
   }
   game_pkg_switch_to_prop_db(env);
-  game_pkg_switch_from_game_cmds(Game_cmd_get_dependent_commands(),
+  game_pkg_switch_from_game_cmds(env,
+                                 Game_cmd_get_dependent_commands(),
                                  Game_cmd_get_specific_commands());
   unset_game_game(OptsHandler_create());
 
@@ -462,12 +464,12 @@ static void game_pkg_switch_to_game_cmds(NuSMVEnv_ptr env,
     stored_dependent = NodeList_create();
     SET_FOREACH(names_dependent_set, iter) {
       string_ptr name = (string_ptr) Set_GetMember(names_dependent_set, iter);
-      game_pkg_store_remove_cmd((char*)UStringMgr_get_string_text(name), stored_dependent);
+      game_pkg_store_remove_cmd(env,(char*)UStringMgr_get_string_text(name), stored_dependent);
     }
   }
 
   /* Add mode2 versions of dependent commands. */
-  game_pkg_add_cmds(dependent);
+  game_pkg_add_cmds(env,dependent);
 
   /* Store and remove mode1-specific commands. */
   {
@@ -477,12 +479,12 @@ static void game_pkg_switch_to_game_cmds(NuSMVEnv_ptr env,
     stored_specific = NodeList_create();
     SET_FOREACH(names_specific_set, iter) {
       string_ptr name = (string_ptr) Set_GetMember(names_specific_set, iter);
-      game_pkg_store_remove_cmd((char*)UStringMgr_get_string_text(name), stored_specific);
+      game_pkg_store_remove_cmd(env,(char*)UStringMgr_get_string_text(name), stored_specific);
     }
   }
 
   /* Add mode2-specific commands. */
-  game_pkg_add_cmds(specific);
+  game_pkg_add_cmds(env,specific);
 
   /* Destroy names_*_set. */
   Set_ReleaseSet(names_specific_set);
@@ -524,23 +526,24 @@ static void game_pkg_switch_to_game_cmds(NuSMVEnv_ptr env,
   SeeAlso     [ Game_Mode_Exit, game_pkg_switch_to_game_cmds ]
 
 ******************************************************************************/
-static void game_pkg_switch_from_game_cmds(NodeList_ptr dependent,
+static void game_pkg_switch_from_game_cmds(NuSMVEnv_ptr env,
+                                           NodeList_ptr dependent,
                                            NodeList_ptr specific)
 {
   nusmv_assert(dependent != NODE_LIST(NULL));
   nusmv_assert(specific != NODE_LIST(NULL));
 
   /* Remove game-specific commands. */
-  game_pkg_remove_cmds(specific);
+  game_pkg_remove_cmds(env,specific);
 
   /* Restore (non-game)-specific commands. */
-  game_pkg_restore_cmds(&stored_specific);
+  game_pkg_restore_cmds(env,&stored_specific);
 
   /* Remove game-versions of dependent commands. */
-  game_pkg_remove_cmds(dependent);
+  game_pkg_remove_cmds(env,dependent);
 
   /* Restore (non-game)-versions of dependent commands. */
-  game_pkg_restore_cmds(&stored_dependent);
+  game_pkg_restore_cmds(env,&stored_dependent);
 }
 
 /**Function********************************************************************
@@ -555,7 +558,7 @@ static void game_pkg_switch_from_game_cmds(NodeList_ptr dependent,
   SeeAlso     [ game_pkg_remove_cmds ]
 
 ******************************************************************************/
-static void game_pkg_add_cmds(NodeList_ptr commands)
+static void game_pkg_add_cmds(NuSMVEnv_ptr env,NodeList_ptr commands)
 {
   ListIter_ptr iter;
 
@@ -566,12 +569,12 @@ static void game_pkg_add_cmds(NodeList_ptr commands)
 
     descr = (CommandDescr_t*) NodeList_get_elem_at(commands, iter);
     if (descr->command_fp != (PFI) NULL) {
-      nusmv_assert(!Cmd_CommandDefined(descr->name));
-      Cmd_CommandAdd(descr->name,
+      nusmv_assert(!Cmd_CommandDefined(env,descr->name));
+      Cmd_CommandAdd(env,descr->name,
                      descr->command_fp,
                      descr->changes_hmgr,
                      descr->reentrant);
-      nusmv_assert(Cmd_CommandDefined(descr->name));
+      nusmv_assert(Cmd_CommandDefined(env,descr->name));
     }
   }
 }
@@ -588,7 +591,7 @@ static void game_pkg_add_cmds(NodeList_ptr commands)
   SeeAlso     [ game_pkg_remove_cmds ]
 
 ******************************************************************************/
-void game_pkg_remove_cmds(NodeList_ptr commands)
+void game_pkg_remove_cmds(NuSMVEnv_ptr env, NodeList_ptr commands)
 {
   ListIter_ptr iter;
 
@@ -599,9 +602,9 @@ void game_pkg_remove_cmds(NodeList_ptr commands)
 
     descr = (CommandDescr_t*) NodeList_get_elem_at(commands, iter);
     if (descr->command_fp != (PFI) NULL) {
-      nusmv_assert(Cmd_CommandDefined(descr->name));
-      Cmd_CommandRemove(descr->name);
-      nusmv_assert(!Cmd_CommandDefined(descr->name));
+      nusmv_assert(Cmd_CommandDefined(env,descr->name));
+      Cmd_CommandRemove(env,descr->name);
+      nusmv_assert(!Cmd_CommandDefined(env,descr->name));
     }
   }
 }
@@ -619,17 +622,17 @@ void game_pkg_remove_cmds(NodeList_ptr commands)
   SeeAlso     [ game_pkg_switch_to_game_cmds ]
 
 ******************************************************************************/
-static void game_pkg_store_remove_cmd(char* name, NodeList_ptr stored)
+static void game_pkg_store_remove_cmd(NuSMVEnv_ptr env,char* name, NodeList_ptr stored)
 {
   CommandDescr_t* descr;
 
   nusmv_assert(name != (char*) NULL);
   nusmv_assert(stored != NODE_LIST(NULL));
-  nusmv_assert(Cmd_CommandDefined(name));
+  nusmv_assert(Cmd_CommandDefined(env,name));
 
-  descr = Cmd_CommandGet(name);
+  descr = Cmd_CommandGet(env,name);
   NodeList_append(stored, (node_ptr) CmdCommandCopy(descr));
-  Cmd_CommandRemove(name);
+  Cmd_CommandRemove(env,name);
 }
 
 /**Function********************************************************************
@@ -646,7 +649,7 @@ static void game_pkg_store_remove_cmd(char* name, NodeList_ptr stored)
   SeeAlso     [ game_pkg_switch_from_game_cmds ]
 
 ******************************************************************************/
-static void game_pkg_restore_cmds(NodeList_ptr* stored)
+static void game_pkg_restore_cmds(NuSMVEnv_ptr env,NodeList_ptr* stored)
 {
   nusmv_assert(stored != (NodeList_ptr*) NULL);
   nusmv_assert(*stored != NODE_LIST(NULL));
@@ -658,8 +661,8 @@ static void game_pkg_restore_cmds(NodeList_ptr* stored)
     first = NodeList_get_first_iter(*stored);
     descr = (CommandDescr_t*) NodeList_remove_elem_at(*stored, first);
     nusmv_assert(descr != (CommandDescr_t*) NULL);
-    nusmv_assert(!Cmd_CommandDefined(descr->name));
-    Cmd_CommandAdd(descr->name,
+    nusmv_assert(!Cmd_CommandDefined(env,descr->name));
+    Cmd_CommandAdd(env,descr->name,
                    descr->command_fp,
                    descr->changes_hmgr,
                    descr->reentrant);

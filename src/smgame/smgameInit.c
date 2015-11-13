@@ -71,18 +71,18 @@ EXTERN FILE* nusmv_stderr;
   SeeAlso     [ ]
 
 ******************************************************************************/
-void Smgame_Reset()
+void Smgame_Reset(NuSMVEnv_ptr env)
 {
   if (opt_verbose_level_gt(OptsHandler_create(), 1)) {
     fprintf(nusmv_stderr, "Shutting down the game part...\n");
   }
-  NuGaTAddons_Quit();
+  NuGaTAddons_Quit(env);
   if (opt_verbose_level_gt(OptsHandler_create(), 2)) {
     fprintf(nusmv_stderr, "Done\n");
   }
 
-  CInit_reset_first();
-  CInit_reset_last();
+  CInit_reset_first(env);
+  CInit_reset_last(env);
 
   if (opt_verbose_level_gt(OptsHandler_create(), 1)) {
     fprintf(nusmv_stderr, "Starting the game part...\n");
@@ -113,12 +113,12 @@ void Smgame_Reset()
   SeeAlso     [ Smgame_End ]
 
 ******************************************************************************/
-void Smgame_Init()
+void Smgame_Init(NuSMVEnv_ptr env)
 {
   //CInit_init(); //this is already called by NuSMVCore init
   set_pgm_name(OptsHandler_create(), PACKAGE_NAME);
   //NuGaTAddons_Init();
-  Smgame_AddCmd();
+  Smgame_AddCmd(env);
 }
 
 /**Function********************************************************************
@@ -133,8 +133,8 @@ void Smgame_Init()
   SeeAlso     [ Smgame_Init ]
 
 ******************************************************************************/
-void Smgame_End()
+void Smgame_End(NuSMVEnv_ptr env)
 {
-  NuGaTAddons_Quit();
-  CInit_end();
+  NuGaTAddons_Quit(env);
+  CInit_end(env);
 }

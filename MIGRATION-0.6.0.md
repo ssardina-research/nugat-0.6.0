@@ -256,6 +256,30 @@ Nitin Yadav - nitin.yadav@rmit.edu.au
 
         *   replaced with '(char*)UStringMgr_get_string_text('
 
+29.Warning: gamePkg.c: passing argument 1 of ‘Cmd_CommandDefined’ from incompatible pointer type
+
+        *   added 'env' parameter for : 
+        
+                'Cmd_CommandDefined'
+                'Cmd_CommandAdd'
+                'Cmd_CommandRemove'
+                'Cmd_CommandGet'
+                'NuGaTAddons_Quit'
+                
+                'game_pkg_switch_from_game_cmds'
+                'game_pkg_add_cmds'
+                'game_pkg_remove_cmds'
+                'game_pkg_store_remove_cmd'
+                'game_pkg_restore_cmds'
+                
+                'CommandGameReset'
+                'Smgame_Init'
+                'Smgame_AddCmd'
+                'Smgame_Reset'
+                'Smgame_End'
+            
+
+
 ================================================================================
 EOF
 ================================================================================

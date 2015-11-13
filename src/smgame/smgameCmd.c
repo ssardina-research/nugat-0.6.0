@@ -80,8 +80,8 @@ EXTERN FILE* nusmv_stderr;
 /*---------------------------------------------------------------------------*/
 /* Static function prototypes                                                */
 /*---------------------------------------------------------------------------*/
-static int CommandGameReset(int argc, char **argv);
-static int UsageGameReset ARGS((void));
+static int CommandGameReset(NuSMVEnv_ptr env, int argc, char **argv);
+static int UsageGameReset (void);
 
 /**AutomaticEnd***************************************************************/
 
@@ -101,12 +101,12 @@ static int UsageGameReset ARGS((void));
   SeeAlso     [ ]
 
 ******************************************************************************/
-void Smgame_AddCmd(void){
+void Smgame_AddCmd(NuSMVEnv_ptr env){
   boolean res;
 
-  res = Cmd_CommandRemove("reset");
+  res = Cmd_CommandRemove(env,"reset");
   nusmv_assert(res);
-  Cmd_CommandAdd("reset", CommandGameReset, 0, false);
+  Cmd_CommandAdd(env,"reset", CommandGameReset, 0, false);
 }
 
 
@@ -139,7 +139,7 @@ void Smgame_AddCmd(void){
   SeeAlso            [ ]
 
 ******************************************************************************/
-static int CommandGameReset(int argc, char ** argv)
+static int CommandGameReset(NuSMVEnv_ptr env,int argc, char ** argv)
 {
   int c;
 
@@ -156,7 +156,7 @@ static int CommandGameReset(int argc, char ** argv)
     goto CommandGameReset_return_usage;
   }
 
-  Smgame_Reset();
+  Smgame_Reset(env);
 
   /* Avoid compiler warning. */
   goto CommandGameReset_return_0;
