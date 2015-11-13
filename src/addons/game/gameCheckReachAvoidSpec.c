@@ -56,6 +56,7 @@
 #include "parser/symbols.h"
 #include "utils/utils.h"
 #include "utils/error.h"
+#include "utils/ErrorMgr.h"
 #include "utils/ustring.h"
 /* for variable ordering functions. Later it must be changed to public */
 #include "enc/bdd/BddEnc.h"
@@ -121,13 +122,14 @@ void Game_CheckReachTargetSpec(NuSMVEnv_ptr env, PropGame_ptr prop, gameParams_p
   Game_BeforeCheckingSpec(env,prop);
 
   /* the checking itself */
-  status = Game_UseStrongReachabilityAlgorithm(prop,
+  status = Game_UseStrongReachabilityAlgorithm(env,
+                                               prop,
                                                (construct_strategy ?
                                                 (&strategy) :
                                                 (GameStrategy_ptr*) NULL));
 
   /* printing the results and cleaning up */
-  Game_AfterCheckingSpec(prop, status, strategy, Nil, Nil, params);
+  Game_AfterCheckingSpec(env,prop, status, strategy, Nil, Nil, params);
 }
 
 /**Function********************************************************************
@@ -162,13 +164,14 @@ void Game_CheckAvoidTargetSpec(NuSMVEnv_ptr env,PropGame_ptr prop, gameParams_pt
   Game_BeforeCheckingSpec(env,prop);
 
   /* the checking itself */
-  status = Game_UseStrongReachabilityAlgorithm(prop,
+  status = Game_UseStrongReachabilityAlgorithm(env,
+                                               prop,
                                                (construct_strategy ?
                                                 (&strategy) :
                                                 (GameStrategy_ptr*) NULL));
 
   /* printing the results and cleaning up */
-  Game_AfterCheckingSpec(prop, status, strategy, Nil, Nil, params);
+  Game_AfterCheckingSpec(env,prop, status, strategy, Nil, Nil, params);
 }
 
 /**Function********************************************************************
@@ -205,13 +208,14 @@ void Game_CheckReachDeadlockSpec(NuSMVEnv_ptr env, PropGame_ptr prop, gameParams
   Game_BeforeCheckingSpec(env,prop);
 
   /* the checking itself */
-  status = Game_UseStrongReachabilityAlgorithm(prop,
+  status = Game_UseStrongReachabilityAlgorithm(env,
+                                               prop,
                                                (construct_strategy ?
                                                 (&strategy) :
                                                 (GameStrategy_ptr*) NULL));
 
   /* printing the results and cleaning up */
-  Game_AfterCheckingSpec(prop, status, strategy, Nil, Nil, params);
+  Game_AfterCheckingSpec(env,prop, status, strategy, Nil, Nil, params);
 }
 
 /**Function********************************************************************
@@ -248,13 +252,14 @@ void Game_CheckAvoidDeadlockSpec(NuSMVEnv_ptr env, PropGame_ptr prop, gameParams
   Game_BeforeCheckingSpec(env,prop);
 
   /* the checking itself */
-  status = Game_UseStrongReachabilityAlgorithm(prop,
+  status = Game_UseStrongReachabilityAlgorithm(env,
+                                               prop,
                                                (construct_strategy ?
                                                 (&strategy) :
                                                 (GameStrategy_ptr*) NULL));
 
   /* printing the results and cleaning up */
-  Game_AfterCheckingSpec(prop, status, strategy, Nil, Nil, params);
+  Game_AfterCheckingSpec(env,prop, status, strategy, Nil, Nil, params);
 }
 
 /**Function********************************************************************
@@ -293,15 +298,17 @@ void Game_CheckAvoidDeadlockSpec(NuSMVEnv_ptr env, PropGame_ptr prop, gameParams
   SeeAlso     [ ]
 
 ******************************************************************************/
-Game_RealizabilityStatus Game_UseStrongReachabilityAlgorithm(PropGame_ptr prop,
+Game_RealizabilityStatus Game_UseStrongReachabilityAlgorithm(NuSMVEnv_ptr env, PropGame_ptr prop,
                                                     GameStrategy_ptr* strategy)
 {
   GameBddFsm_ptr fsm = PropGame_get_game_bdd_fsm(prop);
   BddEnc_ptr enc = BddFsm_get_bdd_encoding(BDD_FSM(fsm));
   DDMgr_ptr dd_manager = BddEnc_get_dd_manager(enc);
-  const NuSMVEnv_ptr env = EnvObject_get_environment(ENV_OBJECT(dd_manager));
+
   const NodeMgr_ptr nodemgr = NODE_MGR(NuSMVEnv_get_value(env, ENV_NODE_MGR));
-  UStringMgr_ptr strings = USTRING_MGR(NuSMVEnv_get_value(env, ENV_STRING_MGR));
+  const UStringMgr_ptr strings = USTRING_MGR(NuSMVEnv_get_value(env, ENV_STRING_MGR));
+  const ErrorMgr_ptr errmgr = ERROR_MGR(NuSMVEnv_get_value(env, ENV_ERROR_MANAGER));
+
   OptsHandler_ptr oh = OptsHandler_create();
 
   PROP_GAME_CHECK_INSTANCE(prop);
@@ -363,7 +370,7 @@ Game_RealizabilityStatus Game_UseStrongReachabilityAlgorithm(PropGame_ptr prop,
     quantifiers = quantifiers == 'N' ? 'N'  /* 'N' does not change */
       : quantifiers == 'E' ? 'A'
       : quantifiers == 'A' ? 'E'
-      : (internal_error("unknown quantifiers"), 0);
+      : (ErrorMgr_internal_error(errmgr,"unknown quantifiers"), 0);
   }
 
   allReachStates = bdd_dup(originalTarget);

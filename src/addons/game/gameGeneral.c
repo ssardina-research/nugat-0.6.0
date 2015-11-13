@@ -161,7 +161,8 @@ void Game_BeforeCheckingSpec(NuSMVEnv_ptr env,PropGame_ptr prop)
   SeeAlso     [ Game_BeforeCheckingSpec ]
 
 ******************************************************************************/
-void Game_AfterCheckingSpec(PropGame_ptr prop,
+void Game_AfterCheckingSpec(NuSMVEnv_ptr env,
+                            PropGame_ptr prop,
                             Game_RealizabilityStatus status,
                             GameStrategy_ptr strategy,
                             node_ptr varList1,
@@ -170,6 +171,8 @@ void Game_AfterCheckingSpec(PropGame_ptr prop,
 
 {
   boolean has_params;
+
+  const ErrorMgr_ptr errmgr = ERROR_MGR(NuSMVEnv_get_value(env, ENV_ERROR_MANAGER));
 
   PROP_GAME_CHECK_INSTANCE(prop);
 
@@ -194,7 +197,7 @@ void Game_AfterCheckingSpec(PropGame_ptr prop,
     nusmv_assert(Prop_Unchecked == Prop_get_status(PROP(prop)));
     fprintf(nusmv_stdout, " : existence of a strategy is unknown\n");
     break;
-  default: internal_error("unknown status of a problem");
+  default: ErrorMgr_internal_error(errmgr,"unknown status of a problem");
   }
 
   /* print a strategy for a player or an opponent */

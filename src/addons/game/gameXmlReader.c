@@ -296,6 +296,7 @@ int Game_RatFileToGame(const char *filename)
   const NuSMVEnv_ptr env;
   const NodeMgr_ptr nodemgr;
   const UStringMgr_ptr strings;
+  const ErrorMgr_ptr errmgr;
 
   if (cmp_struct_get_read_model(cmps)) {
     fprintf(nusmv_stderr,
@@ -325,6 +326,7 @@ int Game_RatFileToGame(const char *filename)
     env = EnvObject_get_environment(ENV_OBJECT(parseResult));
     nodemgr = NODE_MGR(NuSMVEnv_get_value(env, ENV_NODE_MGR));
     strings =  USTRING_MGR(NuSMVEnv_get_value(env, ENV_STRING_MGR));
+    errmgr = ERROR_MGR(NuSMVEnv_get_value(env, ENV_ERROR_MANAGER));
 
     XML_SetUserData(parser, parseResult);
     XML_SetElementHandler(parser,
@@ -1168,7 +1170,7 @@ static void game_xml_reader_tag_end(void* data, const char *string)
         setcar(car(parseResult->stack), NODE_FROM_INT(i));
       }
       else {
-        internal_error("impossible code");
+        ErrorMgr_internal_error(errmgr,"impossible code");
       }
 
       game_xml_reader_free_text_node(text);

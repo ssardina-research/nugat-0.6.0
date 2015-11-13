@@ -102,7 +102,8 @@ typedef struct PrinterGame_TAG
 /* ---------------------------------------------------------------------- */
 /* Private methods to be used by derivated and friend classes only        */
 /* ---------------------------------------------------------------------- */
-EXTERN void printer_game_init ARGS((PrinterGame_ptr self,
+EXTERN void printer_game_init ARGS((const NuSMVEnv_ptr env,
+                                    PrinterGame_ptr self,
                                     const char* name,
                                     int low,
                                     size_t num));

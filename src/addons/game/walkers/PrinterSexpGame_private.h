@@ -110,7 +110,8 @@ EXTERN void printer_sexp_game_init ARGS((PrinterSexpGame_ptr self,
 
 EXTERN void printer_sexp_game_deinit ARGS((PrinterSexpGame_ptr self));
 
-EXTERN int printer_sexp_game_print_node ARGS((PrinterBase_ptr self,
+EXTERN int printer_sexp_game_print_node ARGS((const NuSMVEnv_ptr env,
+                                              PrinterBase_ptr self,
                                               node_ptr n,
                                               int priority));
 

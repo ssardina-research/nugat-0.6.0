@@ -282,7 +282,20 @@ Nitin Yadav - nitin.yadav@rmit.edu.au
 
     *   replaced 'PropDb_set_fsm_to_master(..., PROP(self->prop));' with 'Prop_set_environment_fsms(env, PROP(self->prop));'
 
+31.Warning: gameGeneral.c: implicit declaration of function ‘internal_error(’ 
 
+    *   replaced with 'ErrorMgr_internal_error(errmgr,'
+    *   added library '#include "utils/ErrorMgr.h"'
+    *   added 'env' parameter to:
+            
+            'Game_AfterCheckingSpec'
+            'Game_UseStrongReachabilityAlgorithm'
+            'PrinterGame_create'
+            'PrinterSexpGame_create'
+            'PrinterGame_create'
+            'printer_base_init'
+            
+            
 ================================================================================
 EOF
 ================================================================================

@@ -188,7 +188,8 @@ void Game_CheckGenReactivitySpec(NuSMVEnv_ptr env, PropGame_ptr prop, gameParams
                                 NULL);
 
   /* Printing the results and cleaning up. */
-  Game_AfterCheckingSpec(prop,
+  Game_AfterCheckingSpec(env,
+                         prop,
                          isSuccess ? GAME_REALIZABLE : GAME_UNREALIZABLE,
                          strategy,
                          varList1,
@@ -265,7 +266,8 @@ void Game_CheckBuchiGameSpec(PropGame_ptr prop, gameParams_ptr params)
                                       var);
 
   /* Printing the results and cleaning up. */
-  Game_AfterCheckingSpec(prop,
+  Game_AfterCheckingSpec(env,
+                         prop,
                          isSuccess ? GAME_REALIZABLE : GAME_UNREALIZABLE,
                          strategy,
                          varList1,

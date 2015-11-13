@@ -47,7 +47,7 @@
 
 #include "parser/symbols.h"
 #include "utils/utils.h"
-#include "utils/error.h"
+#include "utils/ErrorMgr.h"
 
 #include <stdio.h>
 
@@ -102,7 +102,7 @@ static char rcsid[] UTIL_UNUSED = "$Id: PrinterSexpGame.c,v 1.1.2.3 2010-02-08 1
 /*---------------------------------------------------------------------------*/
 /* Static function prototypes                                                */
 /*---------------------------------------------------------------------------*/
-static void printer_sexp_game_finalize ARGS((Object_ptr object, void* dummy));
+static void printer_sexp_game_finalize(Object_ptr object, void* dummy);
 
 /*---------------------------------------------------------------------------*/
 /* Definition of exported functions                                          */
@@ -119,12 +119,13 @@ static void printer_sexp_game_finalize ARGS((Object_ptr object, void* dummy));
   SeeAlso     [ PrinterSexpGame_destroy ]
 
 ******************************************************************************/
-PrinterSexpGame_ptr PrinterSexpGame_create(const char* name)
+PrinterSexpGame_ptr PrinterSexpGame_create(NuSMVEnv_ptr env,const char* name)
 {
   PrinterSexpGame_ptr self = ALLOC(PrinterSexpGame, 1);
   PRINTER_SEXP_GAME_CHECK_INSTANCE(self);
 
-  printer_sexp_game_init(self,
+  printer_sexp_game_init(env,
+                         self,
                          name,
                          NUSMV_GAME_SYMBOL_FIRST,
                          NUSMV_GAME_SYMBOL_LAST - NUSMV_GAME_SYMBOL_FIRST);
@@ -147,13 +148,13 @@ PrinterSexpGame_ptr PrinterSexpGame_create(const char* name)
   SeeAlso     [ PrinterSexpGame_create ]
 
 ******************************************************************************/
-void printer_sexp_game_init(PrinterSexpGame_ptr self,
+void printer_sexp_game_init(NuSMVEnv_ptr env,PrinterSexpGame_ptr self,
                             const char* name,
                             int low,
                             size_t num)
 {
   /* base class initialization */
-  printer_base_init(PRINTER_BASE(self), name, low, num, false);
+  printer_base_init(PRINTER_BASE(self),env, name, low, num, false);
 
   /* members initialization */
 
@@ -193,9 +194,10 @@ void printer_sexp_game_deinit(PrinterSexpGame_ptr self)
   SeeAlso     [ ]
 
 ******************************************************************************/
-int printer_sexp_game_print_node(PrinterBase_ptr self, node_ptr n, int priority)
+int printer_sexp_game_print_node(const NuSMVEnv_ptr env,PrinterBase_ptr self, node_ptr n, int priority)
 {
   int result;
+  const ErrorMgr_ptr errmgr = ERROR_MGR(NuSMVEnv_get_value(env, ENV_ERROR_MANAGER));
 
   nusmv_assert(n != Nil); /* Here only game tokens. */
   switch (node_get_type(n)) {
@@ -292,7 +294,7 @@ int printer_sexp_game_print_node(PrinterBase_ptr self, node_ptr n, int priority)
       _PRINT(")");
     break;
   default:
-    internal_error("No match for node of type %d", node_get_type(n));
+    ErrorMgr_internal_error(errmgr,"No match for node of type %d", node_get_type(n));
     result = 0;
   }
   return result;

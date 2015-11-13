@@ -49,6 +49,7 @@
 #include "fsm/bdd/BddFsm.h"
 #include "trans/bdd/BddTrans.h"
 #include "utils/error.h"
+#include "utils/ErrorMgr.h"
 #include "utils/utils.h"
 
 #include <stdio.h>
@@ -1058,6 +1059,9 @@ EXTERN boolean GameBddFsm_can_player_satisfy(const GameBddFsm_ptr self,
   boolean isOne;
   boolean goalNegation, p2Negation, p1Negation;
 
+  const NuSMVEnv_ptr env = EnvObject_get_environment(ENV_OBJECT(self));
+  const ErrorMgr_ptr errmgr = ERROR_MGR(NuSMVEnv_get_value(env, ENV_ERROR_MANAGER));
+
   GAME_BDD_FSM_CHECK_INSTANCE(self);
 
   dd_manager = BddEnc_get_dd_manager(self->enc);
@@ -1101,7 +1105,7 @@ EXTERN boolean GameBddFsm_can_player_satisfy(const GameBddFsm_ptr self,
     break;
 
   default:
-    internal_error("unknown intial condition interpretation");
+    ErrorMgr_internal_error(errmgr,"unknown intial condition interpretation");
   } /* switch */
 
   /* negate the goal states */
@@ -1178,6 +1182,9 @@ EXTERN BddStates GameBddFsm_player_satisfies_from(const GameBddFsm_ptr self,
   bdd_ptr tmp, result;
   boolean goalNegation, p2Negation, p1Negation;
 
+  const NuSMVEnv_ptr env = EnvObject_get_environment(ENV_OBJECT(self));
+  const ErrorMgr_ptr errmgr = ERROR_MGR(NuSMVEnv_get_value(env, ENV_ERROR_MANAGER));
+
   GAME_BDD_FSM_CHECK_INSTANCE(self);
 
   dd_manager = BddEnc_get_dd_manager(self->enc);
@@ -1221,7 +1228,7 @@ EXTERN BddStates GameBddFsm_player_satisfies_from(const GameBddFsm_ptr self,
     break;
 
   default:
-    internal_error("unknown intial condition interpretation");
+    ErrorMgr_internal_error(errmgr,"unknown intial condition interpretation");
   } /* switch */
 
   /* negate the goal states */

@@ -241,7 +241,7 @@
 +    }
 +    FAIL {
 +      bdd_enc_unlock_reordering(self);
-+      internal_error("bdd_enc_end_var_block: Failure during variable block construction\n");
++      ErrorMgr_internal_error(errmgr,"bdd_enc_end_var_block: Failure during variable block construction\n");
 +    }
 +
 +    NodeList_append(blocks, (node_ptr) block);

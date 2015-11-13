@@ -431,7 +431,7 @@ EXTERN GameBddFsm_ptr Game_CreateGameBddFsm ARGS((const FsmBuilder_ptr self,
 EXTERN void
 Game_BeforeCheckingSpec ARGS((NuSMVEnv_ptr env,PropGame_ptr prop));
 
-EXTERN void Game_AfterCheckingSpec ARGS((PropGame_ptr prop,
+EXTERN void Game_AfterCheckingSpec ARGS((NuSMVEnv_ptr env,PropGame_ptr prop,
                                          Game_RealizabilityStatus status,
                                          GameStrategy_ptr strategy,
                                          node_ptr varList1,
@@ -447,7 +447,7 @@ EXTERN boolean Game_ComputeGenReactivity ARGS((node_ptr specExp,
                                  bdd_ptr* winningStates));
 
 EXTERN Game_RealizabilityStatus
-Game_UseStrongReachabilityAlgorithm ARGS((PropGame_ptr prop,
+Game_UseStrongReachabilityAlgorithm ARGS((NuSMVEnv_ptr env, PropGame_ptr prop,
                                           GameStrategy_ptr* strategy));
 
 EXTERN boolean Game_PropertyToGame

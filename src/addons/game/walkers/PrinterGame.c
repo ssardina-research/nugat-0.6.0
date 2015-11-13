@@ -48,6 +48,7 @@
 #include "parser/symbols.h"
 
 #include "utils/error.h"
+#include "utils/ErrorMgr.h"
 
 static char rcsid[] UTIL_UNUSED = "$Id: PrinterGame.c,v 1.1.2.3 2010-02-08 14:39:01 nusmv Exp $";
 
@@ -100,7 +101,7 @@ static char rcsid[] UTIL_UNUSED = "$Id: PrinterGame.c,v 1.1.2.3 2010-02-08 14:39
 /*---------------------------------------------------------------------------*/
 /* Static function prototypes                                                */
 /*---------------------------------------------------------------------------*/
-static void printer_game_finalize ARGS((Object_ptr object, void* dummy));
+static void printer_game_finalize(Object_ptr object, void* dummy);
 
 /*---------------------------------------------------------------------------*/
 /* Definition of exported functions                                          */
@@ -117,12 +118,13 @@ static void printer_game_finalize ARGS((Object_ptr object, void* dummy));
   SeeAlso     [ PrinterGame_destroy ]
 
 ******************************************************************************/
-PrinterGame_ptr PrinterGame_create(const char* name)
+PrinterGame_ptr PrinterGame_create(const NuSMVEnv_ptr env,const char* name)
 {
   PrinterGame_ptr self = ALLOC(PrinterGame, 1);
   PRINTER_GAME_CHECK_INSTANCE(self);
 
-  printer_game_init(self,
+  printer_game_init(env,
+                    self,
                     name,
                     NUSMV_GAME_SYMBOL_FIRST,
                     NUSMV_GAME_SYMBOL_LAST - NUSMV_GAME_SYMBOL_FIRST);
@@ -145,13 +147,14 @@ PrinterGame_ptr PrinterGame_create(const char* name)
   SeeAlso     [ PrinterGame_create ]
 
 ******************************************************************************/
-void printer_game_init(PrinterGame_ptr self,
+void printer_game_init(const NuSMVEnv_ptr env,
+                       PrinterGame_ptr self,
                        const char* name,
                        int low,
                        size_t num)
 {
   /* base class initialization */
-  printer_base_init(PRINTER_BASE(self), name, low, num,
+  printer_base_init(PRINTER_BASE(self),env, name, low, num,
                     false /*NULL not handled*/);
 
   /* members initialization */
@@ -194,6 +197,10 @@ void printer_game_deinit(PrinterGame_ptr self)
 ******************************************************************************/
 int printer_game_print_node(PrinterBase_ptr self, node_ptr n, int priority)
 {
+
+  const NuSMVEnv_ptr env = EnvObject_get_environment(ENV_OBJECT(self));
+  const ErrorMgr_ptr errmgr = ERROR_MGR(NuSMVEnv_get_value(env, ENV_ERROR_MANAGER));
+    
   switch (node_get_type(n)) {
   case GAME:
     /* this node is not expected to be printted as usual expression */
@@ -241,7 +248,7 @@ int printer_game_print_node(PrinterBase_ptr self, node_ptr n, int priority)
       _PRINT(")");
 
   default:
-    internal_error("printer_game_print_node: unsupported type = %d",
+    ErrorMgr_internal_error(errmgr,"printer_game_print_node: unsupported type = %d",
                    node_get_type(n));
   }
 

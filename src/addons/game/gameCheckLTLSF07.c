@@ -2099,7 +2099,7 @@ static void Game_SF07_StructCheckLTLGameSF07_check
 
   /* Check */
   self->curr_goal_realizability =
-    Game_UseStrongReachabilityAlgorithm(prop,
+    Game_UseStrongReachabilityAlgorithm(env, prop,
                                         (construct_strategy ?
                                          (&self->strategy) :
                                          (GameStrategy_ptr*) NULL));

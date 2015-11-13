@@ -53,6 +53,7 @@
 #include "parser/symbols.h"
 #include "utils/utils.h"
 #include "utils/error.h"
+#include "utils/ErrorMgr.h"
 
 static char rcsid[] UTIL_UNUSED = "$Id: CheckerGame.c,v 1.1.2.3 2010-02-08 15:28:10 nusmv Exp $";
 
@@ -213,6 +214,7 @@ static SymbType_ptr checker_game_check_expr(CheckerBase_ptr self,
   node_ptr ctx_expr;
   const NuSMVEnv_ptr env = EnvObject_get_environment(ENV_OBJECT(self));
   const NodeMgr_ptr nodemgr = NODE_MGR(NuSMVEnv_get_value(env, ENV_NODE_MGR));
+  const ErrorMgr_ptr errmgr = ERROR_MGR(NuSMVEnv_get_value(env, ENV_ERROR_MANAGER));
 
   if (context != Nil) ctx_expr = find_node(nodemgr,CONTEXT, context, expr);
   else ctx_expr = expr;
@@ -305,7 +307,7 @@ static SymbType_ptr checker_game_check_expr(CheckerBase_ptr self,
   }
 
   default:
-    internal_error("checker_game_check_expr: not supported type");
+    ErrorMgr_internal_error(errmgr,"checker_game_check_expr: not supported type");
   }
 
   nusmv_assert(false); /* impossible code */

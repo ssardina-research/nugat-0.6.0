@@ -169,10 +169,10 @@ void Game_Init(void)
     CATCH(errmgr) {
       NodeWalker_ptr walker;
 
-      walker = NODE_WALKER(PrinterGame_create("GAME Printer"));
+      walker = NODE_WALKER(PrinterGame_create(env,"GAME Printer"));
       MasterNodeWalker_register_walker(MASTER_NODE_WALKER(mp), walker);
 
-      walker = NODE_WALKER(PrinterSexpGame_create("GAME Sexp Printer"));
+      walker = NODE_WALKER(PrinterSexpGame_create(env,"GAME Sexp Printer"));
       MasterNodeWalker_register_walker(MASTER_NODE_WALKER(msp), walker);
 
       walker = NODE_WALKER(CheckerGame_create());
