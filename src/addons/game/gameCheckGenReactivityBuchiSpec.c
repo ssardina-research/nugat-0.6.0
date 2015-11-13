@@ -129,7 +129,7 @@ static void game_undeclare_special_var ARGS((SymbLayer_ptr layer));
   SeeAlso     [ ]
 
 ******************************************************************************/
-void Game_CheckGenReactivitySpec(PropGame_ptr prop, gameParams_ptr params)
+void Game_CheckGenReactivitySpec(NuSMVEnv_ptr env, PropGame_ptr prop, gameParams_ptr params)
 {
   boolean construct_strategy;
   boolean isSuccess;
@@ -139,8 +139,8 @@ void Game_CheckGenReactivitySpec(PropGame_ptr prop, gameParams_ptr params)
   node_ptr varList1 = Nil;
   node_ptr varList2 = Nil;
 
-  const NuSMVEnv_ptr env = EnvObject_get_environment(ENV_OBJECT(prop));
   const NodeMgr_ptr nodemgr = NODE_MGR(NuSMVEnv_get_value(env, ENV_NODE_MGR));
+  const UStringMgr_ptr strings = USTRING_MGR(NuSMVEnv_get_value(env, ENV_STRING_MGR));
 
   /* The given property must be a general reactivity(1) property.
      Such a property has GAME_TWO_EXPR_LIST at top (see the
@@ -155,7 +155,7 @@ void Game_CheckGenReactivitySpec(PropGame_ptr prop, gameParams_ptr params)
   construct_strategy = (((params != (gameParams_ptr) NULL) &&
                          params->strategy_printout) ||
                         opt_game_print_strategy(OptsHandler_create()));
-  Game_BeforeCheckingSpec(prop);
+  Game_BeforeCheckingSpec(env,prop);
 
   /* Declare a special variable required for strategy printing. */
   if (construct_strategy) {
@@ -163,7 +163,7 @@ void Game_CheckGenReactivitySpec(PropGame_ptr prop, gameParams_ptr params)
                              &layer,
                              &var);
 
-    if (UStringMgr_find_string(USTRING_MGR,PLAYER_NAME_1) == PropGame_get_player(prop)) {
+    if (UStringMgr_find_string(strings,PLAYER_NAME_1) == PropGame_get_player(prop)) {
       varList1 = cons(nodemgr,var, Nil);
       varList2 = Nil;
     }
@@ -239,7 +239,7 @@ void Game_CheckBuchiGameSpec(PropGame_ptr prop, gameParams_ptr params)
   construct_strategy = (((params != (gameParams_ptr) NULL) &&
                          params->strategy_printout) ||
                         opt_game_print_strategy(OptsHandler_create()));
-  Game_BeforeCheckingSpec(prop);
+  Game_BeforeCheckingSpec(env,prop);
 
   /* Declare a special variable required for strategy printing. */
   if (construct_strategy) {
@@ -247,7 +247,7 @@ void Game_CheckBuchiGameSpec(PropGame_ptr prop, gameParams_ptr params)
                              &layer,
                              &var);
 
-    if (UStringMgr_find_string(USTRING_MGR,PLAYER_NAME_1) == PropGame_get_player(prop)) {
+    if (UStringMgr_find_string(strings,PLAYER_NAME_1) == PropGame_get_player(prop)) {
       varList1 = cons(nodemgr,var, Nil);
       varList2 = Nil;
     }
@@ -438,7 +438,7 @@ static void game_declare_special_var(int guaranteeNumber,
   /* Loop until a free name is found. */
   do {
     sprintf(name+2, "_%d", ++i);
-    var = find_node(nodemgr,ATOM, (node_ptr)UStringMgr_find_string(USTRING_MGR,name), Nil);
+    var = find_node(nodemgr,ATOM, (node_ptr)UStringMgr_find_string(strings,name), Nil);
     var = find_node(nodemgr,DOT, Nil, var);
   } while (!SymbLayer_can_declare_var(layer, var));
 
@@ -1256,7 +1256,7 @@ static boolean game_compute_buchi_game(PropGame_ptr prop,
 
   /* flag which player this game is for */
   GamePlayer player =
-    (UStringMgr_find_string(USTRING_MGR,PLAYER_NAME_1) == PropGame_get_player(prop))
+    (UStringMgr_find_string(strings,PLAYER_NAME_1) == PropGame_get_player(prop))
     ? PLAYER_1 : PLAYER_2;
 
   bdd_ptr init_1, init_2, invar_1, invar_2;

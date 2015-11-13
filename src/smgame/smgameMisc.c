@@ -179,14 +179,14 @@ void Smgame_BatchMain()
       }
 
       if ((prop_no < 0) ||
-          (prop_no >= PropDb_get_size(PropPkg_get_prop_database()))) {
+          (prop_no >= PropDb_get_size(PROP_DB(NuSMVEnv_get_value(env, ENV_PROP_DB))))) {
         fprintf(nusmv_stderr,
                 "Error: \"%d\" is not a valid property index\n",
                 prop_no);
         ErrorMgr_nusmv_exit(errmgr,1);
       }
 
-      prop = PropDb_get_prop_at_index(PropPkg_get_prop_database(), prop_no);
+      prop = PropDb_get_prop_at_index(PROP_DB(NuSMVEnv_get_value(env, ENV_PROP_DB)), prop_no);
 
       switch (Prop_get_type(prop)) {
       case Prop_Ltl:
@@ -252,7 +252,7 @@ void Smgame_BatchMain()
         }
 
 
-        props = PropDb_get_props_of_type(PropPkg_get_prop_database(), Prop_Ltl);
+        props = PropDb_get_props_of_type(PROP_DB(NuSMVEnv_get_value(env, ENV_PROP_DB)), Prop_Ltl);
         nusmv_assert(props != LS_NIL);
 
         lsForEachItem(props, iterator, prop) {
@@ -282,7 +282,7 @@ void Smgame_BatchMain()
           fprintf(nusmv_stderr, "Verifying the PSL properties...\n");
         }
 
-        props = PropDb_get_props_of_type(PropPkg_get_prop_database(), Prop_Psl);
+        props = PropDb_get_props_of_type(PROP_DB(NuSMVEnv_get_value(env, ENV_PROP_DB)), Prop_Psl);
         nusmv_assert(props != LS_NIL);
 
         lsForEachItem(props, iterator, prop) {
@@ -308,7 +308,7 @@ void Smgame_BatchMain()
           fprintf(nusmv_stderr, "Verifying the INVAR properties...\n");
         }
 
-        props = PropDb_get_props_of_type(PropPkg_get_prop_database(),
+        props = PropDb_get_props_of_type(PROP_DB(NuSMVEnv_get_value(env, ENV_PROP_DB)),
                                          Prop_Invar);
         nusmv_assert(props != LS_NIL);
 
@@ -356,7 +356,7 @@ void Smgame_BatchMain()
       ErrorMgr_nusmv_exit(errmgr,1);
     }
  #endif
-    BddFsm_check_machine(PropDb_master_get_bdd_fsm(PropPkg_get_prop_database()));
+    BddFsm_check_machine(PropDb_master_get_bdd_fsm(PROP_DB(NuSMVEnv_get_value(env, ENV_PROP_DB))));
   }
 
   if (get_prop_no(oh) != -1) {
@@ -367,7 +367,7 @@ void Smgame_BatchMain()
     {
       /* If this is PropGame_LtlGame, then build Boolean model. */
       Prop_ptr prop;
-      prop = PropDb_get_prop_at_index(PropPkg_get_prop_database(),
+      prop = PropDb_get_prop_at_index(PROP_DB(NuSMVEnv_get_value(env, ENV_PROP_DB)),
                                       get_prop_no(oh));
       if (Prop_get_type(prop) == PropGame_LtlGame) {
         if (Compile_check_if_bool_model_was_built(NULL, false)) {
@@ -385,26 +385,26 @@ void Smgame_BatchMain()
 
     /* Evaluates the Specifications */
     if (!opt_ignore_spec(oh)) {
-      PropDb_verify_all_type(PropPkg_get_prop_database(), Prop_Ctl);
+      PropDb_verify_all_type(PROP_DB(NuSMVEnv_get_value(env, ENV_PROP_DB)), Prop_Ctl);
     }
 
     if (!opt_ignore_compute(oh)) {
-      PropDb_verify_all_type(PropPkg_get_prop_database(), Prop_Compute);
+      PropDb_verify_all_type(PROP_DB(NuSMVEnv_get_value(env, ENV_PROP_DB)), Prop_Compute);
     }
 
     /* Evaluates the LTL specifications */
     if (!opt_ignore_ltlspec(oh)) {
-      PropDb_verify_all_type(PropPkg_get_prop_database(), Prop_Ltl);
+      PropDb_verify_all_type(PROP_DB(NuSMVEnv_get_value(env, ENV_PROP_DB)), Prop_Ltl);
     }
 
     /* Evaluates the PSL specifications */
     if (!opt_ignore_pslspec(oh)) {
-      PropDb_verify_all_type(PropPkg_get_prop_database(), Prop_Psl);
+      PropDb_verify_all_type(PROP_DB(NuSMVEnv_get_value(env, ENV_PROP_DB)), Prop_Psl);
     }
 
     /* Evaluates CHECKINVARIANTS */
     if (!opt_ignore_invar(oh)) {
-      PropDb_verify_all_type(PropPkg_get_prop_database(), Prop_Invar);
+      PropDb_verify_all_type(PROP_DB(NuSMVEnv_get_value(env, ENV_PROP_DB)), Prop_Invar);
     }
 
 #if HAVE_GAME
@@ -414,16 +414,16 @@ void Smgame_BatchMain()
        containing game specifications.
     */
 
-    PropDb_verify_all_type(PropPkg_get_prop_database(), PropGame_ReachTarget);
-    PropDb_verify_all_type(PropPkg_get_prop_database(), PropGame_AvoidTarget);
-    PropDb_verify_all_type(PropPkg_get_prop_database(), PropGame_ReachDeadlock);
-    PropDb_verify_all_type(PropPkg_get_prop_database(), PropGame_AvoidDeadlock);
-    PropDb_verify_all_type(PropPkg_get_prop_database(), PropGame_BuchiGame);
+    PropDb_verify_all_type(PROP_DB(NuSMVEnv_get_value(env, ENV_PROP_DB)), PropGame_ReachTarget);
+    PropDb_verify_all_type(PROP_DB(NuSMVEnv_get_value(env, ENV_PROP_DB)), PropGame_AvoidTarget);
+    PropDb_verify_all_type(PROP_DB(NuSMVEnv_get_value(env, ENV_PROP_DB)), PropGame_ReachDeadlock);
+    PropDb_verify_all_type(PROP_DB(NuSMVEnv_get_value(env, ENV_PROP_DB)), PropGame_AvoidDeadlock);
+    PropDb_verify_all_type(PROP_DB(NuSMVEnv_get_value(env, ENV_PROP_DB)), PropGame_BuchiGame);
     {
       /* If the set of PropGame_LtlGame is non-empty, then build
          Boolean model. */
       lsList tmp;
-      tmp = PropDb_get_props_of_type(PropPkg_get_prop_database(),
+      tmp = PropDb_get_props_of_type(PROP_DB(NuSMVEnv_get_value(env, ENV_PROP_DB)),
                                      PropGame_LtlGame);
       if (lsLength(tmp) > 0) {
         if (Compile_check_if_bool_model_was_built(NULL, false)) {
@@ -432,8 +432,8 @@ void Smgame_BatchMain()
       }
       lsDestroy(tmp, NULL);
     }
-    PropDb_verify_all_type(PropPkg_get_prop_database(), PropGame_LtlGame);
-    PropDb_verify_all_type(PropPkg_get_prop_database(), PropGame_GenReactivity);
+    PropDb_verify_all_type(PROP_DB(NuSMVEnv_get_value(env, ENV_PROP_DB)), PropGame_LtlGame);
+    PropDb_verify_all_type(PROP_DB(NuSMVEnv_get_value(env, ENV_PROP_DB)), PropGame_GenReactivity);
 #endif
   }
 
@@ -475,7 +475,7 @@ void Smgame_BatchMain()
     }
 #endif
 
-    BddFsm_print_reachable_states_info(PropDb_master_get_bdd_fsm(PropPkg_get_prop_database()),
+    BddFsm_print_reachable_states_info(PropDb_master_get_bdd_fsm(PROP_DB(NuSMVEnv_get_value(env, ENV_PROP_DB)),
                                        false, /* do not print states */
                                        false, /* do not print defines */
                                        false, /* do not print formula */

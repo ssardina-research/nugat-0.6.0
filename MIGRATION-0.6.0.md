@@ -61,8 +61,13 @@ Nitin Yadav - nitin.yadav@rmit.edu.au
         
 8.Error: grammar.y : function 'find_string' not found
 
-    *   'find_string' has been replaced by 'UStringMgr_find_string(USTRING_MGR,' and in grammar.y.2.55 with 'UStringMgr_find_string(USTRING_MGR(NuSMVEnv_get_value(__nusmv_parser_env__, ENV_STRING_MGR)),'
+    *   'find_string(' has been replaced 
     
+            by 'UStringMgr_find_string(strings,' with 'strings' declaration 'UStringMgr_ptr strings = USTRING_MGR(NuSMVEnv_get_value(env, ENV_STRING_MGR));'
+            
+            and in grammar.y.2.55 with 'UStringMgr_find_string(USTRING_MGR(NuSMVEnv_get_value(__nusmv_parser_env__, ENV_STRING_MGR)),'
+            
+        
 9.Error : input.l: ‘nusmv_yytext’ undeclared (first use in this function) ------------- ^"#"" "[0-9]+.*\n       sscanf(nusmv_yytext,"# %d",&nusmv_yylineno); 
             
     *   added this variable after 'AM_LFLAGS' in the parser/Makefile(.am and .in)
@@ -223,7 +228,25 @@ Nitin Yadav - nitin.yadav@rmit.edu.au
             ‘node_pkg_get_global_master_wff_printer’ with 'MASTER_PRINTER(NuSMVEnv_get_value(env, ENV_WFF_PRINTER))'
             ‘node_pkg_get_global_master_sexp_printer’ with 'MASTER_PRINTER(NuSMVEnv_get_value(env, ENV_SEXP_PRINTER));'
             ‘Compile_get_global_symb_table’ with 'symb_table'
-            ‘PropPkg_get_prop_database’ with ...    
+            ‘PropPkg_get_prop_database’ with 'PROP_DB(NuSMVEnv_get_value(env, ENV_PROP_DB));'
+                added 'env' parameter for :
+                    'game_pkg_switch_to_prop_db_game'
+                    'Game_Mode_Enter'
+                    'Game_Mode_Exit'
+                    'Game_Quit'
+                    'Game_CommandWriteBooleanModel'
+                    'Game_CommandFlattenHierarchy'
+                    'Game_CommandBuildFlatModel'
+                    'Game_CommandBuildBooleanModel'
+                    'Game_CommandBuildBddModel'
+                    'Game_CommandWriteFlatModel'
+                    'Game_CommandWriteBooleanModel'
+                    'PropDb_create'
+                    'CompileFlatten_quit_flattener'
+                    'Game_CheckGenReactivitySpec'
+                    'command_function_ptr'
+                    
+            'PropPkg_set_prop_database(PROP_DB(dbg))' with 'NuSMVEnv_set_value(env, ENV_PROP_DB,PROP_DB(dbg))'
     
 
 ================================================================================

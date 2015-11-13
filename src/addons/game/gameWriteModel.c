@@ -106,7 +106,7 @@ static bool game_split_and_print_spec ARGS((FILE* out,
   SeeAlso     [ Compile_WriteFlattenModel ]
 
 ******************************************************************************/
-void Game_CommandWriteFlatModel(FILE* ofileid)
+void Game_CommandWriteFlatModel(NuSMVEnv_ptr env,FILE* ofileid)
 {
   SymbTable_ptr st;
   array_t* layer1;
@@ -199,7 +199,7 @@ void Game_CommandWriteFlatModel(FILE* ofileid)
   SeeAlso     [ Compile_WriteBoolModel ]
 
 ******************************************************************************/
-void Game_CommandWriteBooleanModel(FILE* ofileid)
+void Game_CommandWriteBooleanModel(NuSMVEnv_ptr env,FILE* ofileid)
 {
   BddEnc_ptr enc;
   SymbTable_ptr st;
@@ -209,7 +209,7 @@ void Game_CommandWriteBooleanModel(FILE* ofileid)
   nusmv_assert((FILE *) NULL != ofileid);
 
   bool_fsm = PropDbGame_master_get_game_bool_sexp_fsm( \
-                                     PROP_DB_GAME(PropPkg_get_prop_database()));
+                                     PROP_DB_GAME(NuSMVEnv_get_value(env, ENV_PROP_DB)));
   enc = BddFsm_get_bdd_encoding(BDD_FSM(bool_fsm));
   st = BaseEnc_get_symb_table(BASE_ENC(enc));
 

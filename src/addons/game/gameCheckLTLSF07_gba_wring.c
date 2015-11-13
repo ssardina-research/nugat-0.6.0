@@ -292,7 +292,7 @@ static void game_sf07_gba_wring_wif_rec_id
 ARGS((Game_SF07_gba_wring_ptr self, char* id));
 
 static int game_sf07_gba_wring_varnamestring2nodeptr
-ARGS((char* s, boolean delimiters, int* pos, node_ptr* literal));
+ARGS((NuSMVEnv_ptr env, char* s, boolean delimiters, int* pos, node_ptr* literal));
 
 /*---------------------------------------------------------------------------*/
 /* Definition of exported functions                                          */
@@ -837,10 +837,10 @@ void Game_SF07_gba_wring_parse_output_file(Game_SF07_gba_wring_ptr self)
   GAME_SF07_GBA_WRING_CHECK_INSTANCE(self);
   nusmv_assert(self->output_file_name != (char*) NULL);
 
-  NuSMVEnv_ptr const env = EnvObject_get_environment(ENV_OBJECT(self->gba));
-  ErrorMgr_ptr const errmgr =
-            ERROR_MGR(NuSMVEnv_get_value(env, ENV_ERROR_MANAGER));
+  const NuSMVEnv_ptr env = EnvObject_get_environment(ENV_OBJECT(self->gba));
+  const ErrorMgr_ptr errmgr = ERROR_MGR(NuSMVEnv_get_value(env, ENV_ERROR_MANAGER));
   const NodeMgr_ptr nodemgr = NODE_MGR(NuSMVEnv_get_value(env, ENV_NODE_MGR));
+  const UStringMgr_ptr strings = USTRING_MGR(NuSMVEnv_get_value(env, ENV_STRING_MGR));
 
   /* Open output file. */
   self->output_file = fopen(self->output_file_name, "r");
@@ -919,7 +919,7 @@ void Game_SF07_gba_wring_parse_output_file(Game_SF07_gba_wring_ptr self)
       string_ptr state_id;
       node_ptr label;
 
-      state_id = UStringMgr_find_string(USTRING_MGR,self->po_s);
+      state_id = UStringMgr_find_string(strings,self->po_s);
       game_sf07_gba_wring_clear_po_s(self);
 
       res = game_sf07_gba_wring_read_token(self,
@@ -992,7 +992,7 @@ void Game_SF07_gba_wring_parse_output_file(Game_SF07_gba_wring_ptr self)
             negative = (self->po_s[strlen(self->po_s) - 1] == '0');
             /* Remove =0/1 part. */
             self->po_s[strlen(self->po_s) - 2] = '\0';
-            res = game_sf07_gba_wring_varnamestring2nodeptr(nodemgr,self->po_s,
+            res = game_sf07_gba_wring_varnamestring2nodeptr(env,self->po_s,
                                                             false,
                                                             &pos,
                                                             &literal);
@@ -1062,7 +1062,7 @@ void Game_SF07_gba_wring_parse_output_file(Game_SF07_gba_wring_ptr self)
       /* Source state. Needed. */
       res = game_sf07_gba_wring_read_state_id(self);
       if (res != 0) { goto ERROR_PARSER; }
-      source_state_id = UStringMgr_find_string(USTRING_MGR,self->po_s);
+      source_state_id = UStringMgr_find_string(strings,self->po_s);
       source_state =
         GAME_SF07_GBA_STATE(find_assoc(state_id_2_state,
                                        (node_ptr) source_state_id));
@@ -1097,7 +1097,7 @@ void Game_SF07_gba_wring_parse_output_file(Game_SF07_gba_wring_ptr self)
           Game_SF07_gba_state_ptr target_state;
           Game_SF07_gba_transition_ptr transition;
 
-          target_state_id = UStringMgr_find_string(USTRING_MGR,self->po_s);
+          target_state_id = UStringMgr_find_string(strings,self->po_s);
           target_state =
             GAME_SF07_GBA_STATE(find_assoc(state_id_2_state,
                                            (node_ptr) target_state_id));
@@ -1158,7 +1158,7 @@ void Game_SF07_gba_wring_parse_output_file(Game_SF07_gba_wring_ptr self)
           string_ptr fair_state_id;
           Game_SF07_gba_state_ptr fair_state;
 
-          fair_state_id = UStringMgr_find_string(USTRING_MGR,self->po_s);
+          fair_state_id = UStringMgr_find_string(strings,self->po_s);
           fair_state =
             GAME_SF07_GBA_STATE(find_assoc(state_id_2_state,
                                            (node_ptr) fair_state_id));
@@ -2175,13 +2175,16 @@ static void game_sf07_gba_wring_wif_rec_id(Game_SF07_gba_wring_ptr self,
   SeeAlso     [ game_sf07_gba_wring_wif_rec_nodeptr ]
 
 ******************************************************************************/
-static int game_sf07_gba_wring_varnamestring2nodeptr(NodeMgr_ptr nodemgr,
+static int game_sf07_gba_wring_varnamestring2nodeptr(NuSMVEnv_ptr env,
                                                      char* s,
                                                      boolean delimiters,
                                                      int* pos,
                                                      node_ptr* literal)
 {
   node_ptr res;
+
+  const NodeMgr_ptr nodemgr = NODE_MGR(NuSMVEnv_get_value(env, ENV_NODE_MGR));
+  const UStringMgr_ptr strings = USTRING_MGR(NuSMVEnv_get_value(env, ENV_STRING_MGR));
 
   nusmv_assert(s != (char*) NULL);
   nusmv_assert(pos != (int*) NULL);
@@ -2212,10 +2215,10 @@ static int game_sf07_gba_wring_varnamestring2nodeptr(NodeMgr_ptr nodemgr,
         goto game_sf07_gba_wring_varnamestring2nodeptr_return_1;
       }
       *pos += 2;
-      if (game_sf07_gba_wring_varnamestring2nodeptr(nodemgr,s, true, pos, &lhs) != 0) {
+      if (game_sf07_gba_wring_varnamestring2nodeptr(env,s, true, pos, &lhs) != 0) {
         goto game_sf07_gba_wring_varnamestring2nodeptr_return_1;
       }
-      if (game_sf07_gba_wring_varnamestring2nodeptr(nodemgr,s, true, pos, &rhs) != 0) {
+      if (game_sf07_gba_wring_varnamestring2nodeptr(env,s, true, pos, &rhs) != 0) {
         goto game_sf07_gba_wring_varnamestring2nodeptr_return_1;
       }
     } else if (strncmp(&(s[*pos]), "ATOM", 4) == 0) {
@@ -2239,7 +2242,7 @@ static int game_sf07_gba_wring_varnamestring2nodeptr(NodeMgr_ptr nodemgr,
         }
 
         *pos_first_zr = '\0'; /* simulate shorter s */
-        lhs = (node_ptr) UStringMgr_find_string(USTRING_MGR,&(s[*pos]));
+        lhs = (node_ptr) UStringMgr_find_string(strings,&(s[*pos]));
         *pos = strlen(s);
         *pos_first_zr = 'Z'; /* restore s */
 
@@ -2248,7 +2251,7 @@ static int game_sf07_gba_wring_varnamestring2nodeptr(NodeMgr_ptr nodemgr,
         }
         *pos += 2;
       }
-      if (game_sf07_gba_wring_varnamestring2nodeptr(nodemgr,s, true, pos, &rhs) != 0) {
+      if (game_sf07_gba_wring_varnamestring2nodeptr(env,s, true, pos, &rhs) != 0) {
         goto game_sf07_gba_wring_varnamestring2nodeptr_return_1;
       }
       if (rhs != Nil) {
@@ -2261,7 +2264,7 @@ static int game_sf07_gba_wring_varnamestring2nodeptr(NodeMgr_ptr nodemgr,
         goto game_sf07_gba_wring_varnamestring2nodeptr_return_1;
       }
       *pos += 2;
-      if (game_sf07_gba_wring_varnamestring2nodeptr(nodemgr,s, true, pos, &lhs) != 0) {
+      if (game_sf07_gba_wring_varnamestring2nodeptr(env,s, true, pos, &lhs) != 0) {
         goto game_sf07_gba_wring_varnamestring2nodeptr_return_1;
       }
       if (lhs == Nil) {
@@ -2308,10 +2311,10 @@ static int game_sf07_gba_wring_varnamestring2nodeptr(NodeMgr_ptr nodemgr,
         goto game_sf07_gba_wring_varnamestring2nodeptr_return_1;
       }
       *pos += 2;
-      if (game_sf07_gba_wring_varnamestring2nodeptr(nodemgr,s, true, pos, &lhs) != 0) {
+      if (game_sf07_gba_wring_varnamestring2nodeptr(env,s, true, pos, &lhs) != 0) {
         goto game_sf07_gba_wring_varnamestring2nodeptr_return_1;
       }
-      if (game_sf07_gba_wring_varnamestring2nodeptr(nodemgr,s, true, pos, &rhs) != 0) {
+      if (game_sf07_gba_wring_varnamestring2nodeptr(env,s, true, pos, &rhs) != 0) {
         goto game_sf07_gba_wring_varnamestring2nodeptr_return_1;
       }
     } else if (strncmp(&(s[*pos]), "NUMBER", 6) == 0) {
@@ -2355,7 +2358,7 @@ static int game_sf07_gba_wring_varnamestring2nodeptr(NodeMgr_ptr nodemgr,
         }
         *pos += 2;
       }
-      if (game_sf07_gba_wring_varnamestring2nodeptr(nodemgr,s, true, pos, &rhs) != 0) {
+      if (game_sf07_gba_wring_varnamestring2nodeptr(env,s, true, pos, &rhs) != 0) {
         goto game_sf07_gba_wring_varnamestring2nodeptr_return_1;
       }
       if (rhs != Nil) {

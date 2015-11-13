@@ -149,35 +149,34 @@ typedef enum Game_SF07_StrategyPrintingMode_TAG Game_SF07_StrategyPrintingMode;
 /* Function prototypes                                                       */
 /*---------------------------------------------------------------------------*/
 EXTERN void Game_Init ARGS((void));
-EXTERN void Game_Quit ARGS((void));
-EXTERN void Game_Mode_Enter ARGS((void));
-EXTERN void Game_Mode_Exit ARGS((void));
+EXTERN void Game_Quit ARGS((NuSMVEnv_ptr env));
+EXTERN void Game_Mode_Enter ARGS((NuSMVEnv_ptr env));
+EXTERN void Game_Mode_Exit ARGS((NuSMVEnv_ptr env));
 
 /* various commands used to create the Game FSMs */
-EXTERN int Game_CommandFlattenHierarchy ARGS((void));
+EXTERN int Game_CommandFlattenHierarchy ARGS((NuSMVEnv_ptr env));
 EXTERN int Game_CommandEncodeVariables ARGS((char* input_order_file_name));
-EXTERN void Game_CommandBuildFlatModel ARGS((void));
-EXTERN void Game_CommandBuildBooleanModel ARGS((void));
-EXTERN void Game_CommandBuildBddModel ARGS((void));
+EXTERN void Game_CommandBuildFlatModel ARGS((NuSMVEnv_ptr env));
+EXTERN void Game_CommandBuildBooleanModel ARGS((NuSMVEnv_ptr env));
+EXTERN void Game_CommandBuildBddModel ARGS((NuSMVEnv_ptr env));
 
-EXTERN void Game_CommandWriteFlatModel ARGS((FILE* ofileid));
-EXTERN void Game_CommandWriteBooleanModel ARGS((FILE* ofileid));
+EXTERN void Game_CommandWriteFlatModel ARGS((NuSMVEnv_ptr env,FILE* ofileid));
+EXTERN void Game_CommandWriteBooleanModel ARGS((NuSMVEnv_ptr env,FILE* ofileid));
 
 /* checking specification */
 EXTERN void
-Game_CheckReachTargetSpec ARGS((PropGame_ptr prop, gameParams_ptr params));
+Game_CheckReachTargetSpec ARGS((NuSMVEnv_ptr env,PropGame_ptr prop, gameParams_ptr params));
+
+EXTERN void Game_CheckAvoidTargetSpec ARGS((NuSMVEnv_ptr env,PropGame_ptr prop, gameParams_ptr params));
 
 EXTERN void
-Game_CheckAvoidTargetSpec ARGS((PropGame_ptr prop, gameParams_ptr params));
+Game_CheckReachDeadlockSpec ARGS((NuSMVEnv_ptr env,PropGame_ptr prop, gameParams_ptr params));
 
 EXTERN void
-Game_CheckReachDeadlockSpec ARGS((PropGame_ptr prop, gameParams_ptr params));
+Game_CheckAvoidDeadlockSpec ARGS((NuSMVEnv_ptr env,PropGame_ptr prop, gameParams_ptr params));
 
 EXTERN void
-Game_CheckAvoidDeadlockSpec ARGS((PropGame_ptr prop, gameParams_ptr params));
-
-EXTERN void
-Game_CheckBuchiGameSpec ARGS((PropGame_ptr prop, gameParams_ptr params));
+Game_CheckBuchiGameSpec ARGS((NuSMVEnv_ptr env,PropGame_ptr prop, gameParams_ptr params));
 
 EXTERN void Game_CheckLtlGameSpecSF07 ARGS((PropGame_ptr prop,
                                             gameParams_ptr params,
@@ -186,7 +185,7 @@ EXTERN void Game_CheckLtlGameSpecSF07 ARGS((PropGame_ptr prop,
                                             Game_Who w));
 
 EXTERN void
-Game_CheckGenReactivitySpec ARGS((PropGame_ptr prop, gameParams_ptr params));
+Game_CheckGenReactivitySpec ARGS((NuSMVEnv_ptr env, PropGame_ptr prop, gameParams_ptr params));
 
 EXTERN int Game_CheckGameSpecAndComputeCores ARGS((NodeMgr_ptr nodemgr,
                                                    PropGame_ptr prop,

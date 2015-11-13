@@ -73,7 +73,7 @@ static char rcsid[] UTIL_UNUSED = "$Id: gameCmd.c,v 1.1.2.10 2010-02-08 12:25:25
   SeeAlso     [ game_invoke_game_command ]
 
 ******************************************************************************/
-typedef void (*command_function_ptr) (PropGame_ptr prop, gameParams_ptr params);
+typedef void (*command_function_ptr) (NuSMVEnv_ptr env, PropGame_ptr prop, gameParams_ptr params);
 
 /*---------------------------------------------------------------------------*/
 /* Static function prototypes                                                */
@@ -144,7 +144,7 @@ static int CommandGameBuildBooleanModel ARGS((NuSMVEnv_ptr env,int argc, char **
 /*---------------------------------------------------------------------------*/
 /* Variable declarations                                                     */
 /*---------------------------------------------------------------------------*/
-
+;
 /**Variable********************************************************************
 
   Synopsis    [ These are the generic commands, i.e., those that apply
@@ -556,7 +556,7 @@ static int CommandGameFlattenHierarchy(NuSMVEnv_ptr env,int argc, char** argv)
         return 1;
     }
 
-    return Game_CommandFlattenHierarchy(); /* does the work */
+    return Game_CommandFlattenHierarchy(env); /* does the work */
 }
 
 static int UsageGameFlattenHierarchy()
@@ -779,10 +779,10 @@ static int CommandGameBuildModel(NuSMVEnv_ptr env,int argc, char** argv)
         }
     }
 
-    Game_CommandBuildFlatModel();
+    Game_CommandBuildFlatModel(env);
     cmp_struct_set_build_flat_model(cmps);
 
-    Game_CommandBuildBddModel();
+    Game_CommandBuildBddModel(env);
     cmp_struct_set_build_model(cmps);
 
     if (opt_verbose_level_gt(OptsHandler_create(), 0)) {
@@ -868,7 +868,7 @@ static int CommandGameBuildFlatModel(NuSMVEnv_ptr env,int argc, char** argv)
         return 1;
     }
 
-    Game_CommandBuildFlatModel();
+    Game_CommandBuildFlatModel(env);
     cmp_struct_set_build_flat_model(cmps);
 
     if (opt_verbose_level_gt(OptsHandler_create(), 0)) {
@@ -944,10 +944,10 @@ static int CommandGameBuildBooleanModel(NuSMVEnv_ptr env,int argc, char ** argv)
         return 1;
     }
 
-    Game_CommandBuildFlatModel();
+    Game_CommandBuildFlatModel(env);
     cmp_struct_set_build_flat_model(cmps);
 
-    Game_CommandBuildBooleanModel();
+    Game_CommandBuildBooleanModel(env);
     cmp_struct_set_build_bool_model(cmps);
 
     if (opt_verbose_level_gt(OptsHandler_create(), 0)) {
@@ -1059,7 +1059,7 @@ static int CommandGameWriteModelFlat(NuSMVEnv_ptr env,int argc, char **argv)
     }
 
     CATCH(errmgr) {
-            Game_CommandWriteFlatModel(ofileid);
+            Game_CommandWriteFlatModel(env,ofileid);
 
             if (opt_verbose_level_gt(OptsHandler_create(), 0)) {
                 fprintf(stderr, ".. done.\n");
@@ -1214,7 +1214,7 @@ static int CommandGameWriteModelFlatBool(NuSMVEnv_ptr env,int argc, char** argv)
     }
 
     CATCH(errmgr) {
-            Game_CommandWriteBooleanModel(ofileid);
+            Game_CommandWriteBooleanModel(env,ofileid);
 
             if (opt_verbose_level_gt(OptsHandler_create(), 0)) {
                 fprintf(stderr, ".. done.\n");
@@ -2683,7 +2683,7 @@ static int game_invoke_game_command(NuSMVEnv_ptr env,int argc, char **argv, Prop
                              (strategy_stream == (FILE*) NULL)) ||
                              ((strategyFileName != NIL(char)) &&
                              (strategy_stream != (FILE*) NULL)));
-                command_function(PROP_GAME(p), &params);
+                command_function(env,PROP_GAME(p), &params);
             }
         FAIL(errmgr) {
             goto game_invoke_game_command_return_1;
@@ -2710,7 +2710,7 @@ static int game_invoke_game_command(NuSMVEnv_ptr env,int argc, char **argv, Prop
                     Prop_ptr p = PropDb_get_prop_at_index(prop_db, i);
 
                     if (Prop_get_type(p) == type) {
-                        command_function(PROP_GAME(p), &params);
+                        command_function(env,PROP_GAME(p), &params);
                     }
                 }
             }

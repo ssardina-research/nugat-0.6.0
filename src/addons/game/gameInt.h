@@ -429,7 +429,7 @@ EXTERN GameBddFsm_ptr Game_CreateGameBddFsm ARGS((const FsmBuilder_ptr self,
                                                   const TransType trans_type));
 
 EXTERN void
-Game_BeforeCheckingSpec ARGS((PropGame_ptr prop));
+Game_BeforeCheckingSpec ARGS((NuSMVEnv_ptr env,PropGame_ptr prop));
 
 EXTERN void Game_AfterCheckingSpec ARGS((PropGame_ptr prop,
                                          Game_RealizabilityStatus status,

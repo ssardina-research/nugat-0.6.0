@@ -64,6 +64,7 @@
 #include "utils/avl.h"
 #include "utils/error.h"
 #include "utils/ustring.h"
+#include "utils/UStringMgr.h"
 #include "utils/NodeList.h"
 
 #include <stdio.h>
@@ -110,9 +111,9 @@ EXTERN FILE* nusmv_stdout;
 /*---------------------------------------------------------------------------*/
 /* Static function prototypes                                                */
 /*---------------------------------------------------------------------------*/
-static void game_pkg_switch_to_prop_db_game ARGS((void));
-static void game_pkg_switch_to_prop_db ARGS((void));
-static void game_pkg_switch_to_game_cmds ARGS((NodeList_ptr generic,
+static void game_pkg_switch_to_prop_db_game ARGS((NuSMVEnv_ptr env));
+static void game_pkg_switch_to_prop_db ARGS((NuSMVEnv_ptr env));
+static void game_pkg_switch_to_game_cmds ARGS((NuSMVEnv_ptr env,NodeList_ptr generic,
                                                NodeList_ptr dependent,
                                                NodeList_ptr specific));
 static void game_pkg_switch_from_game_cmds ARGS((NodeList_ptr dependent,
@@ -144,6 +145,8 @@ void Game_Init(void)
     ErrorMgr_ptr const errmgr =
             ERROR_MGR(NuSMVEnv_get_value(env, ENV_ERROR_MANAGER));
 
+    SymbTable_ptr symb_table = SYMB_TABLE(NuSMVEnv_get_value(env, ENV_SYMB_TABLE));
+
   if (opt_verbose_level_gt(OptsHandler_create(), 0)) {
     fprintf(nusmv_stderr, "Initializing the Game package... \n");
   }
@@ -157,10 +160,10 @@ void Game_Init(void)
   game_pkg_add_cmds(Game_cmd_get_generic_commands());
 
   { /* walkers */
-    MasterPrinter_ptr mp = node_pkg_get_global_master_wff_printer();
-    MasterPrinter_ptr msp = node_pkg_get_global_master_sexp_printer();
+    MasterPrinter_ptr mp = MASTER_PRINTER(NuSMVEnv_get_value(env, ENV_WFF_PRINTER));
+    MasterPrinter_ptr msp = MASTER_PRINTER(NuSMVEnv_get_value(env, ENV_SEXP_PRINTER));
     TypeChecker_ptr tc =
-      SymbTable_get_type_checker(Compile_get_global_symb_table());
+      SymbTable_get_type_checker(symb_table);
 
     CATCH(errmgr) {
       NodeWalker_ptr walker;
@@ -176,7 +179,7 @@ void Game_Init(void)
     }
 
     FAIL(errmgr) {
-      Game_Quit();
+      Game_Quit(env);
       ErrorMgr_nusmv_exit(errmgr,1);
     }
   }
@@ -193,14 +196,14 @@ void Game_Init(void)
   SeeAlso     [ Game_Init, Game_Mode_Exit ]
 
 ******************************************************************************/
-void Game_Quit(void)
+void Game_Quit(NuSMVEnv_ptr env)
 {
   if (opt_verbose_level_gt(OptsHandler_create(), 0)) {
     fprintf(nusmv_stderr, "Quitting the Game package... \n");
   }
 
   if (opt_game_game(OptsHandler_create())) {
-    Game_Mode_Exit();
+    Game_Mode_Exit(env);
   }
 
   game_pkg_remove_cmds(Game_cmd_get_generic_commands());
@@ -224,7 +227,7 @@ void Game_Quit(void)
   SeeAlso     [ Game_Mode_Exit, Game_Init ]
 
 ******************************************************************************/
-void Game_Mode_Enter(void)
+void Game_Mode_Enter(NuSMVEnv_ptr env)
 {
   nusmv_assert(!opt_game_game(OptsHandler_create()));
 
@@ -232,8 +235,9 @@ void Game_Mode_Enter(void)
     fprintf(nusmv_stderr, "Entering game mode...\n");
   }
 
-  game_pkg_switch_to_prop_db_game();
-  game_pkg_switch_to_game_cmds(Game_cmd_get_generic_commands(),
+  game_pkg_switch_to_prop_db_game(env);
+  game_pkg_switch_to_game_cmds(env,
+                               Game_cmd_get_generic_commands(),
                                Game_cmd_get_dependent_commands(),
                                Game_cmd_get_specific_commands());
   set_game_game(OptsHandler_create());
@@ -259,7 +263,7 @@ void Game_Mode_Enter(void)
   SeeAlso     [ Game_Mode_Enter, Game_Quit ]
 
 ******************************************************************************/
-void Game_Mode_Exit(void)
+void Game_Mode_Exit(NuSMVEnv_ptr env)
 {
   nusmv_assert(opt_game_game(OptsHandler_create()));
 
@@ -271,7 +275,7 @@ void Game_Mode_Exit(void)
     GameHierarchy_destroy(mainGameHierarchy);
     mainGameHierarchy = GAME_HIERARCHY(NULL);
   }
-  game_pkg_switch_to_prop_db();
+  game_pkg_switch_to_prop_db(env);
   game_pkg_switch_from_game_cmds(Game_cmd_get_dependent_commands(),
                                  Game_cmd_get_specific_commands());
   unset_game_game(OptsHandler_create());
@@ -299,17 +303,17 @@ void Game_Mode_Exit(void)
   SeeAlso     [ Game_Mode_Enter, game_pkg_switch_to_prop_db ]
 
 ******************************************************************************/
-static void game_pkg_switch_to_prop_db_game()
+static void game_pkg_switch_to_prop_db_game(NuSMVEnv_ptr env)
 {
   PropDb_ptr db;
   PropDbGame_ptr dbg;
 
-  db = PropPkg_get_prop_database();
+  db = PROP_DB(NuSMVEnv_get_value(env, ENV_PROP_DB));
   if (db != PROP_DB(NULL)) {
     PropDb_destroy(db);
   }
   dbg = PropDbGame_create();
-  PropPkg_set_prop_database(PROP_DB(dbg));
+  NuSMVEnv_set_value(env, ENV_PROP_DB,PROP_DB(dbg));
 }
 
 /**Function********************************************************************
@@ -323,17 +327,17 @@ static void game_pkg_switch_to_prop_db_game()
   SeeAlso     [ Game_Mode_Exit, game_pkg_switch_to_prop_db_game ]
 
 ******************************************************************************/
-static void game_pkg_switch_to_prop_db()
+static void game_pkg_switch_to_prop_db(NuSMVEnv_ptr env)
 {
   PropDbGame_ptr dbg;
   PropDb_ptr db;
 
-  dbg = PROP_DB_GAME(PropPkg_get_prop_database());
+  dbg = PROP_DB_GAME(NuSMVEnv_get_value(env, ENV_PROP_DB));
   if (dbg != PROP_DB_GAME(NULL)) {
     PropDbGame_destroy(dbg);
   }
-  db = PropDb_create();
-  PropPkg_set_prop_database(db);
+  db = PropDb_create(env);
+  NuSMVEnv_set_value(env, ENV_PROP_DB,PROP_DB(db));
 }
 
 /*---------------------------------------------------------------------------*/
@@ -375,7 +379,8 @@ static void game_pkg_switch_to_prop_db()
   SeeAlso     [ Game_Mode_Enter, game_pkg_switch_from_game_cmds ]
 
 ******************************************************************************/
-static void game_pkg_switch_to_game_cmds(NodeList_ptr generic,
+static void game_pkg_switch_to_game_cmds(NuSMVEnv_ptr env,
+                                         NodeList_ptr generic,
                                          NodeList_ptr dependent,
                                          NodeList_ptr specific)
 {
@@ -383,6 +388,7 @@ static void game_pkg_switch_to_game_cmds(NodeList_ptr generic,
   Set_t names_dependent_set;
   Set_t names_gen_dep_set;
   Set_t names_specific_set;
+  UStringMgr_ptr strings = USTRING_MGR(NuSMVEnv_get_value(env, ENV_STRING_MGR));
 
   nusmv_assert(generic != NODE_LIST(NULL));
   nusmv_assert(dependent != NODE_LIST(NULL));
@@ -400,7 +406,7 @@ static void game_pkg_switch_to_game_cmds(NodeList_ptr generic,
       descr = (CommandDescr_t*) NodeList_get_elem_at(generic, iter);
       names_generic_set =
         Set_AddMember(names_generic_set,
-                      (Set_Element_t) find_string((char*) descr->name));
+                      (Set_Element_t) UStringMgr_find_string(strings,(char*) descr->name));
     }
   }
 
@@ -416,7 +422,7 @@ static void game_pkg_switch_to_game_cmds(NodeList_ptr generic,
       descr = (CommandDescr_t*) NodeList_get_elem_at(dependent, iter);
       names_dependent_set =
         Set_AddMember(names_dependent_set,
-                      (Set_Element_t) find_string((char*) descr->name));
+                      (Set_Element_t) UStringMgr_find_string(strings,(char*) descr->name));
     }
   }
 
@@ -440,9 +446,9 @@ static void game_pkg_switch_to_game_cmds(NodeList_ptr generic,
 
     names_specific_set = Set_MakeEmpty();
     avl_foreach_item(cmdCommandTable, gen, AVL_FORWARD, &key, (char**) NULL) {
-      if (!Set_IsMember(names_gen_dep_set, (Set_Element_t) UStringMgr_find_string(USTRING_MGR,key))) {
+      if (!Set_IsMember(names_gen_dep_set, (Set_Element_t) UStringMgr_find_string(strings,key))) {
         names_specific_set = Set_AddMember(names_specific_set,
-                                           (Set_Element_t) UStringMgr_find_string(USTRING_MGR,key));
+                                           (Set_Element_t) UStringMgr_find_string(strings,key));
       }
     }
   }

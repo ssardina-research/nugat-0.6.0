@@ -7,7 +7,7 @@ game_begin    : {
   }
 #if HAVE_GAME
   if (opt_game_game(OptsHandler_create())) {
-    Game_Mode_Exit();
+    Game_Mode_Exit(NuSMVEnv_get_value(__nusmv_parser_env__, ENV_STRING_MGR));
   }
   game_parser_spec_list = Nil;
   game_parser_player_1 = Nil;
@@ -97,7 +97,7 @@ game_definition
                          nusmv_yyerror_lined("redefinition of a GAME", $1);
                        }
                        else {
-                         Game_Mode_Enter();
+                         Game_Mode_Enter(NuSMVEnv_get_value(__nusmv_parser_env__, ENV_STRING_MGR));
                        }
 #else
                        nusmv_yyerror_lined("GAME declaration cannot be processes "

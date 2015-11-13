@@ -852,7 +852,7 @@ static void Game_SF07_StructCheckLTLGameSF07_run_iteration
     Game_SF07_StructCheckLTLGameSF07_construct_ba(self);
     Game_SF07_StructCheckLTLGameSF07_construct_goal(self);
     Game_SF07_StructCheckLTLGameSF07_construct_monitor_sexp(self);
-    Game_SF07_StructCheckLTLGameSF07_construct_monitor_game_bdd_fsm(self);
+    Game_SF07_StructCheckLTLGameSF07_construct_monitor_game_bdd_fsm(env,self);
     Game_SF07_StructCheckLTLGameSF07_construct_product_game_bdd_fsm(self);
     Game_SF07_StructCheckLTLGameSF07_check(self);
     if (self->curr_goal_realizability == GAME_REALIZABLE) {
@@ -1130,6 +1130,7 @@ static void Game_SF07_StructCheckLTLGameSF07_construct_monitor_sexp
     const NuSMVEnv_ptr env = EnvObject_get_environment(ENV_OBJECT(self));
     const NodeMgr_ptr nodemgr = NODE_MGR(NuSMVEnv_get_value(env, ENV_NODE_MGR));
     const MasterPrinter_ptr wffprint = MASTER_PRINTER(NuSMVEnv_get_value(env, ENV_WFF_PRINTER));
+    const UStringMgr_ptr strings = USTRING_MGR(NuSMVEnv_get_value(env, ENV_STRING_MGR));
 
   GAME_SF07_STRUCT_CHECK_LTL_GAME_SF07_CHECK_INSTANCE(self);
   if (self->curr_player == PLAYER_1) {
@@ -1171,7 +1172,7 @@ static void Game_SF07_StructCheckLTLGameSF07_construct_monitor_sexp
     monitor = new_node(nodemgr,MODULE,
                        new_node(nodemgr,MODTYPE,
                                 new_node(nodemgr,ATOM,
-                                         (node_ptr) UStringMgr_find_string(USTRING_MGR,module_name),
+                                         (node_ptr) UStringMgr_find_string(strings,module_name),
                                          Nil),
                                 Nil),
                        monitor);
@@ -1213,7 +1214,7 @@ static void Game_SF07_StructCheckLTLGameSF07_construct_monitor_sexp
     monitor = new_node(nodemgr,MODULE,
                        new_node(nodemgr,MODTYPE,
                                 new_node(nodemgr,ATOM,
-                                         (node_ptr) UStringMgr_find_string(USTRING_MGR,module_name),
+                                         (node_ptr) UStringMgr_find_string(strings,module_name),
                                          Nil),
                                 Nil),
                        Nil);
@@ -1746,7 +1747,7 @@ Game_SF07_StructCheckLTLGameSF07_construct_monitor_trans_statements
 
 ******************************************************************************/
 static void Game_SF07_StructCheckLTLGameSF07_construct_monitor_game_bdd_fsm
-(Game_SF07_StructCheckLTLGameSF07_ptr self)
+(NuSMVEnv_ptr env, Game_SF07_StructCheckLTLGameSF07_ptr self)
 {
   FlatHierarchy_ptr player1_monitor_flat_hierarchy;
   FlatHierarchy_ptr player2_monitor_flat_hierarchy;
@@ -1806,7 +1807,7 @@ static void Game_SF07_StructCheckLTLGameSF07_construct_monitor_game_bdd_fsm
   /* Retrieve self->prop's fsms. */
   prop_game_bdd_fsm = PropGame_get_game_bdd_fsm(self->prop);
   if (prop_game_bdd_fsm == GAME_BDD_FSM(NULL)) {
-    PropDb_set_fsm_to_master(PropPkg_get_prop_database(), PROP(self->prop));
+    PropDb_set_fsm_to_master(PROP_DB(NuSMVEnv_get_value(env, ENV_PROP_DB)), PROP(self->prop));
     prop_game_bdd_fsm = PropGame_get_game_bdd_fsm(self->prop);
   }
   GAME_BDD_FSM_CHECK_INSTANCE(prop_game_bdd_fsm);
@@ -2139,6 +2140,7 @@ static node_ptr Game_SF07_StructCheckLTLGameSF07_gba_state_to_var_name
 
   const NuSMVEnv_ptr env = EnvObject_get_environment(ENV_OBJECT(self));
   const NodeMgr_ptr nodemgr = NODE_MGR(NuSMVEnv_get_value(env, ENV_NODE_MGR));
+  const UStringMgr_ptr strings = USTRING_MGR(NuSMVEnv_get_value(env, ENV_STRING_MGR));
 
   GAME_SF07_STRUCT_CHECK_LTL_GAME_SF07_CHECK_INSTANCE(self);
   GAME_SF07_GBA_STATE_CHECK_INSTANCE(state);
@@ -2157,7 +2159,7 @@ static node_ptr Game_SF07_StructCheckLTLGameSF07_gba_state_to_var_name
           state_id_s);
 
   res = find_node(nodemgr,ATOM,
-                  (node_ptr) UStringMgr_find_string(USTRING_MGR,res_s),
+                  (node_ptr) UStringMgr_find_string(strings,res_s),
                   Nil);
 
   FREE(res_s);

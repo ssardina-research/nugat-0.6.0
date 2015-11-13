@@ -43,6 +43,7 @@
 # include "config.h"
 #endif
 
+#include <code/nusmv/core/bmc/bmcInt.h>
 #include "gameInt.h"
 #include "GameHierarchy.h"
 #include "PropDbGame.h"
@@ -103,10 +104,10 @@ EXTERN int yylineno;
   SeeAlso     [ compile_create_flat_model, Game_CommandBuildBddModel ]
 
 ******************************************************************************/
-void Game_CommandBuildFlatModel(void)
+void Game_CommandBuildFlatModel(NuSMVEnv_ptr env)
 {
   if (GAME_SEXP_FSM(NULL) == PropDbGame_master_get_game_scalar_sexp_fsm( \
-                                   PROP_DB_GAME(PropPkg_get_prop_database()))) {
+                                   PROP_DB_GAME(NuSMVEnv_get_value(env, ENV_PROP_DB)))) {
     SymbTable_ptr st;
     SymbLayer_ptr model_layer_1;
     SymbLayer_ptr model_layer_2;
@@ -151,7 +152,7 @@ void Game_CommandBuildFlatModel(void)
                          set2);
 
     PropDbGame_master_set_game_scalar_sexp_fsm( \
-                         PROP_DB_GAME(PropPkg_get_prop_database()), scalar_fsm);
+                         PROP_DB_GAME(NuSMVEnv_get_value(env, ENV_PROP_DB)), scalar_fsm);
 
     Set_ReleaseSet(set2);
     Set_ReleaseSet(set1);
@@ -178,10 +179,10 @@ void Game_CommandBuildFlatModel(void)
   SeeAlso     [ compile_create_boolean_model, Game_CommandBuildFlatModel ]
 
 ******************************************************************************/
-void Game_CommandBuildBooleanModel(void)
+void Game_CommandBuildBooleanModel(NuSMVEnv_ptr env)
 {
   if (GAME_SEXP_FSM(NULL) == PropDbGame_master_get_game_bool_sexp_fsm( \
-                                   PROP_DB_GAME(PropPkg_get_prop_database()))) {
+                                   PROP_DB_GAME(NuSMVEnv_get_value(env, ENV_PROP_DB)))) {
     GameSexpFsm_ptr scalar_fsm;
     GameSexpFsm_ptr bool_fsm;
     SymbTable_ptr st;
@@ -210,7 +211,7 @@ void Game_CommandBuildBooleanModel(void)
 
     /* convert existing scalar FSM to the boolean FSM */
     scalar_fsm = PropDbGame_master_get_game_scalar_sexp_fsm( \
-                                     PROP_DB_GAME(PropPkg_get_prop_database()));
+                                     PROP_DB_GAME(NuSMVEnv_get_value(env, ENV_PROP_DB)));
 
     bool_fsm = GameSexpFsm_scalar_to_boolean(scalar_fsm,
                                              enc,
@@ -218,7 +219,7 @@ void Game_CommandBuildBooleanModel(void)
                                              determ_layer_2);
 
     PropDbGame_master_set_game_bool_sexp_fsm( \
-                           PROP_DB_GAME(PropPkg_get_prop_database()), bool_fsm);
+                           PROP_DB_GAME(NuSMVEnv_get_value(env, ENV_PROP_DB)), bool_fsm);
 
     /* commits layers to the encodings */
     BaseEnc_commit_layer(BASE_ENC(Enc_get_bool_encoding()),
@@ -279,11 +280,11 @@ void Game_CommandBuildBooleanModel(void)
   SeeAlso     [ CommandBuildModel, Game_CommandBuildFlatModel ]
 
 ******************************************************************************/
-void Game_CommandBuildBddModel(void)
+void Game_CommandBuildBddModel(NuSMVEnv_ptr env)
 {
   SymbTable_ptr st = Compile_get_global_symb_table();
   GameSexpFsm_ptr scalar_fsm = PropDbGame_master_get_game_scalar_sexp_fsm( \
-                                     PROP_DB_GAME(PropPkg_get_prop_database()));
+                                     PROP_DB_GAME(NuSMVEnv_get_value(env, ENV_PROP_DB)));
 
   GameBddFsm_ptr bdd_fsm =
     Game_CreateGameBddFsm(global_fsm_builder,
@@ -292,7 +293,7 @@ void Game_CommandBuildBddModel(void)
                           SymbTable_get_layer(st, MODEL_LAYER_1),
                           SymbTable_get_layer(st, MODEL_LAYER_2),
                           get_partition_method(OptsHandler_create()));
-  PropDbGame_master_set_game_bdd_fsm(PROP_DB_GAME(PropPkg_get_prop_database()),
+  PropDbGame_master_set_game_bdd_fsm(PROP_DB_GAME(NuSMVEnv_get_value(env, ENV_PROP_DB)),
                                      bdd_fsm);
 }
 

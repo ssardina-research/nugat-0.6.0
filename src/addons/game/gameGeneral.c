@@ -97,7 +97,7 @@ static void game_print_prop_exp ARGS((FILE *file, PropGame_ptr prop));
   SeeAlso     [ Game_AfterCheckingSpec ]
 
 ******************************************************************************/
-void Game_BeforeCheckingSpec(PropGame_ptr prop)
+void Game_BeforeCheckingSpec(NuSMVEnv_ptr env,PropGame_ptr prop)
 {
   GameBddFsm_ptr fsm;
 
@@ -126,7 +126,7 @@ void Game_BeforeCheckingSpec(PropGame_ptr prop)
 
   fsm = PropGame_get_game_bdd_fsm(prop);
   if (fsm == GAME_BDD_FSM(NULL)) {
-    PropDb_set_fsm_to_master(PropPkg_get_prop_database(), PROP(prop));
+    PropDb_set_fsm_to_master(PROP_DB(NuSMVEnv_get_value(env, ENV_PROP_DB)), PROP(prop));
     fsm = PropGame_get_game_bdd_fsm(prop);
     GAME_BDD_FSM_CHECK_INSTANCE(fsm);
   }

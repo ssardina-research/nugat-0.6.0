@@ -120,7 +120,7 @@ static void game_check_first_player_recur ARGS((SymbTable_ptr st,
                                                 NodeList_ptr vars,
                                                 boolean allowCurrentVar,
                                                 boolean isInNext));
-
+;
 /*---------------------------------------------------------------------------*/
 /* Definition of exported functions                                          */
 /*---------------------------------------------------------------------------*/
@@ -140,7 +140,7 @@ static void game_check_first_player_recur ARGS((SymbTable_ptr st,
                 compile_flatten_smv ]
 
 ******************************************************************************/
-int Game_CommandFlattenHierarchy(void)
+int Game_CommandFlattenHierarchy(NuSMVEnv_ptr env)
 {
   SymbTable_ptr st = Compile_get_global_symb_table();
   int propErr;
@@ -191,7 +191,8 @@ int Game_CommandFlattenHierarchy(void)
                GameHierarchy_get_ltlspec(mainGameHierarchy) == Nil &&
                GameHierarchy_get_pslspec(mainGameHierarchy) == Nil &&
                GameHierarchy_get_invarspec(mainGameHierarchy) == Nil);
-  propErr = PropDbGame_fill(PROP_DB_GAME(PropPkg_get_prop_database()),
+
+  propErr = PropDbGame_fill(PROP_DB_GAME(NuSMVEnv_get_value(env, ENV_PROP_DB)),
                             st,
                             GameHierarchy_get_reachtarget(mainGameHierarchy),
                             GameHierarchy_get_avoidtarget(mainGameHierarchy),
@@ -205,8 +206,8 @@ int Game_CommandFlattenHierarchy(void)
     mainGameHierarchy = GAME_HIERARCHY(NULL);
     SymbTable_remove_layer(st, model_layer_1);
     SymbTable_remove_layer(st, model_layer_2);
-    PropDb_clean(PropPkg_get_prop_database());
-    CompileFlatten_quit_flattener();
+    PropDb_clean(PROP_DB(NuSMVEnv_get_value(env, ENV_PROP_DB)));
+    CompileFlatten_quit_flattener(env);
     cmp_struct_unset_read_model(cmps); /* resets also the command read_model */
     return 1; /* error */
   }

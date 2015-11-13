@@ -295,7 +295,7 @@ int Game_RatFileToGame(const char *filename)
   XmlParseResult_ptr parseResult;
   const NuSMVEnv_ptr env;
   const NodeMgr_ptr nodemgr;
-
+  const UStringMgr_ptr strings;
 
   if (cmp_struct_get_read_model(cmps)) {
     fprintf(nusmv_stderr,
@@ -324,6 +324,7 @@ int Game_RatFileToGame(const char *filename)
 
     env = EnvObject_get_environment(ENV_OBJECT(parseResult));
     nodemgr = NODE_MGR(NuSMVEnv_get_value(env, ENV_NODE_MGR));
+    strings =  USTRING_MGR(NuSMVEnv_get_value(env, ENV_STRING_MGR));
 
     XML_SetUserData(parser, parseResult);
     XML_SetElementHandler(parser,
@@ -392,7 +393,7 @@ int Game_RatFileToGame(const char *filename)
        Transformations are applied to try and fit more
        assumptions/guarantees into the init or trans categories.
     */
-    Game_PropertyToGame(nodemgr,
+    Game_PropertyToGame(env,
                         &parseResult->input_vars,
                         &parseResult->output_vars,
                         parseResult->assumptions,
@@ -427,14 +428,14 @@ int Game_RatFileToGame(const char *filename)
     module1 = new_node(nodemgr,MODULE,
                        new_node(nodemgr,MODTYPE,
                                 new_node(nodemgr,ATOM,
-                                         (node_ptr) UStringMgr_find_string(USTRING_MGR,PLAYER_NAME_1),
+                                         (node_ptr) UStringMgr_find_string(strings,PLAYER_NAME_1),
                                          Nil),
                                 Nil),
                        module1);
     module2 = new_node(nodemgr,MODULE,
                        new_node(nodemgr,MODTYPE,
                                 new_node(nodemgr,ATOM,
-                                         (node_ptr) UStringMgr_find_string(USTRING_MGR,PLAYER_NAME_2),
+                                         (node_ptr) UStringMgr_find_string(strings,PLAYER_NAME_2),
                                          Nil),
                                 Nil),
                        module2);
@@ -467,7 +468,7 @@ int Game_RatFileToGame(const char *filename)
 
 
   if (!opt_game_game(OptsHandler_create())) {
-    Game_Mode_Enter();
+    Game_Mode_Enter(env);
   }
   cmp_struct_set_read_model(cmps);
 
@@ -687,7 +688,7 @@ static node_ptr game_xml_reader_parse_type(const char* text) {
           newNode = new_node(nodemgr,FALSEEXP, Nil, Nil);
         }
         else {
-          newNode = new_node(nodemgr,ATOM, (node_ptr) UStringMgr_find_string(USTRING_MGR,buf), Nil);
+          newNode = new_node(nodemgr,ATOM, (node_ptr) UStringMgr_find_string(strings,buf), Nil);
         }
       }
       else {
@@ -1142,7 +1143,7 @@ static void game_xml_reader_tag_end(void* data, const char *string)
       if (XML_NAME == tag || XML_STATUS == tag) {
         /* Create left child for the tag node as usual NuSMV ATOM. */
         setcar(car(parseResult->stack),
-               new_node(nodemgr,ATOM, (node_ptr) find_string((char*) car(text)), Nil));
+               new_node(nodemgr,ATOM, (node_ptr) UStringMgr_find_string(strings,(char*) car(text)), Nil));
       }
       else if (XML_KIND == tag) {
         /* Set left child to be an integer 'A', 'G', 'E' or 'S'. */

@@ -632,6 +632,8 @@ void prop_game_print_db(const PropGame_ptr self, FILE* file)
 ******************************************************************************/
 void prop_game_verify(PropGame_ptr self)
 {
+  const NuSMVEnv_ptr env = EnvObject_get_environment(ENV_OBJECT(self));
+
   PROP_GAME_CHECK_INSTANCE(self);
   nusmv_assert(PropGame_type_is_game(Prop_get_type(PROP(self))));
   /* the input file contains game */
@@ -640,22 +642,22 @@ void prop_game_verify(PropGame_ptr self)
   if (Prop_get_status(PROP(self)) == Prop_Unchecked)  {
     switch (Prop_get_type(PROP(self))) {
     case PropGame_ReachTarget:
-      Game_CheckReachTargetSpec(self, &gameParams);
+      Game_CheckReachTargetSpec(env,self, &gameParams);
       break;
     case PropGame_AvoidTarget:
-      Game_CheckAvoidTargetSpec(self, &gameParams);
+      Game_CheckAvoidTargetSpec(env,self, &gameParams);
       break;
     case PropGame_ReachDeadlock:
-      Game_CheckReachDeadlockSpec(self, &gameParams);
+      Game_CheckReachDeadlockSpec(env,self, &gameParams);
       break;
     case PropGame_AvoidDeadlock:
-      Game_CheckAvoidDeadlockSpec(self, &gameParams);
+      Game_CheckAvoidDeadlockSpec(env,self, &gameParams);
       break;
     case PropGame_BuchiGame:
-      Game_CheckBuchiGameSpec(self, &gameParams);
+      Game_CheckBuchiGameSpec(env,self, &gameParams);
       break;
     case PropGame_LtlGame:
-      Game_CheckLtlGameSpecSF07(self,
+      Game_CheckLtlGameSpecSF07(env,self,
                                 &gameParams,
                                 DEFAULT_GAME_CHECK_LTL_GAME_SPEC_SF07_KMIN,
                                 DEFAULT_GAME_CHECK_LTL_GAME_SPEC_SF07_KMAX,
