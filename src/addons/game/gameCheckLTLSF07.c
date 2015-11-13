@@ -1807,7 +1807,7 @@ static void Game_SF07_StructCheckLTLGameSF07_construct_monitor_game_bdd_fsm
   /* Retrieve self->prop's fsms. */
   prop_game_bdd_fsm = PropGame_get_game_bdd_fsm(self->prop);
   if (prop_game_bdd_fsm == GAME_BDD_FSM(NULL)) {
-    PropDb_set_fsm_to_master(PROP_DB(NuSMVEnv_get_value(env, ENV_PROP_DB)), PROP(self->prop));
+    Prop_set_environment_fsms(env, PROP(self->prop));
     prop_game_bdd_fsm = PropGame_get_game_bdd_fsm(self->prop);
   }
   GAME_BDD_FSM_CHECK_INSTANCE(prop_game_bdd_fsm);

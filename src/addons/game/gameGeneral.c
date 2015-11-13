@@ -126,7 +126,7 @@ void Game_BeforeCheckingSpec(NuSMVEnv_ptr env,PropGame_ptr prop)
 
   fsm = PropGame_get_game_bdd_fsm(prop);
   if (fsm == GAME_BDD_FSM(NULL)) {
-    PropDb_set_fsm_to_master(PROP_DB(NuSMVEnv_get_value(env, ENV_PROP_DB)), PROP(prop));
+    Prop_set_environment_fsms(env, PROP(prop));
     fsm = PropGame_get_game_bdd_fsm(prop);
     GAME_BDD_FSM_CHECK_INSTANCE(fsm);
   }

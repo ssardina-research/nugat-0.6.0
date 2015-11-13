@@ -278,6 +278,9 @@ Nitin Yadav - nitin.yadav@rmit.edu.au
                 'Smgame_Reset'
                 'Smgame_End'
             
+30.Warning: gameGeneral.c: implicit declaration of function ‘PropDb_set_fsm_to_master’
+
+    *   replaced 'PropDb_set_fsm_to_master(..., PROP(self->prop));' with 'Prop_set_environment_fsms(env, PROP(self->prop));'
 
 
 ================================================================================
