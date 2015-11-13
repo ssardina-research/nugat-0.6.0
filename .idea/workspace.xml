@@ -13,7 +13,9 @@
     </ADDITIONAL_GENERATION_ENVIRONMENT>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="270c3bb5-5a79-42ad-ba25-a8665d2f47cb" name="Default" comment="" />
+    <list default="true" id="270c3bb5-5a79-42ad-ba25-a8665d2f47cb" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+    </list>
     <ignored path="NuGaT-0.54.iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -38,92 +40,76 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="MIGRATION-0.6.0.md" pinned="false" current-in-tab="false">
+      <file leaf-file-name="MIGRATION-0.6.0.md" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/MIGRATION-0.6.0.md">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-7.0">
-              <caret line="46" column="0" selection-start-line="46" selection-start-column="0" selection-end-line="46" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
           <provider editor-type-id="MarkdownPreviewEditor">
             <state />
           </provider>
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.6533958">
+              <caret line="45" column="4" selection-start-line="45" selection-start-column="4" selection-end-line="45" selection-end-column="4" />
+              <folding />
+            </state>
+          </provider>
         </entry>
       </file>
-      <file leaf-file-name="gameCheckGenReactivityBuchiSpec.c" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/addons/game/gameCheckGenReactivityBuchiSpec.c">
+      <file leaf-file-name="gamePkg.c" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/addons/game/gamePkg.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-2.9152544">
-              <caret line="1520" column="54" selection-start-line="1520" selection-start-column="54" selection-end-line="1520" selection-end-column="54" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="316" column="26" selection-start-line="316" selection-start-column="26" selection-end-line="316" selection-end-column="26" />
               <folding>
-                <element signature="e#1808#1828#0" expanded="true" />
-                <element signature="e#1837#1854#0" expanded="true" />
+                <element signature="e#1473#1493#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="gameCheckLTLSF07.c" pinned="false" current-in-tab="true">
+      <file leaf-file-name="gameCheckLTLSF07.c" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/addons/game/gameCheckLTLSF07.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.3326886">
-              <caret line="2246" column="23" selection-start-line="2246" selection-start-column="12" selection-end-line="2246" selection-end-column="23" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="2267" column="40" selection-start-line="2267" selection-start-column="40" selection-end-line="2267" selection-end-column="40" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="gameFlatten.c" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/addons/game/gameFlatten.c">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-13.266666">
-              <caret line="288" column="78" selection-start-line="288" selection-start-column="2" selection-end-line="288" selection-end-column="78" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="gameReqToGame.c" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/addons/game/gameReqToGame.c">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-6.0666666">
-              <caret line="556" column="10" selection-start-line="556" selection-start-column="10" selection-end-line="556" selection-end-column="10" />
-              <folding>
-                <element signature="e#1557#1589#0" expanded="true" />
-                <element signature="e#15746#15936#0" expanded="true" />
-                <element signature="e#16358#16549#0" expanded="true" />
-                <element signature="e#17171#17193#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="CheckerGame.c" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/addons/game/walkers/CheckerGame.c">
+      <file leaf-file-name="PropDbGame.c" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/addons/game/PropDbGame.c">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="214" column="2" selection-start-line="214" selection-start-column="2" selection-end-line="214" selection-end-column="2" />
+              <caret line="529" column="31" selection-start-line="529" selection-start-column="31" selection-end-line="529" selection-end-column="31" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="gameCheckLTLSF07_gba_wring.c" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/addons/game/gameCheckLTLSF07_gba_wring.c">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-7.4915257">
-              <caret line="1930" column="59" selection-start-line="1930" selection-start-column="59" selection-end-line="1930" selection-end-column="59" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="TypeCheckerGame.c" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/addons/game/TypeCheckerGame.c">
+      <file leaf-file-name="PropGame.c" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/addons/game/PropGame.c">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="137" column="8" selection-start-line="137" selection-start-column="8" selection-end-line="137" selection-end-column="8" />
+              <caret line="444" column="0" selection-start-line="444" selection-start-column="0" selection-end-line="444" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="PropGame_private.h" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/addons/game/PropGame_private.h">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="95" column="0" selection-start-line="95" selection-start-column="0" selection-end-line="95" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="PropGame.h" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/addons/game/PropGame.h">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="159" column="32" selection-start-line="159" selection-start-column="32" selection-end-line="159" selection-end-column="32" />
               <folding />
             </state>
           </provider>
@@ -132,8 +118,8 @@
       <file leaf-file-name="gameUnrealCore.c" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/addons/game/gameUnrealCore.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-5.0666666">
-              <caret line="2467" column="41" selection-start-line="2466" selection-start-column="4" selection-end-line="2467" selection-end-column="80" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="2966" column="10" selection-start-line="2966" selection-start-column="10" selection-end-line="2966" selection-end-column="10" />
               <folding />
             </state>
           </provider>
@@ -143,7 +129,7 @@
         <entry file="file://$PROJECT_DIR$/src/addons/game/gameWriteModel.c">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="383" column="19" selection-start-line="383" selection-start-column="19" selection-end-line="383" selection-end-column="19" />
+              <caret line="405" column="21" selection-start-line="405" selection-start-column="21" selection-end-line="405" selection-end-column="21" />
               <folding />
             </state>
           </provider>
@@ -157,11 +143,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/addons/game/gameCheckLTLSF07_gba.h" />
-        <option value="$PROJECT_DIR$/src/addons/game/gameCheckLTLSF07_gba_wring.h" />
-        <option value="$PROJECT_DIR$/src/addons/game/gameCmd.h" />
-        <option value="$PROJECT_DIR$/src/addons/game/gameGeneral.c" />
-        <option value="$PROJECT_DIR$/src/addons/game/walkers/CheckerGame.h" />
         <option value="$PROJECT_DIR$/src/addons/game/walkers/CheckerGame_private.h" />
         <option value="$PROJECT_DIR$/src/addons/game/walkers/PrinterGame.c" />
         <option value="$PROJECT_DIR$/src/addons/game/walkers/PrinterGame.h" />
@@ -177,7 +158,6 @@
         <option value="$PROJECT_DIR$/src/addons/game/gameOpt.c" />
         <option value="$PROJECT_DIR$/src/parser/grammar.y" />
         <option value="$PROJECT_DIR$/src/parser/grammar.y.2" />
-        <option value="$PROJECT_DIR$/src/parser/grammar.y.2.55" />
         <option value="$PROJECT_DIR$/src/addons/game/GamePlayer.c" />
         <option value="$PROJECT_DIR$/src/parser/grammar.c" />
         <option value="$PROJECT_DIR$/src/addons/game/fsm/GameBddFsm.c" />
@@ -190,24 +170,30 @@
         <option value="$PROJECT_DIR$/src/addons/game/GameStrategy.c" />
         <option value="$PROJECT_DIR$/src/smgame/smgameMisc.c" />
         <option value="$PROJECT_DIR$/src/addons/game/gameVarEncoding.c" />
-        <option value="$PROJECT_DIR$/src/addons/game/gamePkg.c" />
-        <option value="$PROJECT_DIR$/src/addons/game/gameXmlReader.c" />
         <option value="$PROJECT_DIR$/src/addons/game/gameInt.h" />
-        <option value="$PROJECT_DIR$/src/addons/game/PropGame.c" />
         <option value="$PROJECT_DIR$/CMakeLists.txt" />
-        <option value="$PROJECT_DIR$/src/addons/game/gameCmd.c" />
-        <option value="$PROJECT_DIR$/src/addons/game/game.h" />
         <option value="$PROJECT_DIR$/src/addons/game/gameFlatten.c" />
         <option value="$PROJECT_DIR$/src/addons/game/gameCheckReachAvoidSpec.c" />
         <option value="$PROJECT_DIR$/src/addons/game/gameReqToGame.c" />
         <option value="$PROJECT_DIR$/src/addons/game/gameCheckGenReactivityBuchiSpec.c" />
-        <option value="$PROJECT_DIR$/src/addons/game/gameCheckLTLSF07.c" />
         <option value="$PROJECT_DIR$/src/addons/game/gameCheckLTLSF07_gba_wring.c" />
-        <option value="$PROJECT_DIR$/src/addons/game/gameUnrealCore.c" />
-        <option value="$PROJECT_DIR$/src/addons/game/gameWriteModel.c" />
         <option value="$PROJECT_DIR$/src/addons/game/TypeCheckerGame.c" />
         <option value="$PROJECT_DIR$/src/addons/game/walkers/CheckerGame.c" />
+        <option value="$PROJECT_DIR$/src/addons/game/gameXmlReader.c" />
+        <option value="$PROJECT_DIR$/src/addons/game/game.h" />
+        <option value="$PROJECT_DIR$/src/parser/grammar.y.2.55" />
+        <option value="$PROJECT_DIR$/src/addons/game/PropDbGame_private.h" />
+        <option value="$PROJECT_DIR$/src/addons/game/gameCmd.c" />
+        <option value="$PROJECT_DIR$/src/addons/game/gameUnrealCore.c" />
+        <option value="$PROJECT_DIR$/src/addons/game/gameWriteModel.c" />
         <option value="$PROJECT_DIR$/MIGRATION-0.6.0.md" />
+        <option value="$PROJECT_DIR$/src/addons/game/gamePkg.c" />
+        <option value="$PROJECT_DIR$/src/addons/game/PropDbGame.h" />
+        <option value="$PROJECT_DIR$/src/addons/game/gameCheckLTLSF07.c" />
+        <option value="$PROJECT_DIR$/src/addons/game/PropGame.h" />
+        <option value="$PROJECT_DIR$/src/addons/game/PropDbGame.c" />
+        <option value="$PROJECT_DIR$/src/addons/game/PropGame.c" />
+        <option value="$PROJECT_DIR$/src/addons/game/PropGame_private.h" />
       </list>
     </option>
   </component>
@@ -218,8 +204,7 @@
   </component>
   <component name="OCFindUsagesOptions" text="false" ivars="false" properties="true" derivedClasses="false" />
   <component name="ProjectFrameBounds">
-    <option name="x" value="-1" />
-    <option name="width" value="1922" />
+    <option name="width" value="1914" />
     <option name="height" value="1060" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
@@ -290,6 +275,228 @@
             <PATH_ELEMENT>
               <option name="myItemId" value="NuGaT-0.54" />
               <option name="myItemType" value="com.jetbrains.cidr.projectView.CidrFilesViewHelper$MyProjectTreeStructure$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="External Libraries" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Header Search Paths" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.NamedLibraryElementNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="NuGaT-0.54" />
+              <option name="myItemType" value="com.jetbrains.cidr.projectView.CidrFilesViewHelper$MyProjectTreeStructure$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="External Libraries" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Header Search Paths" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.NamedLibraryElementNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="smgame" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="NuGaT-0.54" />
+              <option name="myItemType" value="com.jetbrains.cidr.projectView.CidrFilesViewHelper$MyProjectTreeStructure$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="External Libraries" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Header Search Paths" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.NamedLibraryElementNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="parser" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="NuGaT-0.54" />
+              <option name="myItemType" value="com.jetbrains.cidr.projectView.CidrFilesViewHelper$MyProjectTreeStructure$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="External Libraries" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Header Search Paths" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.NamedLibraryElementNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="addons" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="NuGaT-0.54" />
+              <option name="myItemType" value="com.jetbrains.cidr.projectView.CidrFilesViewHelper$MyProjectTreeStructure$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="External Libraries" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Header Search Paths" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.NamedLibraryElementNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="NuGaT-0.54" />
+              <option name="myItemType" value="com.jetbrains.cidr.projectView.CidrFilesViewHelper$MyProjectTreeStructure$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="External Libraries" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Header Search Paths" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.NamedLibraryElementNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="NuSMV" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="NuGaT-0.54" />
+              <option name="myItemType" value="com.jetbrains.cidr.projectView.CidrFilesViewHelper$MyProjectTreeStructure$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="External Libraries" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Header Search Paths" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.NamedLibraryElementNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="NuSMV" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="code" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="NuGaT-0.54" />
+              <option name="myItemType" value="com.jetbrains.cidr.projectView.CidrFilesViewHelper$MyProjectTreeStructure$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="External Libraries" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Header Search Paths" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.NamedLibraryElementNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="NuSMV" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="code" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="nusmv" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="NuGaT-0.54" />
+              <option name="myItemType" value="com.jetbrains.cidr.projectView.CidrFilesViewHelper$MyProjectTreeStructure$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="External Libraries" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Header Search Paths" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.NamedLibraryElementNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="NuSMV" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="code" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="nusmv" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="core" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="NuGaT-0.54" />
+              <option name="myItemType" value="com.jetbrains.cidr.projectView.CidrFilesViewHelper$MyProjectTreeStructure$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="External Libraries" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Header Search Paths" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.NamedLibraryElementNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="NuSMV" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="code" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="nusmv" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="core" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="prop" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
@@ -367,54 +574,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="addons" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="NuGaT-0.54" />
-              <option name="myItemType" value="com.jetbrains.cidr.projectView.CidrFilesViewHelper$MyProjectTreeStructure$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="nugat-0.5.4" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="addons" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="game" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="NuGaT-0.54" />
-              <option name="myItemType" value="com.jetbrains.cidr.projectView.CidrFilesViewHelper$MyProjectTreeStructure$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="nugat-0.5.4" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="addons" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="game" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="walkers" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -533,17 +692,16 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-1" y="0" width="1922" height="1060" extended-state="6" />
-    <editor active="true" />
+    <frame x="0" y="0" width="1914" height="1060" extended-state="4" />
+    <editor active="false" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1433843" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.14293277" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3290735" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="CMake" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32481363" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="true" content_ui="tabs" />
-      <window_info id="Find" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.35569754" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33013844" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24893162" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4824281" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.4824281" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3290735" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -552,6 +710,7 @@
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.35569754" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
     </layout>
@@ -594,45 +753,11 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/addons/game/GameStrategy.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.675">
-          <caret line="134" column="37" selection-start-line="134" selection-start-column="37" selection-end-line="134" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../NuSMV-2.6.0/NuSMV/code/nusmv/core/enc/bdd/BddEnc.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.39824945">
-          <caret line="1280" column="53" selection-start-line="1280" selection-start-column="42" selection-end-line="1280" selection-end-column="53" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/newError.log">
+    <entry file="file://$PROJECT_DIR$/src/addons/game/gameWriteModel.c">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="1252" column="7" selection-start-line="1252" selection-start-column="7" selection-end-line="1252" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/make.log">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="269" column="68" selection-start-line="269" selection-start-column="68" selection-end-line="269" selection-end-column="68" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/addons/game/PropDbGame.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="130" column="58" selection-start-line="130" selection-start-column="58" selection-end-line="130" selection-end-column="58" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/addons/game/fsm/GameBddFsm.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5404814">
-          <caret line="205" column="67" selection-start-line="205" selection-start-column="67" selection-end-line="205" selection-end-column="67" />
+          <caret line="405" column="21" selection-start-line="405" selection-start-column="21" selection-end-line="405" selection-end-column="21" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -654,13 +779,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.33260393">
           <caret line="60" column="8" selection-start-line="60" selection-start-column="8" selection-end-line="60" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/addons/game/GameStrategy.c">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-5.233333">
-          <caret line="1060" column="37" selection-start-line="1060" selection-start-column="25" selection-end-line="1060" selection-end-column="37" />
         </state>
       </provider>
     </entry>
@@ -703,13 +821,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="55" column="13" selection-start-line="55" selection-start-column="13" selection-end-line="55" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/addons/game/PropDbGame.c">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="83" column="0" selection-start-line="83" selection-start-column="0" selection-end-line="84" selection-end-column="26" />
         </state>
       </provider>
     </entry>
@@ -787,25 +898,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="126" column="23" selection-start-line="126" selection-start-column="2" selection-end-line="126" selection-end-column="23" />
-          <folding>
-            <element signature="e#1509#1529#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/contrib/BddEnc.c.patch">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="238" column="5" selection-start-line="238" selection-start-column="5" selection-end-line="238" selection-end-column="5" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/addons/game/gamePkg.c">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="142" column="0" selection-start-line="142" selection-start-column="0" selection-end-line="142" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -813,13 +905,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="105" column="22" selection-start-line="105" selection-start-column="22" selection-end-line="105" selection-end-column="22" />
-          <folding>
-            <element signature="e#5751#11279#0" expanded="true" />
-            <element signature="e#12195#12451#0" expanded="true" />
-            <element signature="e#12635#13078#0" expanded="true" />
-            <element signature="e#13968#15169#0" expanded="true" />
-            <element signature="e#16258#16522#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -827,39 +912,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-4.733333">
           <caret line="896" column="9" selection-start-line="896" selection-start-column="3" selection-end-line="896" selection-end-column="9" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/addons/game/PropGame_private.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33333334">
-          <caret line="76" column="15" selection-start-line="76" selection-start-column="15" selection-end-line="76" selection-end-column="15" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/addons/game/PropGame.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33333334">
-          <caret line="120" column="23" selection-start-line="120" selection-start-column="23" selection-end-line="120" selection-end-column="23" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/addons/game/gameXmlReader.c">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-49.833332">
-          <caret line="409" column="26" selection-start-line="409" selection-start-column="21" selection-end-line="409" selection-end-column="26" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/addons/game/PropGame.c">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-7.8333335">
-          <caret line="639" column="53" selection-start-line="639" selection-start-column="53" selection-end-line="639" selection-end-column="53" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -867,7 +919,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-11.5">
           <caret line="450" column="49" selection-start-line="450" selection-start-column="49" selection-end-line="450" selection-end-column="49" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -875,23 +926,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-10.666667">
           <caret line="67" column="4" selection-start-line="67" selection-start-column="4" selection-end-line="67" selection-end-column="27" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/addons/game/gameCmd.c">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-6.0666666">
-          <caret line="3548" column="66" selection-start-line="3548" selection-start-column="66" selection-end-line="3548" selection-end-column="66" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/addons/game/game.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="191" column="51" selection-start-line="191" selection-start-column="51" selection-end-line="191" selection-end-column="51" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -899,7 +933,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="19.0">
           <caret line="319" column="70" selection-start-line="319" selection-start-column="70" selection-end-line="319" selection-end-column="70" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -907,10 +940,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-2.9152544">
           <caret line="1520" column="54" selection-start-line="1520" selection-start-column="54" selection-end-line="1520" selection-end-column="54" />
-          <folding>
-            <element signature="e#1808#1828#0" expanded="true" />
-            <element signature="e#1837#1854#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -918,7 +947,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-13.266666">
           <caret line="288" column="78" selection-start-line="288" selection-start-column="2" selection-end-line="288" selection-end-column="78" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -926,36 +954,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-7.4915257">
           <caret line="1930" column="59" selection-start-line="1930" selection-start-column="59" selection-end-line="1930" selection-end-column="59" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/addons/game/gameReqToGame.c">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-6.0666666">
-          <caret line="556" column="10" selection-start-line="556" selection-start-column="10" selection-end-line="556" selection-end-column="10" />
-          <folding>
-            <element signature="e#1557#1589#0" expanded="true" />
-            <element signature="e#15746#15936#0" expanded="true" />
-            <element signature="e#16358#16549#0" expanded="true" />
-            <element signature="e#17171#17193#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/addons/game/gameWriteModel.c">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="383" column="19" selection-start-line="383" selection-start-column="19" selection-end-line="383" selection-end-column="19" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/addons/game/gameUnrealCore.c">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-5.0666666">
-          <caret line="2467" column="41" selection-start-line="2466" selection-start-column="4" selection-end-line="2467" selection-end-column="80" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -963,7 +961,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="137" column="8" selection-start-line="137" selection-start-column="8" selection-end-line="137" selection-end-column="8" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -971,6 +968,148 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="214" column="2" selection-start-line="214" selection-start-column="2" selection-end-line="214" selection-end-column="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/addons/game/game.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="152" column="50" selection-start-line="152" selection-start-column="50" selection-end-line="152" selection-end-column="50" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/newError.log">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="1213" column="7" selection-start-line="1213" selection-start-column="7" selection-end-line="1213" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/contrib/BddEnc.c.patch">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="86" column="17" selection-start-line="86" selection-start-column="17" selection-end-line="86" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/addons/game/PropDbGame_private.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-12.2">
+          <caret line="92" column="37" selection-start-line="92" selection-start-column="37" selection-end-line="92" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/addons/game/gameCmd.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="3080" column="42" selection-start-line="3080" selection-start-column="42" selection-end-line="3080" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/addons/game/GameStrategy.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="1012" column="6" selection-start-line="1012" selection-start-column="6" selection-end-line="1012" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/addons/game/gameReqToGame.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="296" column="48" selection-start-line="296" selection-start-column="48" selection-end-line="296" selection-end-column="48" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/addons/game/gameXmlReader.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="459" column="5" selection-start-line="459" selection-start-column="5" selection-end-line="459" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/parser/grammar.y.2.55">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="32" column="58" selection-start-line="32" selection-start-column="58" selection-end-line="32" selection-end-column="58" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/addons/game/PropDbGame.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="116" column="0" selection-start-line="116" selection-start-column="0" selection-end-line="116" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/addons/game/gamePkg.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="316" column="26" selection-start-line="316" selection-start-column="26" selection-end-line="316" selection-end-column="26" />
+          <folding>
+            <element signature="e#1473#1493#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../NuSMV-2.6.0/NuSMV/code/nusmv/core/prop/PropDb_private.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.33333334">
+          <caret line="75" column="49" selection-start-line="75" selection-start-column="49" selection-end-line="75" selection-end-column="49" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/addons/game/PropGame.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="159" column="32" selection-start-line="159" selection-start-column="32" selection-end-line="159" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/addons/game/PropDbGame.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="529" column="31" selection-start-line="529" selection-start-column="31" selection-end-line="529" selection-end-column="31" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/addons/game/PropGame_private.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="95" column="0" selection-start-line="95" selection-start-column="0" selection-end-line="95" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/addons/game/PropGame.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="444" column="0" selection-start-line="444" selection-start-column="0" selection-end-line="444" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/addons/game/gameUnrealCore.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="2966" column="10" selection-start-line="2966" selection-start-column="10" selection-end-line="2966" selection-end-column="10" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/addons/game/gameWriteModel.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="405" column="21" selection-start-line="405" selection-start-column="21" selection-end-line="405" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/addons/game/gameCheckLTLSF07.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="2267" column="40" selection-start-line="2267" selection-start-column="40" selection-end-line="2267" selection-end-column="40" />
           <folding />
         </state>
       </provider>
@@ -980,16 +1119,8 @@
         <state />
       </provider>
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-7.0">
-          <caret line="46" column="0" selection-start-line="46" selection-start-column="0" selection-end-line="46" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/addons/game/gameCheckLTLSF07.c">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3326886">
-          <caret line="2246" column="23" selection-start-line="2246" selection-start-column="12" selection-end-line="2246" selection-end-column="23" />
+        <state vertical-scroll-proportion="0.6533958">
+          <caret line="45" column="4" selection-start-line="45" selection-start-column="4" selection-end-line="45" selection-end-column="4" />
           <folding />
         </state>
       </provider>

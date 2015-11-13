@@ -36,15 +36,18 @@ Nitin Yadav - nitin.yadav@rmit.edu.au
     *   This is because NuSMV has renamed  OptsHandler_get_instance with OptsHandler_create
     *   Rename all calls to OptsHandler_get_instance with OptsHandler_create in NuGat code.
 
-6.Warning: macro ...  [ replace with 'nodemgr' and 'env' ]
+6.Warning: macro ...  
     .1 "new_node" requires 4 arguments, but only 3 given -> added 'nodemgr' parameter
     .2 "cons" requires 3 arguments, but only 2 given -> added 'nodemgr' parameter
     .3 "new_lined_node" requires 5 arguments, but only 4 given -> added 'nodemgr' parameter
     .4 "find_node" requires ... -> added 'nodemgr' parameter
     .5 "print_node" requires ... -> added 'wffprint' parameter
-    . {and others functions} 
     
-    *   added this 2 lines before the usage of 'nodemgr' 
+    *   added this lines before the usage 
+    
+            const NuSMVEnv_ptr env = EnvObject_get_environment(ENV_OBJECT(self));
+            const NodeMgr_ptr nodemgr = NODE_MGR(NuSMVEnv_get_value(env, ENV_NODE_MGR));
+            const MasterPrinter_ptr wffprint = MASTER_PRINTER(NuSMVEnv_get_value(env, ENV_WFF_PRINTER));
 
 7.Warning: grammar.y.: implicit declaration of function ‘yylex’,‘yyerror’ and ‘yyerror_lined’
 
