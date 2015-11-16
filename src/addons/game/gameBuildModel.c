@@ -145,7 +145,7 @@ void Game_CommandBuildFlatModel(NuSMVEnv_ptr env)
     scalar_fsm =
       GameSexpFsm_create(/* we assume that symbol table contains only variables
                             from the game */
-                         env,
+                        env,
                          set,
                          GameHierarchy_get_player_1(mainGameHierarchy),
                          GameHierarchy_get_player_2(mainGameHierarchy),
@@ -225,9 +225,9 @@ void Game_CommandBuildBooleanModel(NuSMVEnv_ptr env)
                            PROP_DB_GAME(NuSMVEnv_get_value(env, ENV_PROP_DB)), bool_fsm);
 
     /* commits layers to the encodings */
-    BaseEnc_commit_layer(BASE_ENC(Enc_get_bool_encoding()),
+    BaseEnc_commit_layer(BASE_ENC(BoolEncClient_get_bool_enc(BOOL_ENC_CLIENT(enc))),
                          DETERM_LAYER_1);
-    BaseEnc_commit_layer(BASE_ENC(Enc_get_bool_encoding()),
+    BaseEnc_commit_layer(BASE_ENC(BoolEncClient_get_bool_enc(BOOL_ENC_CLIENT(enc))),
                          DETERM_LAYER_2);
 
     BaseEnc_commit_layer(BASE_ENC(EBddFsm_get_bdd_encoding(BDD_FSM(GAME_SEXP_FSM(NULL)))),

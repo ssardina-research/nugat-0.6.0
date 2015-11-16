@@ -456,7 +456,7 @@ static void game_declare_special_var(NuSMVEnv_ptr env,
   SymbLayer_declare_state_var(layer, var, symbolicType);
 
   /* Commit the layer to all encodings. */
-  BaseEnc_commit_layer(BASE_ENC(Enc_get_bool_encoding()),
+  BaseEnc_commit_layer(BASE_ENC(BoolEncClient_get_bool_enc(BOOL_ENC_CLIENT(NULL))),
                        SymbLayer_get_name(layer));
   BaseEnc_commit_layer(BASE_ENC(BddFsm_get_bdd_encoding(BDD_FSM(GAME_SEXP_FSM(NULL)))),
                        SymbLayer_get_name(layer));
@@ -491,8 +491,8 @@ static void game_undeclare_special_var(NuSMVEnv_ptr env,SymbLayer_ptr layer)
   if (BaseEnc_layer_occurs(BASE_ENC(BddFsm_get_bdd_encoding(BDD_FSM(GAME_SEXP_FSM(NULL)))), name)) {
     BaseEnc_remove_layer(BASE_ENC(BddFsm_get_bdd_encoding(BDD_FSM(GAME_SEXP_FSM(NULL)))), name);
   }
-  if (BaseEnc_layer_occurs(BASE_ENC(Enc_get_bool_encoding()), name)) {
-    BaseEnc_remove_layer(BASE_ENC(Enc_get_bool_encoding()), name);
+  if (BaseEnc_layer_occurs(BASE_ENC(BoolEncClient_get_bool_enc(BOOL_ENC_CLIENT(NULL))), name)) {
+    BaseEnc_remove_layer(BASE_ENC(BoolEncClient_get_bool_enc(BOOL_ENC_CLIENT(NULL))), name);
   }
 
   SymbTable_remove_layer(SYMB_TABLE(NuSMVEnv_get_value(env, ENV_SYMB_TABLE)), layer);

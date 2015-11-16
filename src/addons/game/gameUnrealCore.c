@@ -684,7 +684,7 @@ Game_UnrealizableCore_Struct_create (NuSMVEnv_ptr env,
 
   cls->oh = OptsHandler_create();
   cls->st = SYMB_TABLE(NuSMVEnv_get_value(env, ENV_SYMB_TABLE));
-  cls->bool_enc = Enc_get_bool_encoding();
+  cls->bool_enc = BoolEncClient_get_bool_enc(BOOL_ENC_CLIENT(NULL));
   cls->bdd_enc = BddFsm_get_bdd_encoding(BDD_FSM(GAME_BDD_FSM(NULL)));
   cls->dd_manager = BddEnc_get_dd_manager(cls->bdd_enc);
   cls->gh = mainGameHierarchy;

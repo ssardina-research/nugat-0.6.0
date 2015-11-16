@@ -367,6 +367,16 @@ Nitin Yadav - nitin.yadav@rmit.edu.au
             
             'Enc_init_bool_encoding'
             'Enc_init_bdd_encoding'
+            
+44.warning: implicit declaration of function ‘Enc_get_bool_encoding()’
+
+    *   replaced with 'BoolEncClient_get_bool_enc(BOOL_ENC_CLIENT(ARG))'
+        ARG is replaced with : 
+        
+            'enc' in gameBuildModel.c   
+            'NULL' in gameCheckGenReactivityBuchiSpec.c and gameUnrealCore.c
+            'bdd_enc' in gameVarEncoding.c and swapped the code
+            
 
 ================================================================================
 EOF
