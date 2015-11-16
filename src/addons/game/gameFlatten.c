@@ -612,7 +612,7 @@ static void game_check_first_player_recur(NuSMVEnv_ptr env,
 
   /* assignment */
   case EQDEF:
-    yylineno = node_get_lineno(expr); /* for further error messages */
+    nusmv_yylineno = node_get_lineno(expr); /* for further error messages */
     if (NEXT == node_get_type(car(expr))) { /* trans-assign */
       game_check_first_player_recur(env,st, car(expr), vars, true, false);
       game_check_first_player_recur(env,st, cdr(expr), vars, true, false);
@@ -624,7 +624,7 @@ static void game_check_first_player_recur(NuSMVEnv_ptr env,
     break;
 
   default:
-    yylineno = node_get_lineno(expr); /* for further error messages */
+    nusmv_yylineno = node_get_lineno(expr); /* for further error messages */
     game_check_first_player_recur(env,st, car(expr), vars, allowCurrent, isInNext);
     game_check_first_player_recur(env,st, cdr(expr), vars, allowCurrent, isInNext);
     break;

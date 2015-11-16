@@ -352,7 +352,10 @@ Nitin Yadav - nitin.yadav@rmit.edu.au
     *   replaced 'error_second_player_var' with 'ErrorMgr_error_second_player_var(errmgr,'
     *   added declaration when required 'const ErrorMgr_ptr errmgr = ERROR_MGR(NuSMVEnv_get_value(env, ENV_ERROR_MANAGER));'
     
-    
+41.error: gameFlatten.c: ‘yylineno’  undeclared (first use in this function)
+
+    *   replaced with 'nusmv_yylineno'
+  
 ================================================================================
 EOF
 ================================================================================
