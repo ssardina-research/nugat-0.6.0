@@ -199,7 +199,7 @@ EXTERN int Game_CheckGameSpecAndComputeCores ARGS((NuSMVEnv_ptr env,NodeMgr_ptr 
                                                    int N));
 
 #if HAVE_LIBEXPAT
-EXTERN int Game_RatFileToGame ARGS((const char* filename));
+EXTERN int Game_RatFileToGame ARGS((NuSMVEnv_ptr env, const char* filename));
 #endif /* HAVE_LIBEXPAT */
 
 /* Game Options */

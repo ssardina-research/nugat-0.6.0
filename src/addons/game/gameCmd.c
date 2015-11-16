@@ -461,7 +461,7 @@ static int CommandReadRatFile(NuSMVEnv_ptr env,int argc, char** argv)
     fflush(stderr);
   }
 
-  if (Game_RatFileToGame(get_input_file(OptsHandler_create()))) {
+  if (Game_RatFileToGame(env,get_input_file(OptsHandler_create()))) {
     goto CommandReadRatFile_exit_1;
   }
 

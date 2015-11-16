@@ -391,7 +391,19 @@ Nitin Yadav - nitin.yadav@rmit.edu.au
 
     *   added first parameter 'BoolEnc_ptr bool_enc = BOOL_ENC(NuSMVEnv_get_value(env, ENV_BOOL_ENCODER));'
 
+48.errors in gameXmlReader.c 
     
+    warning: implicit declaration of function ‘error_out_of_memory’
+    
+        *    replaced with 'ErrorMgr_error_out_of_memory(errmgr,' and added 'errmgr' parameter to 'gameXmlReader_XmlParseResult_create'
+    
+    error: 317:9 : assignment of read-only variable ‘env’
+    
+        *   passed as parameter and changed declaration 
+        
+49.warning: gameXmlReader.c: passing argument 2 of ‘XML_SetElementHandler’ from incompatible pointer type
+
+    *
     
 ================================================================================
 EOF

@@ -451,7 +451,7 @@ Game_UseStrongReachabilityAlgorithm ARGS((NuSMVEnv_ptr env, PropGame_ptr prop,
                                           GameStrategy_ptr* strategy));
 
 EXTERN boolean Game_PropertyToGame
- ARGS((NodeMgr_ptr nodemgr,node_ptr* inputVars, node_ptr* outputVars,
+ ARGS((NuSMVEnv_ptr env,node_ptr* inputVars, node_ptr* outputVars,
        node_ptr exp_1, node_ptr* init_1, node_ptr* trans_1,
        node_ptr exp_2, node_ptr* init_2, node_ptr* trans_2,
        node_ptr* property));

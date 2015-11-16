@@ -56,6 +56,7 @@
 #include "parser/symbols.h"
 #include "utils/utils.h"
 #include "utils/error.h"
+#include "nusmv/core/utils/ErrorMgr.h"
 
 #include <ctype.h> /* for isspace */
 #include <expat.h>
@@ -245,29 +246,32 @@ EXTERN int yylineno;
 /*---------------------------------------------------------------------------*/
 /* Static function prototypes                                                */
 /*---------------------------------------------------------------------------*/
-static void game_xml_reader_tag_begin ARGS((void* data,
+static void game_xml_reader_tag_begin ARGS((NuSMVEnv_ptr env,
+                                            void* data,
                                             const char* name,
                                             const char** atts));
 
-static void game_xml_reader_tag_end ARGS((void* data,
+static void game_xml_reader_tag_end ARGS((NuSMVEnv_ptr env,
+                                          void* data,
                                           const char *string));
 
-static void game_xml_reader_char_handler ARGS((void* data,
+static void game_xml_reader_char_handler ARGS((NuSMVEnv_ptr env,
+                                               void* data,
                                                const char *txt,
                                                int len));
 
-static node_ptr game_xml_reader_pop_stack ARGS((node_ptr* stack));
+static node_ptr game_xml_reader_pop_stack ARGS((NodeMgr_ptr nodemgr,node_ptr* stack));
 
-static node_ptr game_xml_reader_pop_stack_cleanly ARGS((node_ptr* stack));
+static node_ptr game_xml_reader_pop_stack_cleanly ARGS((NodeMgr_ptr nodemgr,node_ptr* stack));
 
-static void game_xml_reader_free_text_node ARGS((node_ptr text_node));
+static void game_xml_reader_free_text_node ARGS((NodeMgr_ptr nodemgr, node_ptr text_node));
 
-static node_ptr game_xml_reader_parse_type ARGS((const char* text));
+static node_ptr game_xml_reader_parse_type ARGS((NuSMVEnv_ptr env,const char* text));
 
 static enum XmlTags game_xml_reader_identify_tag ARGS((const char* txt));
 
 static XmlParseResult_ptr
-gameXmlReader_XmlParseResult_create ARGS((XML_Parser parser));
+gameXmlReader_XmlParseResult_create ARGS((const ErrorMgr_ptr errmgr,XML_Parser parser));
 
 static void
 gameXmlReader_XmlParseResult_destroy_parser ARGS((XmlParseResult_ptr self));
@@ -290,13 +294,13 @@ gameXmlReader_XmlParseResult_destroy ARGS((XmlParseResult_ptr self));
   SeeAlso     [ ]
 
 ******************************************************************************/
-int Game_RatFileToGame(const char *filename)
+int Game_RatFileToGame(NuSMVEnv_ptr env,const char *filename)
 {
   XmlParseResult_ptr parseResult;
-  const NuSMVEnv_ptr env;
-  const NodeMgr_ptr nodemgr;
-  const UStringMgr_ptr strings;
-  const ErrorMgr_ptr errmgr;
+
+  const NodeMgr_ptr nodemgr = NODE_MGR(NuSMVEnv_get_value(env, ENV_NODE_MGR));
+  const UStringMgr_ptr strings =  USTRING_MGR(NuSMVEnv_get_value(env, ENV_STRING_MGR));
+  const ErrorMgr_ptr errmgr = ERROR_MGR(NuSMVEnv_get_value(env, ENV_ERROR_MANAGER));
 
   if (cmp_struct_get_read_model(cmps)) {
     fprintf(nusmv_stderr,
@@ -320,13 +324,8 @@ int Game_RatFileToGame(const char *filename)
 
     /* Create parser and parseResult. */
     parser = XML_ParserCreate(NULL);
-    if (!parser) error_out_of_memory(0);
-    parseResult = gameXmlReader_XmlParseResult_create(parser);
-
-    env = EnvObject_get_environment(ENV_OBJECT(parseResult));
-    nodemgr = NODE_MGR(NuSMVEnv_get_value(env, ENV_NODE_MGR));
-    strings =  USTRING_MGR(NuSMVEnv_get_value(env, ENV_STRING_MGR));
-    errmgr = ERROR_MGR(NuSMVEnv_get_value(env, ENV_ERROR_MANAGER));
+    if (!parser) ErrorMgr_error_out_of_memory(errmgr,0);
+    parseResult = gameXmlReader_XmlParseResult_create(errmgr,parser);
 
     XML_SetUserData(parser, parseResult);
     XML_SetElementHandler(parser,
@@ -353,7 +352,7 @@ int Game_RatFileToGame(const char *filename)
         }
       } /* while */
     }
-    FAIL {
+    FAIL(errmgr) {
       fclose(file);
       gameXmlReader_XmlParseResult_destroy(parseResult);
       ErrorMgr_rpterr(errmgr,"Parser error");
@@ -365,7 +364,7 @@ int Game_RatFileToGame(const char *filename)
     fclose(file);
     gameXmlReader_XmlParseResult_destroy_parser(parseResult);
 
-    if (Nil != game_xml_reader_pop_stack_cleanly(&parseResult->stack)) {
+    if (Nil != game_xml_reader_pop_stack_cleanly(nodemgr,&parseResult->stack)) {
       gameXmlReader_XmlParseResult_destroy(parseResult);
       ErrorMgr_rpterr(errmgr,"Parse error (XML file): stack is not empty after parsing.\n");
     }
@@ -494,7 +493,7 @@ int Game_RatFileToGame(const char *filename)
   SeeAlso     [ game_xml_reader_pop_stack_cleanly ]
 
 ******************************************************************************/
-static node_ptr game_xml_reader_pop_stack(node_ptr* stack) {
+static node_ptr game_xml_reader_pop_stack(NodeMgr_ptr nodemgr,node_ptr* stack) {
   node_ptr head;
   node_ptr element;
 
@@ -526,14 +525,14 @@ static node_ptr game_xml_reader_pop_stack(node_ptr* stack) {
   SeeAlso     [ game_xml_reader_pop_stack ]
 
 ******************************************************************************/
-static node_ptr game_xml_reader_pop_stack_cleanly(node_ptr* stack) {
-  node_ptr head = game_xml_reader_pop_stack(stack);
+static node_ptr game_xml_reader_pop_stack_cleanly(NodeMgr_ptr nodemgr,node_ptr* stack) {
+  node_ptr head = game_xml_reader_pop_stack(nodemgr,stack);
 
   while (Nil != head
          && XML_TEXT == node_get_type(head)
          && '\0' == ((char*) car(head))[0]) {
-    game_xml_reader_free_text_node(head);
-    head = game_xml_reader_pop_stack(stack);
+    game_xml_reader_free_text_node(nodemgr,head);
+    head = game_xml_reader_pop_stack(nodemgr,stack);
   }
 
   return head;
@@ -551,7 +550,7 @@ static node_ptr game_xml_reader_pop_stack_cleanly(node_ptr* stack) {
   SeeAlso     [ ]
 
 ******************************************************************************/
-static void game_xml_reader_free_text_node(node_ptr text_node) {
+static void game_xml_reader_free_text_node(NodeMgr_ptr nodemgr,node_ptr text_node) {
   node_ptr l;
 
   nusmv_assert(node_get_type(text_node) == XML_TEXT);
@@ -575,10 +574,14 @@ static void game_xml_reader_free_text_node(node_ptr text_node) {
   SeeAlso     [ ]
 
 ******************************************************************************/
-static node_ptr game_xml_reader_parse_type(const char* text) {
+static node_ptr game_xml_reader_parse_type(NuSMVEnv_ptr env,const char* text) {
   int i1;
   int i2;
   int size = -1; /* size has some default, for sure wrong value */
+
+  const NodeMgr_ptr nodemgr = NODE_MGR(NuSMVEnv_get_value(env, ENV_NODE_MGR));
+  const UStringMgr_ptr strings =  USTRING_MGR(NuSMVEnv_get_value(env, ENV_STRING_MGR));
+  const ErrorMgr_ptr errmgr = ERROR_MGR(NuSMVEnv_get_value(env, ENV_ERROR_MANAGER));
 
   if (0 == strcmp(text, "boolean")) {
     return new_node(nodemgr,BOOLEAN, Nil, Nil);
@@ -751,7 +754,7 @@ static node_ptr game_xml_reader_parse_type(const char* text) {
                         new_node(nodemgr,TWODOTS,
                                  new_node(nodemgr,NUMBER, NODE_FROM_INT(i1), Nil),
                                  new_node(nodemgr,NUMBER, NODE_FROM_INT(i2), Nil)),
-                        game_xml_reader_parse_type(text));
+                        game_xml_reader_parse_type(env,text));
       }
       else ErrorMgr_rpterr(errmgr,"04 Incorrect XML file array %%d .. %%d type");
     }
@@ -833,11 +836,16 @@ static enum XmlTags game_xml_reader_identify_tag(const char* txt)
   SeeAlso     [ ]
 
 ******************************************************************************/
-static void game_xml_reader_tag_begin(void* data,
+static void game_xml_reader_tag_begin(NuSMVEnv_ptr env,
+                                      void* data,
                                       const char* name,
                                       const char** atts)
 {
   XmlParseResult_ptr parseResult = XML_PARSE_RESULT(data);
+
+  const NodeMgr_ptr nodemgr = NODE_MGR(NuSMVEnv_get_value(env, ENV_NODE_MGR));
+  const UStringMgr_ptr strings =  USTRING_MGR(NuSMVEnv_get_value(env, ENV_STRING_MGR));
+  const ErrorMgr_ptr errmgr = ERROR_MGR(NuSMVEnv_get_value(env, ENV_ERROR_MANAGER));
 
   /* Simply create a new node at the stack with the given element name. */
   enum XmlTags tag = game_xml_reader_identify_tag(name);
@@ -940,9 +948,13 @@ static void game_xml_reader_tag_begin(void* data,
   SeeAlso     [ ]
 
 ******************************************************************************/
-static void game_xml_reader_tag_end(void* data, const char *string)
+static void game_xml_reader_tag_end(NuSMVEnv_ptr env,void* data, const char *string)
 {
   XmlParseResult_ptr parseResult = XML_PARSE_RESULT(data);
+
+  const NodeMgr_ptr nodemgr = NODE_MGR(NuSMVEnv_get_value(env, ENV_NODE_MGR));
+  const UStringMgr_ptr strings =  USTRING_MGR(NuSMVEnv_get_value(env, ENV_STRING_MGR));
+  const ErrorMgr_ptr errmgr = ERROR_MGR(NuSMVEnv_get_value(env, ENV_ERROR_MANAGER));
 
   enum XmlTags tag = game_xml_reader_identify_tag(string);
 
@@ -955,7 +967,7 @@ static void game_xml_reader_tag_end(void* data, const char *string)
   if (parseResult->isIgnore) {
     if (node_get_type(car(parseResult->stack)) == tag) {
       /* The corresponding end tag is met. */
-      node_ptr node = game_xml_reader_pop_stack(&parseResult->stack);
+      node_ptr node = game_xml_reader_pop_stack(nodemgr,&parseResult->stack);
       free_node(nodemgr,node);
       parseResult->isIgnore = false;
     }
@@ -976,7 +988,7 @@ static void game_xml_reader_tag_end(void* data, const char *string)
   case XML_SIGNALS:
   case XML_REQUIREMENTS:
     {
-      node_ptr node = game_xml_reader_pop_stack_cleanly(&parseResult->stack);
+      node_ptr node = game_xml_reader_pop_stack_cleanly(nodemgr,&parseResult->stack);
       nusmv_assert(node_get_type(node) == tag &&
                    Nil == car(node) &&
                    Nil == cdr(node) /* nothing to free */);
@@ -993,10 +1005,10 @@ static void game_xml_reader_tag_end(void* data, const char *string)
     {
       node_ptr name, kind, type, signal;
 
-      type = game_xml_reader_pop_stack_cleanly(&parseResult->stack);
-      kind = game_xml_reader_pop_stack_cleanly(&parseResult->stack);
-      name = game_xml_reader_pop_stack_cleanly(&parseResult->stack);
-      signal = game_xml_reader_pop_stack_cleanly(&parseResult->stack);
+      type = game_xml_reader_pop_stack_cleanly(nodemgr,&parseResult->stack);
+      kind = game_xml_reader_pop_stack_cleanly(nodemgr,&parseResult->stack);
+      name = game_xml_reader_pop_stack_cleanly(nodemgr,&parseResult->stack);
+      signal = game_xml_reader_pop_stack_cleanly(nodemgr,&parseResult->stack);
 
       if (node_get_type(name) != XML_NAME) {
         swap_nodes(&name, &type);
@@ -1043,15 +1055,15 @@ static void game_xml_reader_tag_end(void* data, const char *string)
       /* Pop the NAME and PROPERTY nodes, and the node of assumption or
          guarantee */
       node_ptr name =
-        game_xml_reader_pop_stack_cleanly(&parseResult->stack);
+        game_xml_reader_pop_stack_cleanly(nodemgr,&parseResult->stack);
       node_ptr property =
-        game_xml_reader_pop_stack_cleanly(&parseResult->stack);
+        game_xml_reader_pop_stack_cleanly(nodemgr,&parseResult->stack);
       node_ptr kind =
-        game_xml_reader_pop_stack_cleanly(&parseResult->stack);
+        game_xml_reader_pop_stack_cleanly(nodemgr,&parseResult->stack);
       node_ptr toggled =
-        game_xml_reader_pop_stack_cleanly(&parseResult->stack);
+        game_xml_reader_pop_stack_cleanly(nodemgr,&parseResult->stack);
       node_ptr requirement =
-        game_xml_reader_pop_stack_cleanly(&parseResult->stack);;
+        game_xml_reader_pop_stack_cleanly(nodemgr,&parseResult->stack);;
 
       /* Swap the elements if required. */
       if (node_get_type(name) != XML_NAME) {
@@ -1134,7 +1146,7 @@ static void game_xml_reader_tag_end(void* data, const char *string)
       node_ptr text;
 
       /* Pop the TEXT node. Use the simple pop_stack function! */
-      text = game_xml_reader_pop_stack(&parseResult->stack);
+      text = game_xml_reader_pop_stack(nodemgr,&parseResult->stack);
 
       nusmv_assert(node_get_type(text) == XML_TEXT);
 
@@ -1173,7 +1185,7 @@ static void game_xml_reader_tag_end(void* data, const char *string)
         ErrorMgr_internal_error(errmgr,"impossible code");
       }
 
-      game_xml_reader_free_text_node(text);
+      game_xml_reader_free_text_node(nodemgr,text);
     }
     break;
 
@@ -1185,7 +1197,7 @@ static void game_xml_reader_tag_end(void* data, const char *string)
 
       /* Pop the TEXT node and parse it with the NuGaT parser. Use the
          usual pop_stack function. */
-      node_ptr node = game_xml_reader_pop_stack(&parseResult->stack);
+      node_ptr node = game_xml_reader_pop_stack(nodemgr,&parseResult->stack);
 
       nusmv_assert(node_get_type(node) == XML_TEXT &&
                    node_get_type(car(parseResult->stack)) == XML_PROPERTY &&
@@ -1198,7 +1210,7 @@ static void game_xml_reader_tag_end(void* data, const char *string)
         ErrorMgr_rpterr(errmgr,"Parse error in an PSL expression in XML file");
       }
 
-      game_xml_reader_free_text_node(node);
+      game_xml_reader_free_text_node(nodemgr,node);
       setcar(car(parseResult->stack), property);
     }
     break;
@@ -1209,7 +1221,7 @@ static void game_xml_reader_tag_end(void* data, const char *string)
          to proper type and made it left child of XML_TYPE */
 
       /* Pop the TEXT node. Use the usual pop_stack function! */
-      node_ptr text = game_xml_reader_pop_stack(&parseResult->stack);
+      node_ptr text = game_xml_reader_pop_stack(nodemgr,&parseResult->stack);
       nusmv_assert(node_get_type(text) == XML_TEXT);
 
       if (parseResult->stack == Nil ||
@@ -1220,9 +1232,9 @@ static void game_xml_reader_tag_end(void* data, const char *string)
 
       /* Create left child for NAME node as usual NuSMV ATOM. */
       setcar(car(parseResult->stack),
-             game_xml_reader_parse_type((char*) car(text)));
+             game_xml_reader_parse_type(env,(char*) car(text)));
 
-      game_xml_reader_free_text_node(text);
+      game_xml_reader_free_text_node(nodemgr,text);
     }
     break;
 
@@ -1289,12 +1301,16 @@ static void game_xml_reader_tag_end(void* data, const char *string)
   SeeAlso     [ ]
 
 ******************************************************************************/
-static void game_xml_reader_char_handler(void* data, const char *txt, int len)
+static void game_xml_reader_char_handler(NuSMVEnv_ptr env,void* data, const char *txt, int len)
 {
   XmlParseResult_ptr parseResult = XML_PARSE_RESULT(data);
   int prevLen;
   node_ptr text_node;
   char* buffer;
+
+  const NodeMgr_ptr nodemgr = NODE_MGR(NuSMVEnv_get_value(env, ENV_NODE_MGR));
+  const UStringMgr_ptr strings =  USTRING_MGR(NuSMVEnv_get_value(env, ENV_STRING_MGR));
+  const ErrorMgr_ptr errmgr = ERROR_MGR(NuSMVEnv_get_value(env, ENV_ERROR_MANAGER));
 
   /* Reset line info for possible error messages. */
   yylineno = XML_GetCurrentLineNumber(parseResult->parser);
@@ -1332,7 +1348,7 @@ static void game_xml_reader_char_handler(void* data, const char *txt, int len)
   buffer = (char*) car(text_node);
   prevLen = buffer != NULL ? strlen(buffer) : 0;
   buffer = REALLOC(char, buffer,  prevLen + len + 1);
-  if (!buffer) error_out_of_memory(len + 1);
+  if (!buffer) ErrorMgr_error_out_of_memory(errmgr,len + 1);
 
   strncpy(buffer + prevLen, txt, len);
   buffer[prevLen+len] = '\0';
@@ -1353,12 +1369,12 @@ static void game_xml_reader_char_handler(void* data, const char *txt, int len)
   SeeAlso     [ gameXmlReader_XmlParseResult_destroy ]
 
 ******************************************************************************/
-static XmlParseResult_ptr gameXmlReader_XmlParseResult_create(XML_Parser parser)
+static XmlParseResult_ptr gameXmlReader_XmlParseResult_create(const ErrorMgr_ptr errmgr,XML_Parser parser)
 {
   XmlParseResult_ptr self;
 
   self = ALLOC(XmlParseResult, 1);
-  if (XML_PARSE_RESULT(NULL) == self) error_out_of_memory(0);
+  if (XML_PARSE_RESULT(NULL) == self) ErrorMgr_error_out_of_memory(errmgr,0);
 
   self->input_vars = Nil;
   self->output_vars = Nil;
