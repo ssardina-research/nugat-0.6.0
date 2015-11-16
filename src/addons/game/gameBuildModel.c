@@ -116,7 +116,7 @@ void Game_CommandBuildFlatModel(NuSMVEnv_ptr env)
     SymbLayerIter iter1, iter2;
     SymbTableIter titer;
 
-    st = Compile_get_global_symb_table();
+    st = SYMB_TABLE(NuSMVEnv_get_value(env, ENV_SYMB_TABLE));
     model_layer_1 = SymbTable_get_layer(st, MODEL_LAYER_1);
     model_layer_2 = SymbTable_get_layer(st, MODEL_LAYER_2);
 
@@ -200,7 +200,7 @@ void Game_CommandBuildBooleanModel(NuSMVEnv_ptr env)
     if (reord_status == 1) { dd_autodyn_disable(dd); }
 
     /* create determinization layers */
-    st = Compile_get_global_symb_table();
+    st = SYMB_TABLE(NuSMVEnv_get_value(env, ENV_SYMB_TABLE));
 
     determ_layer_1 = SymbTable_create_layer(st,
                                             DETERM_LAYER_1,
@@ -282,7 +282,7 @@ void Game_CommandBuildBooleanModel(NuSMVEnv_ptr env)
 ******************************************************************************/
 void Game_CommandBuildBddModel(NuSMVEnv_ptr env)
 {
-  SymbTable_ptr st = Compile_get_global_symb_table();
+  SymbTable_ptr st = SYMB_TABLE(NuSMVEnv_get_value(env, ENV_SYMB_TABLE));
   GameSexpFsm_ptr scalar_fsm = PropDbGame_master_get_game_scalar_sexp_fsm( \
                                      PROP_DB_GAME(NuSMVEnv_get_value(env, ENV_PROP_DB)));
 

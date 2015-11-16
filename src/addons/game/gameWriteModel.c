@@ -114,7 +114,7 @@ void Game_CommandWriteFlatModel(NuSMVEnv_ptr env,FILE* ofileid)
 
   nusmv_assert((FILE *) NULL != ofileid);
 
-  st = Compile_get_global_symb_table();
+  st = SYMB_TABLE(NuSMVEnv_get_value(env, ENV_SYMB_TABLE));
 
   layer1 = array_alloc(const char*, 1);
   layer2 = array_alloc(const char*, 1);

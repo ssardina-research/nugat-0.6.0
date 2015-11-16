@@ -111,11 +111,13 @@ static GameHierarchy_ptr
                                     SymbLayer_ptr model_layer_2,
                                     node_ptr module_2));
 
-static void game_check_first_player ARGS((SymbTable_ptr st,
+static void game_check_first_player ARGS((NuSMVEnv_ptr env,
+                                          SymbTable_ptr st,
                                           FlatHierarchy_ptr player_1,
                                           NodeList_ptr vars));
 
-static void game_check_first_player_recur ARGS((SymbTable_ptr st,
+static void game_check_first_player_recur ARGS((NuSMVEnv_ptr env,
+                                                SymbTable_ptr st,
                                                 node_ptr expr,
                                                 NodeList_ptr vars,
                                                 boolean allowCurrentVar,
@@ -142,7 +144,7 @@ static void game_check_first_player_recur ARGS((SymbTable_ptr st,
 ******************************************************************************/
 int Game_CommandFlattenHierarchy(NuSMVEnv_ptr env)
 {
-  SymbTable_ptr st = Compile_get_global_symb_table();
+  SymbTable_ptr st = SYMB_TABLE(NuSMVEnv_get_value(env, ENV_SYMB_TABLE));
   int propErr;
 
   if (opt_verbose_level_gt(OptsHandler_create(), 0)) {
@@ -352,7 +354,8 @@ game_flatten_game_hierarchy(SymbTable_ptr symbol_table,
    /*NEW_CODE_START*/
    SymbLayerIter iter2;
    SymbLayer_gen_iter(model_layer_2, &iter2, STT_VAR);
-   game_check_first_player(symbol_table,
+   game_check_first_player(env,
+                           symbol_table,
                            player_1,
                            SymbLayer_iter_to_list(model_layer_2, iter2));
    /*NEW_CODE_END*/
@@ -467,42 +470,49 @@ game_flatten_game_hierarchy(SymbTable_ptr symbol_table,
   SeeAlso     [ ]
 
 ******************************************************************************/
-static void game_check_first_player(SymbTable_ptr st,
+static void game_check_first_player(NuSMVEnv_ptr env,
+                                    SymbTable_ptr st,
                                     FlatHierarchy_ptr player_1,
                                     NodeList_ptr vars)
 {
   /* check init */
-  game_check_first_player_recur(st,
+  game_check_first_player_recur(env,
+                                st,
                                 FlatHierarchy_get_init(player_1),
                                 vars,
                                 false,
                                 false);
   /* check invar */
-  game_check_first_player_recur(st,
+  game_check_first_player_recur(env,
+                                st,
                                 FlatHierarchy_get_invar(player_1),
                                 vars,
                                 false,
                                 false);
   /* check justice */
-  game_check_first_player_recur(st,
+  game_check_first_player_recur(env,
+                                st,
                                 FlatHierarchy_get_justice(player_1),
                                 vars,
                                 false,
                                 false);
   /* check compassion */
-  game_check_first_player_recur(st,
+  game_check_first_player_recur(env,
+                                st,
                                 FlatHierarchy_get_compassion(player_1),
                                 vars,
                                 false,
                                 false);
   /* check trans */
-  game_check_first_player_recur(st,
+  game_check_first_player_recur(env,
+                                st,
                                 FlatHierarchy_get_trans(player_1),
                                 vars,
                                 true,
                                 false);
   /* check assign. "map" is used to get rid of processes names */
-  game_check_first_player_recur(st,
+  game_check_first_player_recur(env,
+                                st,
                                 map(0,cdr, FlatHierarchy_get_assign(player_1)),
                                 vars,
                                 false,
@@ -526,7 +536,8 @@ static void game_check_first_player(SymbTable_ptr st,
   SeeAlso     [ game_check_first_player ]
 
 ******************************************************************************/
-static void game_check_first_player_recur(SymbTable_ptr st,
+static void game_check_first_player_recur(NuSMVEnv_ptr env,
+                                          SymbTable_ptr st,
                                           node_ptr expr,
                                           NodeList_ptr vars,
                                           boolean allowCurrent,
@@ -558,7 +569,7 @@ static void game_check_first_player_recur(SymbTable_ptr st,
   case DOT:
   case ARRAY:
     {
-      SymbTable_ptr st = Compile_get_global_symb_table();
+      SymbTable_ptr st = SYMB_TABLE(NuSMVEnv_get_value(env, ENV_SYMB_TABLE));
       if (SymbTable_is_symbol_constant(st, expr)) {
         /* it is a constant => skip */
         break;
@@ -566,7 +577,7 @@ static void game_check_first_player_recur(SymbTable_ptr st,
       else if (SymbTable_is_symbol_define(st, expr)) {
         /* it is define => expand */
         expr = SymbTable_get_define_flatten_body(st, expr);
-        game_check_first_player_recur(st, expr, vars, allowCurrent, isInNext);
+        game_check_first_player_recur(env,st, expr, vars, allowCurrent, isInNext);
       }
       else if (SymbTable_is_symbol_var(st, expr)) {
         /* it is a var => check it */
@@ -586,26 +597,26 @@ static void game_check_first_player_recur(SymbTable_ptr st,
   case CONTEXT: nusmv_assert(false);
 
   case NEXT: /* allowCurrent is of no importance any more */
-    game_check_first_player_recur(st, car(expr), vars, allowCurrent, true);
+    game_check_first_player_recur(env,st, car(expr), vars, allowCurrent, true);
     break;
 
   /* assignment */
   case EQDEF:
     yylineno = node_get_lineno(expr); /* for further error messages */
     if (NEXT == node_get_type(car(expr))) { /* trans-assign */
-      game_check_first_player_recur(st, car(expr), vars, true, false);
-      game_check_first_player_recur(st, cdr(expr), vars, true, false);
+      game_check_first_player_recur(env,st, car(expr), vars, true, false);
+      game_check_first_player_recur(env,st, cdr(expr), vars, true, false);
     }
     else { /* init-assign or invar-assign */
-      game_check_first_player_recur(st, car(expr), vars, false, false);
-      game_check_first_player_recur(st, cdr(expr), vars, false, false);
+      game_check_first_player_recur(env,st, car(expr), vars, false, false);
+      game_check_first_player_recur(env,st, cdr(expr), vars, false, false);
     }
     break;
 
   default:
     yylineno = node_get_lineno(expr); /* for further error messages */
-    game_check_first_player_recur(st, car(expr), vars, allowCurrent, isInNext);
-    game_check_first_player_recur(st, cdr(expr), vars, allowCurrent, isInNext);
+    game_check_first_player_recur(env,st, car(expr), vars, allowCurrent, isInNext);
+    game_check_first_player_recur(env,st, cdr(expr), vars, allowCurrent, isInNext);
     break;
   } /* switch */
 

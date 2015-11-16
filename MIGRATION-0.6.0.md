@@ -299,11 +299,25 @@ Nitin Yadav - nitin.yadav@rmit.edu.au
 
     *   removed '&' for the first parameter
     
-33.warning: gameGeneral.c:373:26:  passing argument 2 of ‘Prop_print’ from incompatible pointer type
+33.warning: gameGeneral.c:  passing argument 2 of ‘Prop_print’ from incompatible pointer type
 
     *   added cast of the second argument with '(OStream_ptr)...'      
             
-            
+34.warning: gameFlatten.c: implicit declaration of function ‘Compile_get_global_symb_table’
+
+
+    *   replaced with 'SYMB_TABLE(NuSMVEnv_get_value(env, ENV_SYMB_TABLE))'
+    *   added 'env' parameter for :
+            'game_declare_special_var'
+            'game_undeclare_special_var'
+            'Game_SF07_StructCheckLTLGameSF07_create'
+            'Game_CheckLtlGameSpecSF07'
+            'game_check_first_player_recur'
+            'game_check_first_player'
+            'Game_UnrealizableCore_Struct_create'
+            'Game_CheckGameSpecAndComputeCores'
+
+
 ================================================================================
 EOF
 ================================================================================

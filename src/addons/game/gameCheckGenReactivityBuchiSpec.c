@@ -107,11 +107,13 @@ static void game_free_list_of_array_of_bdd ARGS((DDMgr_ptr dd,
                                                  node_ptr list,
                                                  int size));
 
-static void game_declare_special_var ARGS((int guaranteeNumber,
+static void game_declare_special_var ARGS((NuSMVEnv_ptr env,
+                                           int guaranteeNumber,
                                            SymbLayer_ptr* new_layer,
                                            node_ptr* new_var));
 
-static void game_undeclare_special_var ARGS((SymbLayer_ptr layer));
+static void game_undeclare_special_var ARGS((NuSMVEnv_ptr env,
+                                             SymbLayer_ptr layer));
 
 /*---------------------------------------------------------------------------*/
 /* Definition of exported functions                                          */
@@ -159,7 +161,8 @@ void Game_CheckGenReactivitySpec(NuSMVEnv_ptr env, PropGame_ptr prop, gameParams
 
   /* Declare a special variable required for strategy printing. */
   if (construct_strategy) {
-    game_declare_special_var(llength(cdr(Prop_get_expr_core(PROP(prop)))),
+    game_declare_special_var(env,
+                            llength(cdr(Prop_get_expr_core(PROP(prop)))),
                              &layer,
                              &var);
 
@@ -200,7 +203,7 @@ void Game_CheckGenReactivitySpec(NuSMVEnv_ptr env, PropGame_ptr prop, gameParams
   if (construct_strategy) {
     if (Nil != varList1) free_node(varList1);
     if (Nil != varList2) free_node(varList2);
-    game_undeclare_special_var(layer);
+    game_undeclare_special_var(env,layer);
   }
 }
 
@@ -244,7 +247,8 @@ void Game_CheckBuchiGameSpec(PropGame_ptr prop, gameParams_ptr params)
 
   /* Declare a special variable required for strategy printing. */
   if (construct_strategy) {
-    game_declare_special_var(llength(car(Prop_get_expr_core(PROP(prop)))),
+    game_declare_special_var(env,
+                             llength(car(Prop_get_expr_core(PROP(prop)))),
                              &layer,
                              &var);
 
@@ -278,7 +282,7 @@ void Game_CheckBuchiGameSpec(PropGame_ptr prop, gameParams_ptr params)
   if (construct_strategy) {
     if (Nil != varList1) free_node(varList1);
     if (Nil != varList2) free_node(varList2);
-    game_undeclare_special_var(layer);
+    game_undeclare_special_var(env,layer);
   }
 }
 
@@ -415,7 +419,8 @@ static void game_free_list_of_array_of_bdd(DDMgr_ptr dd,
   SeeAlso     [ game_undeclare_special_var ]
 
 ******************************************************************************/
-static void game_declare_special_var(int guaranteeNumber,
+static void game_declare_special_var(NuSMVEnv_ptr env,
+                                     int guaranteeNumber,
                                      SymbLayer_ptr* new_layer,
                                      node_ptr* new_var)
 {
@@ -428,7 +433,7 @@ static void game_declare_special_var(int guaranteeNumber,
   SymbType_ptr symbolicType;
 
   /* Create a new temporal layer (with arbitrary name). */
-  layer = SymbTable_create_layer(Compile_get_global_symb_table(),
+  layer = SymbTable_create_layer(SYMB_TABLE(NuSMVEnv_get_value(env, ENV_SYMB_TABLE)),
                                  NULL, /* a new name will be created */
                                  SYMB_LAYER_POS_BOTTOM);
 
@@ -478,7 +483,7 @@ static void game_declare_special_var(int guaranteeNumber,
   SeeAlso     [ game_declare_special_var ]
 
 ******************************************************************************/
-static void game_undeclare_special_var(SymbLayer_ptr layer)
+static void game_undeclare_special_var(NuSMVEnv_ptr env,SymbLayer_ptr layer)
 {
   const char* name = SymbLayer_get_name(layer);
 
@@ -490,7 +495,7 @@ static void game_undeclare_special_var(SymbLayer_ptr layer)
     BaseEnc_remove_layer(BASE_ENC(Enc_get_bool_encoding()), name);
   }
 
-  SymbTable_remove_layer(Compile_get_global_symb_table(), layer);
+  SymbTable_remove_layer(SYMB_TABLE(NuSMVEnv_get_value(env, ENV_SYMB_TABLE)), layer);
 }
 
 /**Function********************************************************************

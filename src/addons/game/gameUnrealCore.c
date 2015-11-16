@@ -137,7 +137,7 @@ typedef struct GameGameFsms_TAG* GameGameFsms_ptr;
   SeeAlso     [ ]
 
 ******************************************************************************/
-typedef boolean (*game_is_game_still_correct) ARGS((
+typedef boolean (*game_is_game_still_correct) (
                                           Game_UnrealizableCore_Struct_ptr self,
                                                     GameBddFsm_ptr fsm,
                                                     GamePlayer playerToModify,
@@ -382,7 +382,8 @@ EXTERN FsmBuilder_ptr global_fsm_builder;
 /* Static function prototypes                                                */
 /*---------------------------------------------------------------------------*/
 static Game_UnrealizableCore_Struct_ptr Game_UnrealizableCore_Struct_create
-ARGS((PropGame_ptr prop,
+(NuSMVEnv_ptr env,
+      PropGame_ptr prop,
       Game_UnrealizableCore_Algorithm algo,
       Game_UnrealizableCore_CoreType ct,
       boolean min_init,
@@ -390,65 +391,64 @@ ARGS((PropGame_ptr prop,
       boolean min_trans,
       boolean min_prop,
       Game_Who w,
-      int N));
+      int N);
 static void Game_UnrealizableCore_Struct_destroy
-ARGS((Game_UnrealizableCore_Struct_ptr self));
+(Game_UnrealizableCore_Struct_ptr self);
 static void Game_UnrealizableCore_Struct_save_assign_hashes
-ARGS((Game_UnrealizableCore_Struct_ptr self));
+(Game_UnrealizableCore_Struct_ptr self);
 static void Game_UnrealizableCore_Struct_restore_assign_hashes
-ARGS((Game_UnrealizableCore_Struct_ptr self));
+(Game_UnrealizableCore_Struct_ptr self);
 static void Game_UnrealizableCore_Struct_save_flat_hierarchies
-ARGS((Game_UnrealizableCore_Struct_ptr self));
+(Game_UnrealizableCore_Struct_ptr self);
 static void Game_UnrealizableCore_Struct_restore_flat_hierarchies
-ARGS((Game_UnrealizableCore_Struct_ptr self));
+(Game_UnrealizableCore_Struct_ptr self);
 
-static node_ptr copy_opposite_list ARGS((NodeMgr_ptr nodemgr,node_ptr l));
-static void free_opposite_list ARGS((node_ptr l));
-static node_ptr opposite_reverse ARGS((node_ptr x));
+static node_ptr copy_opposite_list (NodeMgr_ptr nodemgr,node_ptr l);
+static void free_opposite_list (node_ptr l);
+static node_ptr opposite_reverse (node_ptr x);
 
 static GameGameFsms_ptr game_construct_game_fsms
-ARGS((Game_UnrealizableCore_Struct_ptr self));
+(Game_UnrealizableCore_Struct_ptr self);
 static void game_free_game_fsms
-ARGS((GameGameFsms_ptr fsm));
+(GameGameFsms_ptr fsm);
 
 static node_ptr game_create_new_param
-ARGS((Game_UnrealizableCore_Struct_ptr self,
+(Game_UnrealizableCore_Struct_ptr self,
        node_ptr expr,
        int kind,
-      GamePlayer player));
+      GamePlayer player);
 static void game_guard_exprs_by_parameters
-ARGS((Game_UnrealizableCore_Struct_ptr self,
+(Game_UnrealizableCore_Struct_ptr self,
       node_ptr exprs,
       int kind,
-      GamePlayer player));
+      GamePlayer player);
 static void game_guard_gamespecs_by_parameters
-ARGS((Game_UnrealizableCore_Struct_ptr self));
+(Game_UnrealizableCore_Struct_ptr self);
 static void game_guard_game_hierarchy_with_parameters
-ARGS((Game_UnrealizableCore_Struct_ptr self));
+(Game_UnrealizableCore_Struct_ptr self);
 static void game_unguard_exprs_by_parameters
-ARGS((Game_UnrealizableCore_Struct_ptr self,
+(Game_UnrealizableCore_Struct_ptr self,
       node_ptr exprs,
       int kind,
-      GamePlayer player));
+      GamePlayer player);
 static void game_unguard_gamespecs_by_parameters
-ARGS((Game_UnrealizableCore_Struct_ptr self));
+(Game_UnrealizableCore_Struct_ptr self);
 static void game_unguard_game_hierarchy_with_parameters
-ARGS((Game_UnrealizableCore_Struct_ptr self));
+(Game_UnrealizableCore_Struct_ptr self);
 
 
 static void game_process_unrealizable_core_with_params
-ARGS((Game_UnrealizableCore_Struct_ptr self,
+(Game_UnrealizableCore_Struct_ptr self,
       GameBddFsm_ptr fsm,
-      bdd_ptr winningCore));
+      bdd_ptr winningCore);
 
 static void game_compute_core_using_parameters
-ARGS((Game_UnrealizableCore_Struct_ptr self));
+(Game_UnrealizableCore_Struct_ptr self);
 
 static void game_compute_core_switching_constraints
-ARGS((Game_UnrealizableCore_Struct_ptr self));
+(Game_UnrealizableCore_Struct_ptr self);
 
-static void game_output_spec_without_params
-ARGS((Game_UnrealizableCore_Struct_ptr self, FILE* out));
+static void game_output_spec_without_params(Game_UnrealizableCore_Struct_ptr self, FILE* out);
 
 /*---------------------------------------------------------------------------*/
 /* Definition of exported functions                                          */
@@ -466,7 +466,8 @@ ARGS((Game_UnrealizableCore_Struct_ptr self, FILE* out));
   SeeAlso     [ ]
 
 ******************************************************************************/
-int Game_CheckGameSpecAndComputeCores(NodeMgr_ptr nodemgr,
+int Game_CheckGameSpecAndComputeCores(NuSMVEnv_ptr env,
+                                      NodeMgr_ptr nodemgr,
                                       PropGame_ptr prop,
                                       Game_UnrealizableCore_Algorithm algo,
                                       Game_UnrealizableCore_CoreType ct,
@@ -502,7 +503,8 @@ int Game_CheckGameSpecAndComputeCores(NodeMgr_ptr nodemgr,
     return 1;
   }
 
-  cls = Game_UnrealizableCore_Struct_create(PROP_GAME(prop),
+  cls = Game_UnrealizableCore_Struct_create(env,
+                                            PROP_GAME(prop),
                                             algo,
                                             ct,
                                             min_init,
@@ -648,7 +650,8 @@ const char* Game_UnrealizableCore_CoreType_to_string(
 
 ******************************************************************************/
 static Game_UnrealizableCore_Struct_ptr
-Game_UnrealizableCore_Struct_create (PropGame_ptr prop,
+Game_UnrealizableCore_Struct_create (NuSMVEnv_ptr env,
+                                     PropGame_ptr prop,
                                      Game_UnrealizableCore_Algorithm algo,
                                      Game_UnrealizableCore_CoreType ct,
                                      boolean min_init,
@@ -680,7 +683,7 @@ Game_UnrealizableCore_Struct_create (PropGame_ptr prop,
   GAME_UNREALIZABLE_CORE_STRUCT_CHECK_INSTANCE(cls);
 
   cls->oh = OptsHandler_create();
-  cls->st = Compile_get_global_symb_table();
+  cls->st = SYMB_TABLE(NuSMVEnv_get_value(env, ENV_SYMB_TABLE));
   cls->bool_enc = Enc_get_bool_encoding();
   cls->bdd_enc = BddFsm_get_bdd_encoding(BDD_FSM(GAME_BDD_FSM(NULL)));
   cls->dd_manager = BddEnc_get_dd_manager(cls->bdd_enc);

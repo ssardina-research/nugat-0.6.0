@@ -178,7 +178,7 @@ Game_CheckAvoidDeadlockSpec ARGS((NuSMVEnv_ptr env,PropGame_ptr prop, gameParams
 EXTERN void
 Game_CheckBuchiGameSpec ARGS((NuSMVEnv_ptr env,PropGame_ptr prop, gameParams_ptr params));
 
-EXTERN void Game_CheckLtlGameSpecSF07 ARGS((PropGame_ptr prop,
+EXTERN void Game_CheckLtlGameSpecSF07 ARGS((NuSMVEnv_ptr env,PropGame_ptr prop,
                                             gameParams_ptr params,
                                             unsigned int kmin,
                                             unsigned int kmax,
@@ -187,7 +187,7 @@ EXTERN void Game_CheckLtlGameSpecSF07 ARGS((PropGame_ptr prop,
 EXTERN void
 Game_CheckGenReactivitySpec ARGS((NuSMVEnv_ptr env, PropGame_ptr prop, gameParams_ptr params));
 
-EXTERN int Game_CheckGameSpecAndComputeCores ARGS((NodeMgr_ptr nodemgr,
+EXTERN int Game_CheckGameSpecAndComputeCores ARGS((NuSMVEnv_ptr env,NodeMgr_ptr nodemgr,
                                                    PropGame_ptr prop,
                                            Game_UnrealizableCore_Algorithm algo,
                                               Game_UnrealizableCore_CoreType ct,

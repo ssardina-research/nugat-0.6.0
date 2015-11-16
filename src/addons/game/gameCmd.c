@@ -3078,7 +3078,7 @@ static int CommandCheckLtlGameSpecSF07(NuSMVEnv_ptr env,int argc, char **argv)
                 (NIL(char) == strategyFileName ||
                 (FILE*) NULL != strategy_stream) );
 
-                Game_CheckLtlGameSpecSF07(PROP_GAME(p), &params, kmin, kmax, w);
+                Game_CheckLtlGameSpecSF07(env,PROP_GAME(p), &params, kmin, kmax, w);
             }
         FAIL(errmgr) {
             goto CommandCheckLtlGameSpecSF07_return_1;
@@ -3107,7 +3107,7 @@ static int CommandCheckLtlGameSpecSF07(NuSMVEnv_ptr env,int argc, char **argv)
                     Prop_ptr p = PropDb_get_prop_at_index(prop_db, i);
 
                     if (Prop_get_type(p) == PropGame_LtlGame) {
-                        Game_CheckLtlGameSpecSF07(PROP_GAME(p), &params, kmin, kmax, w);
+                        Game_CheckLtlGameSpecSF07(env,PROP_GAME(p), &params, kmin, kmax, w);
                     }
                 }
             }
@@ -3516,7 +3516,9 @@ static int CommandExtractUnrealizableCore(NuSMVEnv_ptr env,int argc, char **argv
                                     "properties.\n");
                     goto CommandExtractUnrealizableCore_return_1;
                 }
-                Game_CheckGameSpecAndComputeCores(nodemgr,PROP_GAME(p),
+                Game_CheckGameSpecAndComputeCores(env,
+                                                  nodemgr,
+                                                  PROP_GAME(p),
                                                   algo,
                                                   ct,
                                                   min_init,
@@ -3546,7 +3548,9 @@ static int CommandExtractUnrealizableCore(NuSMVEnv_ptr env,int argc, char **argv
                                         "available for GENREACTIVITY\n"
                                         "properties. Skipping property %d.\n", i);
                     } else {
-                        Game_CheckGameSpecAndComputeCores(nodemgr,PROP_GAME(p),
+                        Game_CheckGameSpecAndComputeCores(env,
+                                                          nodemgr,
+                                                          PROP_GAME(p),
                                                           algo,
                                                           ct,
                                                           min_init,

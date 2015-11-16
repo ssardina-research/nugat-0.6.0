@@ -402,7 +402,8 @@ static void Game_SF07_StructCheckLTLGameSF07_free_node ARGS((node_ptr node));
   SeeAlso     [ ]
 
 ******************************************************************************/
-void Game_CheckLtlGameSpecSF07(PropGame_ptr prop,
+void Game_CheckLtlGameSpecSF07(NuSMVEnv_ptr env,
+                                PropGame_ptr prop,
                                gameParams_ptr params,
                                unsigned int kmin,
                                unsigned int kmax,
@@ -425,7 +426,7 @@ void Game_CheckLtlGameSpecSF07(PropGame_ptr prop,
   nusmv_assert(opt_game_game_initial_condition(OptsHandler_create()) ==
                'N');
 
-  cls = Game_SF07_StructCheckLTLGameSF07_create(prop, params, kmin, kmax, w);
+  cls = Game_SF07_StructCheckLTLGameSF07_create(env,prop, params, kmin, kmax, w);
 
   /* As in gameGeneral.c::Game_BeforeCheckingSpec. */
   if (opt_verbose_level_ge(OptsHandler_create(), 1)) {
@@ -575,7 +576,8 @@ Game_SF07_StrategyPrintingMode_to_string(const Game_SF07_StrategyPrintingMode m)
 
 ******************************************************************************/
 static Game_SF07_StructCheckLTLGameSF07_ptr
-Game_SF07_StructCheckLTLGameSF07_create(PropGame_ptr prop,
+Game_SF07_StructCheckLTLGameSF07_create(NuSMVEnv_ptr env,
+                                        PropGame_ptr prop,
                                         gameParams_ptr params,
                                         unsigned int kmin,
                                         unsigned int kmax,
@@ -603,7 +605,7 @@ Game_SF07_StructCheckLTLGameSF07_create(PropGame_ptr prop,
   res->bool_enc =
     BoolEncClient_get_bool_enc(BOOL_ENC_CLIENT(res->bdd_enc));
   res->dd_manager = BddEnc_get_dd_manager(res->bdd_enc);
-  res->symb_table = Compile_get_global_symb_table();
+  res->symb_table = SYMB_TABLE(NuSMVEnv_get_value(env, ENV_SYMB_TABLE));
 
   if (!cmp_struct_get_bmc_init(cmps)) {
      w2w_init_wff2nnf();
