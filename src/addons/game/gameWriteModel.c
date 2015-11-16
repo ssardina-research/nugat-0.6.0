@@ -124,13 +124,15 @@ void Game_CommandWriteFlatModel(NuSMVEnv_ptr env,FILE* ofileid)
   fprintf(ofileid, "\n-- Begin GAME Flat Model\n");
   fprintf(ofileid, "GAME\n");
 
-  Compile_WriteFlattenFsm(ofileid,
+  Compile_WriteFlattenFsm(env,
+                          ofileid,
                           st,
                           layer1,
                           PLAYER_NAME_1,
                           GameHierarchy_get_player_1(mainGameHierarchy),
                           true);
-  Compile_WriteFlattenFsm(ofileid,
+  Compile_WriteFlattenFsm(env,
+                          ofileid,
                           st,
                           layer2,
                           PLAYER_NAME_2,
@@ -208,6 +210,8 @@ void Game_CommandWriteBooleanModel(NuSMVEnv_ptr env,FILE* ofileid)
 
   const ErrorMgr_ptr errmgr = ERROR_MGR(NuSMVEnv_get_value(env, ENV_ERROR_MANAGER));
 
+  BoolEnc_ptr bool_enc = BOOL_ENC(NuSMVEnv_get_value(env, ENV_BOOL_ENCODER));
+
   nusmv_assert((FILE *) NULL != ofileid);
 
   bool_fsm = PropDbGame_master_get_game_bool_sexp_fsm( \
@@ -222,8 +226,9 @@ void Game_CommandWriteBooleanModel(NuSMVEnv_ptr env,FILE* ofileid)
   layers = NodeList_create();
   NodeList_append(layers, (node_ptr) SymbTable_get_layer(st, MODEL_LAYER_1));
   NodeList_append(layers, (node_ptr) SymbTable_get_layer(st,
-                            BoolEnc_scalar_layer_to_bool_layer(MODEL_LAYER_1)));
-  Compile_WriteBoolFsm(ofileid,
+                            BoolEnc_scalar_layer_to_bool_layer(bool_enc,MODEL_LAYER_1)));
+  Compile_WriteBoolFsm(env,
+                       ofileid,
                        st,
                        layers,
                        PLAYER_NAME_1,
@@ -234,8 +239,9 @@ void Game_CommandWriteBooleanModel(NuSMVEnv_ptr env,FILE* ofileid)
   layers = NodeList_create();
   NodeList_append(layers, (node_ptr) SymbTable_get_layer(st, MODEL_LAYER_2));
   NodeList_append(layers, (node_ptr) SymbTable_get_layer(st,
-                            BoolEnc_scalar_layer_to_bool_layer(MODEL_LAYER_2)));
-  Compile_WriteBoolFsm(ofileid,
+                            BoolEnc_scalar_layer_to_bool_layer(bool_enc,MODEL_LAYER_2)));
+  Compile_WriteBoolFsm(env,
+                       ofileid,
                        st,
                        layers,
                        PLAYER_NAME_2,
