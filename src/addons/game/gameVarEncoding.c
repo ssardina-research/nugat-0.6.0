@@ -120,13 +120,13 @@ int Game_CommandEncodeVariables(NuSMVEnv_ptr env, char* input_order_file_name)
 
   /* Creates the bool encoding, and commits the model layer, which was
      created during the flattening phase. */
-  Enc_init_bool_encoding();
+  Enc_init_bool_encoding(env);
   bool_enc = Enc_get_bool_encoding();
   BaseEnc_commit_layer(BASE_ENC(bool_enc), MODEL_LAYER_1);
   BaseEnc_commit_layer(BASE_ENC(bool_enc), MODEL_LAYER_2);
 
   /* Creates the bdd encoding, and again commits the model layer. */
-  Enc_init_bdd_encoding();
+  Enc_init_bdd_encoding(env);
   bdd_enc = BddFsm_get_bdd_encoding(BDD_FSM(GAME_BDD_FSM(NULL)));
   BaseEnc_commit_layer(BASE_ENC(bdd_enc), MODEL_LAYER_1);
   BaseEnc_commit_layer(BASE_ENC(bdd_enc), MODEL_LAYER_2);

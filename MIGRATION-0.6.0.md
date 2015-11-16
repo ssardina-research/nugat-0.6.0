@@ -361,6 +361,13 @@ Nitin Yadav - nitin.yadav@rmit.edu.au
     *   added 'env' parameter for 'Game_CommandEncodeVariables'
     *   removed 'env' declaration inside the function 
 
+43.error: too few arguments to function ‘Enc_init_bool_encoding’
+
+    *   added 'env' parameter for :
+            
+            'Enc_init_bool_encoding'
+            'Enc_init_bdd_encoding'
+
 ================================================================================
 EOF
 ================================================================================
