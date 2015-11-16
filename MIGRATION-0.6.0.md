@@ -403,7 +403,10 @@ Nitin Yadav - nitin.yadav@rmit.edu.au
         
 49.warning: gameXmlReader.c: passing argument 2 of ‘XML_SetElementHandler’ from incompatible pointer type
 
-    *
+    *   remove 'env' parameter and added inside each function
+    *   added 'env; parameter for :
+            'Parser_read_psl_from_string'
+            'PslNode_convert_psl_to_core'
     
 ================================================================================
 EOF

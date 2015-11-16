@@ -151,7 +151,7 @@ EXTERN int yylineno;
 /*---------------------------------------------------------------------------*/
 /* Static function prototypes                                                */
 /*---------------------------------------------------------------------------*/
-static node_ptr game_and_exp ARGS((node_ptr exp1, node_ptr exp2));
+static node_ptr game_and_exp ARGS((NodeMgr_ptr nodemgr, node_ptr exp1, node_ptr exp2));
 
 static void game_fill_in_var_hash_table ARGS((node_ptr inVarList,
                                               node_ptr outVarList));
@@ -268,8 +268,8 @@ boolean Game_PropertyToGame(NuSMVEnv_ptr env,
   outputVars_orig = *outputVars;
 
   /* Get rid of all PSL operators, i.e., convert to usual SMV format. */
-  exp_1 = PslNode_convert_psl_to_core(exp_1);
-  exp_2 = PslNode_convert_psl_to_core(exp_2);
+  exp_1 = PslNode_convert_psl_to_core(env,exp_1);
+  exp_2 = PslNode_convert_psl_to_core(env,exp_2);
 
   /* Store exp_1, exp_2. */
   exp_1_orig = exp_1;
@@ -326,7 +326,7 @@ boolean Game_PropertyToGame(NuSMVEnv_ptr env,
 
     /* Check if both reqs are Nil => create an avoid-deadlock game. */
     if (Nil == req_1 && Nil == req_2) {
-      *property = new_node(env,AVOIDDEADLOCK, NODE_FROM_INT(2), Nil);
+      *property = new_node(nodemgr,AVOIDDEADLOCK, NODE_FROM_INT(2), Nil);
       success = true;
     }
     /* Check if this is a reachability game. */
@@ -422,11 +422,11 @@ boolean Game_PropertyToGame(NuSMVEnv_ptr env,
       /* Create the property, buchi or gen-reactivity. */
       if (success) {
         if (Nil == req_1) {
-          *property = new_node(nodemgr,BUCHIGAME, (2),
+          *property = new_node(nodemgr,BUCHIGAME, NODE_FROM_INT(2),
                                new_node(nodemgr,GAME_EXP_LIST, req_2, Nil));
         }
         else {
-          *property = new_node(nodemgr,GENREACTIVITY, (2),
+          *property = new_node(nodemgr,GENREACTIVITY, NODE_FROM_INT(2),
                                new_node(nodemgr,GAME_TWO_EXP_LISTS, req_1, req_2));
         }
       }
@@ -470,7 +470,7 @@ boolean Game_PropertyToGame(NuSMVEnv_ptr env,
       }
 
       *property = new_node(nodemgr,LTLGAME,
-                           (2),
+                           NODE_FROM_INT(2),
                            new_node(nodemgr,IMPLIES,
                                     exp_1_orig,
                                     exp_2_orig));
@@ -1507,7 +1507,7 @@ exp_kind game_property_to_game(NuSMVEnv_ptr env,
        value (except that subexpression cannot be at top level).
     */
     res = car(*exp);
-    kind = game_property_to_game(nodemgr,
+    kind = game_property_to_game(env,
                                  &res,
                                  TOP_LEVEL == value ? DETERMINISTIC_TRUE : value,
                                  varList,
@@ -1697,7 +1697,7 @@ exp_kind game_property_to_game(NuSMVEnv_ptr env,
        value (except that subexpression cannot be at top level).
     */
     res = car(*exp);
-    kind = game_property_to_game(nodemgr,
+    kind = game_property_to_game(env,
                                  &res,
                                  TOP_LEVEL == value ? DETERMINISTIC_TRUE : value,
                                  varList,

@@ -246,17 +246,13 @@ EXTERN int yylineno;
 /*---------------------------------------------------------------------------*/
 /* Static function prototypes                                                */
 /*---------------------------------------------------------------------------*/
-static void game_xml_reader_tag_begin ARGS((NuSMVEnv_ptr env,
-                                            void* data,
+static void game_xml_reader_tag_begin ARGS((void* data,
                                             const char* name,
                                             const char** atts));
 
-static void game_xml_reader_tag_end ARGS((NuSMVEnv_ptr env,
-                                          void* data,
+static void game_xml_reader_tag_end ARGS((void* data,
                                           const char *string));
-
-static void game_xml_reader_char_handler ARGS((NuSMVEnv_ptr env,
-                                               void* data,
+static void game_xml_reader_char_handler ARGS((void* data,
                                                const char *txt,
                                                int len));
 
@@ -836,13 +832,13 @@ static enum XmlTags game_xml_reader_identify_tag(const char* txt)
   SeeAlso     [ ]
 
 ******************************************************************************/
-static void game_xml_reader_tag_begin(NuSMVEnv_ptr env,
-                                      void* data,
+static void game_xml_reader_tag_begin(void* data,
                                       const char* name,
                                       const char** atts)
 {
   XmlParseResult_ptr parseResult = XML_PARSE_RESULT(data);
 
+  const NuSMVEnv_ptr env = EnvObject_get_environment(ENV_OBJECT(parseResult));
   const NodeMgr_ptr nodemgr = NODE_MGR(NuSMVEnv_get_value(env, ENV_NODE_MGR));
   const UStringMgr_ptr strings =  USTRING_MGR(NuSMVEnv_get_value(env, ENV_STRING_MGR));
   const ErrorMgr_ptr errmgr = ERROR_MGR(NuSMVEnv_get_value(env, ENV_ERROR_MANAGER));
@@ -948,10 +944,11 @@ static void game_xml_reader_tag_begin(NuSMVEnv_ptr env,
   SeeAlso     [ ]
 
 ******************************************************************************/
-static void game_xml_reader_tag_end(NuSMVEnv_ptr env,void* data, const char *string)
+static void game_xml_reader_tag_end(void* data, const char *string)
 {
   XmlParseResult_ptr parseResult = XML_PARSE_RESULT(data);
 
+  const NuSMVEnv_ptr env = EnvObject_get_environment(ENV_OBJECT(parseResult));
   const NodeMgr_ptr nodemgr = NODE_MGR(NuSMVEnv_get_value(env, ENV_NODE_MGR));
   const UStringMgr_ptr strings =  USTRING_MGR(NuSMVEnv_get_value(env, ENV_STRING_MGR));
   const ErrorMgr_ptr errmgr = ERROR_MGR(NuSMVEnv_get_value(env, ENV_ERROR_MANAGER));
@@ -1206,7 +1203,7 @@ static void game_xml_reader_tag_end(NuSMVEnv_ptr env,void* data, const char *str
 
       /* Get and parse the string. */
       arg[0] = (char*) car(node);
-      if (Parser_read_psl_from_string(1, arg, &property)) {
+      if (Parser_read_psl_from_string(env,1, arg, &property)) {
         ErrorMgr_rpterr(errmgr,"Parse error in an PSL expression in XML file");
       }
 
@@ -1301,13 +1298,14 @@ static void game_xml_reader_tag_end(NuSMVEnv_ptr env,void* data, const char *str
   SeeAlso     [ ]
 
 ******************************************************************************/
-static void game_xml_reader_char_handler(NuSMVEnv_ptr env,void* data, const char *txt, int len)
+static void game_xml_reader_char_handler(void* data, const char *txt, int len)
 {
   XmlParseResult_ptr parseResult = XML_PARSE_RESULT(data);
   int prevLen;
   node_ptr text_node;
   char* buffer;
 
+  const NuSMVEnv_ptr env = EnvObject_get_environment(ENV_OBJECT(parseResult));
   const NodeMgr_ptr nodemgr = NODE_MGR(NuSMVEnv_get_value(env, ENV_NODE_MGR));
   const UStringMgr_ptr strings =  USTRING_MGR(NuSMVEnv_get_value(env, ENV_STRING_MGR));
   const ErrorMgr_ptr errmgr = ERROR_MGR(NuSMVEnv_get_value(env, ENV_ERROR_MANAGER));
