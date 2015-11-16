@@ -125,7 +125,7 @@ typedef struct GameSexpFsm_TAG* GameSexpFsm_ptr;
 
 /* constructors */
 
-EXTERN GameSexpFsm_ptr GameSexpFsm_create ARGS((Set_t all_vars_set,
+EXTERN GameSexpFsm_ptr GameSexpFsm_create ARGS((NuSMVEnv_ptr env,Set_t all_vars_set,
                                                 FlatHierarchy_ptr hierarchy_1,
                                                 FlatHierarchy_ptr hierarchy_2,
                                                 Set_t vars_set_1,

@@ -408,7 +408,7 @@ static void free_opposite_list (node_ptr l);
 static node_ptr opposite_reverse (node_ptr x);
 
 static GameGameFsms_ptr game_construct_game_fsms
-(Game_UnrealizableCore_Struct_ptr self);
+(NuSMVEnv_ptr env,Game_UnrealizableCore_Struct_ptr self);
 static void game_free_game_fsms
 (GameGameFsms_ptr fsm);
 
@@ -443,7 +443,7 @@ static void game_process_unrealizable_core_with_params
       bdd_ptr winningCore);
 
 static void game_compute_core_using_parameters
-(Game_UnrealizableCore_Struct_ptr self);
+(NuSMVEnv_ptr env,Game_UnrealizableCore_Struct_ptr self);
 
 static void game_compute_core_switching_constraints
 (Game_UnrealizableCore_Struct_ptr self);
@@ -516,7 +516,7 @@ int Game_CheckGameSpecAndComputeCores(NuSMVEnv_ptr env,
 
   switch (algo) {
   case GAME_UNREALIZABLE_CORE_ALGORITHM_ACTIVATION_VARIABLES:
-    game_compute_core_using_parameters(cls);
+    game_compute_core_using_parameters(env,cls);
     break;
   case GAME_UNREALIZABLE_CORE_ALGORITHM_EXPLICIT:
     game_compute_core_switching_constraints(cls);
@@ -1010,7 +1010,7 @@ node_ptr opposite_reverse(node_ptr x)
   SeeAlso     [ game_free_game_fsms ]
 
 ******************************************************************************/
-static GameGameFsms_ptr game_construct_game_fsms(
+static GameGameFsms_ptr game_construct_game_fsms(NuSMVEnv_ptr env,
                                           Game_UnrealizableCore_Struct_ptr self)
 {
   /* FSMs are not created yet */
@@ -1050,7 +1050,8 @@ static GameGameFsms_ptr game_construct_game_fsms(
 
   /* We assume that symbol table contains only variables from the
      game. */
-  fsms->sexp = GameSexpFsm_create(set,
+  fsms->sexp = GameSexpFsm_create(env,
+                                  set,
                                   GameHierarchy_get_player_1(self->gh),
                                   GameHierarchy_get_player_2(self->gh),
                                   set1,
@@ -2157,7 +2158,7 @@ void game_process_unrealizable_core_with_params(
   SeeAlso     [ ]
 
 ******************************************************************************/
-static void game_compute_core_using_parameters(
+static void game_compute_core_using_parameters(NuSMVEnv_ptr env,
                                           Game_UnrealizableCore_Struct_ptr self)
 {
   GameGameFsms_ptr fsm;
@@ -2173,7 +2174,7 @@ static void game_compute_core_using_parameters(
   game_guard_game_hierarchy_with_parameters(self);
 
   /* create all the necessary FSM for the property */
-  fsm = game_construct_game_fsms(self);
+  fsm = game_construct_game_fsms(env,self);
 
   /* the prop has not been used yet */
   nusmv_assert(GAME_BDD_FSM(NULL) == PropGame_get_game_bdd_fsm(self->prop));
@@ -2713,7 +2714,7 @@ static boolean game_minimize_players_constraints(
           function[i].set_elmnt(iter, trueConst);
 
           /* create all the necessary FSMs */
-          GameGameFsms_ptr new_fsm = game_construct_game_fsms(self);
+          GameGameFsms_ptr new_fsm = game_construct_game_fsms(env,self);
 
           boolean newReal = Game_ComputeGenReactivity(property,
                                                       self->player,
@@ -2808,7 +2809,7 @@ static boolean game_minimize_players_constraints(
   SeeAlso     [ ]
 
 ******************************************************************************/
-static boolean game_is_opponent_constraint_minimal(
+static boolean game_is_opponent_constraint_minimal(NuSMVEnv_ptr env,
                                            Game_UnrealizableCore_Struct_ptr self,
                                                    GameBddFsm_ptr fsm,
                                                    GamePlayer playerToModify,
@@ -2819,7 +2820,7 @@ static boolean game_is_opponent_constraint_minimal(
   GameGameFsms_ptr new_fsm;
   /* create new FSM if required */
   if (GAME_BDD_FSM(NULL) == fsm) {
-    new_fsm = game_construct_game_fsms(self);
+    new_fsm = game_construct_game_fsms(env,self);
     fsm = new_fsm->bdd;
   }
   else new_fsm = (GameGameFsms_ptr) NULL;
@@ -3067,7 +3068,7 @@ static void game_compute_core_switching_constraints(
 
   /* ------- perform the check of the original spec ------ */
   /* create all the necessary FSMs */
-  fsm = game_construct_game_fsms(self);
+  fsm = game_construct_game_fsms(env,self);
 
   realizable = Game_ComputeGenReactivity(spec,
                                          self->player,
@@ -3122,7 +3123,7 @@ static void game_compute_core_switching_constraints(
     if (somethingChanged) {
       boolean realizable2;
       game_free_game_fsms(fsm);
-      fsm = game_construct_game_fsms(self);
+      fsm = game_construct_game_fsms(env,self);
 
       bdd_ptr tmp = winningStates;
       realizable2 = Game_ComputeGenReactivity(spec,

@@ -325,6 +325,15 @@ Nitin Yadav - nitin.yadav@rmit.edu.au
 36.warning: passing argument 1 of ‘Compile_ConstructHierarchy’ from incompatible pointer type [ TODO : CHECK IF IT IS CORRECT ]
 
     *   added parameter 'boolean expand_bounded_arrays = false;'    
+    
+37.warning: implicit declaration of function ‘rpterr’
+
+    *   replaced with 'ErrorMgr_rpterr(errmgr,' and added declaration when required 'const ErrorMgr_ptr errmgr = ERROR_MGR(NuSMVEnv_get_value(env, ENV_ERROR_MANAGER));'
+    *   added 'env' parameter for:
+            'GameSexpFsm_create'
+            'game_construct_game_fsms'
+            'game_is_opponent_constraint_minimal'
+            'game_compute_core_using_parameters'
 
 ================================================================================
 EOF

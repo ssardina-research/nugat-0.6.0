@@ -291,6 +291,7 @@ game_flatten_game_hierarchy(SymbTable_ptr symbol_table,
 
   const NuSMVEnv_ptr env = EnvObject_get_environment(ENV_OBJECT(symbol_table));
   const NodeMgr_ptr nodemgr = NODE_MGR(NuSMVEnv_get_value(env, ENV_NODE_MGR));
+  const ErrorMgr_ptr errmgr = ERROR_MGR(NuSMVEnv_get_value(env, ENV_ERROR_MANAGER));
 
   FlatHierarchy_ptr player_1 = FlatHierarchy_create(symbol_table);
   FlatHierarchy_ptr player_2 = FlatHierarchy_create(symbol_table);
@@ -327,7 +328,7 @@ game_flatten_game_hierarchy(SymbTable_ptr symbol_table,
                Nil != FlatHierarchy_get_assign(player_2));
   if (Nil != cdr(FlatHierarchy_get_assign(player_1)) ||
       Nil != cdr(FlatHierarchy_get_assign(player_2))) {
-    rpterr("A game declaration should not contain process declarations.\n");
+    ErrorMgr_rpterr(errmgr,"A game declaration should not contain process declarations.\n");
   }
   /* input vars are not allowed. */
    if (SymbTable_get_input_vars_num(symbol_table)>0) error_game_definition_contains_input_vars(car(tmp));

@@ -206,6 +206,8 @@ void Game_CommandWriteBooleanModel(NuSMVEnv_ptr env,FILE* ofileid)
   GameSexpFsm_ptr bool_fsm;
   NodeList_ptr layers;
 
+  const ErrorMgr_ptr errmgr = ERROR_MGR(NuSMVEnv_get_value(env, ENV_ERROR_MANAGER));
+
   nusmv_assert((FILE *) NULL != ofileid);
 
   bool_fsm = PropDbGame_master_get_game_bool_sexp_fsm( \
@@ -289,7 +291,7 @@ void Game_CommandWriteBooleanModel(NuSMVEnv_ptr env,FILE* ofileid)
                             det_layer);
 
   if (/*NodeList_get_length(SymbLayer_get_input_vars*/SymbLayer_get_input_vars_num(det_layer) != 0) {
-    rpterr("New variables have been created during determinization of game \n"
+    ErrorMgr_rpterr(errmgr,"New variables have been created during determinization of game \n"
            "specification. Such new (input) variables are not supported in "
            "games.");
   }

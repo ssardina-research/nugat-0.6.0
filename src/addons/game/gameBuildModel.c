@@ -145,6 +145,7 @@ void Game_CommandBuildFlatModel(NuSMVEnv_ptr env)
     scalar_fsm =
       GameSexpFsm_create(/* we assume that symbol table contains only variables
                             from the game */
+                         env,
                          set,
                          GameHierarchy_get_player_1(mainGameHierarchy),
                          GameHierarchy_get_player_2(mainGameHierarchy),
@@ -188,6 +189,8 @@ void Game_CommandBuildBooleanModel(NuSMVEnv_ptr env)
     SymbTable_ptr st;
     SymbLayer_ptr determ_layer_1;
     SymbLayer_ptr determ_layer_2;
+
+    const ErrorMgr_ptr errmgr = ERROR_MGR(NuSMVEnv_get_value(env, ENV_ERROR_MANAGER));
 
     int reord_status;
     dd_reorderingtype rt;
@@ -247,7 +250,7 @@ void Game_CommandBuildBooleanModel(NuSMVEnv_ptr env)
      if (NodeList_get_length(syms1) != 0 ||
          NodeList_get_length(syms2) != 0) {
         yylineno = 0; /* for error messages */
-        rpterr("determinization variables are not supported by realizability "
+        ErrorMgr_rpterr(errmgr,"determinization variables are not supported by realizability "
                        "algorithms, \nbut were created during booleanisation\n"
                        "(check ASSIGN with boolean on the left and boolean-set on the "
                        "right)\n");
@@ -259,7 +262,7 @@ void Game_CommandBuildBooleanModel(NuSMVEnv_ptr env)
     if (NodeList_get_length(SymbLayer_get_all_symbols(determ_layer_1)) != 0 ||
         NodeList_get_length(SymbLayer_get_all_symbols(determ_layer_2)) != 0) {
       yylineno = 0;
-      rpterr("determinization variables are not supported by realizability "
+      ErrorMgr_rpterr(errmgr,"determinization variables are not supported by realizability "
              "algorithms, \nbut were created during booleanisation\n"
              "(check ASSIGN with boolean on the left and boolean-set on the "
              "right)\n");

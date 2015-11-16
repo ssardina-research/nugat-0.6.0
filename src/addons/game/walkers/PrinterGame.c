@@ -204,7 +204,7 @@ int printer_game_print_node(PrinterBase_ptr self, node_ptr n, int priority)
   switch (node_get_type(n)) {
   case GAME:
     /* this node is not expected to be printted as usual expression */
-    rpterr("Unexpected printing of high-level GAME constructs");
+    ErrorMgr_rpterr(errmgr,"Unexpected printing of high-level GAME constructs");
 
   case REACHTARGET:
   case AVOIDTARGET:
@@ -214,7 +214,7 @@ int printer_game_print_node(PrinterBase_ptr self, node_ptr n, int priority)
   case LTLGAME:
   case GENREACTIVITY:
     /* these specifications are not expected to be printted as usual exp */
-    rpterr("Unexpected printing of high-level GAME specifications");
+    ErrorMgr_rpterr(errmgr,"Unexpected printing of high-level GAME specifications");
 
     /* this is GAME specifications wrapper. Player name is on the left
        and the expression on the right */
@@ -252,7 +252,7 @@ int printer_game_print_node(PrinterBase_ptr self, node_ptr n, int priority)
                    node_get_type(n));
   }
 
-  rpterr("PrinterGame.c : Impossible code");
+  ErrorMgr_rpterr(errmgr,"PrinterGame.c : Impossible code");
   return 1;
 }
 

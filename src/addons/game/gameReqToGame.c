@@ -393,7 +393,7 @@ boolean Game_PropertyToGame(NuSMVEnv_ptr env,
             node_get_type(car(exp)) != OP_FUTURE ||
             PURE_PROPOSITIONAL != game_get_expression_kind(car(car(exp)))) {
 #ifndef GAME_REQ_TO_GAME_USE_LTLGAME
-          rpterr("Requirement-to-game translation cannot deal with following "
+          ErrorMgr_rpterr(errmgr,"Requirement-to-game translation cannot deal with following "
                  "first player requirement : %s", sprint_node(exp));
           /* not need to free. This is exit point */
 #else
@@ -409,7 +409,7 @@ boolean Game_PropertyToGame(NuSMVEnv_ptr env,
             node_get_type(car(exp)) != OP_FUTURE ||
             PURE_PROPOSITIONAL != game_get_expression_kind(car(car(exp)))) {
 #ifndef GAME_REQ_TO_GAME_USE_LTLGAME
-          rpterr("Requirement-to-game translation cannot deal with following "
+          ErrorMgr_rpterr(errmgr,"Requirement-to-game translation cannot deal with following "
                  "second player requirement : %s", sprint_node(exp));
           /* not need to free. This is exit point */
 #else
@@ -997,6 +997,7 @@ static node_ptr game_normalize_syntactically(node_ptr exp, boolean negated)
 {
   const NuSMVEnv_ptr env = EnvObject_get_environment(ENV_OBJECT(exp));
   const NodeMgr_ptr nodemgr = NODE_MGR(NuSMVEnv_get_value(env, ENV_NODE_MGR));
+  const ErrorMgr_ptr errmgr = ERROR_MGR(NuSMVEnv_get_value(env, ENV_ERROR_MANAGER));
 
   node_ptr oprd1 = car(exp);
   node_ptr oprd2 = cdr(exp);
@@ -1256,7 +1257,7 @@ static node_ptr game_normalize_syntactically(node_ptr exp, boolean negated)
   case ABG:
   case AU:
   case EU:
-    rpterr("Found CTL operator in an LTL expression.");
+    ErrorMgr_rpterr(errmgr,"Found CTL operator in an LTL expression.");
 
   default:
     nusmv_assert(false);

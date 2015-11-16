@@ -315,7 +315,7 @@ int Game_RatFileToGame(const char *filename)
 
     /* Open the file. */
     file = fopen(filename, "r");
-    if (file == (FILE*) NULL) rpterr("cannot open input XML file %s", filename);
+    if (file == (FILE*) NULL) ErrorMgr_rpterr(errmgr,"cannot open input XML file %s", filename);
     yylineno = 1;
 
     /* Create parser and parseResult. */
@@ -341,13 +341,13 @@ int Game_RatFileToGame(const char *filename)
         len = fread(inBuffer, sizeof(char), BUFFSIZE, file);
 
         if (ferror(file)) {
-          rpterr("IO Error in reading XML file");
+          ErrorMgr_rpterr(errmgr,"IO Error in reading XML file");
         }
 
         done = feof(file);
 
         if (!XML_Parse(parser, inBuffer, len, done)) {
-          rpterr("Parse error (XML file) at line %d:\n%s\n",
+          ErrorMgr_rpterr(errmgr,"Parse error (XML file) at line %d:\n%s\n",
                  XML_GetCurrentLineNumber(parser),
                  XML_ErrorString(XML_GetErrorCode(parser)));
         }
@@ -356,7 +356,7 @@ int Game_RatFileToGame(const char *filename)
     FAIL {
       fclose(file);
       gameXmlReader_XmlParseResult_destroy(parseResult);
-      rpterr("Parser error");
+      ErrorMgr_rpterr(errmgr,"Parser error");
     };
 
     /* Clean up and check. From now on only the data read into
@@ -367,7 +367,7 @@ int Game_RatFileToGame(const char *filename)
 
     if (Nil != game_xml_reader_pop_stack_cleanly(&parseResult->stack)) {
       gameXmlReader_XmlParseResult_destroy(parseResult);
-      rpterr("Parse error (XML file): stack is not empty after parsing.\n");
+      ErrorMgr_rpterr(errmgr,"Parse error (XML file): stack is not empty after parsing.\n");
     }
   }
 
@@ -592,7 +592,7 @@ static node_ptr game_xml_reader_parse_type(const char* text) {
   else if (1 == sscanf(text, "word [ %d ] %n", &i1, &size) ||
            1 == sscanf(text, "unsigned word [ %d ] %n", &i1, &size)) {
     if (-1 == size || text[size] != '\0') {
-      rpterr("Incorrect XML file (word type)");
+      ErrorMgr_rpterr(errmgr,"Incorrect XML file (word type)");
     }
     return new_node(nodemgr,UNSIGNED_WORD,
                     new_node(nodemgr,NUMBER,
@@ -602,7 +602,7 @@ static node_ptr game_xml_reader_parse_type(const char* text) {
   }
   else if (1 == sscanf(text, "signed word [ %d ] %n", &i1, &size)) {
     if (-1 == size || text[size] != '\0') {
-      rpterr("Incorrect XML file (word type)");
+      ErrorMgr_rpterr(errmgr,"Incorrect XML file (word type)");
     }
     return new_node(nodemgr,SIGNED_WORD,
                     new_node(nodemgr,NUMBER,
@@ -613,24 +613,24 @@ static node_ptr game_xml_reader_parse_type(const char* text) {
   /* a range, i.e. int .. int */
   else if (1 == sscanf(text, "%d %n", &i1, &size)) {
     if (-1 == size) {
-      rpterr("01 Incorrect XML file %%d .. %%d (range) type");
+      ErrorMgr_rpterr(errmgr,"01 Incorrect XML file %%d .. %%d (range) type");
     }
     text += size;
     size = -1;
     sscanf(text, ".. %n", &size);
     if (-1 == size) {
-      rpterr("02 Incorrect XML file %%d .. %%d (range) type");
+      ErrorMgr_rpterr(errmgr,"02 Incorrect XML file %%d .. %%d (range) type");
     }
     text += size;
     size = -1;
     if (1 == sscanf(text, "%d %n", &i2, &size)) {
-      if (-1 == size) rpterr("03 Incorrect XML file %%d .. %%d (range) type");
+      if (-1 == size) ErrorMgr_rpterr(errmgr,"03 Incorrect XML file %%d .. %%d (range) type");
       return new_node(nodemgr,TWODOTS,
                       new_node(nodemgr,NUMBER, NODE_FROM_INT(i1), Nil),
                       new_node(nodemgr,NUMBER, NODE_FROM_INT(i2), Nil));
     }
     else {
-      rpterr("04 Incorrect XML file %%d .. %%d (range) type");
+      ErrorMgr_rpterr(errmgr,"04 Incorrect XML file %%d .. %%d (range) type");
     }
   }
   /* a list of values */
@@ -675,7 +675,7 @@ static node_ptr game_xml_reader_parse_type(const char* text) {
         res = sscanf(text, sscanf_format, buf, &size);
         nusmv_assert(1 == res);
         if (size == IDBUFSIZE - 1) {
-          rpterr("XML Reader: buffer overflow");
+          ErrorMgr_rpterr(errmgr,"XML Reader: buffer overflow");
         }
 
         /* [AT] If complex identifiers are allowed, a loop should be
@@ -694,29 +694,29 @@ static node_ptr game_xml_reader_parse_type(const char* text) {
         }
       }
       else {
-        rpterr("Invalid constant in type");
+        ErrorMgr_rpterr(errmgr,"Invalid constant in type");
       }
 
       /* Skip comma or final parenthesis. */
       if (',' == text[0]) {
         size = -1;
         sscanf(text, ", %n", &size);
-        if (-1 == size) rpterr("Incorrect XML file (comma)");
+        if (-1 == size) ErrorMgr_rpterr(errmgr,"Incorrect XML file (comma)");
         text += size;
       }
       else if ('}' == text[0]) {
         size = -1;
         sscanf(text, "} %n", &size);
-        if (-1 == size) rpterr("Incorrect XML file (right cbrace)");
+        if (-1 == size) ErrorMgr_rpterr(errmgr,"Incorrect XML file (right cbrace)");
         text += size;
         end = true;
       }
-      else rpterr("Invalid constant list in type");
+      else ErrorMgr_rpterr(errmgr,"Invalid constant list in type");
 
       listOfVals = cons(nodemgr,newNode, listOfVals);
     } /* while */
 
-    if (text[0] != '\0') rpterr("Incorrect XML file (list of type constants)");
+    if (text[0] != '\0') ErrorMgr_rpterr(errmgr,"Incorrect XML file (list of type constants)");
 
     return new_node(nodemgr,SCALAR, listOfVals, Nil);
   }
@@ -726,25 +726,25 @@ static node_ptr game_xml_reader_parse_type(const char* text) {
     size = -1;
     if (1 == sscanf(text, "%d %n", &i1, &size)) {
       if (-1 == size) {
-        rpterr("00 Incorrect XML file array %%d .. %%d type");
+        ErrorMgr_rpterr(errmgr,"00 Incorrect XML file array %%d .. %%d type");
       }
       text += size;
       size = -1;
       sscanf(text, ".. %n", &size);
       if (-1 == size) {
-        rpterr("01 Incorrect XML file array %%d .. %%d type");
+        ErrorMgr_rpterr(errmgr,"01 Incorrect XML file array %%d .. %%d type");
       }
       text += size;
       size = -1;
       if (1 == sscanf(text, "%d %n", &i2, &size)) {
         if (-1 == size) {
-          rpterr("02 Incorrect XML file array %%d .. %%d type");
+          ErrorMgr_rpterr(errmgr,"02 Incorrect XML file array %%d .. %%d type");
         }
         text += size;
         size = -1;
         sscanf(text, "of %n", &size);
         if (-1 == size) {
-          rpterr("03 Incorrect XML file array %%d .. %%d type");
+          ErrorMgr_rpterr(errmgr,"03 Incorrect XML file array %%d .. %%d type");
         }
         text += size;
         return new_node(nodemgr,ARRAY_TYPE,
@@ -753,12 +753,12 @@ static node_ptr game_xml_reader_parse_type(const char* text) {
                                  new_node(nodemgr,NUMBER, NODE_FROM_INT(i2), Nil)),
                         game_xml_reader_parse_type(text));
       }
-      else rpterr("04 Incorrect XML file array %%d .. %%d type");
+      else ErrorMgr_rpterr(errmgr,"04 Incorrect XML file array %%d .. %%d type");
     }
-    else rpterr("05 Incorrect XML file array %%d .. %%d type");
+    else ErrorMgr_rpterr(errmgr,"05 Incorrect XML file array %%d .. %%d type");
   }
   else {
-    rpterr("Incorrect XML file (unknown type : \"%s\")", text);
+    ErrorMgr_rpterr(errmgr,"Incorrect XML file (unknown type : \"%s\")", text);
     return Nil;
   }
 
@@ -854,7 +854,7 @@ static void game_xml_reader_tag_begin(void* data,
   /* Tags that cannot be met. */
   case XML_ERROR:
   case XML_TEXT:
-    rpterr("Unexpected XML element: tag \"%s\"", name);
+    ErrorMgr_rpterr(errmgr,"Unexpected XML element: tag \"%s\"", name);
 
   /* Tags we are interested in. */
   case XML_PROJECT:
@@ -873,7 +873,7 @@ static void game_xml_reader_tag_begin(void* data,
 
     /* No attributes are allowed. */
     if (atts[0] != NULL) {
-      rpterr("Unexpected XML element attribute: %s", atts[0]);
+      ErrorMgr_rpterr(errmgr,"Unexpected XML element attribute: %s", atts[0]);
     }
 
     parseResult->stack = cons(nodemgr,new_node(nodemgr,tag, Nil, Nil), parseResult->stack);
@@ -919,7 +919,7 @@ static void game_xml_reader_tag_begin(void* data,
     return;
   } /* switch */
 
-  rpterr("Unknown XML element: tag \"%s\"", name);
+  ErrorMgr_rpterr(errmgr,"Unknown XML element: tag \"%s\"", name);
 
   return;
 }
@@ -966,7 +966,7 @@ static void game_xml_reader_tag_end(void* data, const char *string)
   /* Impossible situation. */
   case XML_ERROR:
   case XML_TEXT:
-    rpterr("Unexpected end XML (%s) tag", string);
+    ErrorMgr_rpterr(errmgr,"Unexpected end XML (%s) tag", string);
     break;
 
   /* All signals, requirements, etc are processed when they are met
@@ -1025,7 +1025,7 @@ static void game_xml_reader_tag_end(void* data, const char *string)
         parseResult->output_vars = cons(nodemgr,signal, parseResult->output_vars);
       }
       else {
-        rpterr("The value of kind of a signal can only be E or S (found: %c).",
+        ErrorMgr_rpterr(errmgr,"The value of kind of a signal can only be E or S (found: %c).",
                PTR_TO_INT(car(kind)));
       }
 
@@ -1099,7 +1099,7 @@ static void game_xml_reader_tag_end(void* data, const char *string)
                                              parseResult->guarantees);
         }
         else {
-          rpterr("The value of kind of a requirement can only be A or G "
+          ErrorMgr_rpterr(errmgr,"The value of kind of a requirement can only be A or G "
                  "(found: %c).",
                  PTR_TO_INT(car(kind)));
         }
@@ -1155,7 +1155,7 @@ static void game_xml_reader_tag_end(void* data, const char *string)
         else if (0 == strcmp((char*) car(text), "E")) c = 'E';
         else if (0 == strcmp((char*) car(text), "S")) c = 'S';
         else {
-          rpterr("A kind can be only: A, G, E and S (found: %s).", car(text));
+          ErrorMgr_rpterr(errmgr,"A kind can be only: A, G, E and S (found: %s).", car(text));
         }
         setcar(car(parseResult->stack), NODE_FROM_INT(c));
       }
@@ -1164,7 +1164,7 @@ static void game_xml_reader_tag_end(void* data, const char *string)
         if (0 == strcmp((char*) car(text), "0")) i = '0';
         else if (0 == strcmp((char*) car(text), "1")) i = '1';
         else {
-          rpterr("The value of toggled can be only: 0 and 1 (found: %s).",
+          ErrorMgr_rpterr(errmgr,"The value of toggled can be only: 0 and 1 (found: %s).",
                  car(text));
         }
         setcar(car(parseResult->stack), NODE_FROM_INT(i));
@@ -1195,7 +1195,7 @@ static void game_xml_reader_tag_end(void* data, const char *string)
       /* Get and parse the string. */
       arg[0] = (char*) car(node);
       if (Parser_read_psl_from_string(1, arg, &property)) {
-        rpterr("Parse error in an PSL expression in XML file");
+        ErrorMgr_rpterr(errmgr,"Parse error in an PSL expression in XML file");
       }
 
       game_xml_reader_free_text_node(node);
@@ -1215,7 +1215,7 @@ static void game_xml_reader_tag_end(void* data, const char *string)
       if (parseResult->stack == Nil ||
           node_get_type(car(parseResult->stack)) != XML_TYPE ||
           caar(parseResult->stack) != Nil /* end tag has been already met */) {
-        rpterr("Incorrect XML file (tag %s)", string);
+        ErrorMgr_rpterr(errmgr,"Incorrect XML file (tag %s)", string);
       }
 
       /* Create left child for NAME node as usual NuSMV ATOM. */
@@ -1263,7 +1263,7 @@ static void game_xml_reader_tag_end(void* data, const char *string)
 
   case XML_NOTES:
 
-    rpterr("Impossible end tag (%s)", string);
+    ErrorMgr_rpterr(errmgr,"Impossible end tag (%s)", string);
     break;
 
   } /* switch */

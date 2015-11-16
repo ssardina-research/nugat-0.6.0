@@ -42,6 +42,7 @@
 
 ******************************************************************************/
 
+#include "code/nusmv/core/utils/ErrorMgr.h"
 #include "GameSexpFsm.h"
 
 #include "compile/compile.h"
@@ -136,13 +137,16 @@ static void game_sexp_fsm_deinit ARGS((GameSexpFsm_ptr self));
   SeeAlso     [ ]
 
 ******************************************************************************/
-GameSexpFsm_ptr GameSexpFsm_create(Set_t all_vars_set,
+GameSexpFsm_ptr GameSexpFsm_create(NuSMVEnv_ptr env,
+                                   Set_t all_vars_set,
                                    FlatHierarchy_ptr hierarchy_1,
                                    FlatHierarchy_ptr hierarchy_2,
                                    Set_t vars_set_1,
                                    Set_t vars_set_2)
 {
   GameSexpFsm_ptr self;
+
+  const ErrorMgr_ptr errmgr = ERROR_MGR(NuSMVEnv_get_value(env, ENV_ERROR_MANAGER));
 
   FLAT_HIERARCHY_CHECK_INSTANCE(hierarchy_1);
   FLAT_HIERARCHY_CHECK_INSTANCE(hierarchy_2);
@@ -158,7 +162,7 @@ GameSexpFsm_ptr GameSexpFsm_create(Set_t all_vars_set,
 
   if (Nil != FlatHierarchy_get_invar(hierarchy_1) ||
       Nil != FlatHierarchy_get_invar(hierarchy_2)) {
-    rpterr("Game has an invariant construct (INVAR or ASSIGN)."
+    ErrorMgr_rpterr(errmgr,"Game has an invariant construct (INVAR or ASSIGN)."
            "This is not implemented at the moment.\n");
     /* For developers: the problem is how images are
        computed. Currently invars are added at the end to the
