@@ -241,13 +241,13 @@ void Game_AfterCheckingSpec(NuSMVEnv_ptr env,
         /**NEW_CODE_START**/
         SymbLayerIter iter1;
         NodeList_ptr syms1;
-        SymbLayer_gen_iter(&dl1, &iter1, STT_ALL);
-        syms1 = SymbLayer_iter_to_list(&dl1, iter1);
+        SymbLayer_gen_iter(dl1, &iter1, STT_ALL);
+        syms1 = SymbLayer_iter_to_list(dl1, iter1);
 
         SymbLayerIter iter2;
         NodeList_ptr syms2;
-        SymbLayer_gen_iter(&dl2, &iter2, STT_ALL);
-        syms2 = SymbLayer_iter_to_list(&dl2, iter2);
+        SymbLayer_gen_iter(dl2, &iter2, STT_ALL);
+        syms2 = SymbLayer_iter_to_list(dl2, iter2);
         fprintf(nusmv_stdout,"Hi\n");
         nusmv_assert((dl1 == SYMB_LAYER(NULL)) ||
                      (NodeList_get_length(syms1) ==
@@ -370,5 +370,5 @@ const char* Game_Who_to_string(const Game_Who w)
 static void game_print_prop_exp(FILE *file, PropGame_ptr prop)
 {
   fprintf(file, " ");
-  Prop_print(PROP(prop), file, PROP_PRINT_FMT_FORMULA);
+  Prop_print(PROP(prop), (OStream_ptr)file, PROP_PRINT_FMT_FORMULA);
 }

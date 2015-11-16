@@ -595,7 +595,7 @@ int prop_db_game_prop_create_and_add(PropDbGame_ptr self,
   if (!TypeCheckerGame_check_property(SymbTable_get_type_checker(symb_table),
                                       PROP(prop))) {
     fprintf(nusmv_stderr, "ERROR: Property \"");
-    Prop_print(PROP(prop), nusmv_stderr, PROP_PRINT_FMT_FORMULA);
+    Prop_print(PROP(prop), (OStream_ptr)nusmv_stderr, PROP_PRINT_FMT_FORMULA);
     fprintf(nusmv_stderr, "\b\" is not correct or not well typed.\n");
     return -1; /* type violation */
   }

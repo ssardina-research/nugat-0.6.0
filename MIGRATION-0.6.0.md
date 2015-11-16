@@ -23,20 +23,20 @@ Nitin Yadav - nitin.yadav@rmit.edu.au
 
     *   check if exists the directory "include" into 'NuSMV-2.6.0/cudd-2.4.1.1', if not present execute 'setup.sh' into NuSMV-2.6.0/cudd-2.4.1.1 directory
 
-4.Error: statement EXTERN is missing 
+4.error: statement EXTERN is missing 
     
     *   added this 2 lines in config.h.in
     
             /* Define to 1 if the system has EXTERN and ARGS */
             #define HAVE_EXTERN_ARGS_MACROS 1
 
-5.Warning: ggrammar.y:1076:38: warning: passing argument 1 of ‘opt_game_game’ makes pointer from integer without a cast
+5.warning: ggrammar.y:1076:38: warning: passing argument 1 of ‘opt_game_game’ makes pointer from integer without a cast
                         if (!opt_game_game(OptsHandler_get_instance())) {...
 
     *   This is because NuSMV has renamed  OptsHandler_get_instance with OptsHandler_create
     *   Rename all calls to OptsHandler_get_instance with OptsHandler_create in NuGat code.
 
-6.Warning: macro ...  
+6.warning: macro ...  
     .1 "new_node" requires 4 arguments, but only 3 given -> added 'nodemgr' parameter
     .2 "cons" requires 3 arguments, but only 2 given -> added 'nodemgr' parameter
     .3 "new_lined_node" requires 5 arguments, but only 4 given -> added 'nodemgr' parameter
@@ -49,7 +49,7 @@ Nitin Yadav - nitin.yadav@rmit.edu.au
             const NodeMgr_ptr nodemgr = NODE_MGR(NuSMVEnv_get_value(env, ENV_NODE_MGR));
             const MasterPrinter_ptr wffprint = MASTER_PRINTER(NuSMVEnv_get_value(env, ENV_WFF_PRINTER));
 
-7.Warning: grammar.y.: implicit declaration of function ‘yylex’,‘yyerror’ and ‘yyerror_lined’
+7.warning: grammar.y.: implicit declaration of function ‘yylex’,‘yyerror’ and ‘yyerror_lined’
 
      *   change in parser/Makefile(.am and .in)
         
@@ -59,7 +59,7 @@ Nitin Yadav - nitin.yadav@rmit.edu.au
 
     *   replace in grammar.y.2.55 'yyerror_lined' with 'nusmv_yyerror_lined'
         
-8.Error: grammar.y : function 'find_string' not found
+8.error: grammar.y : function 'find_string' not found
 
     *   'find_string(' has been replaced 
     
@@ -68,23 +68,23 @@ Nitin Yadav - nitin.yadav@rmit.edu.au
             and in grammar.y.2.55 with 'UStringMgr_find_string(USTRING_MGR(NuSMVEnv_get_value(__nusmv_parser_env__, ENV_STRING_MGR)),'
             
         
-9.Error : input.l: ‘nusmv_yytext’ undeclared (first use in this function) ------------- ^"#"" "[0-9]+.*\n       sscanf(nusmv_yytext,"# %d",&nusmv_yylineno); 
+9.error : input.l: ‘nusmv_yytext’ undeclared (first use in this function) ------------- ^"#"" "[0-9]+.*\n       sscanf(nusmv_yytext,"# %d",&nusmv_yylineno); 
             
     *   added this variable after 'AM_LFLAGS' in the parser/Makefile(.am and .in)
         
             LEX_OUTPUT_ROOT = lex.nusmv_yy
        
-10.Error: input.l : ‘yylval’ undeclared (first use in this function)
+10.error: input.l : ‘yylval’ undeclared (first use in this function)
 
     *   replaced in input.2.55 the string 'yylval' with 'nusmv_yylval' and 'yylineno' with 'nusmv_yylineno'
 
-11.Error: input.l : ‘TOK_GAME’ undeclared (first use in this function) 
+11.error: input.l : ‘TOK_GAME’ undeclared (first use in this function) 
 
     *   added a new file parser/input.l.1.55 with '#include "grammar.h"' 
     *   included this file (input.l.1.55) in parser/Makefile(.am and .in) after input.l.1.50
     *   added 'src/parser/input.l.1.55' in CMakeList.txt
 
-12.Error: gameOpt.c : too few arguments to function ‘OptsHandler_register_option’
+12.error: gameOpt.c : too few arguments to function ‘OptsHandler_register_option’
 
     *   added argument to Game_init_opt(NuSMVEnv_ptr const env) in gameInt.h and gameOpt.c 
     *   in gamePkg.c
@@ -94,18 +94,18 @@ Nitin Yadav - nitin.yadav@rmit.edu.au
                     #include "nusmv/core/utils/StreamMgr.h"
                     #include "nusmv/core/cinit/NuSMVEnv.h"
                    
-13.Error: GamePlayer.c : ‘USTRING_MGR’ undeclared (first use in this function)
+13.error: GamePlayer.c : ‘USTRING_MGR’ undeclared (first use in this function)
 
     *   'USTRING_MGR' has been replaced by 'USTRING_MGR(NuSMVEnv_get_value(__nusmv_parser_env__, ENV_STRING_MGR))'
     *   added this line below the #include code
             
             extern NuSMVEnv_ptr __nusmv_parser_env__;
     
-14.Warning: GameStrategy.c : passing argument 1 of ‘bdd_free’ from incompatible pointer type
+14.warning: GameStrategy.c : passing argument 1 of ‘bdd_free’ from incompatible pointer type
 
     *   replaced 'DdManager*' with 'DDMgr_ptr' in all files
 
-15.Warning: GameStrategy.c : implicit declaration of function ‘Enc_get_bdd_encoding’
+15.warning: GameStrategy.c : implicit declaration of function ‘Enc_get_bdd_encoding’
 
     *   is replaced with: if 'fsm' variable is 
         -present 
@@ -119,7 +119,7 @@ Nitin Yadav - nitin.yadav@rmit.edu.au
                 BddFsm_get_bdd_encoding(BDD_FSM(GAME_BDD_FSM(NULL)));
                 BddFsm_get_bdd_encoding(BDD_FSM(GAME_SEXP_FSM(NULL)));
                 
-16.Warning: GameStrategy.c: passing argument 1 of ‘print_node’ from incompatible pointer type
+16.warning: GameStrategy.c: passing argument 1 of ‘print_node’ from incompatible pointer type
    
     *   replace print_node(...) with print_node(wffprint,...)
         replaced SymbType_print(...) with SymbType_print(... , wffprint , ...)
@@ -163,21 +163,21 @@ Nitin Yadav - nitin.yadav@rmit.edu.au
                            UsagePrint(env,...)
                            
 
-17.Warning: GameStrategy.c: passing argument 7 of ‘BddEnc_print_bdd_wff’ from incompatible pointer type
+17.warning: GameStrategy.c: passing argument 7 of ‘BddEnc_print_bdd_wff’ from incompatible pointer type
 
     *   replaced the parameter "out" with "OSTREAM(out)"
 
-18.Warning: gameCmd.c:  initialization from incompatible pointer type {"read_rat_file",        CommandReadRatFile, 0, true},
+18.warning: gameCmd.c:  initialization from incompatible pointer type {"read_rat_file",        CommandReadRatFile, 0, true},
 
     *   added the "NuSMVEnv_ptr env" parameter in functions declaration
         
             static int Command...(NuSMVEnv_ptr env,...)
 
-19.Error: gameCmd.c:  ‘nusmv_stderr’ undeclared (first use in this function) 
+19.error: gameCmd.c:  ‘nusmv_stderr’ undeclared (first use in this function) 
 
     *   replaced 'nusmv_stdout' with 'stdout' and 'nusmv_stderr' with 'stderr'
     
-20.Warning: gameCmd.c:  implicit declaration of function ‘nusmv_exit’ 
+20.warning: gameCmd.c:  implicit declaration of function ‘nusmv_exit’ 
 
     *   replaced all 'nusmv_exit' with 'exit'
     *   added this line in head where 'env' is added
@@ -194,34 +194,34 @@ Nitin Yadav - nitin.yadav@rmit.edu.au
             CmdOpenPipe
             CmdOpenFile
 
-21.Error: gameCmd.c:  ‘CATCH’ undeclared (first use in this function)
+21.error: gameCmd.c:  ‘CATCH’ undeclared (first use in this function)
                          
     *   replaced "CATCH" with "CATCH(errmgr)" and "FAIL" with "FAIL(errmgr)" and added this lines of declaration
     
             NuSMVEnv_ptr const env = EnvObject_get_environment(ENV_OBJECT(self->symb_table));  ( ONLY IF 'env' IS NOT DECLARED )
             ErrorMgr_ptr const errmgr = ERROR_MGR(NuSMVEnv_get_value(env, ENV_ERROR_MANAGER));
                         
-22.Warning: gameCmd.c: implicit declaration of function ‘PropPkg_get_prop_database’
+22.warning: gameCmd.c: implicit declaration of function ‘PropPkg_get_prop_database’
 
     *   replaced with variable "prop_db" and declaration
     
             PropDb_ptr prop_db  = PROP_DB(NuSMVEnv_get_value(env, ENV_PROP_DB));
             
-23.Error: gameCmd.c: ‘USTRING_MGR’ undeclared (first use in this function)
+23.error: gameCmd.c: ‘USTRING_MGR’ undeclared (first use in this function)
 
     *   *   'USTRING_MGR' has been replaced by 'USTRING_MGR(NuSMVEnv_get_value(env, ENV_STRING_MGR))'
     
-24.Warning: gameCmd.c:  passing argument 2 of ‘PropDb_print_list_header’ from incompatible pointer type
+24.warning: gameCmd.c:  passing argument 2 of ‘PropDb_print_list_header’ from incompatible pointer type
 
     *   added "OStream_ptr ostream_ptr_nusmv_output = OStream_create(nusmv_stdout);" before the 'PropDb_print_list_header()' function
     *   replaced for :
             'PropDb_print_list_header()' and 'PropDb_print_prop_at_index()' -> 'nusmv_output' with 'ostream_ptr_nusmv_output'
             
-25.Error: gameCmd.c:  ‘dd_manager’ undeclared (first use in this function)
+25.error: gameCmd.c:  ‘dd_manager’ undeclared (first use in this function)
 
     *   added declaration "DDMgr_ptr dd_manager = (DDMgr_ptr )NuSMVEnv_get_value(env, ENV_DD_MGR);"
     
-26.Warning: gamePkg.c: implicit declaration of function
+26.warning: gamePkg.c: implicit declaration of function
 
     *   all this functions are replaced
     
@@ -248,15 +248,15 @@ Nitin Yadav - nitin.yadav@rmit.edu.au
                     
             'PropPkg_set_prop_database(PROP_DB(dbg))' with 'NuSMVEnv_set_value(env, ENV_PROP_DB,PROP_DB(dbg))'
     
-27.Error: gamePkg.c: ‘cmdCommandTable’ undeclared (first use in this function)
+27.error: gamePkg.c: ‘cmdCommandTable’ undeclared (first use in this function)
     
         *   replaced with 'commandTable' and added declaration 'avl_tree* commandTable = (avl_tree*)NuSMVEnv_get_value(env, ENV_CMD_COMMAND_TABLE);'
         
-28.Warning: gamePkg.c: implicit declaration of function ‘get_text(’
+28.warning: gamePkg.c: implicit declaration of function ‘get_text(’
 
         *   replaced with '(char*)UStringMgr_get_string_text('
 
-29.Warning: gamePkg.c: passing argument 1 of ‘Cmd_CommandDefined’ from incompatible pointer type
+29.warning: gamePkg.c: passing argument 1 of ‘Cmd_CommandDefined’ from incompatible pointer type
 
         *   added 'env' parameter for : 
         
@@ -278,11 +278,11 @@ Nitin Yadav - nitin.yadav@rmit.edu.au
                 'Smgame_Reset'
                 'Smgame_End'
             
-30.Warning: gameGeneral.c: implicit declaration of function ‘PropDb_set_fsm_to_master’
+30.warning: gameGeneral.c: implicit declaration of function ‘PropDb_set_fsm_to_master’
 
     *   replaced 'PropDb_set_fsm_to_master(..., PROP(self->prop));' with 'Prop_set_environment_fsms(env, PROP(self->prop));'
 
-31.Warning: gameGeneral.c: implicit declaration of function ‘internal_error(’ 
+31.warning: gameGeneral.c: implicit declaration of function ‘internal_error(’ 
 
     *   replaced with 'ErrorMgr_internal_error(errmgr,'
     *   added library '#include "utils/ErrorMgr.h"'
@@ -294,6 +294,14 @@ Nitin Yadav - nitin.yadav@rmit.edu.au
             'PrinterSexpGame_create'
             'PrinterGame_create'
             'printer_base_init'
+            
+32.warning: gameGeneral.c: passing argument 1 of ‘SymbLayer_gen_iter’ and 'SymbLayer_iter_to_list’ from incompatible pointer type
+
+    *   removed '&' for the first parameter
+    
+33.warning: gameGeneral.c:373:26:  passing argument 2 of ‘Prop_print’ from incompatible pointer type
+
+    *   added cast of the second argument with '(OStream_ptr)...'      
             
             
 ================================================================================

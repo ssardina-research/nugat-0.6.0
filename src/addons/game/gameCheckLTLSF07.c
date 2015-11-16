@@ -431,7 +431,7 @@ void Game_CheckLtlGameSpecSF07(PropGame_ptr prop,
   if (opt_verbose_level_ge(OptsHandler_create(), 1)) {
     fprintf(nusmv_stderr, "computing ");
     fprintf(nusmv_stderr, " ");
-    Prop_print(PROP(cls->prop), nusmv_stderr, PROP_PRINT_FMT_FORMULA);
+    Prop_print(PROP(cls->prop), (OStream_ptr)nusmv_stderr, PROP_PRINT_FMT_FORMULA);
     fprintf(nusmv_stderr, "\n");
   }
 
@@ -486,7 +486,7 @@ void Game_CheckLtlGameSpecSF07(PropGame_ptr prop,
   {
     fprintf(nusmv_stdout, "-- ");
     fprintf(nusmv_stdout, " ");
-    Prop_print(PROP(prop), nusmv_stdout, PROP_PRINT_FMT_FORMULA);
+    Prop_print(PROP(prop), (OStream_ptr)nusmv_stdout, PROP_PRINT_FMT_FORMULA);
 
     switch (Prop_get_status(PROP(cls->prop))) {
     case Prop_True:
@@ -2092,7 +2092,7 @@ static void Game_SF07_StructCheckLTLGameSF07_check
   if (opt_verbose_level_ge(OptsHandler_create(), 4)) {
     fprintf(nusmv_stderr,
             "\nGame_SF07_StructCheckLTLGameSF07_check: sub game goal is:\n");
-    Prop_print(PROP(prop), nusmv_stderr, PROP_PRINT_FMT_FORMULA);
+    Prop_print(PROP(prop), (OStream_ptr)nusmv_stderr, PROP_PRINT_FMT_FORMULA);
     fprintf(nusmv_stderr,
             "\nGame_SF07_StructCheckLTLGameSF07_check: end sub game goal\n");
   }
