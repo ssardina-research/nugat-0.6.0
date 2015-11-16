@@ -230,7 +230,7 @@ void Game_CommandBuildBooleanModel(NuSMVEnv_ptr env)
     BaseEnc_commit_layer(BASE_ENC(BoolEncClient_get_bool_enc(BOOL_ENC_CLIENT(enc))),
                          DETERM_LAYER_2);
 
-    BaseEnc_commit_layer(BASE_ENC(EBddFsm_get_bdd_encoding(BDD_FSM(GAME_SEXP_FSM(NULL)))),
+    BaseEnc_commit_layer(BASE_ENC(BddFsm_get_bdd_encoding(BDD_FSM(GAME_SEXP_FSM(NULL)))),
                          DETERM_LAYER_1);
     BaseEnc_commit_layer(BASE_ENC(BddFsm_get_bdd_encoding(BDD_FSM(GAME_SEXP_FSM(NULL)))),
                          DETERM_LAYER_2);

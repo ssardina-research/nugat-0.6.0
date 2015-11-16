@@ -2871,8 +2871,9 @@ static int CommandCheckLtlGameSpecSF07(NuSMVEnv_ptr env,int argc, char **argv)
     int kmin = -1;
     int kmax = -1;
     Game_Who w = GAME_WHO_INVALID;
-    ErrorMgr_ptr const errmgr =
-            ERROR_MGR(NuSMVEnv_get_value(env, ENV_ERROR_MANAGER));
+
+    const ErrorMgr_ptr errmgr = ERROR_MGR(NuSMVEnv_get_value(env, ENV_ERROR_MANAGER));
+
     PropDb_ptr prop_db  = PROP_DB(NuSMVEnv_get_value(env, ENV_PROP_DB));
 
     nusmv_assert(opt_game_game(OptsHandler_create()));

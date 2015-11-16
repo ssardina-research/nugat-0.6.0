@@ -42,6 +42,7 @@ Nitin Yadav - nitin.yadav@rmit.edu.au
     .3 "new_lined_node" requires 5 arguments, but only 4 given -> added 'nodemgr' parameter
     .4 "find_node" requires ... -> added 'nodemgr' parameter
     .5 "print_node" requires ... -> added 'wffprint' parameter
+    .6 "free_node" requires ... -> added 'nodemgr' parameter
     
     *   added this lines before the usage 
     
@@ -377,7 +378,21 @@ Nitin Yadav - nitin.yadav@rmit.edu.au
             'NULL' in gameCheckGenReactivityBuchiSpec.c and gameUnrealCore.c
             'bdd_enc' in gameVarEncoding.c and swapped the code
             
+45.error: too few arguments to function ‘Enc_init_bdd_encoding’
 
+    *   added second parameter 'input_order_file_name'
+
+46.warning: passing argument 1 of ‘Compile_WriteFlattenFsm’ from incompatible pointer type
+   warning: passing argument 1 of ‘Compile_WriteBoolFsm’ from incompatible pointer type
+        
+    *   added 'env' parameter
+        
+47.warning: passing argument 1 of ‘BoolEnc_scalar_layer_to_bool_layer’ from incompatible pointer type
+
+    *   added first parameter 'BoolEnc_ptr bool_enc = BOOL_ENC(NuSMVEnv_get_value(env, ENV_BOOL_ENCODER));'
+
+    
+    
 ================================================================================
 EOF
 ================================================================================

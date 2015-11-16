@@ -93,17 +93,19 @@ game_compute_gen_reactivity ARGS((node_ptr specExp,
                                   bdd_ptr underapproxWinStates,
                                   bdd_ptr* winningStates));
 
-static boolean game_compute_buchi_game ARGS((PropGame_ptr prop,
+static boolean game_compute_buchi_game ARGS((NuSMVEnv_ptr env,
+                                             PropGame_ptr prop,
                                              GameStrategy_ptr* strategy,
                                              node_ptr jxVar));
 
-static void game_free_list_of_bdd ARGS((DDMgr_ptr dd, node_ptr list));
+static void game_free_list_of_bdd ARGS((NodeMgr_ptr nodemgr,DDMgr_ptr dd, node_ptr list));
 
 static void game_free_array_of_bdd ARGS((DDMgr_ptr dd,
                                          bdd_ptr* array,
                                          int size));
 
-static void game_free_list_of_array_of_bdd ARGS((DDMgr_ptr dd,
+static void game_free_list_of_array_of_bdd ARGS((NodeMgr_ptr nodemgr,
+                                                 DDMgr_ptr dd,
                                                  node_ptr list,
                                                  int size));
 
@@ -201,8 +203,8 @@ void Game_CheckGenReactivitySpec(NuSMVEnv_ptr env, PropGame_ptr prop, gameParams
 
   /* Remove created free variable. */
   if (construct_strategy) {
-    if (Nil != varList1) free_node(varList1);
-    if (Nil != varList2) free_node(varList2);
+    if (Nil != varList1) free_node(nodemgr,varList1);
+    if (Nil != varList2) free_node(nodemgr,varList2);
     game_undeclare_special_var(env,layer);
   }
 }
@@ -218,7 +220,7 @@ void Game_CheckGenReactivitySpec(NuSMVEnv_ptr env, PropGame_ptr prop, gameParams
   SeeAlso     [ ]
 
 ******************************************************************************/
-void Game_CheckBuchiGameSpec(PropGame_ptr prop, gameParams_ptr params)
+void Game_CheckBuchiGameSpec(NuSMVEnv_ptr env,PropGame_ptr prop, gameParams_ptr params)
 {
   boolean construct_strategy;
   boolean isSuccess;
@@ -228,8 +230,8 @@ void Game_CheckBuchiGameSpec(PropGame_ptr prop, gameParams_ptr params)
   node_ptr varList1 = Nil;
   node_ptr varList2 = Nil;
 
-  const NuSMVEnv_ptr env = EnvObject_get_environment(ENV_OBJECT(prop));
   const NodeMgr_ptr nodemgr = NODE_MGR(NuSMVEnv_get_value(env, ENV_NODE_MGR));
+  const UStringMgr_ptr strings = USTRING_MGR(NuSMVEnv_get_value(env, ENV_STRING_MGR));
 
   /* The given property must be a buchi game property. Such a
      property is a list of expressions (CONS at top) (see the
@@ -263,7 +265,8 @@ void Game_CheckBuchiGameSpec(PropGame_ptr prop, gameParams_ptr params)
   }
 
   /* Verification of the property. */
-  isSuccess = game_compute_buchi_game(prop,
+  isSuccess = game_compute_buchi_game(env,
+                                      prop,
                                       (construct_strategy ?
                                        (&strategy) :
                                        (GameStrategy_ptr*) NULL),
@@ -280,8 +283,8 @@ void Game_CheckBuchiGameSpec(PropGame_ptr prop, gameParams_ptr params)
 
   /* Remove created free variable. */
   if (construct_strategy) {
-    if (Nil != varList1) free_node(varList1);
-    if (Nil != varList2) free_node(varList2);
+    if (Nil != varList1) free_node(nodemgr,varList1);
+    if (Nil != varList2) free_node(nodemgr,varList2);
     game_undeclare_special_var(env,layer);
   }
 }
@@ -334,7 +337,7 @@ boolean Game_ComputeGenReactivity(node_ptr specExp,
   SeeAlso     [ ]
 
 ******************************************************************************/
-static void game_free_list_of_bdd(DDMgr_ptr dd, node_ptr list)
+static void game_free_list_of_bdd(NodeMgr_ptr nodemgr,DDMgr_ptr dd, node_ptr list)
 {
   node_ptr iter = list;
 
@@ -343,7 +346,7 @@ static void game_free_list_of_bdd(DDMgr_ptr dd, node_ptr list)
     iter = cdr(iter);
 
     bdd_free(dd, (bdd_ptr)car(tmp));
-    free_node(tmp);
+    free_node(nodemgr,tmp);
   }
 }
 
@@ -380,7 +383,8 @@ static void game_free_array_of_bdd(DDMgr_ptr dd, bdd_ptr* array, int size)
   SeeAlso     [ ]
 
 ******************************************************************************/
-static void game_free_list_of_array_of_bdd(DDMgr_ptr dd,
+static void game_free_list_of_array_of_bdd(NodeMgr_ptr nodemgr,
+                                            DDMgr_ptr dd,
                                            node_ptr list,
                                            int size)
 {
@@ -391,7 +395,7 @@ static void game_free_list_of_array_of_bdd(DDMgr_ptr dd,
     iter = cdr(iter);
 
     game_free_array_of_bdd(dd, (bdd_ptr*)car(tmp), size);
-    free_node(tmp);
+    free_node(nodemgr,tmp);
   }
 }
 
@@ -431,6 +435,9 @@ static void game_declare_special_var(NuSMVEnv_ptr env,
   node_ptr var;
   node_ptr values;
   SymbType_ptr symbolicType;
+
+  const NodeMgr_ptr nodemgr = NODE_MGR(NuSMVEnv_get_value(env, ENV_NODE_MGR));
+  const UStringMgr_ptr strings = USTRING_MGR(NuSMVEnv_get_value(env, ENV_STRING_MGR));
 
   /* Create a new temporal layer (with arbitrary name). */
   layer = SymbTable_create_layer(SYMB_TABLE(NuSMVEnv_get_value(env, ENV_SYMB_TABLE)),
@@ -794,9 +801,9 @@ static boolean game_compute_gen_reactivity(node_ptr specExp,
       bdd_and_accumulate(dd_manager, &preImageZAndGuarantee, guarantees[j]);
 
       /* free the previously remembered results */
-      game_free_list_of_array_of_bdd(dd_manager, xResults[j], assumptionsN);
+      game_free_list_of_array_of_bdd(nodemgr,dd_manager, xResults[j], assumptionsN);
       xResults[j] = Nil;
-      game_free_list_of_bdd(dd_manager, yResults[j]);
+      game_free_list_of_bdd(nodemgr,dd_manager, yResults[j]);
       yResults[j] = Nil;
 
       while (!isYFixpointReached) {/* --- Y least fix point loop */
@@ -1056,13 +1063,13 @@ static boolean game_compute_gen_reactivity(node_ptr specExp,
         for (j = 0; j < guaranteesN; ++j) {
           node_ptr eq1 = find_node(nodemgr,EQUAL,
                                    jxVar,
-                                   find_node(nodemgr,NUMBER, (j), Nil));
+                                   find_node(nodemgr,NUMBER, NODE_FROM_INT(j), Nil));
           node_ptr eq2 = find_node(nodemgr,EQUAL,
                                    find_node(nodemgr,NEXT,
                                              jxVar,
                                              Nil),
                                    find_node(nodemgr,NUMBER,
-                                             ((j+1) % guaranteesN),
+                                             NODE_FROM_INT((j+1) % guaranteesN),
                                              Nil));
           node_ptr eq = find_node(nodemgr,AND, eq1, eq2);
           tmp = BddEnc_expr_to_bdd(enc, eq, Nil);
@@ -1090,7 +1097,7 @@ static boolean game_compute_gen_reactivity(node_ptr specExp,
             bdd_ptr newTrans;
             node_ptr eq1 = find_node(nodemgr,EQUAL,
                                      jxVar,
-                                     find_node(nodemgr,NUMBER, (j), Nil));
+                                     find_node(nodemgr,NUMBER, NODE_FROM_INT(j), Nil));
             node_ptr eq = find_node(nodemgr,AND, eq1, find_node(nodemgr,NEXT, eq1, Nil));
             tmp = BddEnc_expr_to_bdd(enc, eq, Nil);
 
@@ -1119,7 +1126,7 @@ static boolean game_compute_gen_reactivity(node_ptr specExp,
           bdd_ptr low = bdd_false(dd_manager);
 
           node_ptr eq1 = find_node(nodemgr,EQUAL, jxVar,
-                             find_node(nodemgr,NUMBER, (j), Nil));
+                             find_node(nodemgr,NUMBER, NODE_FROM_INT(j), Nil));
           node_ptr eq = find_node(nodemgr,AND, eq1, find_node(nodemgr,NEXT, eq1, Nil));
           bdd_ptr varBdd = BddEnc_expr_to_bdd(enc, eq, Nil);
 
@@ -1196,8 +1203,8 @@ static boolean game_compute_gen_reactivity(node_ptr specExp,
     game_free_array_of_bdd(dd_manager, guarantees, guaranteesN);
 
     for (i = 0; i < guaranteesN; ++i) {
-      game_free_list_of_bdd(dd_manager, yResults[i]);
-      game_free_list_of_array_of_bdd(dd_manager, xResults[i], assumptionsN);
+      game_free_list_of_bdd(nodemgr,dd_manager, yResults[i]);
+      game_free_list_of_array_of_bdd(nodemgr,dd_manager, xResults[i], assumptionsN);
     }
     FREE(yResults);
     FREE(xResults);
@@ -1250,14 +1257,18 @@ static boolean game_compute_gen_reactivity(node_ptr specExp,
   SeeAlso     [ ]
 
 ******************************************************************************/
-static boolean game_compute_buchi_game(PropGame_ptr prop,
+static boolean game_compute_buchi_game(NuSMVEnv_ptr env,
+                                       PropGame_ptr prop,
                                        GameStrategy_ptr* strategy,
                                        node_ptr jxVar)
 {
   GameBddFsm_ptr fsm = PropGame_get_game_bdd_fsm(prop);
   BddEnc_ptr enc = BddFsm_get_bdd_encoding(BDD_FSM(fsm));
   DDMgr_ptr dd_manager = BddEnc_get_dd_manager(enc);
-  const NuSMVEnv_ptr env = EnvObject_get_environment(ENV_OBJECT(dd_manager));
+
+  const NodeMgr_ptr nodemgr = NODE_MGR(NuSMVEnv_get_value(env, ENV_NODE_MGR));
+  const UStringMgr_ptr strings = USTRING_MGR(NuSMVEnv_get_value(env, ENV_STRING_MGR));
+
   OptsHandler_ptr opt = OptsHandler_create();
 
 
@@ -1385,7 +1396,7 @@ static boolean game_compute_buchi_game(PropGame_ptr prop,
       Y = bdd_dup(preImageZAndBuchi);
 
       /* free the previously remembered results and create a new one */
-      game_free_list_of_bdd(dd_manager, yResults[j]);
+      game_free_list_of_bdd(nodemgr,dd_manager, yResults[j]);
       yResults[j] = cons(nodemgr,(node_ptr)Y, Nil); /* BDD does not belong to
                                                Y anymore */
 
@@ -1407,7 +1418,7 @@ static boolean game_compute_buchi_game(PropGame_ptr prop,
             node_ptr tmp = yResults[j];
             yResults[j] = cdr(tmp);
             bdd_free(dd_manager, (bdd_ptr)car(tmp));
-            free_node(tmp);
+            free_node(nodemgr,tmp);
           }
           yResults[j] = reverse(yResults[j]); /* restore the order */
         }
@@ -1497,7 +1508,7 @@ static boolean game_compute_buchi_game(PropGame_ptr prop,
                                 jxVar,
                                 Nil),
                       find_node(nodemgr,NUMBER,
-                                (((j+1) % buchiConditionsN)),
+                                NODE_FROM_INT(((j+1) % buchiConditionsN)),
                                 Nil));
           node_ptr eq = find_node(nodemgr,AND, eq1, eq2);
           tmp = BddEnc_expr_to_bdd(enc, eq, Nil);
@@ -1577,7 +1588,7 @@ static boolean game_compute_buchi_game(PropGame_ptr prop,
     game_free_array_of_bdd(dd_manager, buchiConditions, buchiConditionsN);
 
     for (i = 0; i < buchiConditionsN; ++i) {
-      game_free_list_of_bdd(dd_manager, yResults[i]);
+      game_free_list_of_bdd(nodemgr,dd_manager, yResults[i]);
     }
     FREE(yResults);
   }

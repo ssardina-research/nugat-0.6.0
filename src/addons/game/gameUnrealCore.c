@@ -401,10 +401,10 @@ static void Game_UnrealizableCore_Struct_restore_assign_hashes
 static void Game_UnrealizableCore_Struct_save_flat_hierarchies
 (Game_UnrealizableCore_Struct_ptr self);
 static void Game_UnrealizableCore_Struct_restore_flat_hierarchies
-(Game_UnrealizableCore_Struct_ptr self);
+(NodeMgr_ptr nodemgr,Game_UnrealizableCore_Struct_ptr self);
 
 static node_ptr copy_opposite_list (NodeMgr_ptr nodemgr,node_ptr l);
-static void free_opposite_list (node_ptr l);
+static void free_opposite_list (NodeMgr_ptr nodemgr,node_ptr l);
 static node_ptr opposite_reverse (node_ptr x);
 
 static GameGameFsms_ptr game_construct_game_fsms
@@ -427,14 +427,14 @@ static void game_guard_gamespecs_by_parameters
 static void game_guard_game_hierarchy_with_parameters
 (Game_UnrealizableCore_Struct_ptr self);
 static void game_unguard_exprs_by_parameters
-(Game_UnrealizableCore_Struct_ptr self,
+(NodeMgr_ptr nodemgr,Game_UnrealizableCore_Struct_ptr self,
       node_ptr exprs,
       int kind,
       GamePlayer player);
 static void game_unguard_gamespecs_by_parameters
-(Game_UnrealizableCore_Struct_ptr self);
+(NodeMgr_ptr nodemgr,Game_UnrealizableCore_Struct_ptr self);
 static void game_unguard_game_hierarchy_with_parameters
-(Game_UnrealizableCore_Struct_ptr self);
+(NodeMgr_ptr nodemgr,Game_UnrealizableCore_Struct_ptr self);
 
 
 static void game_process_unrealizable_core_with_params
@@ -883,7 +883,7 @@ static void Game_UnrealizableCore_Struct_save_flat_hierarchies(
   SeeAlso     [ Game_UnrealizableCore_Struct_save_flat_hieararchies ]
 
 ******************************************************************************/
-static void Game_UnrealizableCore_Struct_restore_flat_hierarchies(
+static void Game_UnrealizableCore_Struct_restore_flat_hierarchies(NodeMgr_ptr nodemgr,
                                          Game_UnrealizableCore_Struct_ptr self)
 {
   FlatHierarchy_ptr fh1;
@@ -896,23 +896,23 @@ static void Game_UnrealizableCore_Struct_restore_flat_hierarchies(
   fh1 = GameHierarchy_get_player_1(self->gh);
   fh2 = GameHierarchy_get_player_2(self->gh);
 
-  free_opposite_list(FlatHierarchy_get_init(fh1));
+  free_opposite_list(nodemgr,FlatHierarchy_get_init(fh1));
   FlatHierarchy_set_init(fh1, self->init1);
   self->init1 = Nil;
-  free_opposite_list(FlatHierarchy_get_invar(fh1));
+  free_opposite_list(nodemgr,FlatHierarchy_get_invar(fh1));
   FlatHierarchy_set_invar(fh1, self->invar1);
   self->invar1 = Nil;
-  free_opposite_list(FlatHierarchy_get_trans(fh1));
+  free_opposite_list(nodemgr,FlatHierarchy_get_trans(fh1));
   FlatHierarchy_set_trans(fh1, self->trans1);
   self->trans1 = Nil;
 
-  free_opposite_list(FlatHierarchy_get_init(fh2));
+  free_opposite_list(nodemgr,FlatHierarchy_get_init(fh2));
   FlatHierarchy_set_init(fh2, self->init2);
   self->init2 = Nil;
-  free_opposite_list(FlatHierarchy_get_invar(fh2));
+  free_opposite_list(nodemgr,FlatHierarchy_get_invar(fh2));
   FlatHierarchy_set_invar(fh2, self->invar2);
   self->invar2 = Nil;
-  free_opposite_list(FlatHierarchy_get_trans(fh2));
+  free_opposite_list(nodemgr,FlatHierarchy_get_trans(fh2));
   FlatHierarchy_set_trans(fh2, self->trans2);
   self->trans2 = Nil;
 
@@ -960,12 +960,12 @@ node_ptr copy_opposite_list(NodeMgr_ptr nodemgr,node_ptr list)
   SeeAlso     [ ]
 
 ******************************************************************************/
-void free_opposite_list(node_ptr l) {
+void free_opposite_list(NodeMgr_ptr nodemgr,node_ptr l) {
   while(l != Nil) {
     node_ptr tmp = l;
 
     l = car(l);
-    free_node(0,tmp);
+    free_node(nodemgr,tmp);
   }
 }
 
@@ -1549,7 +1549,7 @@ game_guard_game_hierarchy_with_parameters(Game_UnrealizableCore_Struct_ptr self)
   SeeAlso     [ game_guard_exprs_by_parameters ]
 
 ******************************************************************************/
-static void game_unguard_exprs_by_parameters(
+static void game_unguard_exprs_by_parameters(NodeMgr_ptr nodemgr,
                                           Game_UnrealizableCore_Struct_ptr self,
                                              node_ptr exprs,
                                              int kind,
@@ -1587,7 +1587,7 @@ static void game_unguard_exprs_by_parameters(
                  ' ' == get_text((string_ptr)car(cdr(car(tmp))))[0]);
     rhs = cdr(tmp);
     setcdr(iter, rhs);
-    free_node(0,tmp);
+    free_node(nodemgr,tmp);
   }
 }
 
@@ -1603,7 +1603,7 @@ static void game_unguard_exprs_by_parameters(
   SeeAlso     [ game_guard_gamespecs_by_parameters ]
 
 ******************************************************************************/
-static void game_unguard_gamespecs_by_parameters(
+static void game_unguard_gamespecs_by_parameters(NodeMgr_ptr nodemgr,
                                           Game_UnrealizableCore_Struct_ptr self)
 {
   node_ptr exp;
@@ -1644,7 +1644,7 @@ static void game_unguard_gamespecs_by_parameters(
                  get_text((string_ptr)car(cdr(car(tmp))))[0] == ' ');
     rhs = cdr(expcore);
     setcdr(exp, rhs);
-    free_node(0,tmp);
+    free_node(nodemgr,tmp);
     break;
 
   case PropGame_ReachDeadlock:
@@ -1668,7 +1668,7 @@ static void game_unguard_gamespecs_by_parameters(
                      ' ' == get_text((string_ptr)car(cdr(car(tmp))))[0]);
         rhs = cdr(tmp);
         setcar(iter, rhs);
-        free_node(0,tmp);
+        free_node(nodemgr,tmp);
       }
     }
     break;
@@ -1690,7 +1690,7 @@ static void game_unguard_gamespecs_by_parameters(
                        ' ' == get_text((string_ptr)car(cdr(car(tmp))))[0]);
           rhs = cdr(tmp);
           setcar(iter, rhs);
-          free_node(0,tmp);
+          free_node(nodemgr,tmp);
         } /* for (iter) */
       }
 
@@ -1705,7 +1705,7 @@ static void game_unguard_gamespecs_by_parameters(
                        ' ' == get_text((string_ptr)car(cdr(car(tmp))))[0]);
           rhs = cdr(tmp);
           setcar(iter, rhs);
-          free_node(0,tmp);
+          free_node(nodemgr,tmp);
         } /* for (iter) */
       }
     }
@@ -1727,7 +1727,7 @@ static void game_unguard_gamespecs_by_parameters(
   SeeAlso     [ game_guard_game_hierarchy_with_parameters ]
 
 ******************************************************************************/
-static void game_unguard_game_hierarchy_with_parameters(
+static void game_unguard_game_hierarchy_with_parameters(NodeMgr_ptr nodemgr,
                                           Game_UnrealizableCore_Struct_ptr self)
 {
   SYMB_LAYER_CHECK_INSTANCE(self->layer);
@@ -1757,19 +1757,19 @@ static void game_unguard_game_hierarchy_with_parameters(
   if (self->N > 0) {
     if (self->w == GAME_WHO_BOTH || self->w == GAME_WHO_PLAYER_1) {
       if (self->min_init) {
-        game_unguard_exprs_by_parameters(self,
+        game_unguard_exprs_by_parameters(nodemgr,self,
                                          FlatHierarchy_get_init(player_1),
                                          INIT,
                                          PLAYER_1);
       }
       if (self->min_invar) {
-        game_unguard_exprs_by_parameters(self,
+        game_unguard_exprs_by_parameters(nodemgr,self,
                                          FlatHierarchy_get_invar(player_1),
                                          INVAR,
                                          PLAYER_1);
       }
       if (self->min_trans) {
-        game_unguard_exprs_by_parameters(self,
+        game_unguard_exprs_by_parameters(nodemgr,self,
                                          FlatHierarchy_get_trans(player_1),
                                          TRANS,
                                          PLAYER_1);
@@ -1778,19 +1778,19 @@ static void game_unguard_game_hierarchy_with_parameters(
 
     if (self->w == GAME_WHO_BOTH || self->w == GAME_WHO_PLAYER_2) {
       if (self->min_init) {
-        game_unguard_exprs_by_parameters(self,
+        game_unguard_exprs_by_parameters(nodemgr,self,
                                          FlatHierarchy_get_init(player_2),
                                          INIT,
                                          PLAYER_2);
       }
       if (self->min_invar) {
-        game_unguard_exprs_by_parameters(self,
+        game_unguard_exprs_by_parameters(nodemgr,self,
                                          FlatHierarchy_get_invar(player_2),
                                          INVAR,
                                          PLAYER_2);
       }
       if (self->min_trans) {
-        game_unguard_exprs_by_parameters(self,
+        game_unguard_exprs_by_parameters(nodemgr,self,
                                          FlatHierarchy_get_trans(player_2),
                                          TRANS,
                                          PLAYER_2);
@@ -1807,7 +1807,7 @@ static void game_unguard_game_hierarchy_with_parameters(
          self->player == PLAYER_1 &&
          Prop_get_type(PROP(self->prop)) == PropGame_GenReactivity)) {
       if (self->min_prop) {
-        game_unguard_gamespecs_by_parameters(self);
+        game_unguard_gamespecs_by_parameters(nodemgr,self);
       }
     }
   }
@@ -2164,6 +2164,8 @@ static void game_compute_core_using_parameters(NuSMVEnv_ptr env,
   GameGameFsms_ptr fsm;
   bdd_ptr winningStates;
 
+  const NodeMgr_ptr nodemgr = NODE_MGR(NuSMVEnv_get_value(env, ENV_NODE_MGR));
+
   /* only gen-reactivity is implemented */
   nusmv_assert(PropGame_GenReactivity == Prop_get_type(PROP(self->prop)));
 
@@ -2221,7 +2223,7 @@ static void game_compute_core_using_parameters(NuSMVEnv_ptr env,
   game_free_game_fsms(fsm);
 
   /* Remove activation variables (parameters). */
-  game_unguard_game_hierarchy_with_parameters(self);
+  game_unguard_game_hierarchy_with_parameters(nodemgr,self);
 }
 
 /**Function********************************************************************
@@ -2539,7 +2541,7 @@ static boolean game_minimize_players_constraints(
       node_ptr tmp = bdd_conjuncts;
       bdd_conjuncts = car(bdd_conjuncts);
       bdd_free(self->dd_manager, (bdd_ptr) cdr(tmp));
-      free_node(0,tmp);
+      free_node(nodemgr,tmp);
     }
 
     /* restore right order of bdd_inits */
@@ -2622,12 +2624,12 @@ static boolean game_minimize_players_constraints(
          iter_conj = car(iter_conj)) {
       bdd_free(self->dd_manager, (bdd_ptr) cdr(iter_conj));
     }
-    free_opposite_list(bdd_conjuncts);
+    free_opposite_list(nodemgr,bdd_conjuncts);
 
     for (iter_init = bdd_inits; iter_init != Nil; iter_init = car(iter_init)) {
       bdd_free(self->dd_manager, (bdd_ptr) cdr(iter_init));
     }
-    free_opposite_list(bdd_inits);
+    free_opposite_list(nodemgr,bdd_inits);
 
     bdd_free(self->dd_manager, invar_2);
     bdd_free(self->dd_manager, invar_1);
@@ -3171,11 +3173,11 @@ static void game_compute_core_switching_constraints(
                                       wffprint);
 
   /* Restore flat hierarchies. */
-  Game_UnrealizableCore_Struct_restore_flat_hierarchies(self);
+  Game_UnrealizableCore_Struct_restore_flat_hierarchies(nodemgr,self);
 
   free_list(0,car(spec));
   free_list(0,cdr(spec));
-  free_node(0,spec);
+  free_node(nodemgr,spec);
 
   init_time = util_cpu_time() - init_time;
   fprintf(nusmv_stderr, "Initialization time: %f\n"

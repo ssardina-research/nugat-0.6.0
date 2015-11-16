@@ -329,7 +329,7 @@ ARGS((Game_SF07_StructCheckLTLGameSF07_ptr self,
       int curr_unique_number));
 
 static void Game_SF07_StructCheckLTLGameSF07_destroy_iteration
-ARGS((Game_SF07_StructCheckLTLGameSF07_ptr self));
+ARGS((NodeMgr_ptr nodemgr,Game_SF07_StructCheckLTLGameSF07_ptr self));
 
 static void Game_SF07_StructCheckLTLGameSF07_run_iteration
 ARGS((Game_SF07_StructCheckLTLGameSF07_ptr self,
@@ -382,7 +382,7 @@ ARGS((Game_SF07_StructCheckLTLGameSF07_ptr self));
 
 static node_ptr Game_SF07_StructCheckLTLGameSF07_copy_node ARGS((NodeMgr_ptr nodemgr, node_ptr node));
 
-static void Game_SF07_StructCheckLTLGameSF07_free_node ARGS((node_ptr node));
+static void Game_SF07_StructCheckLTLGameSF07_free_node ARGS((NodeMgr_ptr nodemgr,node_ptr node));
 
 /*---------------------------------------------------------------------------*/
 /* Definition of exported functions                                          */
@@ -413,6 +413,8 @@ void Game_CheckLtlGameSpecSF07(NuSMVEnv_ptr env,
   unsigned int curr_k;
   GamePlayer curr_player;
   boolean done;
+
+  const NodeMgr_ptr nodemgr = NODE_MGR(NuSMVEnv_get_value(env, ENV_NODE_MGR));
 
   PROP_GAME_CHECK_INSTANCE(prop);
   nusmv_assert(Prop_get_status(PROP(prop)) == Prop_Unchecked);
@@ -525,7 +527,7 @@ void Game_CheckLtlGameSpecSF07(NuSMVEnv_ptr env,
   /* Clean up. */
   if (Prop_get_status(PROP(cls->prop)) == Prop_True ||
       Prop_get_status(PROP(cls->prop)) == Prop_False) {
-    Game_SF07_StructCheckLTLGameSF07_destroy_iteration(cls);
+    Game_SF07_StructCheckLTLGameSF07_destroy_iteration(nodemgr,cls);
   }
   Game_SF07_StructCheckLTLGameSF07_destroy(cls);
 }
@@ -740,7 +742,7 @@ Game_SF07_StructCheckLTLGameSF07_create_iteration
 
 ******************************************************************************/
 static void Game_SF07_StructCheckLTLGameSF07_destroy_iteration
-(Game_SF07_StructCheckLTLGameSF07_ptr self)
+(NodeMgr_ptr nodemgr,Game_SF07_StructCheckLTLGameSF07_ptr self)
 {
   GAME_SF07_STRUCT_CHECK_LTL_GAME_SF07_CHECK_INSTANCE(self);
 
@@ -779,7 +781,7 @@ static void Game_SF07_StructCheckLTLGameSF07_destroy_iteration
   self->curr_player2_monitor_sexp = Nil;
   {
     node_ptr n = self->curr_player2_monitor_sexp_copy;
-    Game_SF07_StructCheckLTLGameSF07_free_node(n);
+    Game_SF07_StructCheckLTLGameSF07_free_node(nodemgr,n);
     self->curr_player2_monitor_sexp_copy = Nil;
   }
   GameBddFsm_destroy(self->curr_monitor_game_bdd_fsm);
@@ -829,9 +831,9 @@ static void Game_SF07_StructCheckLTLGameSF07_run_iteration
 
   GAME_SF07_STRUCT_CHECK_LTL_GAME_SF07_CHECK_INSTANCE(self);
 
-  NuSMVEnv_ptr const env = EnvObject_get_environment(ENV_OBJECT(self->symb_table));
-  ErrorMgr_ptr const errmgr =
-            ERROR_MGR(NuSMVEnv_get_value(env, ENV_ERROR_MANAGER));
+  const NuSMVEnv_ptr env = EnvObject_get_environment(ENV_OBJECT(self->symb_table));
+  const ErrorMgr_ptr errmgr = ERROR_MGR(NuSMVEnv_get_value(env, ENV_ERROR_MANAGER));
+  const NodeMgr_ptr nodemgr = NODE_MGR(NuSMVEnv_get_value(env, ENV_NODE_MGR));
 
   /* Increase counter. */
   nusmv_assert(ltlgame_sf07_unique_number < 999999999);
@@ -884,7 +886,7 @@ static void Game_SF07_StructCheckLTLGameSF07_run_iteration
      for strategy printing. Destruction of the iteration-variant parts
      is done in Game_CheckLtlGameSpecSF07. */
   if (self->curr_goal_realizability != GAME_REALIZABLE) {
-    Game_SF07_StructCheckLTLGameSF07_destroy_iteration(self);
+    Game_SF07_StructCheckLTLGameSF07_destroy_iteration(nodemgr,self);
   }
 }
 
@@ -916,9 +918,9 @@ static void Game_SF07_StructCheckLTLGameSF07_construct_ba
   GAME_SF07_STRUCT_CHECK_LTL_GAME_SF07_CHECK_INSTANCE(self);
   PROP_GAME_CHECK_INSTANCE(self->prop);
 
-  NuSMVEnv_ptr const env = EnvObject_get_environment(ENV_OBJECT(self->symb_table));
+  const NuSMVEnv_ptr  env = EnvObject_get_environment(ENV_OBJECT(self->symb_table));
   const NodeMgr_ptr nodemgr = NODE_MGR(NuSMVEnv_get_value(env, ENV_NODE_MGR));
-  ErrorMgr_ptr const errmgr = ERROR_MGR(NuSMVEnv_get_value(env, ENV_ERROR_MANAGER));
+  const ErrorMgr_ptr  errmgr = ERROR_MGR(NuSMVEnv_get_value(env, ENV_ERROR_MANAGER));
   const MasterPrinter_ptr wffprint = MASTER_PRINTER(NuSMVEnv_get_value(env, ENV_WFF_PRINTER));
 
   /* Has the ba already been constructed? */
@@ -2716,7 +2718,7 @@ static node_ptr Game_SF07_StructCheckLTLGameSF07_copy_node(NodeMgr_ptr nodemgr, 
   SeeAlso     [ Game_SF07_StructCheckLTLGameSF07_copy_node ]
 
 ******************************************************************************/
-static void Game_SF07_StructCheckLTLGameSF07_free_node(node_ptr node) {
+static void Game_SF07_StructCheckLTLGameSF07_free_node(NodeMgr_ptr nodemgr,node_ptr node) {
   if (node != Nil) {
     short int type;
     node_ptr lhs;
@@ -2734,7 +2736,7 @@ static void Game_SF07_StructCheckLTLGameSF07_free_node(node_ptr node) {
       break;
       /* Free lhs. */
     case BIT:
-      Game_SF07_StructCheckLTLGameSF07_free_node(lhs);
+      Game_SF07_StructCheckLTLGameSF07_free_node(nodemgr,lhs);
       break;
       /* Free lhs, rhs. */
     case AND:
@@ -2761,14 +2763,14 @@ static void Game_SF07_StructCheckLTLGameSF07_free_node(node_ptr node) {
     case TWODOTS:
     case UMINUS:
     case VAR:
-      Game_SF07_StructCheckLTLGameSF07_free_node(lhs);
-      Game_SF07_StructCheckLTLGameSF07_free_node(rhs);
+      Game_SF07_StructCheckLTLGameSF07_free_node(nodemgr,lhs);
+      Game_SF07_StructCheckLTLGameSF07_free_node(nodemgr,rhs);
       break;
       /* Catch errors. */
     default:
       nusmv_assert(false);
     }
 
-    free_node(NODE_MGR,node);
+    free_node(nodemgr,node);
   }
 }

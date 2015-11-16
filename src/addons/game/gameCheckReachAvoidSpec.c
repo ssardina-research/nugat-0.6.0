@@ -537,7 +537,7 @@ Game_RealizabilityStatus Game_UseStrongReachabilityAlgorithm(NuSMVEnv_ptr env, P
       while (diffReachStateList != Nil) {
         node_ptr n = cdr(diffReachStateList);
         bdd_free(dd_manager, (bdd_ptr)car(diffReachStateList));
-        free_node(NODE_MGR,diffReachStateList);
+        free_node(nodemgr,diffReachStateList);
         diffReachStateList = n;
       }
 
@@ -611,7 +611,7 @@ Game_RealizabilityStatus Game_UseStrongReachabilityAlgorithm(NuSMVEnv_ptr env, P
   while (reachStateList != Nil) {
     node_ptr n = cdr(reachStateList);
     bdd_free(dd_manager, (bdd_ptr)car(reachStateList));
-    free_node(0,reachStateList);
+    free_node(nodemgr,reachStateList);
     reachStateList = n;
   }
 

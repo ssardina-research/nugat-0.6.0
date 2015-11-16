@@ -505,7 +505,7 @@ static node_ptr game_xml_reader_pop_stack(node_ptr* stack) {
   element = car(head);
   *stack = cdr(head);
 
-  free_node(head);
+  free_node(nodemgr,head);
 
   return element;
 }
@@ -559,7 +559,7 @@ static void game_xml_reader_free_text_node(node_ptr text_node) {
   l = car(text_node);
 
   FREE(l); /* FREE requires l-value */
-  free_node(text_node);
+  free_node(nodemgr,text_node);
 }
 
 /**Function********************************************************************
@@ -956,7 +956,7 @@ static void game_xml_reader_tag_end(void* data, const char *string)
     if (node_get_type(car(parseResult->stack)) == tag) {
       /* The corresponding end tag is met. */
       node_ptr node = game_xml_reader_pop_stack(&parseResult->stack);
-      free_node(node);
+      free_node(nodemgr,node);
       parseResult->isIgnore = false;
     }
     return;
@@ -980,7 +980,7 @@ static void game_xml_reader_tag_end(void* data, const char *string)
       nusmv_assert(node_get_type(node) == tag &&
                    Nil == car(node) &&
                    Nil == cdr(node) /* nothing to free */);
-      free_node(node);
+      free_node(nodemgr,node);
     }
     break;
 
@@ -1015,7 +1015,7 @@ static void game_xml_reader_tag_end(void* data, const char *string)
       /* End tags of NAME, KIND and TYPE are met. */
       nusmv_assert(car(name) != Nil && car(kind) != Nil && car(type) != Nil);
 
-      free_node(signal);
+      free_node(nodemgr,signal);
       signal = new_node(nodemgr,COLON, car(name), car(type));
 
       if ('E' == PTR_TO_INT(car(kind))) {
@@ -1029,9 +1029,9 @@ static void game_xml_reader_tag_end(void* data, const char *string)
                PTR_TO_INT(car(kind)));
       }
 
-      free_node(name);
-      free_node(kind);
-      free_node(type);
+      free_node(nodemgr,name);
+      free_node(nodemgr,kind);
+      free_node(nodemgr,type);
     }
     break;
 
@@ -1111,12 +1111,12 @@ static void game_xml_reader_tag_end(void* data, const char *string)
 
       /* Free all the obtained nodes from the stack (and their
          children if required). */
-      free_node(car(name));
-      free_node(name);
-      free_node(property);
-      free_node(kind);
-      free_node(toggled);
-      free_node(requirement);
+      free_node(nodemgr,car(name));
+      free_node(nodemgr,name);
+      free_node(nodemgr,property);
+      free_node(nodemgr,kind);
+      free_node(nodemgr,toggled);
+      free_node(nodemgr,requirement);
     }
     break;
 
