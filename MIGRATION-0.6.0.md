@@ -334,6 +334,12 @@ Nitin Yadav - nitin.yadav@rmit.edu.au
             'game_construct_game_fsms'
             'game_is_opponent_constraint_minimal'
             'game_compute_core_using_parameters'
+            
+38.warning: implicit declaration of function ‘error_game_definition_contains_input_vars’
+
+    *   replaced with 'ErrorMgr_error_game_definition_contains_input_vars(errmgr,' added declaration when required 'const ErrorMgr_ptr errmgr = ERROR_MGR(NuSMVEnv_get_value(env, ENV_ERROR_MANAGER));'
+    *   added 'env' parameter for 'Compile_ProcessHierarchy'
+    *   added 'nodemgr' parameter for 'PslNode_new_context'
 
 ================================================================================
 EOF

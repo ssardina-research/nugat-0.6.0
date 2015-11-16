@@ -331,23 +331,25 @@ game_flatten_game_hierarchy(SymbTable_ptr symbol_table,
     ErrorMgr_rpterr(errmgr,"A game declaration should not contain process declarations.\n");
   }
   /* input vars are not allowed. */
-   if (SymbTable_get_input_vars_num(symbol_table)>0) error_game_definition_contains_input_vars(car(tmp));
+   if (SymbTable_get_input_vars_num(symbol_table)>0) ErrorMgr_error_game_definition_contains_input_vars(errmgr,car(tmp));
    /*OLD_CODE_START
   tmp = NodeList_to_node_ptr(SymbTable_get_input_vars(symbol_table));
-  if (Nil != tmp) error_game_definition_contains_input_vars(car(tmp));
+  if (Nil != tmp) ErrorMgr_error_game_definition_contains_input_vars(errmgr,car(tmp));
   OLD_CODE_END*/
 
   /* Process the created hierarchy. The 5th parameter is true to allow
      some additional checking of expressions (such as for circular
      dependencies of assignments).
   */
-  Compile_ProcessHierarchy(symbol_table,
+  Compile_ProcessHierarchy(env,
+                           symbol_table,
                            model_layer_1,
                            player_1,
                            Nil,
                            true,
                            true);
-  Compile_ProcessHierarchy(symbol_table,
+  Compile_ProcessHierarchy(env,
+                           symbol_table,
                            model_layer_2,
                            player_2,
                            Nil,
@@ -391,7 +393,7 @@ game_flatten_game_hierarchy(SymbTable_ptr symbol_table,
       invarspec = cons(nodemgr,find_node(nodemgr,CONTEXT, Nil, car(spec)), invarspec);
       break;
     case PSLSPEC:
-      pslspec = cons(nodemgr,PslNode_new_context(PSL_NULL, car(spec)), pslspec);
+      pslspec = cons(nodemgr,PslNode_new_context(nodemgr,PSL_NULL, car(spec)), pslspec);
       break;
     case COMPUTE:
       compute = cons(nodemgr,find_node(nodemgr,CONTEXT, Nil, car(spec)), compute);
