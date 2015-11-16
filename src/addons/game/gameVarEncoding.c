@@ -103,14 +103,12 @@ EXTERN cmp_struct_ptr cmps;
   SeeAlso     [ CommandGameEncodeVariables, compile_encode_variables ]
 
 ******************************************************************************/
-int Game_CommandEncodeVariables(char* input_order_file_name)
+int Game_CommandEncodeVariables(NuSMVEnv_ptr env, char* input_order_file_name)
 {
   BoolEnc_ptr bool_enc;
   BddEnc_ptr bdd_enc;
 
-  NuSMVEnv_ptr const env = EnvObject_get_environment(ENV_OBJECT(self));
-  ErrorMgr_ptr const errmgr =
-            ERROR_MGR(NuSMVEnv_get_value(env, ENV_ERROR_MANAGER));
+  ErrorMgr_ptr const errmgr = ERROR_MGR(NuSMVEnv_get_value(env, ENV_ERROR_MANAGER));
 
   if (opt_verbose_level_gt(OptsHandler_create(), 0)) {
     fprintf(nusmv_stderr, "Building variables...");

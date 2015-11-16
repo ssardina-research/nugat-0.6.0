@@ -650,7 +650,7 @@ static int CommandGameEncodeVariables(NuSMVEnv_ptr env,int argc, char** argv)
         goto command_game_encode_variables_return_1;
     }
 
-    Game_CommandEncodeVariables(input_order_file_name);
+    Game_CommandEncodeVariables(env,input_order_file_name);
 
     if (input_order_file_name != NIL(char)) FREE(input_order_file_name);
     return 0;

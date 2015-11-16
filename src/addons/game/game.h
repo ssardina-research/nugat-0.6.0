@@ -155,7 +155,7 @@ EXTERN void Game_Mode_Exit ARGS((NuSMVEnv_ptr env));
 
 /* various commands used to create the Game FSMs */
 EXTERN int Game_CommandFlattenHierarchy ARGS((NuSMVEnv_ptr env));
-EXTERN int Game_CommandEncodeVariables ARGS((char* input_order_file_name));
+EXTERN int Game_CommandEncodeVariables ARGS((NuSMVEnv_ptr env,char* input_order_file_name));
 EXTERN void Game_CommandBuildFlatModel ARGS((NuSMVEnv_ptr env));
 EXTERN void Game_CommandBuildBooleanModel ARGS((NuSMVEnv_ptr env));
 EXTERN void Game_CommandBuildBddModel ARGS((NuSMVEnv_ptr env));

@@ -355,7 +355,12 @@ Nitin Yadav - nitin.yadav@rmit.edu.au
 41.error: gameFlatten.c: ‘yylineno’  undeclared (first use in this function)
 
     *   replaced with 'nusmv_yylineno'
-  
+
+42.error: gameVarEncoding.c:111:65: ‘self’ undeclared (first use in this function)
+
+    *   added 'env' parameter for 'Game_CommandEncodeVariables'
+    *   removed 'env' declaration inside the function 
+
 ================================================================================
 EOF
 ================================================================================
