@@ -418,7 +418,7 @@ game_flatten_game_hierarchy(SymbTable_ptr symbol_table,
     */
     if (list != (node_ptr*) NULL) {
       spec = find_node(nodemgr,GAME_SPEC_WRAPPER,
-                       sym_intern(env,((car(spec)) == 1 ?
+                       sym_intern(env,((car(spec)) == (node_ptr)1 ?
                                    PLAYER_NAME_1 :
                                    PLAYER_NAME_2)),
                        cdr(spec));

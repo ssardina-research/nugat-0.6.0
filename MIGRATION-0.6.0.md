@@ -340,6 +340,10 @@ Nitin Yadav - nitin.yadav@rmit.edu.au
     *   replaced with 'ErrorMgr_error_game_definition_contains_input_vars(errmgr,' added declaration when required 'const ErrorMgr_ptr errmgr = ERROR_MGR(NuSMVEnv_get_value(env, ENV_ERROR_MANAGER));'
     *   added 'env' parameter for 'Compile_ProcessHierarchy'
     *   added 'nodemgr' parameter for 'PslNode_new_context'
+    
+39.warning: comparison between pointer and integer 'sym_intern(env,((car(spec)) == 1 ?'
+
+    *   added a cast with '(node_ptr)'
 
 ================================================================================
 EOF
