@@ -337,14 +337,22 @@ Nitin Yadav - nitin.yadav@rmit.edu.au
             
 38.warning: implicit declaration of function ‘error_game_definition_contains_input_vars’
 
-    *   replaced with 'ErrorMgr_error_game_definition_contains_input_vars(errmgr,' added declaration when required 'const ErrorMgr_ptr errmgr = ERROR_MGR(NuSMVEnv_get_value(env, ENV_ERROR_MANAGER));'
+    *   replaced with 'ErrorMgr_error_game_definition_contains_input_vars(errmgr,' 
+    *   added declaration when required 'const ErrorMgr_ptr errmgr = ERROR_MGR(NuSMVEnv_get_value(env, ENV_ERROR_MANAGER));'
     *   added 'env' parameter for 'Compile_ProcessHierarchy'
     *   added 'nodemgr' parameter for 'PslNode_new_context'
     
 39.warning: comparison between pointer and integer 'sym_intern(env,((car(spec)) == 1 ?'
 
     *   added a cast with '(node_ptr)'
+    
+40.warning: implicit declaration of function ‘error_second_player_next_var’
 
+    *   replaced with 'ErrorMgr_error_second_player_next_var (errmgr,'
+    *   replaced 'error_second_player_var' with 'ErrorMgr_error_second_player_var(errmgr,'
+    *   added declaration when required 'const ErrorMgr_ptr errmgr = ERROR_MGR(NuSMVEnv_get_value(env, ENV_ERROR_MANAGER));'
+    
+    
 ================================================================================
 EOF
 ================================================================================

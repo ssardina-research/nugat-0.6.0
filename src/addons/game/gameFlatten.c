@@ -553,6 +553,8 @@ static void game_check_first_player_recur(NuSMVEnv_ptr env,
 {
   if (Nil == expr) return;
 
+  const ErrorMgr_ptr errmgr = ERROR_MGR(NuSMVEnv_get_value(env, ENV_ERROR_MANAGER));
+
   switch (node_get_type(expr)) {
   /* usual constant => return success */
   case FAILURE:
@@ -590,8 +592,8 @@ static void game_check_first_player_recur(NuSMVEnv_ptr env,
       else if (SymbTable_is_symbol_var(st, expr)) {
         /* it is a var => check it */
         if ((!allowCurrent || isInNext) && NodeList_belongs_to(vars, expr)) {
-          if (allowCurrent) error_second_player_next_var(expr);
-          else error_second_player_var(expr);
+          if (allowCurrent) ErrorMgr_error_second_player_next_var (errmgr,expr);
+          else ErrorMgr_error_second_player_var(errmgr,expr);
         }
       }
       else {
