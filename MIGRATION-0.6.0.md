@@ -43,6 +43,7 @@ Nitin Yadav - nitin.yadav@rmit.edu.au
     .4 "find_node" requires ... -> added 'nodemgr' parameter
     .5 "print_node" requires ... -> added 'wffprint' parameter
     .6 "free_node" requires ... -> added 'nodemgr' parameter
+    .7 "sprint_node" requires ... -> added 'wffprint' parameter
     
     *   added this lines before the usage 
     
@@ -130,7 +131,7 @@ Nitin Yadav - nitin.yadav@rmit.edu.au
            -added this lines in head of GameStrategy_print_module() 
                    
                    env = EnvObject_get_environment(ENV_OBJECT(st));
-                   const MasterPrinter_ptr wffprint = _PRINTER(NuSMVEnv_get_value(env, ENV_WFF_PRINTER));
+                   MasterPrinter_ptr wffprint = MASTER_PRINTER(NuSMVEnv_get_value(env, ENV_WFF_PRINTER));
    
    
         changed this functions in smgameMain.c
@@ -256,6 +257,10 @@ Nitin Yadav - nitin.yadav@rmit.edu.au
 28.warning: gamePkg.c: implicit declaration of function ‘get_text(’
 
         *   replaced with '(char*)UStringMgr_get_string_text('
+        
+        warning: cast to pointer from integer of different size
+        
+            *   removed '(char*)'
 
 29.warning: gamePkg.c: passing argument 1 of ‘Cmd_CommandDefined’ from incompatible pointer type
 
@@ -391,7 +396,7 @@ Nitin Yadav - nitin.yadav@rmit.edu.au
 
     *   added first parameter 'BoolEnc_ptr bool_enc = BOOL_ENC(NuSMVEnv_get_value(env, ENV_BOOL_ENCODER));'
 
-48.errors in gameXmlReader.c 
+48.errors and warnings in gameXmlReader.c 
     
     warning: implicit declaration of function ‘error_out_of_memory’
     
@@ -407,6 +412,32 @@ Nitin Yadav - nitin.yadav@rmit.edu.au
     *   added 'env; parameter for :
             'Parser_read_psl_from_string'
             'PslNode_convert_psl_to_core'
+            
+50. errors and warnings in gameUnrealCore.c
+
+    warning: passing argument 1 of ‘SymbType_create’ makes pointer from integer without a cast
+    
+        *   added 'env' parameter
+    
+    error: macro "find_atom" requires 2 arguments
+            
+        *   added 'nodemgr' parameter
+  
+    warning: 1880:43: passing argument 2 of ‘game_output_spec_without_params’ from incompatible pointer type
+        
+        *   removed 'const' from 'wffprint' declaration
+    
+    warning: passing argument 7 of ‘BddEnc_print_bdd_wff’ from incompatible pointer type
+    
+        *   add cast '(OStream_ptr) to 'nusmv_stdout' parameter
+        
+    warning: passing argument 8 of ‘game_minimize_players_constraints’ from incompatible pointer type
+    
+        *   add cast '(game_is_game_still_correct)' to 'game_is_opponent_constraint_minimal' parameter
+        
+        
+        
+   
     
 ================================================================================
 EOF

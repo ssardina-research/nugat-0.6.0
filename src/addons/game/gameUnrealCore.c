@@ -143,7 +143,7 @@ typedef boolean (*game_is_game_still_correct) (
                                                     GamePlayer playerToModify,
                                                     node_ptr property,
                                                     boolean realizable,
-                                                    bdd_ptr winningStates));
+                                                    bdd_ptr winningStates);
 
 /*---------------------------------------------------------------------------*/
 /* Structure declarations                                                    */
@@ -448,7 +448,7 @@ static void game_compute_core_using_parameters
 static void game_compute_core_switching_constraints
 (Game_UnrealizableCore_Struct_ptr self);
 
-static void game_output_spec_without_params(Game_UnrealizableCore_Struct_ptr self, FILE* out);
+static void game_output_spec_without_params(Game_UnrealizableCore_Struct_ptr self, MasterPrinter_ptr wffprint, FILE* out);
 
 /*---------------------------------------------------------------------------*/
 /* Definition of exported functions                                          */
@@ -1179,7 +1179,7 @@ static node_ptr game_create_new_param(Game_UnrealizableCore_Struct_ptr self,
   if (is_new_var) {
     nusmv_assert(SymbLayer_can_declare_var(self->layer, var));
 
-    SymbType_ptr symbolicType = SymbType_create(SYMB_TYPE_ENUM, boolean_range);
+    SymbType_ptr symbolicType = SymbType_create(env,SYMB_TYPE_ENUM, boolean_range);
 
     SymbLayer_declare_frozen_var(self->layer, var, symbolicType);
 
@@ -1239,7 +1239,7 @@ static void game_guard_exprs_by_parameters(Game_UnrealizableCore_Struct_ptr self
   for (iter = exprs; iter != Nil; iter = car(iter)) {
     node_ptr param, exp;
     nusmv_assert(AND == node_get_type(iter));
-    nusmv_assert(find_atom(iter) != iter); /* the list is not find_node'd */
+    nusmv_assert(find_atom(nodemgr,iter) != iter); /* the list is not find_node'd */
 
     exp = cdr(iter);
     param = game_create_new_param(self, exp, kind, player);
@@ -1356,7 +1356,7 @@ static void game_guard_gamespecs_by_parameters(
                                 param,
                                 cond,
                                 node_get_lineno(cond));
-          nusmv_assert(iter != find_atom(iter)); /* We are going to
+          nusmv_assert(iter != find_atom(nodemgr,iter)); /* We are going to
                                                     modify it. */
           setcar(iter, cond);
         }
@@ -1387,7 +1387,7 @@ static void game_guard_gamespecs_by_parameters(
                                   cond,
                                   node_get_lineno(cond));
             /* We are going to modify it. */
-            nusmv_assert(iter != find_atom(iter));
+            nusmv_assert(iter != find_atom(nodemgr,iter));
             setcar(iter, cond);
           }
         } /* for (iter) */
@@ -1584,7 +1584,7 @@ static void game_unguard_exprs_by_parameters(NodeMgr_ptr nodemgr,
     nusmv_assert(IMPLIES == node_get_type(tmp) &&
                  DOT == node_get_type(car(tmp)) &&
                  ATOM == node_get_type(cdr(car(tmp))) &&
-                 ' ' == get_text((string_ptr)car(cdr(car(tmp))))[0]);
+                 ' ' == UStringMgr_get_string_text((string_ptr)car(cdr(car(tmp))))[0]);
     rhs = cdr(tmp);
     setcdr(iter, rhs);
     free_node(nodemgr,tmp);
@@ -1641,7 +1641,7 @@ static void game_unguard_gamespecs_by_parameters(NodeMgr_ptr nodemgr,
                    node_get_type(tmp) == AND)) &&
                  node_get_type(car(tmp)) == DOT &&
                  node_get_type(cdr(car(tmp))) == ATOM &&
-                 get_text((string_ptr)car(cdr(car(tmp))))[0] == ' ');
+                 UStringMgr_get_string_text((string_ptr)car(cdr(car(tmp))))[0] == ' ');
     rhs = cdr(expcore);
     setcdr(exp, rhs);
     free_node(nodemgr,tmp);
@@ -1665,7 +1665,7 @@ static void game_unguard_gamespecs_by_parameters(NodeMgr_ptr nodemgr,
         nusmv_assert(IMPLIES == node_get_type(tmp) &&
                      DOT == node_get_type(car(tmp)) &&
                      ATOM == node_get_type(cdr(car(tmp))) &&
-                     ' ' == get_text((string_ptr)car(cdr(car(tmp))))[0]);
+                     ' ' == UStringMgr_get_string_text((string_ptr)car(cdr(car(tmp))))[0]);
         rhs = cdr(tmp);
         setcar(iter, rhs);
         free_node(nodemgr,tmp);
@@ -1687,7 +1687,7 @@ static void game_unguard_gamespecs_by_parameters(NodeMgr_ptr nodemgr,
           nusmv_assert(IMPLIES == node_get_type(tmp) &&
                        DOT == node_get_type(car(tmp)) &&
                        ATOM == node_get_type(cdr(car(tmp))) &&
-                       ' ' == get_text((string_ptr)car(cdr(car(tmp))))[0]);
+                       ' ' == UStringMgr_get_string_text((string_ptr)car(cdr(car(tmp))))[0]);
           rhs = cdr(tmp);
           setcar(iter, rhs);
           free_node(nodemgr,tmp);
@@ -1702,7 +1702,7 @@ static void game_unguard_gamespecs_by_parameters(NodeMgr_ptr nodemgr,
           nusmv_assert(IMPLIES == node_get_type(tmp) &&
                        DOT == node_get_type(car(tmp)) &&
                        ATOM == node_get_type(cdr(car(tmp))) &&
-                       ' ' == get_text((string_ptr)car(cdr(car(tmp))))[0]);
+                       ' ' == UStringMgr_get_string_text((string_ptr)car(cdr(car(tmp))))[0]);
           rhs = cdr(tmp);
           setcar(iter, rhs);
           free_node(nodemgr,tmp);
@@ -1849,7 +1849,7 @@ void game_process_unrealizable_core_with_params(
   boolean is_realizable;
 
     const NuSMVEnv_ptr env = EnvObject_get_environment(ENV_OBJECT(self));
-    const MasterPrinter_ptr wffprint = MASTER_PRINTER(NuSMVEnv_get_value(env, ENV_WFF_PRINTER));
+    MasterPrinter_ptr wffprint = MASTER_PRINTER(NuSMVEnv_get_value(env, ENV_WFF_PRINTER));
 
   nusmv_assert(PropGame_PropGame_Type_First < Prop_get_type(PROP(self->prop)) &&
                PropGame_PropGame_Type_Last > Prop_get_type(PROP(self->prop)));
@@ -2055,7 +2055,7 @@ void game_process_unrealizable_core_with_params(
                            false,
                            false,
                            0,
-                           nusmv_stdout);
+                           (OStream_ptr)nusmv_stdout);
       fprintf(nusmv_stderr,
               "\ngame_process_unrealizable_core_with_params: end set of "
               "cores\n");
@@ -2277,7 +2277,7 @@ static void game_output_spec_without_params(
       nusmv_assert(IMPLIES == node_get_type(exp) &&
                    DOT == node_get_type(car(exp)) &&
                    ATOM == node_get_type(cdr(car(exp))) &&
-                   ' ' == get_text((string_ptr)car(cdr(car(exp))))[0]);
+                   ' ' == UStringMgr_get_string_text((string_ptr)car(cdr(car(exp))))[0]);
       /* act.var was introduced if
          exp is implication with act.var as left child */
       print_node(wffprint,out, cdr(exp)); /* remove the parameter */
@@ -2286,7 +2286,7 @@ static void game_output_spec_without_params(
       nusmv_assert(IMPLIES != node_get_type(exp) ||
                    DOT != node_get_type(car(exp)) ||
                    ATOM != node_get_type(cdr(car(exp))) ||
-                   ' ' != get_text((string_ptr)car(cdr(car(exp))))[0]);
+                   ' ' != UStringMgr_get_string_text((string_ptr)car(cdr(car(exp))))[0]);
       print_node(wffprint,out, exp);
     }
     break;
@@ -2300,7 +2300,7 @@ static void game_output_spec_without_params(
       nusmv_assert(AND == node_get_type(exp) &&
                    DOT == node_get_type(car(exp)) &&
                    ATOM == node_get_type(cdr(car(exp))) &&
-                   ' ' == get_text((string_ptr)car(cdr(car(exp))))[0]);
+                   ' ' == UStringMgr_get_string_text((string_ptr)car(cdr(car(exp))))[0]);
       /* act.var was introduced if exp is
          conjunct with parameter as left child */
       print_node(wffprint,out, cdr(exp)); /* remove the parameter */
@@ -2309,7 +2309,7 @@ static void game_output_spec_without_params(
       nusmv_assert(AND != node_get_type(exp) ||
                    DOT != node_get_type(car(exp)) ||
                    ATOM != node_get_type(cdr(car(exp))) ||
-                   ' ' != get_text((string_ptr)car(cdr(car(exp))))[0]);
+                   ' ' != UStringMgr_get_string_text((string_ptr)car(cdr(car(exp))))[0]);
       print_node(wffprint,out, exp);
     }
     break;
@@ -2332,7 +2332,7 @@ static void game_output_spec_without_params(
         nusmv_assert(IMPLIES == node_get_type(cond) &&
                      DOT == node_get_type(car(cond)) &&
                      ATOM == node_get_type(cdr(car(cond))) &&
-                     ' ' == get_text((string_ptr)car(cdr(car(cond))))[0]);
+                     ' ' == UStringMgr_get_string_text((string_ptr)car(cdr(car(cond))))[0]);
         /* act.var was introduced if exp is
            an implication with parameter as left child */
         print_node(wffprint,out, cdr(cond)); /* remove the parameter */
@@ -2341,7 +2341,7 @@ static void game_output_spec_without_params(
         nusmv_assert(IMPLIES != node_get_type(cond) ||
                      DOT != node_get_type(car(cond)) ||
                      ATOM != node_get_type(cdr(car(cond))) ||
-                     ' ' != get_text((string_ptr)car(cdr(car(cond))))[0]);
+                     ' ' != UStringMgr_get_string_text((string_ptr)car(cdr(car(cond))))[0]);
         print_node(wffprint,out, cond);
       }
 
@@ -2365,7 +2365,7 @@ static void game_output_spec_without_params(
         nusmv_assert(IMPLIES == node_get_type(cond) &&
                      DOT == node_get_type(car(cond)) &&
                      ATOM == node_get_type(cdr(car(cond))) &&
-                     ' ' == get_text((string_ptr)car(cdr(car(cond))))[0]);
+                     ' ' == UStringMgr_get_string_text((string_ptr)car(cdr(car(cond))))[0]);
         /* act.var was introduced if exp is
            an implication with parameter as left child */
         print_node(wffprint,out, cdr(cond)); /* remove the parameter */
@@ -2374,7 +2374,7 @@ static void game_output_spec_without_params(
         nusmv_assert(IMPLIES != node_get_type(cond) ||
                      DOT != node_get_type(car(cond)) ||
                      ATOM != node_get_type(cdr(car(cond))) ||
-                     ' ' != get_text((string_ptr)car(cdr(car(cond))))[0]);
+                     ' ' != UStringMgr_get_string_text((string_ptr)car(cdr(car(cond))))[0]);
         print_node(wffprint,out, cond);
       }
       if (cdr(iter)) fprintf(out, ", ");
@@ -2391,7 +2391,7 @@ static void game_output_spec_without_params(
         nusmv_assert(IMPLIES == node_get_type(cond) &&
                      DOT == node_get_type(car(cond)) &&
                      ATOM == node_get_type(cdr(car(cond))) &&
-                     ' ' == get_text((string_ptr)car(cdr(car(cond))))[0]);
+                     ' ' == UStringMgr_get_string_text((string_ptr)car(cdr(car(cond))))[0]);
         /* act.var was introduced if exp is
            an implication with parameter as left child */
         print_node(wffprint,out, cdr(cond)); /* remove the parameter */
@@ -2400,7 +2400,7 @@ static void game_output_spec_without_params(
         nusmv_assert(IMPLIES != node_get_type(cond) ||
                      DOT != node_get_type(car(cond)) ||
                      ATOM != node_get_type(cdr(car(cond))) ||
-                     ' ' != get_text((string_ptr)car(cdr(car(cond))))[0]);
+                     ' ' != UStringMgr_get_string_text((string_ptr)car(cdr(car(cond))))[0]);
         print_node(wffprint,out, cond);
       }
       if (cdr(iter)) fprintf(out, ", ");
@@ -2699,7 +2699,7 @@ static boolean game_minimize_players_constraints(
 
       for (iter = constraints[i]; iter != Nil; iter = function[i].next(iter)) {
 
-        nusmv_assert(iter != find_atom(iter)); /* it cannot be mem-shared */
+        nusmv_assert(iter != find_atom(nodemgr,iter)); /* it cannot be mem-shared */
         node_ptr exp = function[i].elmnt(iter);
         /* if expression is a memory-shared true-constant => it means it
            was already processed => just skip it.
@@ -3157,7 +3157,7 @@ static void game_compute_core_switching_constraints(
                                       realizable,
                                       winningStates,
                                       false,
-                                      game_is_opponent_constraint_minimal);
+                                      (game_is_game_still_correct)game_is_opponent_constraint_minimal);
   }
   bdd_free(self->dd_manager, winningStates);
   game_free_game_fsms(fsm);

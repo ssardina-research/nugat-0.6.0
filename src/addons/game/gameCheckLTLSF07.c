@@ -313,7 +313,8 @@ EXTERN FILE* nusmv_stderr;
 
 static Game_SF07_StructCheckLTLGameSF07_ptr
 Game_SF07_StructCheckLTLGameSF07_create
-ARGS((PropGame_ptr prop,
+ARGS((NuSMVEnv_ptr env,
+      PropGame_ptr prop,
       gameParams_ptr params,
       unsigned int kmin,
       unsigned int kmax,
@@ -357,7 +358,7 @@ Game_SF07_StructCheckLTLGameSF07_construct_monitor_trans_statements
 ARGS((Game_SF07_StructCheckLTLGameSF07_ptr self));
 
 static void Game_SF07_StructCheckLTLGameSF07_construct_monitor_game_bdd_fsm
-ARGS((Game_SF07_StructCheckLTLGameSF07_ptr self));
+ARGS((NuSMVEnv_ptr env,Game_SF07_StructCheckLTLGameSF07_ptr self));
 
 static void Game_SF07_StructCheckLTLGameSF07_construct_product_game_bdd_fsm
 ARGS((Game_SF07_StructCheckLTLGameSF07_ptr self));
@@ -958,7 +959,7 @@ static void Game_SF07_StructCheckLTLGameSF07_construct_ba
     /**NEW_CODE_END**/
     if (NodeList_get_length(/*SymbLayer_get_all_symbols(det_layer)*/syms) != 0) {
       char* tmp;
-      tmp = sprint_node(NODE_MGR,formula);
+      tmp = sprint_node(wffprint,formula);
       fprintf(nusmv_stderr,
               "Error generating B\"uchi automaton for formula %s: "
               "booleanization introduced determinization variables.\n",
@@ -987,7 +988,7 @@ static void Game_SF07_StructCheckLTLGameSF07_construct_ba
   ba = Game_SF07_gba_wring_ltl2gba(nnfed);
   if (ba == GAME_SF07_GBA(NULL)) {
     char* tmp;
-    tmp = sprint_node(NODE_MGR,formula);
+    tmp = sprint_node(wffprint,formula);
     fprintf(nusmv_stderr,
             "Error generating B\"uchi automaton for formula %s.\n",
             tmp);
@@ -996,7 +997,7 @@ static void Game_SF07_StructCheckLTLGameSF07_construct_ba
   }
   if (Game_SF07_gba_get_fairness_constraints_count(ba) > 1) {
     char* tmp;
-    tmp = sprint_node(NODE_MGR,formula);
+    tmp = sprint_node(wffprint,formula);
     fprintf(nusmv_stderr,
             "Error generating B\"uchi automaton for formula %s: result has "
             "more than 1 fairness constraints.\n",
@@ -2227,7 +2228,7 @@ static void Game_SF07_StructCheckLTLGameSF07_print_monitor
     nusmv_assert(Nil == cdr(car(module)));
     fprintf(ostream,
             "MODULE %s\n",
-            get_text((string_ptr)car(car(car(module)))));
+            (char*)UStringMgr_get_string_text((string_ptr)car(car(car(module)))));
     iter = cdr(module);
   } else {
     iter = module;
@@ -2252,7 +2253,7 @@ static void Game_SF07_StructCheckLTLGameSF07_print_monitor
 
             fprintf(ostream,
                     "  %s : ",
-                    get_text((string_ptr)car(car(car(var)))));
+                    (char*)UStringMgr_get_string_text((string_ptr)car(car(car(var)))));
             print_node(wffprint,ostream, car(cdr(car(var))));
             fprintf(ostream, "..");
             print_node(wffprint,ostream, cdr(cdr(car(var))));

@@ -274,16 +274,16 @@ static void game_sf07_gba_wring_clear_po_s
 ARGS((Game_SF07_gba_wring_ptr self));
 
 static void game_sf07_gba_wring_write_input_file_rec
-ARGS((Game_SF07_gba_wring_ptr self, node_ptr curr));
+ARGS((NuSMVEnv_ptr env,Game_SF07_gba_wring_ptr self, node_ptr curr));
 
 static void game_sf07_gba_wring_wif_rec_un_op
-ARGS((Game_SF07_gba_wring_ptr self, char* op, node_ptr car));
+ARGS((NuSMVEnv_ptr env,Game_SF07_gba_wring_ptr self, char* op, node_ptr car));
 
 static void game_sf07_gba_wring_wif_rec_bin_op
-ARGS((Game_SF07_gba_wring_ptr self, char* op, node_ptr car, node_ptr cdr));
+ARGS((NuSMVEnv_ptr env,Game_SF07_gba_wring_ptr self, char* op, node_ptr car, node_ptr cdr));
 
 static void game_sf07_gba_wring_wif_rec_nodeptr
-ARGS((Game_SF07_gba_wring_ptr self, node_ptr node, boolean delimiters));
+ARGS((NuSMVEnv_ptr env,Game_SF07_gba_wring_ptr self, node_ptr node, boolean delimiters));
 
 static void game_sf07_gba_wring_wif_rec_nodeptr_type
 ARGS((Game_SF07_gba_wring_ptr self, short int type));
@@ -692,15 +692,14 @@ void Game_SF07_gba_wring_write_input_file(Game_SF07_gba_wring_ptr self)
   nusmv_assert(self->input_file_name != (char*) NULL);
   nusmv_assert(self->gba == GAME_SF07_GBA(NULL));
 
-  NuSMVEnv_ptr const env = EnvObject_get_environment(ENV_OBJECT(self->gba));
-  ErrorMgr_ptr const errmgr =
-            ERROR_MGR(NuSMVEnv_get_value(env, ENV_ERROR_MANAGER));
+  const NuSMVEnv_ptr env = EnvObject_get_environment(ENV_OBJECT(self->gba));
+  const ErrorMgr_ptr errmgr = ERROR_MGR(NuSMVEnv_get_value(env, ENV_ERROR_MANAGER));
 
   /* Write translated formula into self->iw_s. */
   game_sf07_gba_wring_ensure_size_iw_s(self,
                                    GAME_SF07_GBA_WRING_MIN_SIZE_STRING_BUFFERS);
   self->iw_s[0] = '\0';
-  game_sf07_gba_wring_write_input_file_rec(self, self->formula);
+  game_sf07_gba_wring_write_input_file_rec(env,self, self->formula);
   game_sf07_gba_wring_ensure_size_iw_s(self, strlen(self->iw_s) + 2);
   strcat(self->iw_s, ";");
 
@@ -1771,7 +1770,7 @@ static void game_sf07_gba_wring_clear_po_s(Game_SF07_gba_wring_ptr self)
 
 ******************************************************************************/
 static void
-game_sf07_gba_wring_write_input_file_rec(Game_SF07_gba_wring_ptr self,
+game_sf07_gba_wring_write_input_file_rec(NuSMVEnv_ptr env,Game_SF07_gba_wring_ptr self,
                                          node_ptr curr)
 {
   int type;
@@ -1802,35 +1801,35 @@ game_sf07_gba_wring_write_input_file_rec(Game_SF07_gba_wring_ptr self,
                  (type == BIT) ||
                  (type == DOT) ||
                  (type == NUMBER && cdr(curr) == Nil));
-    game_sf07_gba_wring_wif_rec_nodeptr(self, curr, false);
+    game_sf07_gba_wring_wif_rec_nodeptr(env,self, curr, false);
     game_sf07_gba_wring_ensure_size_iw_s(self, strlen(self->iw_s) + 3);
     strcat(self->iw_s, "=1");
     break;
     /* Boolean operators. */
   case NOT:
-    game_sf07_gba_wring_wif_rec_un_op(self, "!", car(curr));
+    game_sf07_gba_wring_wif_rec_un_op(env,self, "!", car(curr));
     break;
   case OR:
-    game_sf07_gba_wring_wif_rec_bin_op(self, "+", car(curr), cdr(curr));
+    game_sf07_gba_wring_wif_rec_bin_op(env,self, "+", car(curr), cdr(curr));
     break;
   case AND:
-    game_sf07_gba_wring_wif_rec_bin_op(self, "*", car(curr), cdr(curr));
+    game_sf07_gba_wring_wif_rec_bin_op(env,self, "*", car(curr), cdr(curr));
     break;
     /* Temporal operators. */
   case OP_NEXT:
-    game_sf07_gba_wring_wif_rec_un_op(self, "X", car(curr));
+    game_sf07_gba_wring_wif_rec_un_op(env,self, "X", car(curr));
     break;
   case OP_FUTURE:
-    game_sf07_gba_wring_wif_rec_un_op(self, "F", car(curr));
+    game_sf07_gba_wring_wif_rec_un_op(env,self, "F", car(curr));
     break;
   case OP_GLOBAL:
-    game_sf07_gba_wring_wif_rec_un_op(self, "G", car(curr));
+    game_sf07_gba_wring_wif_rec_un_op(env,self, "G", car(curr));
     break;
   case UNTIL:
-    game_sf07_gba_wring_wif_rec_bin_op(self, "U", car(curr), cdr(curr));
+    game_sf07_gba_wring_wif_rec_bin_op(env,self, "U", car(curr), cdr(curr));
     break;
   case RELEASES:
-    game_sf07_gba_wring_wif_rec_bin_op(self, "R", car(curr), cdr(curr));
+    game_sf07_gba_wring_wif_rec_bin_op(env,self, "R", car(curr), cdr(curr));
     break;
   default:
     fprintf(nusmv_stderr,
@@ -1854,7 +1853,8 @@ game_sf07_gba_wring_write_input_file_rec(Game_SF07_gba_wring_ptr self,
   SeeAlso     [ ]
 
 ******************************************************************************/
-static void game_sf07_gba_wring_wif_rec_un_op(Game_SF07_gba_wring_ptr self,
+static void game_sf07_gba_wring_wif_rec_un_op(NuSMVEnv_ptr env,
+                                              Game_SF07_gba_wring_ptr self,
                                               char* op,
                                               node_ptr car)
 {
@@ -1866,7 +1866,7 @@ static void game_sf07_gba_wring_wif_rec_un_op(Game_SF07_gba_wring_ptr self,
                                        strlen(self->iw_s) + 2 + strlen(op));
   strcat(self->iw_s, op);
   strcat(self->iw_s, "(");
-  game_sf07_gba_wring_write_input_file_rec(self, car);
+  game_sf07_gba_wring_write_input_file_rec(env,self, car);
   game_sf07_gba_wring_ensure_size_iw_s(self, strlen(self->iw_s) + 2);
   strcat(self->iw_s, ")");
 }
@@ -1883,7 +1883,8 @@ static void game_sf07_gba_wring_wif_rec_un_op(Game_SF07_gba_wring_ptr self,
   SeeAlso     [ ]
 
 ******************************************************************************/
-static void game_sf07_gba_wring_wif_rec_bin_op(Game_SF07_gba_wring_ptr self,
+static void game_sf07_gba_wring_wif_rec_bin_op(NuSMVEnv_ptr env,
+                                               Game_SF07_gba_wring_ptr self,
                                                char* op,
                                                node_ptr car,
                                                node_ptr cdr)
@@ -1895,13 +1896,13 @@ static void game_sf07_gba_wring_wif_rec_bin_op(Game_SF07_gba_wring_ptr self,
 
   game_sf07_gba_wring_ensure_size_iw_s(self, strlen(self->iw_s) + 2);
   strcat(self->iw_s, "(");
-  game_sf07_gba_wring_write_input_file_rec(self, car);
+  game_sf07_gba_wring_write_input_file_rec(env,self, car);
   game_sf07_gba_wring_ensure_size_iw_s(self,
                                        strlen(self->iw_s) + 3 + strlen(op));
   strcat(self->iw_s, ")");
   strcat(self->iw_s, op);
   strcat(self->iw_s, "(");
-  game_sf07_gba_wring_write_input_file_rec(self, cdr);
+  game_sf07_gba_wring_write_input_file_rec(env,self, cdr);
   game_sf07_gba_wring_ensure_size_iw_s(self,
                                        strlen(self->iw_s) + 2);
   strcat(self->iw_s, ")");
@@ -1931,10 +1932,14 @@ static void game_sf07_gba_wring_wif_rec_bin_op(Game_SF07_gba_wring_ptr self,
   SeeAlso     [ game_sf07_gba_wring_varnamestring2nodeptr ]
 
 ******************************************************************************/
-static void game_sf07_gba_wring_wif_rec_nodeptr(Game_SF07_gba_wring_ptr self,
+static void game_sf07_gba_wring_wif_rec_nodeptr(NuSMVEnv_ptr env,
+                                                Game_SF07_gba_wring_ptr self,
                                                 node_ptr node,
                                                 boolean delimiters)
 {
+
+    MasterPrinter_ptr wffprint = MASTER_PRINTER(NuSMVEnv_get_value(env, ENV_WFF_PRINTER));
+
   GAME_SF07_GBA_WRING_CHECK_INSTANCE(self);
 
   if (delimiters) {
@@ -1962,16 +1967,16 @@ static void game_sf07_gba_wring_wif_rec_nodeptr(Game_SF07_gba_wring_ptr self,
     case ARRAY:
     case DOT:
       /* Write car. */
-      game_sf07_gba_wring_wif_rec_nodeptr(self, car(node), true);
+      game_sf07_gba_wring_wif_rec_nodeptr(env,self, car(node), true);
       /* Write cdr. */
-      game_sf07_gba_wring_wif_rec_nodeptr(self, cdr(node), true);
+      game_sf07_gba_wring_wif_rec_nodeptr(env,self, cdr(node), true);
       break;
     case ATOM:
       /* Write car. */
       {
         char* tmp;
 
-        tmp = sprint_node(node);
+        tmp = sprint_node(wffprint,node);
         nusmv_assert(tmp != (char*) NULL);
 
         game_sf07_gba_wring_ensure_size_iw_s(self, strlen(self->iw_s) + 3);
@@ -1984,11 +1989,11 @@ static void game_sf07_gba_wring_wif_rec_nodeptr(Game_SF07_gba_wring_ptr self,
       }
       /* Write cdr. */
       nusmv_assert(cdr(node) == Nil);
-      game_sf07_gba_wring_wif_rec_nodeptr(self, cdr(node), true);
+      game_sf07_gba_wring_wif_rec_nodeptr(env,self, cdr(node), true);
       break;
     case BIT:
       /* Write car. */
-      game_sf07_gba_wring_wif_rec_nodeptr(self, car(node), true);
+      game_sf07_gba_wring_wif_rec_nodeptr(env,self, car(node), true);
       /* Write cdr. */
       {
         char* tmp;
@@ -2031,7 +2036,7 @@ static void game_sf07_gba_wring_wif_rec_nodeptr(Game_SF07_gba_wring_ptr self,
       }
       /* Write cdr. */
       nusmv_assert(cdr(node) == Nil);
-      game_sf07_gba_wring_wif_rec_nodeptr(self, cdr(node), true);
+      game_sf07_gba_wring_wif_rec_nodeptr(env,self, cdr(node), true);
       break;
     default:
       nusmv_assert(false);

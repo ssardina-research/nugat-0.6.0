@@ -153,7 +153,7 @@ EXTERN int yylineno;
 /*---------------------------------------------------------------------------*/
 static node_ptr game_and_exp ARGS((NodeMgr_ptr nodemgr, node_ptr exp1, node_ptr exp2));
 
-static void game_fill_in_var_hash_table ARGS((node_ptr inVarList,
+static void game_fill_in_var_hash_table ARGS((NodeMgr_ptr nodemgr,node_ptr inVarList,
                                               node_ptr outVarList));
 
 static node_ptr game_create_unique_name ARGS((NuSMVEnv_ptr env));
@@ -261,7 +261,7 @@ boolean Game_PropertyToGame(NuSMVEnv_ptr env,
   nameToType = new_assoc();
   expToKind = new_assoc();
 
-  game_fill_in_var_hash_table(*inputVars, *outputVars);
+  game_fill_in_var_hash_table(nodemgr,*inputVars, *outputVars);
 
   /* Store inputVars, outputVars. */
   inputVars_orig = *inputVars;
@@ -521,18 +521,18 @@ static node_ptr game_and_exp(NodeMgr_ptr nodemgr, node_ptr exp1, node_ptr exp2)
   SeeAlso     [ ]
 
 ******************************************************************************/
-static void game_fill_in_var_hash_table(node_ptr inVarList, node_ptr outVarList)
+static void game_fill_in_var_hash_table(NodeMgr_ptr nodemgr,node_ptr inVarList, node_ptr outVarList)
 {
   node_ptr iter;
 
   for (iter = inVarList; iter != Nil; iter = cdr(iter)) {
     nusmv_assert(CONS == node_get_type(iter)); /* this is a list */
-    insert_assoc(nameToType, find_atom(0,car(car(iter))), cdr(car(iter)));
+    insert_assoc(nameToType, find_atom(nodemgr,car(car(iter))), cdr(car(iter)));
   }
 
   for (iter = outVarList; iter != Nil; iter = cdr(iter)) {
     nusmv_assert(CONS == node_get_type(iter)); /* this is a list */
-    insert_assoc(nameToType, find_atom(0,car(car(iter))), cdr(car(iter)));
+    insert_assoc(nameToType, find_atom(nodemgr,car(car(iter))), cdr(car(iter)));
   }
 }
 

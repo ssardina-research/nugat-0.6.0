@@ -162,7 +162,7 @@ void Smgame_BatchMain()
 
     /* build_boolean_model may have been already called if the output
        boolean model was specified in the argument list. */
-    if (Compile_check_if_bool_model_was_built(NULL, false)) {
+    if (Compile_check_if_bool_model_was_built(env,NULL, false)) {
       if (Cmd_CommandExecute("build_boolean_model")) ErrorMgr_nusmv_exit(errmgr,1);
     }
 
@@ -370,7 +370,7 @@ void Smgame_BatchMain()
       prop = PropDb_get_prop_at_index(PROP_DB(NuSMVEnv_get_value(env, ENV_PROP_DB)),
                                       get_prop_no(oh));
       if (Prop_get_type(prop) == PropGame_LtlGame) {
-        if (Compile_check_if_bool_model_was_built(NULL, false)) {
+        if (Compile_check_if_bool_model_was_built(env,NULL, false)) {
           if (Cmd_CommandExecute("build_boolean_model")) ErrorMgr_nusmv_exit(errmgr,1);
         }
       }
@@ -426,7 +426,7 @@ void Smgame_BatchMain()
       tmp = PropDb_get_props_of_type(PROP_DB(NuSMVEnv_get_value(env, ENV_PROP_DB)),
                                      PropGame_LtlGame);
       if (lsLength(tmp) > 0) {
-        if (Compile_check_if_bool_model_was_built(NULL, false)) {
+        if (Compile_check_if_bool_model_was_built(env,NULL, false)) {
           if (Cmd_CommandExecute("build_boolean_model")) ErrorMgr_nusmv_exit(errmgr,1);
         }
       }

@@ -459,7 +459,7 @@ static void game_declare_special_var(NuSMVEnv_ptr env,
   /* Create a list of values. */
   values = CompileFlatten_expand_range(0,0, guaranteeNumber - 1);
   /* We don't declare constants here since there are just numbers. */
-  symbolicType = SymbType_create(0,SYMB_TYPE_ENUM, values);
+  symbolicType = SymbType_create(env,SYMB_TYPE_ENUM, values);
   SymbLayer_declare_state_var(layer, var, symbolicType);
 
   /* Commit the layer to all encodings. */
