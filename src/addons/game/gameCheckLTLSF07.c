@@ -2083,7 +2083,7 @@ static void Game_SF07_StructCheckLTLGameSF07_check
 
   /* Construct property. */
   expr = find_node(nodemgr,GAME_SPEC_WRAPPER,
-                   sym_intern(PTR_TO_INT(car(self->curr_goal)) == 1 ?
+                   sym_intern(env,PTR_TO_INT(car(self->curr_goal)) == 1 ?
                               PLAYER_NAME_1 :
                               PLAYER_NAME_2),
                    cdr(self->curr_goal));

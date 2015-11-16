@@ -1173,7 +1173,7 @@ static node_ptr game_create_new_param(Game_UnrealizableCore_Struct_ptr self,
            game_unrealizable_core_unique_num,
            *uniqueNum);
 
-  node_ptr var = find_node(nodemgr,DOT, Nil, sym_intern(name));
+  node_ptr var = find_node(nodemgr,DOT, Nil, sym_intern(env,name));
 
   if (is_new_var) {
     nusmv_assert(SymbLayer_can_declare_var(self->layer, var));

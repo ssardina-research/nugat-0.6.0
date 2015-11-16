@@ -183,9 +183,9 @@ int Game_CommandFlattenHierarchy(NuSMVEnv_ptr env)
   */
   mainGameHierarchy = game_flatten_game_hierarchy(st,
                                                   model_layer_1,
-                                                  sym_intern(PLAYER_NAME_1),
+                                                  sym_intern(env,PLAYER_NAME_1),
                                                   model_layer_2,
-                                                  sym_intern(PLAYER_NAME_2));
+                                                  sym_intern(env,PLAYER_NAME_2));
 
   /* We store properties in the DB of properties */
   nusmv_assert(GameHierarchy_get_ctlspec(mainGameHierarchy) == Nil &&
@@ -287,6 +287,7 @@ game_flatten_game_hierarchy(SymbTable_ptr symbol_table,
   node_ptr buchigame = Nil;
   node_ptr ltlgame = Nil;
   node_ptr genreactivity = Nil;
+  boolean expand_bounded_arrays = false;
 
   const NuSMVEnv_ptr env = EnvObject_get_environment(ENV_OBJECT(symbol_table));
   const NodeMgr_ptr nodemgr = NODE_MGR(NuSMVEnv_get_value(env, ENV_NODE_MGR));
@@ -297,23 +298,27 @@ game_flatten_game_hierarchy(SymbTable_ptr symbol_table,
 
   /* Collect all the constructs of a hierarchy (instance name is
      Nil). */
-  Compile_ConstructHierarchy(symbol_table,
+  Compile_ConstructHierarchy(env,
+                             symbol_table,
                              model_layer_1,
                              module_1,
                              Nil,
                              Nil,
                              player_1,
                              HRC_NODE(NULL),
-                             instances);
+                             instances,
+                             expand_bounded_arrays);
 
-  Compile_ConstructHierarchy(symbol_table,
+  Compile_ConstructHierarchy(env,
+                             symbol_table,
                              model_layer_2,
                              module_2,
                              Nil,
                              Nil,
                              player_2,
                              HRC_NODE(NULL),
-                             instances);
+                             instances,
+                             expand_bounded_arrays);
 
   free_assoc(instances);
 
@@ -410,7 +415,7 @@ game_flatten_game_hierarchy(SymbTable_ptr symbol_table,
     */
     if (list != (node_ptr*) NULL) {
       spec = find_node(nodemgr,GAME_SPEC_WRAPPER,
-                       sym_intern(0,((car(spec)) == 1 ?
+                       sym_intern(env,((car(spec)) == 1 ?
                                    PLAYER_NAME_1 :
                                    PLAYER_NAME_2)),
                        cdr(spec));

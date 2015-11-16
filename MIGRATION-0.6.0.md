@@ -316,9 +316,15 @@ Nitin Yadav - nitin.yadav@rmit.edu.au
             'Game_UnrealizableCore_Struct_create'
             'Game_CheckGameSpecAndComputeCores'
             
-35.error: gameFlatten.c: too few arguments to function ‘CompileFlatten_init_flattener’
+35.error: gameFlatten.c: too few arguments to function ‘CompileFlatten_init_flattener’ &&
+   warning: passing argument 1 of ‘sym_intern’ from incompatible pointer type
+   warning: passing argument 1 of ‘Compile_ConstructHierarchy’ from incompatible pointer type
 
     *   added 'env' parameter
+    
+36.warning: passing argument 1 of ‘Compile_ConstructHierarchy’ from incompatible pointer type [ TODO : CHECK IF IT IS CORRECT ]
+
+    *   added parameter 'boolean expand_bounded_arrays = false;'    
 
 ================================================================================
 EOF
