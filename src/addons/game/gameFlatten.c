@@ -153,7 +153,7 @@ int Game_CommandFlattenHierarchy(NuSMVEnv_ptr env)
 
   /* Initializes the flattener, that must be initialized *after* the
      parsing phase. */
-  CompileFlatten_init_flattener();
+  CompileFlatten_init_flattener(env);
 
   /* Processing of the parse tree and constructions of all the
      expressions for the state machine(s). Here the expansions are

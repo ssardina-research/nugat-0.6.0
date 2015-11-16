@@ -305,7 +305,6 @@ Nitin Yadav - nitin.yadav@rmit.edu.au
             
 34.warning: gameFlatten.c: implicit declaration of function ‘Compile_get_global_symb_table’
 
-
     *   replaced with 'SYMB_TABLE(NuSMVEnv_get_value(env, ENV_SYMB_TABLE))'
     *   added 'env' parameter for :
             'game_declare_special_var'
@@ -316,7 +315,10 @@ Nitin Yadav - nitin.yadav@rmit.edu.au
             'game_check_first_player'
             'Game_UnrealizableCore_Struct_create'
             'Game_CheckGameSpecAndComputeCores'
+            
+35.error: gameFlatten.c: too few arguments to function ‘CompileFlatten_init_flattener’
 
+    *   added 'env' parameter
 
 ================================================================================
 EOF
