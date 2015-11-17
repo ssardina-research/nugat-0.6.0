@@ -314,7 +314,7 @@ static void game_pkg_switch_to_prop_db_game(NuSMVEnv_ptr env)
   if (db != PROP_DB(NULL)) {
     PropDb_destroy(db);
   }
-  dbg = PropDbGame_create();
+  dbg = PropDbGame_create(env);
   NuSMVEnv_set_value(env, ENV_PROP_DB,PROP_DB(dbg));
 }
 

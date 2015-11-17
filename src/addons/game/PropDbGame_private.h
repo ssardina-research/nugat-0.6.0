@@ -86,15 +86,14 @@ typedef struct PropDbGame_TAG
 /* ---------------------------------------------------------------------- */
 /* Private methods to be used by derivated and friend classes only         */
 /* ---------------------------------------------------------------------- */
-EXTERN void prop_db_game_init ARGS((PropDbGame_ptr self));
+EXTERN void prop_db_game_init ARGS((PropDbGame_ptr self,const NuSMVEnv_ptr env));
 EXTERN void prop_db_game_deinit ARGS((PropDbGame_ptr self));
 
-int prop_db_game_prop_create_and_add(const NuSMVEnv_ptr env,
-                                     PropDbGame_ptr self,
+int prop_db_game_prop_create_and_add(PropDbGame_ptr self,
                                      SymbTable_ptr symb_table,
                                      node_ptr spec,
                                      PropGame_Type type);
-void prop_db_game_set_fsm_to_master(PropDbGame_ptr self, PropGame_ptr prop);
+void prop_db_game_set_fsm_to_master(const NuSMVEnv_ptr env,PropDbGame_ptr self, PropGame_ptr prop);
 void prop_db_game_verify_all(const PropDbGame_ptr self);
 
 #endif /* __PROP_DB_GAME_PRIVATE_H__ */
