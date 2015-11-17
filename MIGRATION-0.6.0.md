@@ -498,6 +498,24 @@ Nitin Yadav - nitin.yadav@rmit.edu.au
 
         *   removed line because 'util.h' is not present
         
+56.smgameMisc.c
+
+    warning: implicit declaration of function ‘util_resetlongjmp()’
+    
+        *   replaced with 'ErrorMgr_reset_long_jmp(errmgr)'
+        
+    warning: passing argument 1 of ‘Cmd_CommandExecute’ from incompatible pointer type
+    
+        *   added 'env' parameter
+        
+    warning: implicit declaration of function ‘PropDb_master_get_bdd_fsm’ [ TODO : CHECK IF CORRECT ]
+    
+        *   replaced with 'Prop_get_bdd_fsm' (line 478 miss round bracket ) and changed 'PROB_DB' in 'PROB'
+        
+    warning: passing argument 5 of ‘BddFsm_print_reachable_states_info’ from incompatible pointer type
+    
+        *   add cast for 'nusmv_stdout' with 'OSTREAM(nusmv_stdout)'
+        
 ================================================================================
 EOF
 ================================================================================
