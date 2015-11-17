@@ -1309,6 +1309,7 @@ static int game_sf07_gba_wring_get_next_line(Game_SF07_gba_wring_ptr self)
   boolean done;
   boolean first;
   unsigned int len;
+  char *fgetsResult;
 
   GAME_SF07_GBA_WRING_CHECK_INSTANCE(self);
 
@@ -1327,7 +1328,7 @@ static int game_sf07_gba_wring_get_next_line(Game_SF07_gba_wring_ptr self)
   done = false;
   first = true;
   while (!done) {
-    fgets(self->po_s, self->po_size_s, self->output_file);
+    fgetsResult=fgets(self->po_s, self->po_size_s, self->output_file);
     if (strlen(self->po_s) > 0) {
       if (!feof(self->output_file) &&
           self->po_s[strlen(self->po_s) - 1] != '\n') {

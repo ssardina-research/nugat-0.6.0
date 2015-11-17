@@ -514,7 +514,13 @@ Nitin Yadav - nitin.yadav@rmit.edu.au
         
     warning: passing argument 5 of ‘BddFsm_print_reachable_states_info’ from incompatible pointer type
     
-        *   add cast for 'nusmv_stdout' with 'OSTREAM(nusmv_stdout)'
+        *   added cast for 'nusmv_stdout' with 'OSTREAM(nusmv_stdout)'
+        
+57.gameCheckLTLSF07_gba_wring.c
+
+    warning: ignoring return value of ‘fgets’, declared with attribute warn_unused_result [-Wunused-result] 'fgets(self->po_s, self->po_size_s, self->output_file);'
+
+        *   added declaration 'char *fgetsResult;' and store the result 'fgetsResult=fgets(...'
         
 ================================================================================
 EOF
