@@ -89,7 +89,8 @@ typedef struct PropDbGame_TAG
 EXTERN void prop_db_game_init ARGS((PropDbGame_ptr self));
 EXTERN void prop_db_game_deinit ARGS((PropDbGame_ptr self));
 
-int prop_db_game_prop_create_and_add(PropDbGame_ptr self,
+int prop_db_game_prop_create_and_add(const NuSMVEnv_ptr env,
+                                     PropDbGame_ptr self,
                                      SymbTable_ptr symb_table,
                                      node_ptr spec,
                                      PropGame_Type type);

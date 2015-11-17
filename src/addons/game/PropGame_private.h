@@ -93,7 +93,7 @@ typedef struct PropGame_TAG
 /* ---------------------------------------------------------------------- */
 /* Private methods to be used by derivated and friend classes only        */
 /* ---------------------------------------------------------------------- */
-EXTERN void prop_game_init ARGS((PropGame_ptr self));
+EXTERN void prop_game_init ARGS((PropGame_ptr self,const NuSMVEnv_ptr env));
 EXTERN void prop_game_deinit ARGS((PropGame_ptr self));
 
 Expr_ptr prop_game_get_expr(const PropGame_ptr self);

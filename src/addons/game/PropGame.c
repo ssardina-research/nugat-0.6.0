@@ -107,12 +107,12 @@ static void prop_game_finalize ARGS((Object_ptr object, void* dummy));
   SeeAlso     [ PropGame_destroy ]
 
 ******************************************************************************/
-PropGame_ptr PropGame_create()
+PropGame_ptr PropGame_create(const NuSMVEnv_ptr env)
 {
   PropGame_ptr self = ALLOC(PropGame, 1);
   PROP_GAME_CHECK_INSTANCE(self);
 
-  prop_game_init(self);
+  prop_game_init(self,env);
   return self;
 }
 
@@ -130,13 +130,13 @@ PropGame_ptr PropGame_create()
   SeeAlso     [ PropGame_create, PropGame_destroy ]
 
 ******************************************************************************/
-PropGame_ptr PropGame_create_partial(Expr_ptr expr, PropGame_Type type)
+PropGame_ptr PropGame_create_partial(const NuSMVEnv_ptr env,Expr_ptr expr, PropGame_Type type)
 {
   PropGame_ptr self;
 
   nusmv_assert(PropGame_type_is_game(type));
 
-  self = PropGame_create();
+  self = PropGame_create(env);
   PROP_GAME_CHECK_INSTANCE(self);
 
   /* DEBUGGING: game properties must be wrapped into
@@ -439,12 +439,12 @@ boolean PropGame_type_is_game_or_notype(const PropGame_Type type)
   SeeAlso     [ PropGame_create, prop_init ]
 
 ******************************************************************************/
-void prop_game_init(PropGame_ptr self)
+void prop_game_init(PropGame_ptr self,const NuSMVEnv_ptr env)
 {
   PROP_GAME_CHECK_INSTANCE(self);
 
   /* base class initialization */
-  prop_init(PROP(self));
+  prop_init(PROP(self),env);
 
   /* members initialization */
   self->game_scalar_fsm = GAME_SEXP_FSM(NULL);
@@ -553,6 +553,10 @@ void prop_game_print(const PropGame_ptr self, FILE* file)
 {
   node_ptr p;
   node_ptr context;
+  int i;
+
+  const NuSMVEnv_ptr env = EnvObject_get_environment(ENV_OBJECT(self));
+  MasterPrinter_ptr wffprint = MASTER_PRINTER(NuSMVEnv_get_value(env, ENV_WFF_PRINTER));
 
   PROP_GAME_CHECK_INSTANCE(self);
   nusmv_assert(PropGame_type_is_game(Prop_get_type(PROP(self))));
@@ -567,13 +571,18 @@ void prop_game_print(const PropGame_ptr self, FILE* file)
 
   /* Print the specification type and the player responsible for the
      specification. */
-  indent(file);
+
+  for(i=0; i < OStream_get_indent_size(OSTREAM(file)); i++) fprintf(file, "  ");
+
   fprintf(file,
           " %s %s ",
           Prop_get_type_as_string(PROP(self)),
           (char*)UStringMgr_get_string_text(PropGame_get_player(self)));
 
-  indent_node(file, "", p, " ");
+  for(i=0; i < OStream_get_indent_size(OSTREAM(file)); i++) fprintf(file, "  ");
+  fprintf(file, "%s", "");
+  print_node(wffprint,file, p);
+  fprintf(file, "%s", " ");
 
   if (context != Nil) {
     fprintf(file, "IN ");
@@ -598,6 +607,10 @@ void prop_game_print(const PropGame_ptr self, FILE* file)
 ******************************************************************************/
 void prop_game_print_db(const PropGame_ptr self, FILE* file)
 {
+
+  const NuSMVEnv_ptr env = EnvObject_get_environment(ENV_OBJECT(self));
+  MasterPrinter_ptr wffprint = MASTER_PRINTER(NuSMVEnv_get_value(env, ENV_WFF_PRINTER));
+
   PROP_GAME_CHECK_INSTANCE(self);
   nusmv_assert(PropGame_type_is_game(Prop_get_type(PROP(self))));
 
@@ -664,7 +677,7 @@ void prop_game_verify(PropGame_ptr self)
                                 DEFAULT_GAME_CHECK_LTL_GAME_SPEC_SF07_W);
       break;
     case PropGame_GenReactivity:
-      Game_CheckGenReactivitySpec(self, &gameParams);
+      Game_CheckGenReactivitySpec(env,self, &gameParams);
       break;
     default: nusmv_assert(false); /* invalid type */
     }

@@ -156,8 +156,8 @@ typedef struct PropGame_TAG* PropGame_ptr;
 /* Function prototypes                                                       */
 /*---------------------------------------------------------------------------*/
 
-EXTERN PropGame_ptr PropGame_create ARGS((void));
-EXTERN PropGame_ptr PropGame_create_partial ARGS((Expr_ptr expr,
+EXTERN PropGame_ptr PropGame_create ARGS((const NuSMVEnv_ptr env));
+EXTERN PropGame_ptr PropGame_create_partial ARGS((const NuSMVEnv_ptr env,Expr_ptr expr,
                                                   PropGame_Type type));
 EXTERN void PropGame_destroy ARGS((PropGame_ptr self));
 

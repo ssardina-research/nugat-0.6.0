@@ -2094,7 +2094,7 @@ static void Game_SF07_StructCheckLTLGameSF07_check
                               PLAYER_NAME_1 :
                               PLAYER_NAME_2),
                    cdr(self->curr_goal));
-  prop = PropGame_create_partial(expr, PropGame_AvoidTarget);
+  prop = PropGame_create_partial(env,expr, PropGame_AvoidTarget);
   PropGame_set_game_bdd_fsm(prop, self->curr_product_game_bdd_fsm);
 
   /* Log property. */

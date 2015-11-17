@@ -517,7 +517,7 @@ void PropDbGame_master_set_game_be_fsm(PropDbGame_ptr self, GameBeFsm_ptr fsm)
   SeeAlso     [ PropDbGame_create, PropDbGame_clean, prop_db_init ]
 
 ******************************************************************************/
-void prop_db_game_init(PropDbGame_ptr self)
+void prop_db_game_init(PropDbGame_ptr self,const NuSMVEnv_ptr env)
 {
   PROP_DB_GAME_CHECK_INSTANCE(self);
 
@@ -527,7 +527,7 @@ void prop_db_game_init(PropDbGame_ptr self)
   /* Members initialization. Here: just replace master with a game
      property. */
   Prop_destroy(PROP_DB(self)->master);
-  PROP_DB(self)->master = PROP(PropGame_create());
+  PROP_DB(self)->master = PROP(PropGame_create(env));
 
   /* virtual methods settings */
   OVERRIDE(Object, finalize) = prop_db_game_finalize;
@@ -582,6 +582,8 @@ int prop_db_game_prop_create_and_add(PropDbGame_ptr self,
   int retval, index;
   PropGame_ptr prop;
 
+  const NuSMVEnv_ptr env = EnvObject_get_environment(ENV_OBJECT(self));
+
   PROP_DB_GAME_CHECK_INSTANCE(self);
   SYMB_TABLE_CHECK_INSTANCE(symb_table);
   nusmv_assert(PropGame_type_is_game(type));
@@ -589,7 +591,7 @@ int prop_db_game_prop_create_and_add(PropDbGame_ptr self,
   retval = 0;
   index = PropDb_get_size(PROP_DB(self));
 
-  prop = PropGame_create_partial(spec, type);
+  prop = PropGame_create_partial(env,spec, type);
   Prop_set_index(PROP(prop), index);
 
   if (!TypeCheckerGame_check_property(SymbTable_get_type_checker(symb_table),

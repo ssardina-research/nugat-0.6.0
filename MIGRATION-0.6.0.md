@@ -426,7 +426,7 @@ Nitin Yadav - nitin.yadav@rmit.edu.au
     
     warning: passing argument 7 of ‘BddEnc_print_bdd_wff’ from incompatible pointer type
     
-        *   add cast '(OStream_ptr) to 'nusmv_stdout' parameter
+        *   add cast '(OStream_ptr)' to 'nusmv_stdout' parameter
         
     warning: passing argument 8 of ‘game_minimize_players_constraints’ from incompatible pointer type
     
@@ -442,9 +442,28 @@ Nitin Yadav - nitin.yadav@rmit.edu.au
     
         *   added 'env' and new parameter 'expand_bounded_arrays' with 'false' (default value)
 
+52.PropGame.c
+
+    error: too few arguments to function ‘prop_init’
+    
+        *   added env parameter for all the function until 'prop_db_game_prop_create_and_add' that is the highest level with 'env' declaration inside
         
+    warning: implicit declaration of function ‘indent’ and ‘indent_node’
+    
+        *   replaced
         
-   .14 revision + 
+                'indent(file)'  with 
+                
+                        for(i=0; i < OStream_get_indent_size(OSTREAM(file)); i++) fprintf(file, "  ");
+            
+                'indent_node(file, "", p, " ");'  with 
+                        
+                        for(i=0; i < OStream_get_indent_size(OSTREAM(file)); i++) fprintf(file, "  ");
+                        fprintf(file, "%s", "");
+                        print_node(wffprint,file, p);
+                        fprintf(file, "%s", " ");
+                        
+
     
 ================================================================================
 EOF
