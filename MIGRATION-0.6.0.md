@@ -236,6 +236,7 @@ Nitin Yadav - nitin.yadav@rmit.edu.au
                     'game_pkg_switch_to_prop_db_game'
                     'Game_Mode_Enter'
                     'Game_Mode_Exit'
+                    'Game_Init'
                     'Game_Quit'
                     'Game_CommandWriteBooleanModel'
                     'Game_CommandFlattenHierarchy'
@@ -271,6 +272,7 @@ Nitin Yadav - nitin.yadav@rmit.edu.au
                 'Cmd_CommandAdd'
                 'Cmd_CommandRemove'
                 'Cmd_CommandGet'
+                'NuGaTAddons_Init'
                 'NuGaTAddons_Quit'
                 
                 'game_pkg_switch_from_game_cmds'
@@ -536,7 +538,11 @@ Nitin Yadav - nitin.yadav@rmit.edu.au
             $(NUSMV_DIR)/code/nusmv/core/cinit/cinitVers.lo \
             $(NUSMV_DIR)/code/nusmv/core/cinit/cinitData.lo
             
+60.src/smgame/smgameMain.c
 
+    error: unknown type name ‘FP_V_V’ , FP_V_V iq_fns[][2] = {{NuGaTAddons_Init, NuGaTAddons_Quit}};
+      ^
+        *   replaced with 'FP_V_E'
             
             
 ================================================================================

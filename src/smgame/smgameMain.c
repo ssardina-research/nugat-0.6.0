@@ -112,7 +112,7 @@ int main(int  argc, char ** argv)
   NuSMVEnv_ptr env = NuSMVEnv_create();
 
   boolean requires_shutdown = true;
-  FP_V_V iq_fns[][2] = {{NuGaTAddons_Init, NuGaTAddons_Quit}};
+  FP_V_E iq_fns[][2] = {{NuGaTAddons_Init, NuGaTAddons_Quit}};
 
   /* Initializes data such as tool name, tool version, email.. */
   NuSMVCore_init_data();

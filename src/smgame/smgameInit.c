@@ -87,7 +87,7 @@ void Smgame_Reset(NuSMVEnv_ptr env)
   if (opt_verbose_level_gt(OptsHandler_create(), 1)) {
     fprintf(nusmv_stderr, "Starting the game part...\n");
   }
-  NuGaTAddons_Init();
+  NuGaTAddons_Init(env);
   if (opt_verbose_level_gt(OptsHandler_create(), 2)) {
     fprintf(nusmv_stderr, "Done\n");
   }

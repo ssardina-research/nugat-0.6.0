@@ -95,10 +95,10 @@ static char rcsid[] UTIL_UNUSED = "$Id: addonsPkg.c,v 1.1.2.21 2010-02-22 12:27:
   SeeAlso     [ ]
 
 ******************************************************************************/
-void NuGaTAddons_Init(void) 
+void NuGaTAddons_Init(NuSMVEnv_ptr env)
 {
 #if HAVE_GAME
-   Game_Init();
+   Game_Init(env);
 #endif
 }
 

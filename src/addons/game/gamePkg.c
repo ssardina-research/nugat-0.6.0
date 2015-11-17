@@ -139,10 +139,8 @@ static void game_pkg_restore_cmds ARGS((NuSMVEnv_ptr env,NodeList_ptr* stored));
   SeeAlso     [ Game_Quit, Game_Mode_Enter ]
 
 ******************************************************************************/
-void Game_Init(void)
+void Game_Init(NuSMVEnv_ptr env)
 {
-    NuSMVEnv_ptr env = NuSMVEnv_create();
-
     ErrorMgr_ptr const errmgr =
             ERROR_MGR(NuSMVEnv_get_value(env, ENV_ERROR_MANAGER));
 

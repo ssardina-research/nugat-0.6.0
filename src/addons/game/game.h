@@ -148,7 +148,7 @@ typedef enum Game_SF07_StrategyPrintingMode_TAG Game_SF07_StrategyPrintingMode;
 /*---------------------------------------------------------------------------*/
 /* Function prototypes                                                       */
 /*---------------------------------------------------------------------------*/
-EXTERN void Game_Init ARGS((void));
+EXTERN void Game_Init ARGS((NuSMVEnv_ptr env));
 EXTERN void Game_Quit ARGS((NuSMVEnv_ptr env));
 EXTERN void Game_Mode_Enter ARGS((NuSMVEnv_ptr env));
 EXTERN void Game_Mode_Exit ARGS((NuSMVEnv_ptr env));
