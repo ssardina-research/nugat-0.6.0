@@ -175,7 +175,7 @@ void Game_Init(void)
       walker = NODE_WALKER(PrinterSexpGame_create(env,"GAME Sexp Printer"));
       MasterNodeWalker_register_walker(MASTER_NODE_WALKER(msp), walker);
 
-      walker = NODE_WALKER(CheckerGame_create());
+      walker = NODE_WALKER(CheckerGame_create(env));
       MasterNodeWalker_register_walker(MASTER_NODE_WALKER(tc), walker);
     }
 

@@ -110,12 +110,12 @@ static void print_operator ARGS((FILE* output_stream, node_ptr expr));
   SeeAlso     [ NodeWalker_destroy ]
 
 ******************************************************************************/
-CheckerGame_ptr CheckerGame_create()
+CheckerGame_ptr CheckerGame_create(const NuSMVEnv_ptr env)
 {
   CheckerGame_ptr self = ALLOC(CheckerGame, 1);
   CHECKER_GAME_CHECK_INSTANCE(self);
 
-  checker_game_init(self);
+  checker_game_init(self,env);
 
   return self;
 }
@@ -135,10 +135,10 @@ CheckerGame_ptr CheckerGame_create()
   SeeAlso     [ CheckerGame_create ]
 
 ******************************************************************************/
-void checker_game_init(CheckerGame_ptr self)
+void checker_game_init(CheckerGame_ptr self,const NuSMVEnv_ptr env)
 {
   /* base class initialization */
-  checker_base_init(CHECKER_BASE(self), "GAME Type Checker",
+  checker_base_init(CHECKER_BASE(self),env, "GAME Type Checker",
                     NUSMV_GAME_SYMBOL_FIRST,
                     NUSMV_GAME_SYMBOL_LAST - NUSMV_GAME_SYMBOL_FIRST);
 
@@ -247,7 +247,7 @@ static SymbType_ptr checker_game_check_expr(CheckerBase_ptr self,
 
     if (SymbType_is_error(type)) {
       /* earlier error */
-      return _SET_TYPE(ctx_expr, SymbTablePkg_error_type());
+      return _SET_TYPE(ctx_expr, SymbTablePkg_error_type(env));
     }
 
     /* The operand must be boolean or statement-type (statements can
@@ -259,7 +259,7 @@ static SymbType_ptr checker_game_check_expr(CheckerBase_ptr self,
 
     /* there is violation */
     if (_VIOLATION(TC_VIOLATION_TYPE_MANDATORY, expr)) {
-      return _SET_TYPE(ctx_expr, SymbTablePkg_error_type());
+      return _SET_TYPE(ctx_expr, SymbTablePkg_error_type(env));
     }
 
     /* this is not an error after all -> keeps the current type */
@@ -287,7 +287,7 @@ static SymbType_ptr checker_game_check_expr(CheckerBase_ptr self,
 
     if (SymbType_is_error(type1) || SymbType_is_error(type2)) {
       /*earlier error*/
-      return _SET_TYPE(ctx_expr, SymbTablePkg_error_type());
+      return _SET_TYPE(ctx_expr, SymbTablePkg_error_type(env));
     }
 
     /* implicit conversion to the least common type of the operands */
@@ -299,7 +299,7 @@ static SymbType_ptr checker_game_check_expr(CheckerBase_ptr self,
     }
     /* is this a type error ? */
     if (_VIOLATION(TC_VIOLATION_TYPE_MANDATORY, ctx_expr)) {
-      return _SET_TYPE(ctx_expr, SymbTablePkg_error_type());
+      return _SET_TYPE(ctx_expr, SymbTablePkg_error_type(env));
     }
 
     /* this is not an error after all -> return left operand's type */
@@ -364,7 +364,7 @@ static boolean checker_game_viol_handler(CheckerBase_ptr self,
   */
   nusmv_assert(TC_VIOLATION_TYPE_MANDATORY == violation);
 
-  fprintf(nusmv_stderr, "illegal ");
+  fprintf(stderr, "illegal ");
 
   switch (node_get_type(expr)) {
   case GAME:
@@ -377,10 +377,10 @@ static boolean checker_game_viol_handler(CheckerBase_ptr self,
   case BUCHIGAME:
   case LTLGAME:
   case GENREACTIVITY:
-    fprintf(nusmv_stderr,"type of ");
-    print_operator(nusmv_stderr, expr);
-    fprintf(nusmv_stderr," expression : ");
-    checker_base_print_type(self, nusmv_stderr, car(expr), context);
+    fprintf(stderr,"type of ");
+    print_operator(stderr, expr);
+    fprintf(stderr," expression : ");
+    checker_base_print_type(self, stderr, car(expr), context);
     break;
 
   case GAME_SPEC_WRAPPER:
@@ -388,12 +388,12 @@ static boolean checker_game_viol_handler(CheckerBase_ptr self,
     nusmv_assert(false);    /* this node cannot generate an error */
 
   case GAME_TWO_EXP_LISTS: /* two exp lists */
-    fprintf(nusmv_stderr, "operand types of \"");
-    print_operator(nusmv_stderr, expr);
-    fprintf(nusmv_stderr,"\" : ");
-    checker_base_print_type(self, nusmv_stderr, car(expr), context);
-    fprintf(nusmv_stderr," and ");
-    checker_base_print_type(self, nusmv_stderr, cdr(expr), context);
+    fprintf(stderr, "operand types of \"");
+    print_operator(stderr, expr);
+    fprintf(stderr,"\" : ");
+    checker_base_print_type(self, stderr, car(expr), context);
+    fprintf(stderr," and ");
+    checker_base_print_type(self, stderr, cdr(expr), context);
     break;
 
   default:
@@ -439,7 +439,7 @@ static void print_operator(FILE* output_stream, node_ptr expr)
   case GAME_TWO_EXP_LISTS: fprintf(output_stream, "->"); return;
 
   default:
-    fprintf(nusmv_stderr, "\n%d\n", node_get_type(expr));
+    fprintf(stderr, "\n%d\n", node_get_type(expr));
     nusmv_assert(false);
   }
 }

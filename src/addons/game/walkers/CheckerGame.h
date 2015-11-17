@@ -99,7 +99,7 @@ typedef struct CheckerGame_TAG* CheckerGame_ptr;
 /*---------------------------------------------------------------------------*/
 /* Function prototypes                                                       */
 /*---------------------------------------------------------------------------*/
-EXTERN CheckerGame_ptr CheckerGame_create ARGS((void));
+EXTERN CheckerGame_ptr CheckerGame_create ARGS((const NuSMVEnv_ptr env));
 
 /**AutomaticEnd***************************************************************/
 

@@ -163,7 +163,7 @@ typedef struct CheckerGame_TAG
 /* ---------------------------------------------------------------------- */
 /* Private methods to be used by derivated and friend classes only        */
 /* ---------------------------------------------------------------------- */
-EXTERN void checker_game_init ARGS((CheckerGame_ptr self));
+EXTERN void checker_game_init ARGS((CheckerGame_ptr self,const NuSMVEnv_ptr env));
 EXTERN void checker_game_deinit ARGS((CheckerGame_ptr self));
 
 #endif /* __CHECKER_GAME_PRIVATE_H__ */

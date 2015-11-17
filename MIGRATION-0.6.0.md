@@ -478,6 +478,18 @@ Nitin Yadav - nitin.yadav@rmit.edu.au
     
     *   added 'env' parameter for 'PropDbGame_create' , 'PropDbGame_clean' , 'prop_db_game_init' , 'prop_db_init'
     
+54.walkers/CheckerGame.c
+
+    warning: passing argument 2 of ‘checker_base_init’ from incompatible pointer type
+    error: too few arguments to function ‘SymbTablePkg_error_type’
+    
+        *   added 'env' parameter for : 'checker_game_init' , 'CheckerGame_create' , 'SymbTablePkg_error_type'
+        
+    error: ‘nusmv_stderr’ undeclared (first use in this function)
+    
+        *   replaced with 'stderr'
+        
+
 ================================================================================
 EOF
 ================================================================================
