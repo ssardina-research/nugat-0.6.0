@@ -13,11 +13,10 @@
     </ADDITIONAL_GENERATION_ENVIRONMENT>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="270c3bb5-5a79-42ad-ba25-a8665d2f47cb" name="Default" comment="56">
+    <list default="true" id="270c3bb5-5a79-42ad-ba25-a8665d2f47cb" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/MIGRATION-0.6.0.md" afterPath="$PROJECT_DIR$/MIGRATION-0.6.0.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/addons/addons.h" afterPath="$PROJECT_DIR$/src/addons/addons.h" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/smgame/smgameMisc.c" afterPath="$PROJECT_DIR$/src/smgame/smgameMisc.c" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/addons/game/fsm/GameBddFsm.c" afterPath="$PROJECT_DIR$/src/addons/game/fsm/GameBddFsm.c" />
     </list>
     <list id="f18eade9-5ca5-42ab-88b2-cdac386454f6" name="Rejected commit: Default" comment="fix" />
     <ignored path="NuGaT-0.54.iws" />
@@ -50,55 +49,29 @@
             <state />
           </provider>
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="1.2638377">
-              <caret line="516" column="25" selection-start-line="516" selection-start-column="25" selection-end-line="516" selection-end-column="25" />
+            <state vertical-scroll-proportion="0.72324723">
+              <caret line="530" column="28" selection-start-line="530" selection-start-column="28" selection-end-line="530" selection-end-column="28" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="smgameMisc.c" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/smgame/smgameMisc.c">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-7.1">
-              <caret line="481" column="46" selection-start-line="481" selection-start-column="39" selection-end-line="481" selection-end-column="46" />
-              <folding>
-                <element signature="e#5795#11425#0" expanded="true" />
-                <element signature="e#12791#13260#0" expanded="true" />
-                <element signature="e#14244#15597#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="addons.h" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/addons/addons.h">
+      <file leaf-file-name="GameBddFsm.c" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/addons/game/fsm/GameBddFsm.c">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="85" column="0" selection-start-line="85" selection-start-column="0" selection-end-line="85" selection-end-column="0" />
+              <caret line="1284" column="49" selection-start-line="1284" selection-start-column="49" selection-end-line="1284" selection-end-column="49" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="smgameInit.c" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/smgame/smgameInit.c">
+      <file leaf-file-name="gameCmd.c" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/addons/game/gameCmd.c">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="78" column="2" selection-start-line="78" selection-start-column="2" selection-end-line="78" selection-end-column="2" />
+              <caret line="1922" column="8" selection-start-line="1922" selection-start-column="8" selection-end-line="1922" selection-end-column="8" />
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="addonsPkg.c" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/addons/addonsPkg.c">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="121" column="0" selection-start-line="121" selection-start-column="0" selection-end-line="121" selection-end-column="0" />
-              <folding>
-                <element signature="e#4010#4025#0" expanded="true" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -123,7 +96,6 @@
         <option value="$PROJECT_DIR$/src/smgame/smgameInt.h" />
         <option value="$PROJECT_DIR$/src/smgame/smgameCmd.c" />
         <option value="$PROJECT_DIR$/contrib/BddEnc.c.patch" />
-        <option value="$PROJECT_DIR$/src/addons/game/fsm/GameBddFsm.c" />
         <option value="$PROJECT_DIR$/src/addons/game/walkers/PrinterGame.h" />
         <option value="$PROJECT_DIR$/src/addons/game/walkers/PrinterGame_private.h" />
         <option value="$PROJECT_DIR$/src/addons/game/walkers/PrinterSexpGame.h" />
@@ -140,7 +112,6 @@
         <option value="$PROJECT_DIR$/src/addons/game/gameXmlReader.c" />
         <option value="$PROJECT_DIR$/src/addons/game/gameCheckGenReactivityBuchiSpec.c" />
         <option value="$PROJECT_DIR$/src/addons/game/gameReqToGame.c" />
-        <option value="$PROJECT_DIR$/src/addons/game/gameCheckLTLSF07_gba_wring.c" />
         <option value="$PROJECT_DIR$/src/addons/game/GameStrategy.c" />
         <option value="$PROJECT_DIR$/src/addons/game/gameUnrealCore.c" />
         <option value="$PROJECT_DIR$/src/addons/game/PropGame_private.h" />
@@ -161,6 +132,8 @@
         <option value="$PROJECT_DIR$/src/addons/game/walkers/PrinterSexpGame_private.h" />
         <option value="$PROJECT_DIR$/src/addons/addons.h" />
         <option value="$PROJECT_DIR$/src/smgame/smgameMisc.c" />
+        <option value="$PROJECT_DIR$/src/addons/game/gameCheckLTLSF07_gba_wring.c" />
+        <option value="$PROJECT_DIR$/src/addons/game/fsm/GameBddFsm.c" />
         <option value="$PROJECT_DIR$/MIGRATION-0.6.0.md" />
       </list>
     </option>
@@ -240,6 +213,90 @@
     <panes>
       <pane id="ProjectPane">
         <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="NuGaT-0.54" />
+              <option name="myItemType" value="com.jetbrains.cidr.projectView.CidrFilesViewHelper$MyProjectTreeStructure$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="External Libraries" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Header Search Paths" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.NamedLibraryElementNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="NuGaT-0.54" />
+              <option name="myItemType" value="com.jetbrains.cidr.projectView.CidrFilesViewHelper$MyProjectTreeStructure$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="External Libraries" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Header Search Paths" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.NamedLibraryElementNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="smgame" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="NuGaT-0.54" />
+              <option name="myItemType" value="com.jetbrains.cidr.projectView.CidrFilesViewHelper$MyProjectTreeStructure$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="External Libraries" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Header Search Paths" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.NamedLibraryElementNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="parser" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="NuGaT-0.54" />
+              <option name="myItemType" value="com.jetbrains.cidr.projectView.CidrFilesViewHelper$MyProjectTreeStructure$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="External Libraries" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Header Search Paths" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.NamedLibraryElementNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="addons" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
           <PATH>
             <PATH_ELEMENT>
               <option name="myItemId" value="NuGaT-0.54" />
@@ -390,6 +447,24 @@
               <option name="myItemType" value="com.jetbrains.cidr.projectView.CidrFilesViewHelper$MyProjectTreeStructure$1" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="External Libraries" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Header Search Paths" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.NamedLibraryElementNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="include" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="NuGaT-0.54" />
+              <option name="myItemType" value="com.jetbrains.cidr.projectView.CidrFilesViewHelper$MyProjectTreeStructure$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="nugat-0.5.4" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -484,6 +559,32 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="NuGaT-0.54" />
+              <option name="myItemType" value="com.jetbrains.cidr.projectView.CidrFilesViewHelper$MyProjectTreeStructure$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="nugat-0.5.4" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="addons" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="game" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="fsm" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
     </panes>
@@ -493,7 +594,7 @@
     <property name="last_opened_file_path" value="$USER_HOME$/Desktop/nugat-0.5.4" />
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
-    <property name="SearchEverywhereHistoryKey" value="addons.h&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/addons.h&#10;PrinterSexpGame.c&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/walkers/PrinterSexpGame.c&#10;CheckerGame.c&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/walkers/CheckerGame.c&#10;PropDbGame&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/PropDbGame.c&#10;PropDb&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/PropDbGame.c&#10;Prop&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/PropGame.c&#10;gameCheck&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/gameCheckLTLSF07.c&#10;gameWrite&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/gameWriteModel.c&#10;gameVarEncoding&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/gameVarEncoding.c&#10;gameFla&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/gameFlatten.c&#10;gameGene&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/gameGeneral.c&#10;gameGen&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/gameGeneral.c&#10;gamePk&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/gamePkg.c&#10;gamePkg&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/gamePkg.c&#10;gameCmd.c&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/gameCmd.c&#10;GameStrategy.c&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/GameStrategy.c&#10;GamePlayer.h&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/GamePlayer.h&#10;gameopt&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/gameOpt.c&#10;gameOp&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/gameOpt.c&#10;gameOpt&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/gameOpt.c&#10;GameSexpFsm.h&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/fsm/GameSexpFsm.h&#10;config.h&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/config.h&#10;lwr&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/helpers/ylwrap&#10;lex.&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/lex.yy.c&#10;lex.nu&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/parser/ylwrap4223/lex.nusmv_yy.c&#10;nusmv_yy33&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/parser/ylwrap8259/lex.nusmv_yy33.c&#10;yy&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/parser/ylwrap10952/lex.yy.c&#10;ylw&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/helpers/ylwrap&#10;lore&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/parser/loretest&#10;mgr&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/NuSMV-2.6.0/NuSMV/code/nusmv/core/utils/UStringMgr.h&#10;game_symbols.h&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/parser/game_symbols.h&#10;util&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/NuSMV-2.6.0/NuSMV/code/nusmv/core/utils/utils.h&#10;game.h&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/game.h&#10;NodeM&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/NuSMV-2.6.0/NuSMV/code/nusmv/core/node/NodeMgr.c&#10;grammar.y:1191:28&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/parser/grammar.y&#10;nusmv-config.h&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/NuSMV-2.6.0/NuSMV/build/nusmv-config.h&#10;game.h:207&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/game.h&#10;ylwrap&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/helpers/ylwrap&#10;grammar.c&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/parser/grammar.c&#10;input.l&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/parser/input.l&#10;GameBe&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/fsm/GameBeFsm.c&#10;gameF&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/fsm/GameSexpFsm.h&#10;game_symbols&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/parser/game_symbols.h&#10;grammar.y&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/parser/grammar.y&#10;GameSexpFsm&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/fsm/GameSexpFsm.h&#10;Games&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/fsm/GameSexpFsm.h&#10;PropGame.h&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/PropGame.h&#10;GameBddFsm.h&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/fsm/GameBddFsm.h" />
+    <property name="SearchEverywhereHistoryKey" value="GameBddFsm.c&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/fsm/GameBddFsm.c&#10;gameCheckLTLSF07_gba_wring.c&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/gameCheckLTLSF07_gba_wring.c&#10;addons.h&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/addons.h&#10;PrinterSexpGame.c&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/walkers/PrinterSexpGame.c&#10;CheckerGame.c&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/walkers/CheckerGame.c&#10;PropDbGame&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/PropDbGame.c&#10;PropDb&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/PropDbGame.c&#10;Prop&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/PropGame.c&#10;gameCheck&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/gameCheckLTLSF07.c&#10;gameWrite&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/gameWriteModel.c&#10;gameVarEncoding&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/gameVarEncoding.c&#10;gameFla&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/gameFlatten.c&#10;gameGene&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/gameGeneral.c&#10;gameGen&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/gameGeneral.c&#10;gamePk&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/gamePkg.c&#10;gamePkg&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/gamePkg.c&#10;gameCmd.c&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/gameCmd.c&#10;GameStrategy.c&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/GameStrategy.c&#10;GamePlayer.h&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/GamePlayer.h&#10;gameopt&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/gameOpt.c&#10;gameOp&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/gameOpt.c&#10;gameOpt&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/gameOpt.c&#10;GameSexpFsm.h&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/fsm/GameSexpFsm.h&#10;config.h&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/config.h&#10;lwr&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/helpers/ylwrap&#10;lex.&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/lex.yy.c&#10;lex.nu&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/parser/ylwrap4223/lex.nusmv_yy.c&#10;nusmv_yy33&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/parser/ylwrap8259/lex.nusmv_yy33.c&#10;yy&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/parser/ylwrap10952/lex.yy.c&#10;ylw&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/helpers/ylwrap&#10;lore&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/parser/loretest&#10;mgr&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/NuSMV-2.6.0/NuSMV/code/nusmv/core/utils/UStringMgr.h&#10;game_symbols.h&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/parser/game_symbols.h&#10;util&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/NuSMV-2.6.0/NuSMV/code/nusmv/core/utils/utils.h&#10;game.h&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/game.h&#10;NodeM&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/NuSMV-2.6.0/NuSMV/code/nusmv/core/node/NodeMgr.c&#10;grammar.y:1191:28&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/parser/grammar.y&#10;nusmv-config.h&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/NuSMV-2.6.0/NuSMV/build/nusmv-config.h&#10;game.h:207&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/game.h&#10;ylwrap&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/helpers/ylwrap&#10;grammar.c&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/parser/grammar.c&#10;input.l&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/parser/input.l&#10;GameBe&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/fsm/GameBeFsm.c&#10;gameF&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/fsm/GameSexpFsm.h&#10;game_symbols&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/parser/game_symbols.h&#10;grammar.y&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/parser/grammar.y&#10;GameSexpFsm&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/fsm/GameSexpFsm.h&#10;Games&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/fsm/GameSexpFsm.h&#10;PropGame.h&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/PropGame.h&#10;GameBddFsm.h&#9;FILE&#9;file:///home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/addons/game/fsm/GameBddFsm.h" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth0" value="262" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder0" value="0" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth1" value="264" />
@@ -619,7 +720,19 @@
       <option name="project" value="LOCAL" />
       <updated>1447735442031</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="56">
+      <created>1447736926244</created>
+      <option name="number" value="00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1447736926244</updated>
+    </task>
+    <task id="LOCAL-00007" summary="57">
+      <created>1447737434174</created>
+      <option name="number" value="00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1447737434174</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TodoView">
@@ -633,19 +746,19 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-1" y="0" width="1922" height="1060" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19030048" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3290735" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3290735" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="CMake" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32481363" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="true" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4142705" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32800853" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24893162" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.48668796" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="1.0" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3290735" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -693,7 +806,9 @@
     <MESSAGE value=".46 .47" />
     <MESSAGE value="54" />
     <MESSAGE value="55" />
-    <option name="LAST_COMMIT_MESSAGE" value="55" />
+    <MESSAGE value="56" />
+    <MESSAGE value="57" />
+    <option name="LAST_COMMIT_MESSAGE" value="57" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -702,20 +817,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/addons/game/gameVarEncoding.c">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-4.866667">
-          <caret line="121" column="49" selection-start-line="121" selection-start-column="49" selection-end-line="121" selection-end-column="49" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/addons/game/GamePlayer.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.7580071">
-          <caret line="98" column="5" selection-start-line="98" selection-start-column="5" selection-end-line="98" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../NuSMV-2.6.0/NuSMV/code/nusmv/core/node/NodeMgr.h">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.6103647">
@@ -741,6 +842,10 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-2.7666667">
           <caret line="539" column="17" selection-start-line="539" selection-start-column="8" selection-end-line="539" selection-end-column="17" />
+          <folding>
+            <element signature="e#1596#1613#0" expanded="false" />
+            <element signature="e#1980#2007#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -762,13 +867,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.33205375">
           <caret line="151" column="6" selection-start-line="151" selection-start-column="6" selection-end-line="151" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/addons/game/gameCheckLTLSF07_gba_wring.c">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="2048" column="3" selection-start-line="2048" selection-start-column="3" selection-end-line="2048" selection-end-column="3" />
         </state>
       </provider>
     </entry>
@@ -896,6 +994,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="223" column="51" selection-start-line="223" selection-start-column="51" selection-end-line="223" selection-end-column="51" />
+          <folding>
+            <element signature="e#1521#1560#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -903,13 +1004,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="216" column="58" selection-start-line="216" selection-start-column="58" selection-end-line="216" selection-end-column="58" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/addons/game/gameCmd.c">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="1922" column="69" selection-start-line="1922" selection-start-column="69" selection-end-line="1922" selection-end-column="69" />
         </state>
       </provider>
     </entry>
@@ -1033,7 +1127,7 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="121" column="0" selection-start-line="121" selection-start-column="0" selection-end-line="121" selection-end-column="0" />
           <folding>
-            <element signature="e#4010#4025#0" expanded="true" />
+            <element signature="e#4010#4025#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1059,10 +1153,44 @@
         <state vertical-scroll-proportion="-7.1">
           <caret line="481" column="46" selection-start-line="481" selection-start-column="39" selection-end-line="481" selection-end-column="46" />
           <folding>
-            <element signature="e#5795#11425#0" expanded="true" />
-            <element signature="e#12791#13260#0" expanded="true" />
-            <element signature="e#14244#15597#0" expanded="true" />
+            <element signature="e#5795#11425#0" expanded="false" />
+            <element signature="e#12791#13260#0" expanded="false" />
+            <element signature="e#14244#15597#0" expanded="false" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///usr/include/stdio.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.33333334">
+          <caret line="621" column="13" selection-start-line="621" selection-start-column="13" selection-end-line="621" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/addons/game/gameCheckLTLSF07_gba_wring.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-6.7">
+          <caret line="1311" column="2" selection-start-line="1311" selection-start-column="2" selection-end-line="1311" selection-end-column="20" />
+          <folding>
+            <element signature="e#1482#1521#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/addons/game/gameCmd.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="1922" column="8" selection-start-line="1922" selection-start-column="8" selection-end-line="1922" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/addons/game/fsm/GameBddFsm.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="1284" column="49" selection-start-line="1284" selection-start-column="49" selection-end-line="1284" selection-end-column="49" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1071,8 +1199,8 @@
         <state />
       </provider>
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.2638377">
-          <caret line="516" column="25" selection-start-line="516" selection-start-column="25" selection-end-line="516" selection-end-column="25" />
+        <state vertical-scroll-proportion="0.72324723">
+          <caret line="530" column="28" selection-start-line="530" selection-start-column="28" selection-end-line="530" selection-end-column="28" />
           <folding />
         </state>
       </provider>

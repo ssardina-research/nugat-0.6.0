@@ -521,7 +521,16 @@ Nitin Yadav - nitin.yadav@rmit.edu.au
     warning: ignoring return value of ‘fgets’, declared with attribute warn_unused_result [-Wunused-result] 'fgets(self->po_s, self->po_size_s, self->output_file);'
 
         *   added declaration 'char *fgetsResult;' and store the result 'fgetsResult=fgets(...'
+     
+58.fsm/GameBddFsm.c
+
+    warning: passing argument 2 of ‘BddFsm_print_info’ from incompatible pointer type
+    
+        *   added cast 'OSTREAM(file)'
         
+59.walkers/PrinterSexpGame.c
+    
+    
 ================================================================================
 EOF
 ================================================================================
