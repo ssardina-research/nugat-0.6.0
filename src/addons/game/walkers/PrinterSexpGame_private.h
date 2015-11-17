@@ -103,16 +103,14 @@ typedef struct PrinterSexpGame_TAG
 /* ---------------------------------------------------------------------- */
 /* Private methods to be used by derivated and friend classes only        */
 /* ---------------------------------------------------------------------- */
-EXTERN void printer_sexp_game_init ARGS((NuSMVEnv_ptr env,
-                                         PrinterSexpGame_ptr self,
+EXTERN void printer_sexp_game_init ARGS((PrinterSexpGame_ptr self,
                                          const char* name,
                                          int low,
                                          size_t num));
 
 EXTERN void printer_sexp_game_deinit ARGS((PrinterSexpGame_ptr self));
 
-EXTERN int printer_sexp_game_print_node ARGS((const NuSMVEnv_ptr env,
-                                              PrinterBase_ptr self,
+EXTERN int printer_sexp_game_print_node ARGS((PrinterBase_ptr self,
                                               node_ptr n,
                                               int priority));
 

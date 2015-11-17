@@ -298,8 +298,6 @@ Nitin Yadav - nitin.yadav@rmit.edu.au
             'Game_AfterCheckingSpec'
             'Game_UseStrongReachabilityAlgorithm'
             'PrinterGame_create'
-            'PrinterSexpGame_create'
-            'PrinterGame_create'
             'printer_base_init'
             
 32.warning: gameGeneral.c: passing argument 1 of ‘SymbLayer_gen_iter’ and 'SymbLayer_iter_to_list’ from incompatible pointer type
@@ -528,7 +526,6 @@ Nitin Yadav - nitin.yadav@rmit.edu.au
     
         *   added cast 'OSTREAM(file)'
         
-59.walkers/PrinterSexpGame.c
     
     
 ================================================================================
