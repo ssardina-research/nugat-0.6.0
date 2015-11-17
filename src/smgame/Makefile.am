@@ -53,8 +53,4 @@ smgame_HEADERS =
 
 noinst_LTLIBRARIES = libsmgame.la
 libsmgame_la_SOURCES = $(PKG_SOURCES)
-libsmgame_la_LIBADD = $(NUSMV_DIR)/code/nusmv/core/cinit/cinitCmd.lo \
-                      $(NUSMV_DIR)/code/nusmv/core/cinit/cinitInit.lo \
-                      $(NUSMV_DIR)/code/nusmv/core/cinit/cinitMisc.lo \
-                      $(NUSMV_DIR)/code/nusmv/core/cinit/cinitVers.lo \
-                      $(NUSMV_DIR)/code/nusmv/core/cinit/cinitData.lo
+libsmgame_la_LIBADD =

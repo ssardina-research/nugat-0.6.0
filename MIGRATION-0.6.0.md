@@ -526,8 +526,19 @@ Nitin Yadav - nitin.yadav@rmit.edu.au
     
         *   added cast 'OSTREAM(file)'
         
+59.make[3]: *** No rule to make target `/home/lorenzo/Documents/software/ClionProjects/NuSMV-2.6.0/NuSMV/code/nusmv/core/cinit/cinitCmd.lo', needed by `libsmgame.la' [TODO: check if correct]
     
+    *   removed this include because file not exists
     
+            $(NUSMV_DIR)/code/nusmv/core/cinit/cinitCmd.lo \
+            $(NUSMV_DIR)/code/nusmv/core/cinit/cinitInit.lo \
+            $(NUSMV_DIR)/code/nusmv/core/cinit/cinitMisc.lo \
+            $(NUSMV_DIR)/code/nusmv/core/cinit/cinitVers.lo \
+            $(NUSMV_DIR)/code/nusmv/core/cinit/cinitData.lo
+            
+
+            
+            
 ================================================================================
 EOF
 ================================================================================
