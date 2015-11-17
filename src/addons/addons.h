@@ -79,7 +79,7 @@
 /* Function prototypes                                                       */
 /*---------------------------------------------------------------------------*/
 
-EXTERN void NuGaTAddons_Init ARGS((void));
+EXTERN void NuGaTAddons_Init ARGS((NuSMVEnv_ptr env));
 EXTERN void NuGaTAddons_Quit ARGS((NuSMVEnv_ptr env));
 
 /**AutomaticEnd***************************************************************/
