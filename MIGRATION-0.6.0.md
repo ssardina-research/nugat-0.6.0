@@ -44,12 +44,13 @@ Nitin Yadav - nitin.yadav@rmit.edu.au
     .5 "print_node" requires ... -> added 'wffprint' parameter
     .6 "free_node" requires ... -> added 'nodemgr' parameter
     .7 "sprint_node" requires ... -> added 'wffprint' parameter
+    .8 "Wff2Nnf","CompileFlatten_hash_module" requires ... -> added 'env' parameter
     
     *   added this lines before the usage 
     
             const NuSMVEnv_ptr env = EnvObject_get_environment(ENV_OBJECT(self));
             const NodeMgr_ptr nodemgr = NODE_MGR(NuSMVEnv_get_value(env, ENV_NODE_MGR));
-            const MasterPrinter_ptr wffprint = MASTER_PRINTER(NuSMVEnv_get_value(env, ENV_WFF_PRINTER));
+            MasterPrinter_ptr wffprint = MASTER_PRINTER(NuSMVEnv_get_value(env, ENV_WFF_PRINTER));
 
 7.warning: grammar.y.: implicit declaration of function ‘yylex’,‘yyerror’ and ‘yyerror_lined’
 
@@ -105,7 +106,7 @@ Nitin Yadav - nitin.yadav@rmit.edu.au
     
 14.warning: GameStrategy.c : passing argument 1 of ‘bdd_free’ from incompatible pointer type
 
-    *   replaced 'DdManager*' with 'DDMgr_ptr' in all files
+    *   replaced 'DdManager*'/'DdManager *' with 'DDMgr_ptr' in all files
 
 15.warning: GameStrategy.c : implicit declaration of function ‘Enc_get_bdd_encoding’
 
@@ -413,7 +414,7 @@ Nitin Yadav - nitin.yadav@rmit.edu.au
             'Parser_read_psl_from_string'
             'PslNode_convert_psl_to_core'
             
-50. errors and warnings in gameUnrealCore.c
+50.gameUnrealCore.c
 
     warning: passing argument 1 of ‘SymbType_create’ makes pointer from integer without a cast
     
@@ -422,10 +423,6 @@ Nitin Yadav - nitin.yadav@rmit.edu.au
     error: macro "find_atom" requires 2 arguments
             
         *   added 'nodemgr' parameter
-  
-    warning: 1880:43: passing argument 2 of ‘game_output_spec_without_params’ from incompatible pointer type
-        
-        *   removed 'const' from 'wffprint' declaration
     
     warning: passing argument 7 of ‘BddEnc_print_bdd_wff’ from incompatible pointer type
     
@@ -435,9 +432,19 @@ Nitin Yadav - nitin.yadav@rmit.edu.au
     
         *   add cast '(game_is_game_still_correct)' to 'game_is_opponent_constraint_minimal' parameter
         
+51.gameCheckLTLSF07.c  
+
+    warning: implicit declaration of function ‘w2w_init_wff2nnf()’ and ‘w2w_quit_wff2nnf()’
+    
+        *   replaced with 'wff_pkg_init(env)' and 'wff_pkg_quit(env)'
+        
+    warning: passing argument 1 of ‘Compile_FlattenHierarchy’ from incompatible pointer type
+    
+        *   added 'env' and new parameter 'expand_bounded_arrays' with 'false' (default value)
+
         
         
-   
+   .14 revision + 
     
 ================================================================================
 EOF

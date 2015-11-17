@@ -993,7 +993,7 @@ void GameStrategy_print_module(GameStrategy_ptr self,
 
   env = EnvObject_get_environment(ENV_OBJECT(st));
 
-  const MasterPrinter_ptr wffprint =
+  MasterPrinter_ptr wffprint =
             MASTER_PRINTER(NuSMVEnv_get_value(env, ENV_WFF_PRINTER));
 
   fprintf(out, "MODULE STRATEGY_MODULE%d\n\n", ++module_incr_number);

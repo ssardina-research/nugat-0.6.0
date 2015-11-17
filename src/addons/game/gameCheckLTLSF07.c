@@ -225,7 +225,7 @@ typedef struct Game_SF07_StructCheckLTLGameSF07_TAG {
   BoolEnc_ptr bool_enc;
 
   /* The BDD manager. */
-  DdManager *dd_manager;
+  DDMgr_ptr dd_manager;
 
   /* The symbol table. */
   SymbTable_ptr symb_table;
@@ -321,7 +321,7 @@ ARGS((NuSMVEnv_ptr env,
       Game_Who w));
 
 static void Game_SF07_StructCheckLTLGameSF07_destroy
-ARGS((Game_SF07_StructCheckLTLGameSF07_ptr self));
+ARGS((NuSMVEnv_ptr env,Game_SF07_StructCheckLTLGameSF07_ptr self));
 
 static void Game_SF07_StructCheckLTLGameSF07_create_iteration
 ARGS((Game_SF07_StructCheckLTLGameSF07_ptr self,
@@ -373,7 +373,7 @@ ARGS((Game_SF07_StructCheckLTLGameSF07_ptr self,
 static node_ptr find_node_number ARGS((NodeMgr_ptr nodemgr, int n));
 
 static void Game_SF07_StructCheckLTLGameSF07_print_monitor
-ARGS((FILE* ostream, node_ptr module, boolean body_only));
+ARGS((MasterPrinter_ptr wffprint,FILE* ostream, node_ptr module, boolean body_only));
 
 static void Game_SF07_StructCheckLTLGameSF07_print_strategy_monitor_sexp
 ARGS((Game_SF07_StructCheckLTLGameSF07_ptr self));
@@ -530,7 +530,7 @@ void Game_CheckLtlGameSpecSF07(NuSMVEnv_ptr env,
       Prop_get_status(PROP(cls->prop)) == Prop_False) {
     Game_SF07_StructCheckLTLGameSF07_destroy_iteration(nodemgr,cls);
   }
-  Game_SF07_StructCheckLTLGameSF07_destroy(cls);
+  Game_SF07_StructCheckLTLGameSF07_destroy(env,cls);
 }
 
 /**Function********************************************************************
@@ -611,7 +611,7 @@ Game_SF07_StructCheckLTLGameSF07_create(NuSMVEnv_ptr env,
   res->symb_table = SYMB_TABLE(NuSMVEnv_get_value(env, ENV_SYMB_TABLE));
 
   if (!cmp_struct_get_bmc_init(cmps)) {
-     w2w_init_wff2nnf();
+      wff_pkg_init(env);
   }
 
   /* The iteration-variant parts. */
@@ -645,7 +645,7 @@ Game_SF07_StructCheckLTLGameSF07_create(NuSMVEnv_ptr env,
 
 ******************************************************************************/
 static void Game_SF07_StructCheckLTLGameSF07_destroy
-(Game_SF07_StructCheckLTLGameSF07_ptr self)
+(NuSMVEnv_ptr env,Game_SF07_StructCheckLTLGameSF07_ptr self)
 {
   GAME_SF07_STRUCT_CHECK_LTL_GAME_SF07_CHECK_INSTANCE(self);
 
@@ -665,7 +665,7 @@ static void Game_SF07_StructCheckLTLGameSF07_destroy
   /* Don't destroy symb_table: doesn't belong here. */
 
   if (!cmp_struct_get_bmc_init(cmps)) {
-     w2w_quit_wff2nnf();
+      wff_pkg_quit(env);
   }
 
   /* The iteration-variant parts. */
@@ -944,7 +944,7 @@ static void Game_SF07_StructCheckLTLGameSF07_construct_ba
     SymbLayer_ptr det_layer;
 
     /* Booleanize. */
-    nusmv_assert(Compile_check_if_bool_model_was_built((FILE*) NULL, true) == 0);
+    nusmv_assert(Compile_check_if_bool_model_was_built(env,(FILE*) NULL, true) == 0);
     det_layer = SymbTable_create_layer(self->symb_table,
                                        (char*) NULL, /* temp name */
                                        SYMB_LAYER_POS_DEFAULT);
@@ -970,7 +970,7 @@ static void Game_SF07_StructCheckLTLGameSF07_construct_ba
     SymbTable_remove_layer(self->symb_table, det_layer);
 
     /* Nnfize. */
-    nnfed = Wff2Nnf(NODE_MGR,booleanized);
+    nnfed = Wff2Nnf(env,booleanized);
 
     /* Log result. */
     if (opt_verbose_level_ge(OptsHandler_create(), 4)) {
@@ -1134,7 +1134,7 @@ static void Game_SF07_StructCheckLTLGameSF07_construct_monitor_sexp
 
     const NuSMVEnv_ptr env = EnvObject_get_environment(ENV_OBJECT(self));
     const NodeMgr_ptr nodemgr = NODE_MGR(NuSMVEnv_get_value(env, ENV_NODE_MGR));
-    const MasterPrinter_ptr wffprint = MASTER_PRINTER(NuSMVEnv_get_value(env, ENV_WFF_PRINTER));
+    MasterPrinter_ptr wffprint = MASTER_PRINTER(NuSMVEnv_get_value(env, ENV_WFF_PRINTER));
     const UStringMgr_ptr strings = USTRING_MGR(NuSMVEnv_get_value(env, ENV_STRING_MGR));
 
   GAME_SF07_STRUCT_CHECK_LTL_GAME_SF07_CHECK_INSTANCE(self);
@@ -1778,25 +1778,29 @@ static void Game_SF07_StructCheckLTLGameSF07_construct_monitor_game_bdd_fsm
   nusmv_assert(self->curr_monitor_game_bdd_fsm == GAME_BDD_FSM(NULL));
 
   /* Construct hierarchies. */
-  CompileFlatten_hash_module(NODE_MGR,self->curr_player2_monitor_sexp);
+  CompileFlatten_hash_module(env,self->curr_player2_monitor_sexp);
   player2_monitor_flat_hierarchy =
-    Compile_FlattenHierarchy(self->symb_table,
+    Compile_FlattenHierarchy(env,
+                             self->symb_table,
                              self->curr_player2_monitor_layer,
                              car(car(self->curr_player2_monitor_sexp)),
                              Nil,
                              Nil,
                              false,
                              true,
+                             false,
                              HRC_NODE(NULL));
-  CompileFlatten_hash_module(NODE_MGR,self->curr_player1_monitor_sexp);
+  CompileFlatten_hash_module(env,self->curr_player1_monitor_sexp);
   player1_monitor_flat_hierarchy =
-    Compile_FlattenHierarchy(self->symb_table,
+    Compile_FlattenHierarchy(env,
+                             self->symb_table,
                              self->curr_player1_monitor_layer,
                              car(car(self->curr_player1_monitor_sexp)),
                              Nil,
                              Nil,
                              false,
                              true,
+                             false,
                              HRC_NODE(NULL));
 
   /* Commit layers. */
@@ -2086,7 +2090,7 @@ static void Game_SF07_StructCheckLTLGameSF07_check
 
   /* Construct property. */
   expr = find_node(nodemgr,GAME_SPEC_WRAPPER,
-                   sym_intern(env,PTR_TO_INT(car(self->curr_goal)) == (node_ptr)1 ?
+                   sym_intern(env,PTR_TO_INT(car(self->curr_goal)) == 1 ?
                               PLAYER_NAME_1 :
                               PLAYER_NAME_2),
                    cdr(self->curr_goal));
@@ -2308,7 +2312,7 @@ static void Game_SF07_StructCheckLTLGameSF07_print_strategy_monitor_sexp
   NodeList_ptr vars;
   NodeList_ptr vars_to_decl;
   const NuSMVEnv_ptr env = EnvObject_get_environment(ENV_OBJECT(self));
-  const MasterPrinter_ptr wffprint = MASTER_PRINTER(NuSMVEnv_get_value(env, ENV_WFF_PRINTER));
+  MasterPrinter_ptr wffprint = MASTER_PRINTER(NuSMVEnv_get_value(env, ENV_WFF_PRINTER));
 
   GAME_STRATEGY_CHECK_INSTANCE(self->strategy);
   {
@@ -2435,7 +2439,7 @@ static void Game_SF07_StructCheckLTLGameSF07_print_strategy_monitor_bdd
 
   env = EnvObject_get_environment(ENV_OBJECT(self->symb_table));
 
-  const MasterPrinter_ptr wffprint =
+  MasterPrinter_ptr wffprint =
             MASTER_PRINTER(NuSMVEnv_get_value(env, ENV_WFF_PRINTER));
 
   module_incr_number++;
@@ -2558,7 +2562,7 @@ static void Game_SF07_StructCheckLTLGameSF07_print_strategy_monitor_bdd
                            do_sharing,
                            do_indentation,
                            strlen(init_str),
-                           out);
+                           OSTREAM(out));
       if (get_game_sf07_strategy_printing_mode(OptsHandler_create()) ==
           GAME_SF07_STRATEGY_PRINTING_MODE_BDD_SEPARATE) {
         fprintf(out, "%s", init_str);
@@ -2568,7 +2572,7 @@ static void Game_SF07_StructCheckLTLGameSF07_print_strategy_monitor_bdd
                              do_sharing,
                              do_indentation,
                              strlen(init_str),
-                             out);
+                             OSTREAM(out));
       }
       fprintf(out, "\n");
     }
@@ -2605,7 +2609,7 @@ static void Game_SF07_StructCheckLTLGameSF07_print_strategy_monitor_bdd
                            do_sharing,
                            do_indentation,
                            strlen(trans_str),
-                           out);
+                           OSTREAM(out));
       if (get_game_sf07_strategy_printing_mode(OptsHandler_create()) ==
           GAME_SF07_STRATEGY_PRINTING_MODE_BDD_SEPARATE) {
         fprintf(out, "%s", trans_str);
@@ -2615,7 +2619,7 @@ static void Game_SF07_StructCheckLTLGameSF07_print_strategy_monitor_bdd
                              do_sharing,
                              do_indentation,
                              strlen(trans_str),
-                             out);
+                             OSTREAM(out));
       }
       fprintf(out, "\n");
     }

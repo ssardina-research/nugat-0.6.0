@@ -2472,7 +2472,7 @@ static boolean game_minimize_players_constraints(
 
     const NuSMVEnv_ptr env = EnvObject_get_environment(ENV_OBJECT(self));
     const NodeMgr_ptr nodemgr = NODE_MGR(NuSMVEnv_get_value(env, ENV_NODE_MGR));
-    const MasterPrinter_ptr wffprint = MASTER_PRINTER(NuSMVEnv_get_value(env, ENV_WFF_PRINTER));
+    MasterPrinter_ptr wffprint = MASTER_PRINTER(NuSMVEnv_get_value(env, ENV_WFF_PRINTER));
 
   node_ptr trueConst = find_node(nodemgr,TRUEEXP, Nil, Nil);
 
@@ -3021,7 +3021,7 @@ static void game_compute_core_switching_constraints(
 
     const NuSMVEnv_ptr env = EnvObject_get_environment(ENV_OBJECT(self));
     const NodeMgr_ptr nodemgr = NODE_MGR(NuSMVEnv_get_value(env, ENV_NODE_MGR));
-    const MasterPrinter_ptr wffprint = MASTER_PRINTER(NuSMVEnv_get_value(env, ENV_WFF_PRINTER));
+    MasterPrinter_ptr wffprint = MASTER_PRINTER(NuSMVEnv_get_value(env, ENV_WFF_PRINTER));
 
   node_ptr spec = Prop_get_expr_core(PROP(self->prop));
   /* the prop has not been used yet */
