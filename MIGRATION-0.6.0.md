@@ -542,8 +542,16 @@ Nitin Yadav - nitin.yadav@rmit.edu.au
 
     error: unknown type name ‘FP_V_V’ , FP_V_V iq_fns[][2] = {{NuGaTAddons_Init, NuGaTAddons_Quit}};
       ^
-        *   replaced with 'FP_V_E'
-            
+        *   replaced with 'FP_V_E' because there is 'env' parameter
+        
+    warning: implicit declaration of function ‘init_options_cmd’
+    
+        *   replaced with 'Opt_Cmd_init(env)' and added library '#include "opt/optCmd.h"'
+        
+    warning: implicit declaration of function ‘CInit_NusmvrcSource’
+    
+        *   replaced with 'Cmd_Misc_NusmvrcSource(env)'
+        
             
 ================================================================================
 EOF

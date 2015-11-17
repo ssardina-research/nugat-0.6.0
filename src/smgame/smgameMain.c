@@ -47,6 +47,7 @@
 
 #include "cmd/cmd.h"
 #include "opt/opt.h"
+#include "opt/optCmd.h"
 #include "cinit/cinit.h" //#include "sm/sm.h"
 #include "utils/utils.h"
 #include "../addons/addons.h"
@@ -140,10 +141,10 @@ int main(int  argc, char ** argv)
   if (!opt_batch(OptsHandler_create())) { /* interactive mode */
     /* Initiliazes the commands to handle with options. */
 
-    init_options_cmd();
+    Opt_Cmd_init(env);
     BannerPrint(nusmv_stdout);
     if (!opt_ignore_init_file(OptsHandler_create())) {
-      (void) CInit_NusmvrcSource();
+      (void) Cmd_Misc_NusmvrcSource(env);
     }
     if (NuSMV_CMD_LINE != NULL) {
       /* Before entering interactive mode, check if command file
@@ -581,14 +582,14 @@ static void sm_ParseLineOptions(const NuSMVEnv_ptr env,int argc, char ** argv, O
       argv++; argc--;
       pp_list = get_pp_list(options);
       if (strcmp(pp_list, "") == 0) {
-        set_pp_list(options, "cpp");
+        set_pp_list(options, "cpp", env);
       }
       else {
         char* new_pp_list;
         new_pp_list = ALLOC(char, strlen(pp_list) + 5);
         strcpy(new_pp_list, "cpp ");
         strcat(new_pp_list, pp_list);
-        set_pp_list(options, new_pp_list);
+        set_pp_list(options, new_pp_list, env);
         FREE(new_pp_list);
       }
       continue;
@@ -605,7 +606,7 @@ static void sm_ParseLineOptions(const NuSMVEnv_ptr env,int argc, char ** argv, O
         preprocessors = *(argv++);
         pp_list = get_pp_list(options);
         if (strcmp(pp_list, "") == 0) {
-          set_pp_list(options, preprocessors,env);
+          set_pp_list(options, preprocessors, env);
         }
         else {
           char* new_pp_list;
@@ -614,7 +615,7 @@ static void sm_ParseLineOptions(const NuSMVEnv_ptr env,int argc, char ** argv, O
           strcpy(new_pp_list, pp_list);
           strcat(new_pp_list, " ");
           strcat(new_pp_list, preprocessors);
-          set_pp_list(options, new_pp_list,env);
+          set_pp_list(options, new_pp_list, env);
           FREE(new_pp_list);
         }
 
