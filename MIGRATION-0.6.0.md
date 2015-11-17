@@ -480,16 +480,24 @@ Nitin Yadav - nitin.yadav@rmit.edu.au
     
 54.walkers/CheckerGame.c
 
-    warning: passing argument 2 of ‘checker_base_init’ from incompatible pointer type
+    warning: passing argument 2 of ‘checker_base_init’ from incompatible pointer type 
+    
+        *   added 'env' parameter for : 'checker_game_init' , 'CheckerGame_create'
+        
     error: too few arguments to function ‘SymbTablePkg_error_type’
     
-        *   added 'env' parameter for : 'checker_game_init' , 'CheckerGame_create' , 'SymbTablePkg_error_type'
+        *   added 'env' parameter for 'SymbTablePkg_error_type'
         
     error: ‘nusmv_stderr’ undeclared (first use in this function)
     
         *   replaced with 'stderr'
         
+55.src/addons/addons.h
+    
+    fatal error: util.h: No such file or directory  '#include "util.h"'
 
+        *   removed line because 'util.h' is not present
+        
 ================================================================================
 EOF
 ================================================================================

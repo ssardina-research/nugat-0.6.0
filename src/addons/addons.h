@@ -47,7 +47,6 @@
 #include "config.h"
 #endif
 
-#include "util.h"
 
 /*---------------------------------------------------------------------------*/
 /* Constant declarations                                                     */

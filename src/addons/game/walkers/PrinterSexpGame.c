@@ -148,7 +148,8 @@ PrinterSexpGame_ptr PrinterSexpGame_create(NuSMVEnv_ptr env,const char* name)
   SeeAlso     [ PrinterSexpGame_create ]
 
 ******************************************************************************/
-void printer_sexp_game_init(NuSMVEnv_ptr env,PrinterSexpGame_ptr self,
+void printer_sexp_game_init(NuSMVEnv_ptr env,
+                            PrinterSexpGame_ptr self,
                             const char* name,
                             int low,
                             size_t num)
