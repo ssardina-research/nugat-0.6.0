@@ -223,14 +223,16 @@ Lorenzo Dibenedetto - lorenzodibenedetto90@gmail.com , Sebastian Sardina - ssard
 
     *   added declaration "DDMgr_ptr dd_manager = (DDMgr_ptr )NuSMVEnv_get_value(env, ENV_DD_MGR);"
     
-26.warning: gamePkg.c: implicit declaration of function
+26.warning: gamePkg.c: implicit declaration of function [ EXPLAIN FROM HERE ]
 
     *   all this functions are replaced
     
             ‘node_pkg_get_global_master_wff_printer’ with 'MASTER_PRINTER(NuSMVEnv_get_value(env, ENV_WFF_PRINTER))'
             ‘node_pkg_get_global_master_sexp_printer’ with 'MASTER_PRINTER(NuSMVEnv_get_value(env, ENV_SEXP_PRINTER));'
-            ‘Compile_get_global_symb_table’ with 'symb_table'
+            ‘Compile_get_global_symb_table’ with 'SYMB_TABLE(NuSMVEnv_get_value(env, ENV_SYMB_TABLE))'
             ‘PropPkg_get_prop_database’ with 'PROP_DB(NuSMVEnv_get_value(env, ENV_PROP_DB));'
+            'PropPkg_set_prop_database(PROP_DB(dbg))' with 'NuSMVEnv_set_value(env, ENV_PROP_DB,PROP_DB(dbg))'
+            
                 added 'env' parameter for :
                     'game_pkg_switch_to_prop_db_game'
                     'Game_Mode_Enter'
@@ -249,8 +251,6 @@ Lorenzo Dibenedetto - lorenzodibenedetto90@gmail.com , Sebastian Sardina - ssard
                     'Game_CheckGenReactivitySpec'
                     'command_function_ptr'
                     
-            'PropPkg_set_prop_database(PROP_DB(dbg))' with 'NuSMVEnv_set_value(env, ENV_PROP_DB,PROP_DB(dbg))'
-    
 27.error: gamePkg.c: ‘cmdCommandTable’ undeclared (first use in this function)
     
         *   replaced with 'commandTable' and added declaration 'avl_tree* commandTable = (avl_tree*)NuSMVEnv_get_value(env, ENV_CMD_COMMAND_TABLE);'
@@ -258,33 +258,21 @@ Lorenzo Dibenedetto - lorenzodibenedetto90@gmail.com , Sebastian Sardina - ssard
 28.warning: gamePkg.c: implicit declaration of function ‘get_text(’
 
         *   replaced with '(char*)UStringMgr_get_string_text('
-        
-        warning: cast to pointer from integer of different size
-        
-            *   removed '(char*)'
+        *   replaced with 'UStringMgr_get_string_text(' in 'gameUnrealCore.c' for condition statements
 
 29.warning: gamePkg.c: passing argument 1 of ‘Cmd_CommandDefined’ from incompatible pointer type
 
         *   added 'env' parameter for : 
         
-                'Cmd_CommandDefined'
-                'Cmd_CommandAdd'
-                'Cmd_CommandRemove'
-                'Cmd_CommandGet'
-                'NuGaTAddons_Init'
-                'NuGaTAddons_Quit'
+                'Cmd_CommandDefined', 'Cmd_CommandAdd', 'Cmd_CommandRemove' ,'Cmd_CommandGet' 
                 
-                'game_pkg_switch_from_game_cmds'
-                'game_pkg_add_cmds'
-                'game_pkg_remove_cmds'
-                'game_pkg_store_remove_cmd'
-                'game_pkg_restore_cmds'
+                'NuGaTAddons_Init', 'NuGaTAddons_Quit'
+                
+                'game_pkg_switch_from_game_cmds', 'game_pkg_add_cmds', 'game_pkg_remove_cmds', 'game_pkg_store_remove_cmd', 'game_pkg_restore_cmds'
                 
                 'CommandGameReset'
-                'Smgame_Init'
-                'Smgame_AddCmd'
-                'Smgame_Reset'
-                'Smgame_End'
+                
+                'Smgame_Init', 'Smgame_AddCmd', 'Smgame_Reset', 'Smgame_End'
             
 30.warning: gameGeneral.c: implicit declaration of function ‘PropDb_set_fsm_to_master’
 
@@ -294,12 +282,9 @@ Lorenzo Dibenedetto - lorenzodibenedetto90@gmail.com , Sebastian Sardina - ssard
 
     *   replaced with 'ErrorMgr_internal_error(errmgr,'
     *   added library '#include "utils/ErrorMgr.h"'
-    *   added 'env' parameter to:
+    *   added 'env' parameter for :
             
-            'Game_AfterCheckingSpec'
-            'Game_UseStrongReachabilityAlgorithm'
-            'PrinterGame_create'
-            'printer_base_init'
+            'Game_AfterCheckingSpec', 'Game_UseStrongReachabilityAlgorithm', 'PrinterGame_create', 'printer_base_init'
             
 32.warning: gameGeneral.c: passing argument 1 of ‘SymbLayer_gen_iter’ and 'SymbLayer_iter_to_list’ from incompatible pointer type
 
@@ -313,14 +298,9 @@ Lorenzo Dibenedetto - lorenzodibenedetto90@gmail.com , Sebastian Sardina - ssard
 
     *   replaced with 'SYMB_TABLE(NuSMVEnv_get_value(env, ENV_SYMB_TABLE))'
     *   added 'env' parameter for :
-            'game_declare_special_var'
-            'game_undeclare_special_var'
-            'Game_SF07_StructCheckLTLGameSF07_create'
-            'Game_CheckLtlGameSpecSF07'
-            'game_check_first_player_recur'
-            'game_check_first_player'
-            'Game_UnrealizableCore_Struct_create'
-            'Game_CheckGameSpecAndComputeCores'
+            'game_declare_special_var', 'game_undeclare_special_var', 'Game_SF07_StructCheckLTLGameSF07_create'
+            'Game_CheckLtlGameSpecSF07', 'game_check_first_player_recur', 'game_check_first_player'
+            'Game_UnrealizableCore_Struct_create', 'Game_CheckGameSpecAndComputeCores'
             
 35.error: gameFlatten.c: too few arguments to function ‘CompileFlatten_init_flattener’
    warning: passing argument 1 of ‘sym_intern’ from incompatible pointer type
@@ -341,23 +321,22 @@ Lorenzo Dibenedetto - lorenzodibenedetto90@gmail.com , Sebastian Sardina - ssard
                ...
                }
         
-        *   added 'expand_bounded_arrays' parameter for 'Game_CommandFlattenHierarchy()' , 'game_flatten_game_hierarchy()'
+        *   added 'expand_bounded_arrays' parameter for 'Game_CommandFlattenHierarchy()', 'game_flatten_game_hierarchy()'
                
 37.warning: implicit declaration of function ‘rpterr’
 
     *   replaced with 'ErrorMgr_rpterr(errmgr,' and added declaration when required 'const ErrorMgr_ptr errmgr = ERROR_MGR(NuSMVEnv_get_value(env, ENV_ERROR_MANAGER));'
     *   added 'env' parameter for:
-            'GameSexpFsm_create'
-            'game_construct_game_fsms'
-            'game_is_opponent_constraint_minimal'
-            'game_compute_core_using_parameters'
+            'GameSexpFsm_create', 'game_construct_game_fsms', 'game_is_opponent_constraint_minimal', 'game_compute_core_using_parameters'
             
 38.warning: implicit declaration of function ‘error_game_definition_contains_input_vars’
 
     *   replaced with 'ErrorMgr_error_game_definition_contains_input_vars(errmgr,' 
-    *   added declaration when required 'const ErrorMgr_ptr errmgr = ERROR_MGR(NuSMVEnv_get_value(env, ENV_ERROR_MANAGER));'
-    *   added 'env' parameter for 'Compile_ProcessHierarchy'
-    *   added 'nodemgr' parameter for 'PslNode_new_context'
+    *   added 
+            declaration when required 'const ErrorMgr_ptr errmgr = ERROR_MGR(NuSMVEnv_get_value(env, ENV_ERROR_MANAGER));'
+            parameter 
+                'env'  for 'Compile_ProcessHierarchy'
+                'nodemgr' for 'PslNode_new_context'
     
 39.warning: comparison between pointer and integer 'sym_intern(env,((car(spec)) == 1 ?'
 
@@ -365,8 +344,9 @@ Lorenzo Dibenedetto - lorenzodibenedetto90@gmail.com , Sebastian Sardina - ssard
     
 40.warning: implicit declaration of function ‘error_second_player_next_var’
 
-    *   replaced with 'ErrorMgr_error_second_player_next_var (errmgr,'
-    *   replaced 'error_second_player_var' with 'ErrorMgr_error_second_player_var(errmgr,'
+    *   replaced 
+            with 'ErrorMgr_error_second_player_next_var (errmgr,'
+            'error_second_player_var' with 'ErrorMgr_error_second_player_var(errmgr,'
     *   added declaration when required 'const ErrorMgr_ptr errmgr = ERROR_MGR(NuSMVEnv_get_value(env, ENV_ERROR_MANAGER));'
     
 41.error: gameFlatten.c: ‘yylineno’  undeclared (first use in this function)
@@ -473,7 +453,7 @@ Lorenzo Dibenedetto - lorenzodibenedetto90@gmail.com , Sebastian Sardina - ssard
                         print_node(wffprint,file, p);
                         fprintf(file, "%s", " ");
                         
-53.PropDbGame.c [ ASK IF CORRECT .2.3 ]
+53.PropDbGame.c [ ASK IF RIGHT .2.3 ]
     
     warning: passing argument 2 of ‘Prop_print_db’ from incompatible pointer type
     
@@ -484,7 +464,7 @@ Lorenzo Dibenedetto - lorenzodibenedetto90@gmail.com , Sebastian Sardina - ssard
         *   replaced 'PROP_DB(self)->master' with 'NuSMVEnv_get_value(env, ENV_PROP_DB)'
         *   replaced 'PROP_DB(self)->master = PROP(PropGame_create(env))' with 'NuSMVEnv_set_value(env, ENV_PROP_DB, PROP(PropGame_create(env)))'
         
-        *   replaced this 'OVERRIDE(PropDb, set_fsm_to_master) = (PropDb_set_fsm_to_master_method) prop_db_game_set_fsm_to_master;' with 'Prop_set_environment_fsms(env, prop_db_game_set_fsm_to_master);' 
+        *   replaced this 'OVERRIDE(PropDb, set_fsm_to_master) = (PropDb_set_fsm_to_master_method) prop_db_game_set_fsm_to_master;' with 'Prop_set_environment_fsms(env, prop_db_game_set_fsm_to_master);'  [...]
     
     missing parameter
         
@@ -510,7 +490,7 @@ Lorenzo Dibenedetto - lorenzodibenedetto90@gmail.com , Sebastian Sardina - ssard
 
         *   removed line because 'util.h' is not present
         
-56.smgameMisc.c [ ASK IF CORRECT .3 ]
+56.smgameMisc.c [ ASK IF RIGHT .3 ]
 
     warning: implicit declaration of function ‘util_resetlongjmp()’
     
@@ -520,7 +500,7 @@ Lorenzo Dibenedetto - lorenzodibenedetto90@gmail.com , Sebastian Sardina - ssard
     
         *   added 'env' parameter
         
-    warning: implicit declaration of function ‘PropDb_master_get_bdd_fsm’ 
+    warning: implicit declaration of function ‘PropDb_master_get_bdd_fsm’ [...]
     
         *   replaced with 'Prop_get_bdd_fsm' (line 478 miss round bracket ) and changed 'PROB_DB' in 'PROB'
         
@@ -540,8 +520,10 @@ Lorenzo Dibenedetto - lorenzodibenedetto90@gmail.com , Sebastian Sardina - ssard
     
         *   added cast 'OSTREAM(file)'
         
-59.make[3]: *** No rule to make target `/home/lorenzo/Documents/software/ClionProjects/NuSMV-2.6.0/NuSMV/code/nusmv/core/cinit/cinitCmd.lo', needed by `libsmgame.la' [TODO: check if correct]
-    
+59.make[3]: *** No rule to make target `/home/lorenzo/Documents/software/ClionProjects/NuSMV-2.6.0/NuSMV/code/nusmv/core/cinit/cinitCmd.lo', needed by `libsmgame.la' 
+
+[TODO: find a solution]   
+ 
     *   removed this include because file not exists
     
             $(NUSMV_DIR)/code/nusmv/core/cinit/cinitCmd.lo \
@@ -563,10 +545,13 @@ Lorenzo Dibenedetto - lorenzodibenedetto90@gmail.com , Sebastian Sardina - ssard
     warning: implicit declaration of function ‘CInit_NusmvrcSource’
     
         *   replaced with 'Cmd_Misc_NusmvrcSource(env)'
-        
-61.make[2]: *** No rule to make target `/home/lorenzo/Documents/software/ClionProjects/NuSMV-2.6.0/NuSMV/libnusmvcore.la', needed by `NuGaT'.  Stop.
+
+
+61.make[2]: *** No rule to make target `/home/lorenzo/Documents/software/ClionProjects/NuSMV-2.6.0/NuSMV/libnusmvcore.la', needed by `NuGaT'.  Stop. 
    make[2]: *** No rule to make target `/home/lorenzo/Documents/software/ClionProjects/NuSMV-2.6.0/NuSMV/librbcdag.la', needed by `NuGaT'.  Stop.
-    
+ 
+[TODO: find a solution]   
+ 
     *   ? remove '$(NUSMV_DIR)/libnusmvcore.la' and '$(NUSMV_DIR)/librbcdag.la'  from 'NuGaT_DEPENDENCIES='/'NuGaT_LDADD=' because file not exists ???
    
             
