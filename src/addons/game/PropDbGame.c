@@ -534,8 +534,9 @@ void prop_db_game_init(PropDbGame_ptr self,const NuSMVEnv_ptr env)
   OVERRIDE(Object, finalize) = prop_db_game_finalize;
   OVERRIDE(PropDb, prop_create_and_add) =
     (PropDb_prop_create_and_add_method) prop_db_game_prop_create_and_add;
-  /*OVERRIDE(PropDb, set_fsm_to_master) =
-    (PropDb_set_fsm_to_master_method) prop_db_game_set_fsm_to_master;*/
+
+  Prop_set_environment_fsms(env, prop_db_game_set_fsm_to_master);
+
   OVERRIDE(PropDb, verify_all) =
     (PropDb_verify_all_method) prop_db_game_verify_all;
 }
@@ -638,10 +639,13 @@ int prop_db_game_prop_create_and_add(PropDbGame_ptr self,
   SeeAlso     [ prop_db_set_fsm_to_master ]
 
 ******************************************************************************/
-void prop_db_game_set_fsm_to_master(const NuSMVEnv_ptr env,PropDbGame_ptr self, PropGame_ptr prop)
+void prop_db_game_set_fsm_to_master(PropDbGame_ptr self, PropGame_ptr prop)
 {
   PROP_DB_GAME_CHECK_INSTANCE(self);
   PROP_GAME_CHECK_INSTANCE(prop);
+
+  const NuSMVEnv_ptr env = EnvObject_get_environment(ENV_OBJECT(self));
+
   nusmv_assert(PropGame_type_is_game(Prop_get_type(PROP(prop))));
 
   PropGame_set_game_scalar_sexp_fsm(prop,

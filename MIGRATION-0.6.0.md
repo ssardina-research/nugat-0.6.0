@@ -473,7 +473,7 @@ Lorenzo Dibenedetto - lorenzodibenedetto90@gmail.com , Sebastian Sardina - ssard
                         print_node(wffprint,file, p);
                         fprintf(file, "%s", " ");
                         
-53.PropDbGame.c [ TODO : find solution for commented line ]
+53.PropDbGame.c [ ASK IF CORRECT .2.3 ]
     
     warning: passing argument 2 of ‘Prop_print_db’ from incompatible pointer type
     
@@ -484,9 +484,11 @@ Lorenzo Dibenedetto - lorenzodibenedetto90@gmail.com , Sebastian Sardina - ssard
         *   replaced 'PROP_DB(self)->master' with 'NuSMVEnv_get_value(env, ENV_PROP_DB)'
         *   replaced 'PROP_DB(self)->master = PROP(PropGame_create(env))' with 'NuSMVEnv_set_value(env, ENV_PROP_DB, PROP(PropGame_create(env)))'
         
-        *   commented this line 'OVERRIDE(PropDb, set_fsm_to_master) = (PropDb_set_fsm_to_master_method) prop_db_game_set_fsm_to_master;'
+        *   replaced this 'OVERRIDE(PropDb, set_fsm_to_master) = (PropDb_set_fsm_to_master_method) prop_db_game_set_fsm_to_master;' with 'Prop_set_environment_fsms(env, prop_db_game_set_fsm_to_master);' 
     
-    *   added 'env' parameter for 'PropDbGame_create' , 'PropDbGame_clean' , 'prop_db_game_init' , 'prop_db_init'
+    missing parameter
+        
+        *   added 'env' parameter for 'PropDbGame_create' , 'PropDbGame_clean' , 'prop_db_game_init' , 'prop_db_init'
     
 54.walkers/CheckerGame.c
 
@@ -508,7 +510,7 @@ Lorenzo Dibenedetto - lorenzodibenedetto90@gmail.com , Sebastian Sardina - ssard
 
         *   removed line because 'util.h' is not present
         
-56.smgameMisc.c
+56.smgameMisc.c [ ASK IF CORRECT .3 ]
 
     warning: implicit declaration of function ‘util_resetlongjmp()’
     
@@ -518,7 +520,7 @@ Lorenzo Dibenedetto - lorenzodibenedetto90@gmail.com , Sebastian Sardina - ssard
     
         *   added 'env' parameter
         
-    warning: implicit declaration of function ‘PropDb_master_get_bdd_fsm’ [ TODO : CHECK IF CORRECT ]
+    warning: implicit declaration of function ‘PropDb_master_get_bdd_fsm’ 
     
         *   replaced with 'Prop_get_bdd_fsm' (line 478 miss round bracket ) and changed 'PROB_DB' in 'PROB'
         
