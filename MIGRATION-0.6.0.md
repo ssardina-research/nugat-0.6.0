@@ -552,6 +552,11 @@ Nitin Yadav - nitin.yadav@rmit.edu.au
     
         *   replaced with 'Cmd_Misc_NusmvrcSource(env)'
         
+61.make[2]: *** No rule to make target `/home/lorenzo/Documents/software/ClionProjects/NuSMV-2.6.0/NuSMV/libnusmvcore.la', needed by `NuGaT'.  Stop. [ TODO : find solution ]
+   make[2]: *** No rule to make target `/home/lorenzo/Documents/software/ClionProjects/NuSMV-2.6.0/NuSMV/librbcdag.la', needed by `NuGaT'.  Stop.
+    
+    *   remove '$(NUSMV_DIR)/libnusmvcore.la' and '$(NUSMV_DIR)/librbcdag.la'  from 'NuGaT_DEPENDENCIES='/'NuGaT_LDADD=' because file not exists ???
+
             
 ================================================================================
 EOF

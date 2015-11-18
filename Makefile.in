@@ -137,7 +137,7 @@ libnugat_la_OBJECTS = $(am_libnugat_la_OBJECTS)
 PROGRAMS = $(bin_PROGRAMS)
 am_NuGaT_OBJECTS = smgameMain.$(OBJEXT)
 NuGaT_OBJECTS = $(am_NuGaT_OBJECTS)
-NuGaT_DEPENDENCIES = libnugat.la $(NUSMV_DIR)/libnusmvcore.la $(NUSMV_DIR)/librbcdag.la
+NuGaT_DEPENDENCIES = libnugat.la
 DEFAULT_INCLUDES = -I.@am__isrc@
 depcomp = $(SHELL) $(top_srcdir)/helpers/depcomp
 am__depfiles_maybe = depfiles
@@ -367,7 +367,7 @@ lib_LTLIBRARIES = libnugat.la
 # ----------------------------------------------------------------------
 # The NuGaT executable
 NuGaT_SOURCES = $(top_srcdir)/src/smgame/smgameMain.c
-NuGaT_LDADD = libnugat.la $(NUSMV_DIR)/libnusmvcore.la $(NUSMV_DIR)/librbcdag.la
+NuGaT_LDADD = libnugat.la
 # ----------------------------------------------------------------------
 
 # lib for external linking:
