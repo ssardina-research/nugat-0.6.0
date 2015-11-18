@@ -1,11 +1,10 @@
 ================================================================================
+
 MIGRATION FROM NuGAT 0.5.4 (NuSMV 2.5.4)to NuGAT 0.6.0 (NuGAT 2.6.0)
 
 October 2015
 
-Lorenzo Dibenedetto - lorenzodibenedetto90@gmail.com
-Sebastian Sardina - ssardina@gmail.com 
-Nitin Yadav - nitin.yadav@rmit.edu.au
+Lorenzo Dibenedetto - lorenzodibenedetto90@gmail.com , Sebastian Sardina - ssardina@gmail.com , Nitin Yadav - nitin.yadav@rmit.edu.au
 
 ================================================================================
 
@@ -323,16 +322,27 @@ Nitin Yadav - nitin.yadav@rmit.edu.au
             'Game_UnrealizableCore_Struct_create'
             'Game_CheckGameSpecAndComputeCores'
             
-35.error: gameFlatten.c: too few arguments to function ‘CompileFlatten_init_flattener’ &&
+35.error: gameFlatten.c: too few arguments to function ‘CompileFlatten_init_flattener’
    warning: passing argument 1 of ‘sym_intern’ from incompatible pointer type
    warning: passing argument 1 of ‘Compile_ConstructHierarchy’ from incompatible pointer type
 
     *   added 'env' parameter
     
-36.warning: passing argument 1 of ‘Compile_ConstructHierarchy’ from incompatible pointer type [ TODO : CHECK IF IT IS CORRECT ]
+36.warning: passing argument 1 of ‘Compile_ConstructHierarchy’ from incompatible pointer type
 
-    *   added parameter 'boolean expand_bounded_arrays = false;'    
+    gameCmd.c -> CommandGameFlattenHierarchy()
     
+        *   added declaration 'boolean expand_bounded_arrays = false;'     
+        *   added 'e' option
+         
+             while( ..."he")) != EOF) {
+               ...
+                case 'e': expand_bounded_arrays = true; break;
+               ...
+               }
+        
+        *   added 'expand_bounded_arrays' parameter for 'Game_CommandFlattenHierarchy()' , 'game_flatten_game_hierarchy()'
+               
 37.warning: implicit declaration of function ‘rpterr’
 
     *   replaced with 'ErrorMgr_rpterr(errmgr,' and added declaration when required 'const ErrorMgr_ptr errmgr = ERROR_MGR(NuSMVEnv_get_value(env, ENV_ERROR_MANAGER));'
@@ -552,11 +562,11 @@ Nitin Yadav - nitin.yadav@rmit.edu.au
     
         *   replaced with 'Cmd_Misc_NusmvrcSource(env)'
         
-61.make[2]: *** No rule to make target `/home/lorenzo/Documents/software/ClionProjects/NuSMV-2.6.0/NuSMV/libnusmvcore.la', needed by `NuGaT'.  Stop. [ TODO : find solution ]
+61.make[2]: *** No rule to make target `/home/lorenzo/Documents/software/ClionProjects/NuSMV-2.6.0/NuSMV/libnusmvcore.la', needed by `NuGaT'.  Stop.
    make[2]: *** No rule to make target `/home/lorenzo/Documents/software/ClionProjects/NuSMV-2.6.0/NuSMV/librbcdag.la', needed by `NuGaT'.  Stop.
     
-    *   remove '$(NUSMV_DIR)/libnusmvcore.la' and '$(NUSMV_DIR)/librbcdag.la'  from 'NuGaT_DEPENDENCIES='/'NuGaT_LDADD=' because file not exists ???
-
+    *   ? remove '$(NUSMV_DIR)/libnusmvcore.la' and '$(NUSMV_DIR)/librbcdag.la'  from 'NuGaT_DEPENDENCIES='/'NuGaT_LDADD=' because file not exists ???
+   
             
 ================================================================================
 EOF

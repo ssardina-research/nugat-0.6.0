@@ -16776,7 +16776,7 @@ done
 $as_echo "ok" >&6; }
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking Configured files" >&5
 $as_echo_n "checking Configured files... " >&6; }
-for f in $nusmv_config_dir/$nusmv_pkg; do
+for f in $nusmv_config_dir/$nusmv_pkg ; do
   if ! test -f $f; then
       as_fn_error $? "File $f not found. See configure option --with-nusmv-dir" "$LINENO" 5
   fi

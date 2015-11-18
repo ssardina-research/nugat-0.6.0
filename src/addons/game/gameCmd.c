@@ -532,13 +532,15 @@ static int CommandGameFlattenHierarchy(NuSMVEnv_ptr env,int argc, char** argv)
 {
     int c;
 
+    boolean expand_bounded_arrays = false;
+
     nusmv_assert(opt_game_game(OptsHandler_create()));
 
     util_getopt_reset();
-    while ((c = util_getopt(argc, argv, "h")) != EOF) {
+    while ((c = util_getopt(argc, argv, "he")) != EOF) {
         switch (c) {
             case 'h': return UsageGameFlattenHierarchy();
-
+            case 'e': expand_bounded_arrays = true; break;
             default:  return UsageGameFlattenHierarchy();
         }
     }
@@ -556,7 +558,7 @@ static int CommandGameFlattenHierarchy(NuSMVEnv_ptr env,int argc, char** argv)
         return 1;
     }
 
-    return Game_CommandFlattenHierarchy(env); /* does the work */
+    return Game_CommandFlattenHierarchy(env,expand_bounded_arrays); /* does the work */
 }
 
 static int UsageGameFlattenHierarchy()

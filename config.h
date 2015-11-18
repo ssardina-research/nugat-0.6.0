@@ -223,7 +223,7 @@
 #define PACKAGE_BUGREPORT "nugat@list.fbk.eu"
 
 /* Build date */
-#define PACKAGE_BUILD_DATE "Wed Nov 11 12:37:33 UTC 2015"
+#define PACKAGE_BUILD_DATE "Wed Nov 18 06:16:20 UTC 2015"
 
 /* Define to the full name of this package. */
 #define PACKAGE_NAME "NuGaT"

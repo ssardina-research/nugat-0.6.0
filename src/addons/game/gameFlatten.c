@@ -109,7 +109,8 @@ static GameHierarchy_ptr
                                     SymbLayer_ptr model_layer_1,
                                     node_ptr module_1,
                                     SymbLayer_ptr model_layer_2,
-                                    node_ptr module_2));
+                                    node_ptr module_2,
+                                    boolean expand_bounded_arrays));
 
 static void game_check_first_player ARGS((NuSMVEnv_ptr env,
                                           SymbTable_ptr st,
@@ -142,7 +143,7 @@ static void game_check_first_player_recur ARGS((NuSMVEnv_ptr env,
                 compile_flatten_smv ]
 
 ******************************************************************************/
-int Game_CommandFlattenHierarchy(NuSMVEnv_ptr env)
+int Game_CommandFlattenHierarchy(NuSMVEnv_ptr env,boolean expand_bounded_arrays)
 {
   SymbTable_ptr st = SYMB_TABLE(NuSMVEnv_get_value(env, ENV_SYMB_TABLE));
   int propErr;
@@ -185,7 +186,8 @@ int Game_CommandFlattenHierarchy(NuSMVEnv_ptr env)
                                                   model_layer_1,
                                                   sym_intern(env,PLAYER_NAME_1),
                                                   model_layer_2,
-                                                  sym_intern(env,PLAYER_NAME_2));
+                                                  sym_intern(env,PLAYER_NAME_2),
+                                                  expand_bounded_arrays);
 
   /* We store properties in the DB of properties */
   nusmv_assert(GameHierarchy_get_ctlspec(mainGameHierarchy) == Nil &&
@@ -272,7 +274,8 @@ game_flatten_game_hierarchy(SymbTable_ptr symbol_table,
                             SymbLayer_ptr model_layer_1,
                             node_ptr module_1,
                             SymbLayer_ptr model_layer_2,
-                            node_ptr module_2)
+                            node_ptr module_2,
+                            boolean expand_bounded_arrays)
 {
   node_ptr tmp, iter;
   node_ptr ctlspec = Nil;
@@ -287,7 +290,6 @@ game_flatten_game_hierarchy(SymbTable_ptr symbol_table,
   node_ptr buchigame = Nil;
   node_ptr ltlgame = Nil;
   node_ptr genreactivity = Nil;
-  boolean expand_bounded_arrays = false;
 
   const NuSMVEnv_ptr env = EnvObject_get_environment(ENV_OBJECT(symbol_table));
   const NodeMgr_ptr nodemgr = NODE_MGR(NuSMVEnv_get_value(env, ENV_NODE_MGR));
