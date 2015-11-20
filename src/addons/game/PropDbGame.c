@@ -535,7 +535,7 @@ void prop_db_game_init(PropDbGame_ptr self,const NuSMVEnv_ptr env)
   OVERRIDE(PropDb, prop_create_and_add) =
     (PropDb_prop_create_and_add_method) prop_db_game_prop_create_and_add;
 
-  Prop_set_environment_fsms(env, prop_db_game_set_fsm_to_master);
+  Prop_set_environment_fsms(env, PROP(prop_db_game_set_fsm_to_master));
 
   OVERRIDE(PropDb, verify_all) =
     (PropDb_verify_all_method) prop_db_game_verify_all;

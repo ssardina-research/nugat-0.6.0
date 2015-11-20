@@ -223,7 +223,7 @@ Lorenzo Dibenedetto - lorenzodibenedetto90@gmail.com , Sebastian Sardina - ssard
 
     *   added declaration "DDMgr_ptr dd_manager = (DDMgr_ptr )NuSMVEnv_get_value(env, ENV_DD_MGR);"
     
-26.warning: gamePkg.c: implicit declaration of function [ EXPLAIN FROM HERE ]
+26.warning: gamePkg.c: implicit declaration of function 
 
     *   all this functions are replaced
     
@@ -231,7 +231,7 @@ Lorenzo Dibenedetto - lorenzodibenedetto90@gmail.com , Sebastian Sardina - ssard
             ‘node_pkg_get_global_master_sexp_printer’ with 'MASTER_PRINTER(NuSMVEnv_get_value(env, ENV_SEXP_PRINTER));'
             ‘Compile_get_global_symb_table’ with 'SYMB_TABLE(NuSMVEnv_get_value(env, ENV_SYMB_TABLE))'
             ‘PropPkg_get_prop_database’ with 'PROP_DB(NuSMVEnv_get_value(env, ENV_PROP_DB));'
-            'PropPkg_set_prop_database(PROP_DB(dbg))' with 'NuSMVEnv_set_value(env, ENV_PROP_DB,PROP_DB(dbg))'
+            'PropPkg_set_prop_database(PROP_DB(dbg))' with 'NuSMVEnv_set_value(env, ENV_PROP_DB, PROP_DB(dbg))'
             
                 added 'env' parameter for :
                     'game_pkg_switch_to_prop_db_game'
@@ -312,7 +312,9 @@ Lorenzo Dibenedetto - lorenzodibenedetto90@gmail.com , Sebastian Sardina - ssard
 
     gameCmd.c -> CommandGameFlattenHierarchy()
     
-        *   added declaration 'boolean expand_bounded_arrays = false;'     
+        *   added declaration 'boolean expand_bounded_arrays = false;'  because NuSMV2.6.0 uses this new variable 
+            which is present is same functions that are used by NuGaT
+            
         *   added 'e' option
          
              while( ..."he")) != EOF) {
@@ -340,7 +342,7 @@ Lorenzo Dibenedetto - lorenzodibenedetto90@gmail.com , Sebastian Sardina - ssard
     
 39.warning: comparison between pointer and integer 'sym_intern(env,((car(spec)) == 1 ?'
 
-    *   added a cast with '(node_ptr)'
+    *   added a cast with '(node_ptr)' for 1 value
     
 40.warning: implicit declaration of function ‘error_second_player_next_var’
 
@@ -353,7 +355,7 @@ Lorenzo Dibenedetto - lorenzodibenedetto90@gmail.com , Sebastian Sardina - ssard
 
     *   replaced with 'nusmv_yylineno'
 
-42.error: gameVarEncoding.c:111:65: ‘self’ undeclared (first use in this function)
+42.error: gameVarEncoding.c:111:65: ‘self’ undeclared (first use in this function) [ #TOSOLVE the env before ]
 
     *   added 'env' parameter for 'Game_CommandEncodeVariables'
     *   removed 'env' declaration inside the function 
@@ -362,16 +364,15 @@ Lorenzo Dibenedetto - lorenzodibenedetto90@gmail.com , Sebastian Sardina - ssard
 
     *   added 'env' parameter for :
             
-            'Enc_init_bool_encoding'
-            'Enc_init_bdd_encoding'
+            'Enc_init_bool_encoding', 'Enc_init_bdd_encoding'
             
-44.warning: implicit declaration of function ‘Enc_get_bool_encoding()’
+44.warning: implicit declaration of function ‘Enc_get_bool_encoding()’  [ #CHECK AT RUNTIME ]
 
-    *   replaced with 'BoolEncClient_get_bool_enc(BOOL_ENC_CLIENT(ARG))'
+    *   replaced with 'BoolEncClient_get_bool_enc(BOOL_ENC_CLIENT(..ARG..))'
         ARG is replaced with : 
         
             'enc' in gameBuildModel.c   
-            'NULL' in gameCheckGenReactivityBuchiSpec.c and gameUnrealCore.c
+            'NULL' in gameCheckGenReactivityBuchiSpec.c and gameUnrealCore.c 
             'bdd_enc' in gameVarEncoding.c and swapped the code
             
 45.error: too few arguments to function ‘Enc_init_bdd_encoding’
@@ -387,17 +388,18 @@ Lorenzo Dibenedetto - lorenzodibenedetto90@gmail.com , Sebastian Sardina - ssard
 
     *   added first parameter 'BoolEnc_ptr bool_enc = BOOL_ENC(NuSMVEnv_get_value(env, ENV_BOOL_ENCODER));'
 
-48.errors and warnings in gameXmlReader.c 
+48.gameXmlReader.c 
     
     warning: implicit declaration of function ‘error_out_of_memory’
     
-        *    replaced with 'ErrorMgr_error_out_of_memory(errmgr,' and added 'errmgr' parameter to 'gameXmlReader_XmlParseResult_create'
+        *   replaced with 'ErrorMgr_error_out_of_memory(errmgr,'
+        *   added 'errmgr' parameter to 'gameXmlReader_XmlParseResult_create'
     
     error: 317:9 : assignment of read-only variable ‘env’
     
         *   passed as parameter and changed declaration 
         
-49.warning: gameXmlReader.c: passing argument 2 of ‘XML_SetElementHandler’ from incompatible pointer type
+49.warning: gameXmlReader.c: passing argument 2 of ‘XML_SetElementHandler’ from incompatible pointer type [#TOSOLVE]
 
     *   remove 'env' parameter and added inside each function
     *   added 'env; parameter for :
@@ -436,9 +438,10 @@ Lorenzo Dibenedetto - lorenzodibenedetto90@gmail.com , Sebastian Sardina - ssard
 
     error: too few arguments to function ‘prop_init’
     
-        *   added env parameter for all the function until 'prop_db_game_prop_create_and_add' that is the highest level with 'env' declaration inside
+        *   added env parameter for all the function until 'prop_db_game_prop_create_and_add' 
+                that is the highest level with 'env' declaration inside
         
-    warning: implicit declaration of function ‘indent’ and ‘indent_node’
+    warning: implicit declaration of function ‘indent(file)’ and ‘indent_node(file)’
     
         *   replaced
         
@@ -453,7 +456,7 @@ Lorenzo Dibenedetto - lorenzodibenedetto90@gmail.com , Sebastian Sardina - ssard
                         print_node(wffprint,file, p);
                         fprintf(file, "%s", " ");
                         
-53.PropDbGame.c [ ASK IF RIGHT .2.3 ]
+53.PropDbGame.c [ #CHECK .2.3 AT RUNTIME ]
     
     warning: passing argument 2 of ‘Prop_print_db’ from incompatible pointer type
     
@@ -464,7 +467,8 @@ Lorenzo Dibenedetto - lorenzodibenedetto90@gmail.com , Sebastian Sardina - ssard
         *   replaced 'PROP_DB(self)->master' with 'NuSMVEnv_get_value(env, ENV_PROP_DB)'
         *   replaced 'PROP_DB(self)->master = PROP(PropGame_create(env))' with 'NuSMVEnv_set_value(env, ENV_PROP_DB, PROP(PropGame_create(env)))'
         
-        *   replaced this 'OVERRIDE(PropDb, set_fsm_to_master) = (PropDb_set_fsm_to_master_method) prop_db_game_set_fsm_to_master;' with 'Prop_set_environment_fsms(env, prop_db_game_set_fsm_to_master);'  [...]
+        *   replaced this 'OVERRIDE(PropDb, set_fsm_to_master) = (PropDb_set_fsm_to_master_method) prop_db_game_set_fsm_to_master;' 
+                with 'Prop_set_environment_fsms(env, PROP(prop_db_game_set_fsm_to_master));' 
     
     missing parameter
         
@@ -490,7 +494,7 @@ Lorenzo Dibenedetto - lorenzodibenedetto90@gmail.com , Sebastian Sardina - ssard
 
         *   removed line because 'util.h' is not present
         
-56.smgameMisc.c [ ASK IF RIGHT .3 ]
+56.smgameMisc.c [ #CHECK .3 AT RUNTIME ]
 
     warning: implicit declaration of function ‘util_resetlongjmp()’
     
@@ -512,7 +516,7 @@ Lorenzo Dibenedetto - lorenzodibenedetto90@gmail.com , Sebastian Sardina - ssard
 
     warning: ignoring return value of ‘fgets’, declared with attribute warn_unused_result [-Wunused-result] 'fgets(self->po_s, self->po_size_s, self->output_file);'
 
-        *   added declaration 'char *fgetsResult;' and store the result 'fgetsResult=fgets(...'
+        *   added declaration 'char *fgetsResult;' and store the result 'fgetsResult = fgets(...'
      
 58.fsm/GameBddFsm.c
 
@@ -522,16 +526,18 @@ Lorenzo Dibenedetto - lorenzodibenedetto90@gmail.com , Sebastian Sardina - ssard
         
 59.make[3]: *** No rule to make target `/home/lorenzo/Documents/software/ClionProjects/NuSMV-2.6.0/NuSMV/code/nusmv/core/cinit/cinitCmd.lo', needed by `libsmgame.la' 
 
-[TODO: find a solution]   
- 
-    *   removed this include because file not exists
-    
-            $(NUSMV_DIR)/code/nusmv/core/cinit/cinitCmd.lo \
-            $(NUSMV_DIR)/code/nusmv/core/cinit/cinitInit.lo \
-            $(NUSMV_DIR)/code/nusmv/core/cinit/cinitMisc.lo \
-            $(NUSMV_DIR)/code/nusmv/core/cinit/cinitVers.lo \
-            $(NUSMV_DIR)/code/nusmv/core/cinit/cinitData.lo
+    *   replaced all 'cinit....lo' with 'cinit....c.o' with a new path
             
+            $(NUSMV_DIR)/build/code/nusmv/shell/cinit/CMakeFiles/code_nusmv_shell_cinit.dir/cinit.c.o \
+            $(NUSMV_DIR)/build/code/nusmv/shell/cinit/CMakeFiles/code_nusmv_shell_cinit.dir/cinitCmd.c.o \
+            $(NUSMV_DIR)/build/code/nusmv/core/cinit/CMakeFiles/code_nusmv_core_cinit.dir/cinitInit.c.o \
+            $(NUSMV_DIR)/build/code/nusmv/core/cinit/CMakeFiles/code_nusmv_core_cinit.dir/cinitVers.c.o \
+            $(NUSMV_DIR)/build/code/nusmv/core/cinit/CMakeFiles/code_nusmv_core_cinit.dir/cinitData.c.o
+            
+    *   removed 
+            '$(NUSMV_DIR)/code/nusmv/core/cinit/cinitMisc.lo' line
+            'librbcdag.la' library
+                
 60.src/smgame/smgameMain.c
 
     error: unknown type name ‘FP_V_V’ , FP_V_V iq_fns[][2] = {{NuGaTAddons_Init, NuGaTAddons_Quit}};
@@ -546,14 +552,35 @@ Lorenzo Dibenedetto - lorenzodibenedetto90@gmail.com , Sebastian Sardina - ssard
     
         *   replaced with 'Cmd_Misc_NusmvrcSource(env)'
 
-
+    warning: undefined reference to `nusmv_stderr' ...
+    
+        *   removed all 'EXTERN ' before declarations
+        
 61.make[2]: *** No rule to make target `/home/lorenzo/Documents/software/ClionProjects/NuSMV-2.6.0/NuSMV/libnusmvcore.la', needed by `NuGaT'.  Stop. 
    make[2]: *** No rule to make target `/home/lorenzo/Documents/software/ClionProjects/NuSMV-2.6.0/NuSMV/librbcdag.la', needed by `NuGaT'.  Stop.
- 
-[TODO: find a solution]   
- 
-    *   ? remove '$(NUSMV_DIR)/libnusmvcore.la' and '$(NUSMV_DIR)/librbcdag.la'  from 'NuGaT_DEPENDENCIES='/'NuGaT_LDADD=' because file not exists ???
    
+   *   replaced with "*.a" files with a new path
+
+            $(NUSMV_DIR)/build/lib/libnusmvaddonscore.a \
+            $(NUSMV_DIR)/build/lib/libnusmvcore.a \
+            $(NUSMV_DIR)/build/lib/libnusmvgrammar.a \
+            $(NUSMV_DIR)/build/lib/libnusmvrbc.a \
+            $(NUSMV_DIR)/build/lib/libnusmvshell.a
+
+62.smgameMain.c 
+
+    undefined reference to `MMalloc' ... (1500 rows)
+    
+    *   include cudd library in 'config.status'
+        S["LIBS"]=" -L/home/lorenzo/Documents/software/ClionProjects/NuSMV-2.6.0/NuSMV/build/build-cudd/lib -lst -lmtr -lepd -lcudd -lutil -lreadline -ltermcap /usr/lib/x86_64-linux-gnu/libexpat.la "
+
+63.gameCheckLTLSF07.c 
+
+    undefined reference to `global_fsm_builder' ... (113 rows)
+    
+    **  
+        try to include all .a files
+        
             
 ================================================================================
 EOF

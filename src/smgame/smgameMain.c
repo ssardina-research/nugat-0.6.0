@@ -72,11 +72,11 @@ static char rcsid[] UTIL_UNUSED = "$Id: smMain.c,v 1.28.2.14.2.5.2.31.4.32 2010-
 /* Used to return a value from sm_parselineoptions */
 static char * NuSMV_CMD_LINE = (char *) NULL;
 
-EXTERN FILE* nusmv_stderr;
-EXTERN FILE* nusmv_stdout;
-EXTERN DDMgr_ptr dd_manager;
+FILE* nusmv_stderr;
+FILE* nusmv_stdout;
+DDMgr_ptr dd_manager;
 
-EXTERN GameParams gameParams;
+GameParams gameParams;
 
 /**AutomaticStart*************************************************************/
 
@@ -488,7 +488,7 @@ static void sm_ParseLineOptions(const NuSMVEnv_ptr env,int argc, char ** argv, O
       unset_batch(options); /* goes in interactive mode by default */
       NuSMV_CMD_LINE = ALLOC(char, strlen(*argv)+1);
       strcpy(NuSMV_CMD_LINE, *argv);
-      fprintf(stderr, "FILE ->>> %s \n", NuSMV_CMD_LINE);
+      fprintf(nusmv_stderr, "FILE ->>> %s \n", NuSMV_CMD_LINE);
       argv++; argc--;
       continue;
     }
@@ -765,7 +765,7 @@ static void sm_ParseLineOptions(const NuSMVEnv_ptr env,int argc, char ** argv, O
         argv++; argc -= 2;
         cur_cpl = strtol(*(argv++), err_occ, 10);
         if (strcmp(err_occ[0], "") != 0) {
-          fprintf(stderr, "Error: \"%s\" is not a valid value for the \"-cp\" line option.\n", err_occ[0]);
+          fprintf(nusmv_stderr, "Error: \"%s\" is not a valid value for the \"-cp\" line option.\n", err_occ[0]);
           exit(1);
         }
         set_conj_partitioning(options);
@@ -786,7 +786,7 @@ static void sm_ParseLineOptions(const NuSMVEnv_ptr env,int argc, char ** argv, O
         argv++; argc -= 2;
         cur_cpl = strtol(*(argv++), err_occ, 10);
         if (strcmp(err_occ[0], "") != 0) {
-          fprintf(stderr, "Error: \"%s\" is not a valid value for the \"-iwls95\" line option.\n", err_occ[0]);
+          fprintf(nusmv_stderr, "Error: \"%s\" is not a valid value for the \"-iwls95\" line option.\n", err_occ[0]);
           exit(1);
         }
         set_iwls95cp_partitioning(options);
@@ -930,7 +930,7 @@ static void sm_ParseLineOptions(const NuSMVEnv_ptr env,int argc, char ** argv, O
     }
     else if(strcmp(*argv, "-dp") == 0){
       argv++; argc--;
-      fprintf(stderr, "WARNING: Disjunctive partitioning is no longer supported.\n");
+      fprintf(nusmv_stderr, "WARNING: Disjunctive partitioning is no longer supported.\n");
       continue;
     }
       /* printing strategy options */
