@@ -146,7 +146,7 @@ static hash_ptr nameToType;
 ******************************************************************************/
 static hash_ptr expToKind;
 
-EXTERN int yylineno;
+EXTERN int nusmv_yylineno;
 
 /*---------------------------------------------------------------------------*/
 /* Static function prototypes                                                */
@@ -760,7 +760,7 @@ static void game_convert_to_list_and_push_next_up(node_ptr *exp)
   node_ptr left = car(*exp);
   node_ptr right = cdr(*exp);
 
-  yylineno = node_get_lineno((*exp)); /* line info for new nodes */
+  nusmv_yylineno = node_get_lineno((*exp)); /* line info for new nodes */
 
   /* Currently this is only used for OR by the caller. Check this. */
   nusmv_assert(type == OR);
@@ -1481,7 +1481,7 @@ exp_kind game_property_to_game(NuSMVEnv_ptr env,
       /* the only values possibles */
       nusmv_assert(DETERMINISTIC_TRUE == value && PURE_PROPOSITIONAL == kind);
 
-      yylineno = line; /* All newly created nodes will have this line info. */
+      nusmv_yylineno = line; /* All newly created nodes will have this line info. */
 
       res = car(car(*exp));
       newVar = game_create_new_var(env,varList, new_node(nodemgr,BOOLEAN, Nil, Nil));
@@ -1516,7 +1516,7 @@ exp_kind game_property_to_game(NuSMVEnv_ptr env,
                                  reqs);
     node_node_setcar((*exp), res);
 
-    yylineno = line; /* All newly created nodes will have this line info. */
+    nusmv_yylineno = line; /* All newly created nodes will have this line info. */
 
     switch (value) {
     /* exp is at top-level. Special care required. */
@@ -1599,7 +1599,7 @@ exp_kind game_property_to_game(NuSMVEnv_ptr env,
     res = car(*exp);
     kind = game_get_expression_kind(res);
 
-    yylineno = line; /* All newly created nodes will have this line info. */
+    nusmv_yylineno = line; /* All newly created nodes will have this line info. */
 
     switch (value) {
     /* exp is at top-level. Special care required. */
@@ -1706,7 +1706,7 @@ exp_kind game_property_to_game(NuSMVEnv_ptr env,
                                  reqs);
     node_node_setcar((*exp), res);
 
-    yylineno = line; /* All newly created nodes will have this line info. */
+    nusmv_yylineno = line; /* All newly created nodes will have this line info. */
 
     if (TEMPORAL == kind) {
       break; /* We cannot do anything. Check for being top-level. */
@@ -1760,7 +1760,7 @@ exp_kind game_property_to_game(NuSMVEnv_ptr env,
         break; /* Check for being top-level */
       }
 
-      yylineno = line; /* All newly created nodes will have this line info. */
+      nusmv_yylineno = line; /* All newly created nodes will have this line info. */
 
       /* Operands are pure-propositional. A new var n is introduced:
          "a U b" ==> "b | (a ^ n)", TRANS += "n -> X(b | (a ^ n))",
@@ -1807,7 +1807,7 @@ exp_kind game_property_to_game(NuSMVEnv_ptr env,
         break; /* Check for being top-level */
       }
 
-      yylineno = line; /* All newly created nodes will have this line info. */
+      nusmv_yylineno = line; /* All newly created nodes will have this line info. */
 
       /* Operands are pure-propositional. A new var n is introduced:
          "a R b" ==> "b ^ n", TRANS += "n -> (a | X(b ^ n))"

@@ -67,7 +67,7 @@ static char rcsid[] UTIL_UNUSED = "$Id: TypeChecker.c,v 1.1.2.56.4.14 2010-01-11
 /* Variable declarations                                                     */
 /*---------------------------------------------------------------------------*/
 EXTERN FILE* nusmv_stderr;
-extern int yylineno;
+extern int nusmv_yylineno;
 
 /*---------------------------------------------------------------------------*/
 /* Macro declarations                                                        */
@@ -134,7 +134,7 @@ boolean TypeCheckerGame_check_property(TypeChecker_ptr self,
   default: nusmv_assert(false);
   } /* switch */
 
-  yylineno = node_get_lineno(Prop_get_expr(property));
+  nusmv_yylineno = node_get_lineno(Prop_get_expr(property));
   exp = find_node(nodemgr,kind, Prop_get_expr(property), Nil);
 
   isOK = TypeChecker_is_specification_wellformed(self, exp);

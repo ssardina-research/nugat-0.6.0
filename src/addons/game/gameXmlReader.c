@@ -193,7 +193,7 @@ EXTERN FILE* nusmv_stderr;
 
 EXTERN node_ptr parsed_tree;
 
-EXTERN int yylineno;
+EXTERN int nusmv_yylineno;
 
 /*---------------------------------------------------------------------------*/
 /* Macro declarations                                                        */
@@ -316,7 +316,7 @@ int Game_RatFileToGame(NuSMVEnv_ptr env,const char *filename)
     /* Open the file. */
     file = fopen(filename, "r");
     if (file == (FILE*) NULL) ErrorMgr_rpterr(errmgr,"cannot open input XML file %s", filename);
-    yylineno = 1;
+    nusmv_yylineno = 1;
 
     /* Create parser and parseResult. */
     parser = XML_ParserCreate(NULL);
@@ -847,7 +847,7 @@ static void game_xml_reader_tag_begin(void* data,
   enum XmlTags tag = game_xml_reader_identify_tag(name);
 
   /* Reset line info for possible error messages. */
-  yylineno = XML_GetCurrentLineNumber(parseResult->parser);
+  nusmv_yylineno = XML_GetCurrentLineNumber(parseResult->parser);
 
   /* Some higher level tag is ignored, so ignore everything until the
      corresponding end tag is met.
@@ -956,7 +956,7 @@ static void game_xml_reader_tag_end(void* data, const char *string)
   enum XmlTags tag = game_xml_reader_identify_tag(string);
 
   /* Reset line info for possible error messages. */
-  yylineno = XML_GetCurrentLineNumber(parseResult->parser);
+  nusmv_yylineno = XML_GetCurrentLineNumber(parseResult->parser);
 
   /* Some higher level tag is ignored, so ignore everthing until
      corresponding end-tag is met.
@@ -1311,7 +1311,7 @@ static void game_xml_reader_char_handler(void* data, const char *txt, int len)
   const ErrorMgr_ptr errmgr = ERROR_MGR(NuSMVEnv_get_value(env, ENV_ERROR_MANAGER));
 
   /* Reset line info for possible error messages. */
-  yylineno = XML_GetCurrentLineNumber(parseResult->parser);
+  nusmv_yylineno = XML_GetCurrentLineNumber(parseResult->parser);
 
   /* If XML elements being parsed are ignored, ignore also the text. */
   if (parseResult->isIgnore) return;

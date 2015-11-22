@@ -53,8 +53,9 @@ smgame_HEADERS =
 
 noinst_LTLIBRARIES = libsmgame.la
 libsmgame_la_SOURCES = $(PKG_SOURCES)
-libsmgame_la_LIBADD = $(NUSMV_DIR)/build/code/nusmv/shell/cinit/CMakeFiles/code_nusmv_shell_cinit.dir/cinit.c.o \
-                          $(NUSMV_DIR)/build/code/nusmv/shell/cinit/CMakeFiles/code_nusmv_shell_cinit.dir/cinitCmd.c.o \
-                          $(NUSMV_DIR)/build/code/nusmv/core/cinit/CMakeFiles/code_nusmv_core_cinit.dir/cinitInit.c.o \
-                          $(NUSMV_DIR)/build/code/nusmv/core/cinit/CMakeFiles/code_nusmv_core_cinit.dir/cinitVers.c.o \
-                          $(NUSMV_DIR)/build/code/nusmv/core/cinit/CMakeFiles/code_nusmv_core_cinit.dir/cinitData.c.o
+libsmgame_la_LIBADD = \
+    $(NUSMV_DIR)/build/code/nusmv/shell/cinit/CMakeFiles/code_nusmv_shell_cinit.dir/cinit.c.o \
+    $(NUSMV_DIR)/build/code/nusmv/shell/cinit/CMakeFiles/code_nusmv_shell_cinit.dir/cinitCmd.c.o \
+    $(NUSMV_DIR)/build/code/nusmv/core/cinit/CMakeFiles/code_nusmv_core_cinit.dir/cinitInit.c.o \
+    $(NUSMV_DIR)/build/code/nusmv/core/cinit/CMakeFiles/code_nusmv_core_cinit.dir/cinitVers.c.o \
+    $(NUSMV_DIR)/build/code/nusmv/core/cinit/CMakeFiles/code_nusmv_core_cinit.dir/cinitData.c.o

@@ -24,10 +24,9 @@ Lorenzo Dibenedetto - lorenzodibenedetto90@gmail.com , Sebastian Sardina - ssard
 
 4.error: statement EXTERN is missing 
     
-    *   added this 2 lines in config.h.in
+    *   added this line in 'configure.ac'
     
-            /* Define to 1 if the system has EXTERN and ARGS */
-            #define HAVE_EXTERN_ARGS_MACROS 1
+            'AC_DEFINE(HAVE_EXTERN_ARGS_MACROS, 1, Define to 1 if the system has EXTERN and ARGS)'
 
 5.warning: ggrammar.y:1076:38: warning: passing argument 1 of ‘opt_game_game’ makes pointer from integer without a cast
                         if (!opt_game_game(OptsHandler_get_instance())) {...
@@ -563,25 +562,60 @@ Lorenzo Dibenedetto - lorenzodibenedetto90@gmail.com , Sebastian Sardina - ssard
 
             $(NUSMV_DIR)/build/lib/libnusmvaddonscore.a \
             $(NUSMV_DIR)/build/lib/libnusmvcore.a \
-            $(NUSMV_DIR)/build/lib/libnusmvgrammar.a \
-            $(NUSMV_DIR)/build/lib/libnusmvrbc.a \
             $(NUSMV_DIR)/build/lib/libnusmvshell.a
 
-62.smgameMain.c 
+62.smgameMain.c  [ TODO : find a solution for variable LIBS ( include in Makefile.am/.in or configure.ac ) ]
 
     undefined reference to `MMalloc' ... (1500 rows)
     
-    *   include cudd library in 'config.status'
-        S["LIBS"]=" -L/home/lorenzo/Documents/software/ClionProjects/NuSMV-2.6.0/NuSMV/build/build-cudd/lib -lst -lmtr -lepd -lcudd -lutil -lreadline -ltermcap /usr/lib/x86_64-linux-gnu/libexpat.la "
-
-63.gameCheckLTLSF07.c 
-
-    undefined reference to `global_fsm_builder' ... (113 rows)
-    
-    **  
-        try to include all .a files
+    *   include cudd library in 'config.status' ( copied from NuSMV2.5.4 file 'libnusmvcore.la' )
+        S["LIBS"]=" -L/home/lorenzo/Documents/software/ClionProjects/NuSMV-2.6.0/NuSMV/build/build-cudd/lib -lcudd -lutil -lmtr -lst -lreadline -ltermcap /usr/lib/x86_64-linux-gnu/libexpat.la -lm "
         
+63.gameCheckLTLSF07.c ( 1436 rows )
+
+    undefined reference to `global_fsm_builder' for : ...  
+    
+        ./.libs/libnugat.a
+            src/addons/game/gameCheckLTLSF07.c
+            src/addons/game/gameUnrealCore.c
+            src/addons/game/gameBuildModel.c
+            src/addons/game/gameXmlReader.c
+            src/addons/game/TypeCheckerGame.c
+            src/addons/game/gameReqToGame.c
             
+        /home/lorenzo/Documents/software/ClionProjects/NuSMV-2.6.0/NuSMV/build/lib/libnusmvcore.a(BddEnc.c.o): In function `BddEnc_dump_expr':
+            BddEnc.c:(.text+0x6b82): undefined reference to `log10'
+            ...
+            
+        /home/lorenzo/Documents/software/ClionProjects/NuSMV-2.6.0/NuSMV/build/lib/libnusmvrbc.a(dagStat.c.o): In function `Dag_PrintStats':
+        dagStat.c:(.text+0x1d3): undefined reference to `pow'
+            
+    *   replaced 
+            'grep -c "define NUSMV_HAVE_SOLVER_MINISAT 1"' with 'grep -c "define NUSMV_HAVE_SOLVER_MINISAT 1"'
+            'yylineno' with 'nusmv_yylineno' in : (resolved 13 rows)
+            
+                    src/addons/game
+                        gameXmlReader.c
+                        gameBuildModel.c
+                        gameReqToGame.c
+            'Sm_BannerPrint_minisat' with 'CInit_BannerPrint_minisat'  (resolved 2 rows)
+            'Sm_BannerPrint_zchaff' with 'CInit_BannerPrint_zchaff'  
+            
+            
+    *   included in nusmv-2.pc Minisat library
+    
+            sat_available=yes
+            minisat_libdir=/home/lorenzo/Documents/software/ClionProjects/NuSMV-2.6.0/NuSMV/build/build-MiniSat/minisat-37dc6c67e2af26379d88ce349eb9c4c6160e8543
+            minisat_libname=MiniSat
+            
+
+        
+        
+     
 ================================================================================
 EOF
 ================================================================================
+
+FUTURE TODO
+
+    RECONVERT LOG IN A SMART WAY (like a list, remove all rendundant words)

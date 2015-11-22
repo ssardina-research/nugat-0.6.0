@@ -50,11 +50,13 @@ lib_LTLIBRARIES = libnugat.la
 # ----------------------------------------------------------------------
 # The NuGaT executable
 NuGaT_SOURCES = $(top_srcdir)/src/smgame/smgameMain.c
-NuGaT_LDADD = libnugat.la $(NUSMV_DIR)/build/lib/libnusmvaddonscore.a \
-                              $(NUSMV_DIR)/build/lib/libnusmvcore.a  \
-                              $(NUSMV_DIR)/build/lib/libnusmvgrammar.a \
-                              $(NUSMV_DIR)/build/lib/libnusmvrbc.a \
-                              $(NUSMV_DIR)/build/lib/libnusmvshell.a
+NuGaT_LDADD = libnugat.la \
+    $(NUSMV_DIR)/build/lib/libnusmvshell.a \
+    $(NUSMV_DIR)/build/lib/libnusmvaddonscore.a \
+    $(NUSMV_DIR)/build/lib/libnusmvcore.a  \
+    $(NUSMV_DIR)/build/lib/libnusmvgrammar.a \
+    $(NUSMV_DIR)/build/lib/libnusmvrbc.a
+
 # ----------------------------------------------------------------------
 
 # lib for external linking:

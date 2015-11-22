@@ -1,6 +1,6 @@
 -*- mode: m4 -*-
 #                                               -*- Autoconf -*-
-# Process this file with autoconf to produce a configure script.
+# Process this file with autoconf to produce a configure script. (configure,config.h,config.h.in,config.status)
 AC_PREREQ(2.57)
 
 AC_INIT(NuGaT, 0.5.0, nugat@list.fbk.eu)
@@ -298,7 +298,7 @@ AC_CHECK_LIB(expat, XML_ParserCreate,
     expat_libs=
     ], 
    [$expatlibdir])    
-LIBS=$LIBS_old	
+LIBS="$LIBS_old -L/home/lorenzo/Documents/software/ClionProjects/NuSMV-2.6.0/NuSMV/build/build-cudd/lib -lcudd -lutil -lmtr -lst -lreadline -ltermcap /usr/lib/x86_64-linux-gnu/libexpat.la -lm "
 
 else 
   expat_libs=
@@ -322,7 +322,7 @@ else
 fi
 
 # zchaff?
-have_solver_zchaff=$(grep -c "define HAVE_SOLVER_ZCHAFF 1" $nusmv_dir/build/nusmv-config.h)
+have_solver_zchaff=$(grep -c "define NUSMV_HAVE_SOLVER_ZCHAFF 1" $nusmv_dir/build/nusmv-config.h)
 if test "x$have_solver_zchaff" = "x1"; then
    AC_DEFINE(HAVE_SOLVER_ZCHAFF, 1, Have zchaff)
 else 
@@ -330,12 +330,14 @@ else
 fi
 
 # minisat?
-have_solver_minisat=$(grep -c "define HAVE_SOLVER_MINISAT 1" $nusmv_dir/build/nusmv-config.h)
+have_solver_minisat=$(grep -c "define NUSMV_HAVE_SOLVER_MINISAT 1" $nusmv_dir/build/nusmv-config.h)
 if test "x$have_solver_minisat" = "x1"; then
    AC_DEFINE(HAVE_SOLVER_MINISAT, 1, Have minisat)
 else 
    AC_DEFINE(HAVE_SOLVER_MINISAT, 0, Dont have minisat)
 fi
+
+AC_DEFINE(HAVE_EXTERN_ARGS_MACROS, 1, Define to 1 if the system has EXTERN and ARGS)
 
 # ======================================================================
 #                          Addons checking

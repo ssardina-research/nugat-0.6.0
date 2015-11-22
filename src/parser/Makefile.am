@@ -50,7 +50,7 @@ MOSTLYCLEANFILES = grammar.h grammar.c grammar.y \
 
 AM_YFLAGS = -d -p nusmv_yy
 AM_LFLAGS = -l -Pnusmv_yy
-
+LEX_OUTPUT_ROOT = lex.nusmv_yy
 PKG_SOURCES = grammar.y.1.55 grammar.y.2.55 input.l.1.55 input.l.2.55 grammar.y input.l
 
 parserdir = $(includedir)/nugat/parser

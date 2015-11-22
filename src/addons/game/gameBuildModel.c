@@ -77,7 +77,7 @@ static char rcsid[] UTIL_UNUSED = "$Id: gameBuildModel.c,v 1.1.2.8 2010-02-10 14
 /* Variable declarations                                                     */
 /*---------------------------------------------------------------------------*/
 EXTERN FsmBuilder_ptr global_fsm_builder;
-EXTERN int yylineno;
+EXTERN int nusmv_yylineno;
 
 /*---------------------------------------------------------------------------*/
 /* Macro declarations                                                        */
@@ -249,7 +249,7 @@ void Game_CommandBuildBooleanModel(NuSMVEnv_ptr env)
      /* determinization variables are not supported in Game */
      if (NodeList_get_length(syms1) != 0 ||
          NodeList_get_length(syms2) != 0) {
-        yylineno = 0; /* for error messages */
+        nusmv_yylineno = 0; /* for error messages */
         ErrorMgr_rpterr(errmgr,"determinization variables are not supported by realizability "
                        "algorithms, \nbut were created during booleanisation\n"
                        "(check ASSIGN with boolean on the left and boolean-set on the "
@@ -261,7 +261,7 @@ void Game_CommandBuildBooleanModel(NuSMVEnv_ptr env)
     /*
     if (NodeList_get_length(SymbLayer_get_all_symbols(determ_layer_1)) != 0 ||
         NodeList_get_length(SymbLayer_get_all_symbols(determ_layer_2)) != 0) {
-      yylineno = 0;
+      nusmv_yylineno = 0;
       ErrorMgr_rpterr(errmgr,"determinization variables are not supported by realizability "
              "algorithms, \nbut were created during booleanisation\n"
              "(check ASSIGN with boolean on the left and boolean-set on the "

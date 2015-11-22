@@ -98,7 +98,7 @@
 #define HAVE_REGEX_H 1
 
 /* No sat solvers available */
-#define HAVE_SAT_SOLVER 0
+#define HAVE_SAT_SOLVER 1
 
 /* Define to 1 if you have the `setvbuf' function. */
 #define HAVE_SETVBUF 1
@@ -223,7 +223,7 @@
 #define PACKAGE_BUGREPORT "nugat@list.fbk.eu"
 
 /* Build date */
-#define PACKAGE_BUILD_DATE "Wed Nov 18 06:16:20 UTC 2015"
+#define PACKAGE_BUILD_DATE "Sun Nov 22 23:35:58 UTC 2015"
 
 /* Define to the full name of this package. */
 #define PACKAGE_NAME "NuGaT"

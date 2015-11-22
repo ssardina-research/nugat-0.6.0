@@ -137,11 +137,12 @@ libnugat_la_OBJECTS = $(am_libnugat_la_OBJECTS)
 PROGRAMS = $(bin_PROGRAMS)
 am_NuGaT_OBJECTS = smgameMain.$(OBJEXT)
 NuGaT_OBJECTS = $(am_NuGaT_OBJECTS)
-NuGaT_DEPENDENCIES = libnugat.la  $(NUSMV_DIR)/build/lib/libnusmvaddonscore.a \
-                                      $(NUSMV_DIR)/build/lib/libnusmvcore.a \
-                                      $(NUSMV_DIR)/build/lib/libnusmvgrammar.a \
-                                      $(NUSMV_DIR)/build/lib/libnusmvrbc.a \
-                                      $(NUSMV_DIR)/build/lib/libnusmvshell.a
+NuGaT_DEPENDENCIES = libnugat.la \
+    $(NUSMV_DIR)/build/lib/libnusmvshell.a \
+    $(NUSMV_DIR)/build/lib/libnusmvaddonscore.a \
+    $(NUSMV_DIR)/build/lib/libnusmvcore.a  \
+    $(NUSMV_DIR)/build/lib/libnusmvgrammar.a \
+    $(NUSMV_DIR)/build/lib/libnusmvrbc.a
 DEFAULT_INCLUDES = -I.@am__isrc@
 depcomp = $(SHELL) $(top_srcdir)/helpers/depcomp
 am__depfiles_maybe = depfiles
@@ -371,11 +372,12 @@ lib_LTLIBRARIES = libnugat.la
 # ----------------------------------------------------------------------
 # The NuGaT executable
 NuGaT_SOURCES = $(top_srcdir)/src/smgame/smgameMain.c
-NuGaT_LDADD = libnugat.la $(NUSMV_DIR)/build/lib/libnusmvaddonscore.a \
-                              $(NUSMV_DIR)/build/lib/libnusmvcore.a \
-                              $(NUSMV_DIR)/build/lib/libnusmvgrammar.a \
-                              $(NUSMV_DIR)/build/lib/libnusmvrbc.a \
-                              $(NUSMV_DIR)/build/lib/libnusmvshell.a
+NuGaT_LDADD = libnugat.la \
+    $(NUSMV_DIR)/build/lib/libnusmvshell.a \
+    $(NUSMV_DIR)/build/lib/libnusmvaddonscore.a \
+    $(NUSMV_DIR)/build/lib/libnusmvcore.a  \
+    $(NUSMV_DIR)/build/lib/libnusmvgrammar.a \
+    $(NUSMV_DIR)/build/lib/libnusmvrbc.a
 # ----------------------------------------------------------------------
 
 # lib for external linking:
@@ -472,7 +474,7 @@ clean-libLTLIBRARIES:
 	  echo "rm -f \"$${dir}/so_locations\""; \
 	  rm -f "$${dir}/so_locations"; \
 	done
-libnugat.la: $(libnugat_la_OBJECTS) $(libnugat_la_DEPENDENCIES) $(EXTRA_libnugat_la_DEPENDENCIES)
+libnugat.la: $(libnugat_la_OBJECTS) $(libnugat_la_DEPENDENCIES) $(EXTRA_libnugat_la_DEPENDENCIES) 
 	$(LINK) -rpath $(libdir) $(libnugat_la_OBJECTS) $(libnugat_la_LIBADD) $(LIBS)
 install-binPROGRAMS: $(bin_PROGRAMS)
 	@$(NORMAL_INSTALL)

@@ -6,8 +6,8 @@ datarootdir=/usr/local/share
 datadir=${datarootdir}/nusmv
 sharedir=${datarootdir}
 
-sat_available=no
-minisat_libdir=./../MiniSat_v070721
+sat_available=yes
+minisat_libdir=/home/lorenzo/Documents/software/ClionProjects/NuSMV-2.6.0/NuSMV/build/build-MiniSat/minisat-37dc6c67e2af26379d88ce349eb9c4c6160e8543
 minisat_libname=MiniSat
 
 cudddir=/home/lorenzo/Documents/software/ClionProjects/NuSMV-2.6.0/cudd-2.4.1.1
@@ -16,7 +16,7 @@ cuddmkfile=Makefile_64bit
 
 Name: NuSMV-2
 Description: New Symbolic Model Verifier
-Requires: 
+Requires:
 Version: 2.6.0
-Cflags: -I. -I.. -I${includedir}/nusmv -I${includedir}/${cuddname} 
+Cflags: -I. -I.. -I${includedir}/code/nusmv -I${includedir}/${cuddname}
 Libs: -L${libdir} -lnusmv

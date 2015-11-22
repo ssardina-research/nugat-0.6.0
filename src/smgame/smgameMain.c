@@ -405,11 +405,11 @@ static void BannerPrint(FILE * file)
   CInit_BannerPrint_cudd(file);
 
 # if HAVE_SOLVER_MINISAT
-  Sm_BannerPrint_minisat(file, "NuGaT");
+    CInit_BannerPrint_minisat(file);
 # endif
 
 # if HAVE_SOLVER_ZCHAFF
-  Sm_BannerPrint_zchaff(file, "NuGaT");
+    CInit_BannerPrint_zchaff(file);
 # endif
 
 #if HAVE_GAME
