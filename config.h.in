@@ -58,10 +58,6 @@
 /* Define to 1 if you have the <limits.h> header file. */
 #undef HAVE_LIMITS_H
 
-/* Define to 1 if your system has a GNU libc compatible `malloc' function, and
-   to 0 otherwise. */
-#undef HAVE_MALLOC
-
 /* Defined to 1 if the system provides malloc.h */
 #undef HAVE_MALLOC_H
 
@@ -278,9 +274,6 @@
 #ifndef __cplusplus
 #undef inline
 #endif
-
-/* Define to rpl_malloc if the replacement function should be used. */
-#undef malloc
 
 /* Define to rpl_realloc if the replacement function should be used. */
 #undef realloc

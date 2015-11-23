@@ -59,10 +59,6 @@
 /* Define to 1 if you have the <limits.h> header file. */
 #define HAVE_LIMITS_H 1
 
-/* Define to 1 if your system has a GNU libc compatible `malloc' function, and
-   to 0 otherwise. */
-#define HAVE_MALLOC 0
-
 /* Defined to 1 if the system provides malloc.h */
 #define HAVE_MALLOC_H 1
 
@@ -223,7 +219,7 @@
 #define PACKAGE_BUGREPORT "nugat@list.fbk.eu"
 
 /* Build date */
-#define PACKAGE_BUILD_DATE "Mon Nov 23 04:21:22 UTC 2015"
+#define PACKAGE_BUILD_DATE "Mon Nov 23 05:58:36 UTC 2015"
 
 /* Define to the full name of this package. */
 #define PACKAGE_NAME "NuGaT"
@@ -280,11 +276,8 @@
 /* #undef inline */
 #endif
 
-/* Define to rpl_malloc if the replacement function should be used. */
-/* #undef malloc */
-
 /* Define to rpl_realloc if the replacement function should be used. */
-/* #undef realloc */
+#define realloc rpl_realloc
 
 /* Define to `unsigned int' if <sys/types.h> does not define. */
 /* #undef size_t */
