@@ -141,8 +141,7 @@ static void game_pkg_restore_cmds ARGS((NuSMVEnv_ptr env,NodeList_ptr* stored));
 ******************************************************************************/
 void Game_Init(NuSMVEnv_ptr env)
 {
-    ErrorMgr_ptr const errmgr =
-            ERROR_MGR(NuSMVEnv_get_value(env, ENV_ERROR_MANAGER));
+    ErrorMgr_ptr const errmgr = ERROR_MGR(NuSMVEnv_get_value(env, ENV_ERROR_MANAGER));
     OptsHandler_ptr opts = OPTS_HANDLER(NuSMVEnv_get_value(env, ENV_OPTS_HANDLER));
 
     SymbTable_ptr symb_table = SYMB_TABLE(NuSMVEnv_get_value(env, ENV_SYMB_TABLE));
@@ -154,7 +153,7 @@ void Game_Init(NuSMVEnv_ptr env)
   nusmv_assert(GAME_HIERARCHY(NULL) == mainGameHierarchy);
   nusmv_assert(NODE_LIST(NULL) == stored_dependent);
   nusmv_assert(NODE_LIST(NULL) == stored_specific);
-  set_pgm_name(opts, "lore"); //NEW
+  set_pgm_name(opts, PACKAGE_NAME); //NEW
   Game_init_opt(env);
   Game_init_cmd();
   game_pkg_add_cmds(env,Game_cmd_get_generic_commands());
