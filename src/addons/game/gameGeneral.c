@@ -101,15 +101,17 @@ void Game_BeforeCheckingSpec(NuSMVEnv_ptr env,PropGame_ptr prop)
 {
   GameBddFsm_ptr fsm;
 
+  OptsHandler_ptr opts = OPTS_HANDLER(NuSMVEnv_get_value(env, ENV_OPTS_HANDLER));
+
   PROP_GAME_CHECK_INSTANCE(prop);
 
-  if (opt_verbose_level_gt(OptsHandler_create(), 0)) {
+  if (opt_verbose_level_gt(opts, 0)) {
     fprintf(nusmv_stderr, "computing ");
     game_print_prop_exp(nusmv_stderr, prop);
     fprintf(nusmv_stderr, "\n");
   }
 
-  if (opt_cone_of_influence(OptsHandler_create()) == true) {
+  if (opt_cone_of_influence(opts) == true) {
     /*
        The goal states also include opponent deadlock states =>
        variables from deadlock states should also be considered in the
@@ -173,6 +175,7 @@ void Game_AfterCheckingSpec(NuSMVEnv_ptr env,
   boolean has_params;
 
   const ErrorMgr_ptr errmgr = ERROR_MGR(NuSMVEnv_get_value(env, ENV_ERROR_MANAGER));
+  OptsHandler_ptr opts = OPTS_HANDLER(NuSMVEnv_get_value(env, ENV_OPTS_HANDLER));
 
   PROP_GAME_CHECK_INSTANCE(prop);
 
@@ -202,7 +205,7 @@ void Game_AfterCheckingSpec(NuSMVEnv_ptr env,
 
   /* print a strategy for a player or an opponent */
   if (((has_params && params->strategy_printout)
-       || opt_game_print_strategy(OptsHandler_create())) &&
+       || opt_game_print_strategy(opts)) &&
       ((status == GAME_REALIZABLE) ||
        (status == GAME_UNREALIZABLE))) {
 

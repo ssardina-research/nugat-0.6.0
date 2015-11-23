@@ -438,7 +438,8 @@ void GameStrategy_destroy(GameStrategy_ptr self)
                 game_compute_gen_reactivity, game_compute_buchi_game ]
 
 ******************************************************************************/
-GameStrategy_ptr GameStrategy_construct(GameBddFsm_ptr fsm,
+GameStrategy_ptr GameStrategy_construct(NuSMVEnv_ptr env,
+                                        GameBddFsm_ptr fsm,
                                         GamePlayer player,
                                         boolean reverseInitialQuantifiers,
                                         bdd_ptr goal,
@@ -459,6 +460,8 @@ GameStrategy_ptr GameStrategy_construct(GameBddFsm_ptr fsm,
   bdd_ptr init_2;
   bdd_ptr opponentDeadlock;
   bdd_ptr reachable;
+
+  OptsHandler_ptr opts = OPTS_HANDLER(NuSMVEnv_get_value(env, ENV_OPTS_HANDLER));
 
   GAME_BDD_FSM_CHECK_INSTANCE(fsm);
 
@@ -503,7 +506,7 @@ GameStrategy_ptr GameStrategy_construct(GameBddFsm_ptr fsm,
      to opt_game_game_initial_condition. So there can be 6 values,
      N, N+1, E, E+1, A, A+1, and they are all distinguishable.
   */
-  switch (opt_game_game_initial_condition(OptsHandler_create()) +
+  switch (opt_game_game_initial_condition(opts) +
           reverseInitialQuantifiers) {
   case 'N':    /* normal initial condition. */
   case 'N' + 1:

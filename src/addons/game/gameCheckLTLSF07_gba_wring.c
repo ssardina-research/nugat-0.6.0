@@ -314,7 +314,7 @@ ARGS((NuSMVEnv_ptr env, char* s, boolean delimiters, int* pos, node_ptr* literal
   SeeAlso     [ ]
 
 ******************************************************************************/
-Game_SF07_gba_ptr Game_SF07_gba_wring_ltl2gba(node_ptr formula)
+Game_SF07_gba_ptr Game_SF07_gba_wring_ltl2gba(NuSMVEnv_ptr env,node_ptr formula)
 {
   Game_SF07_gba_ptr res;
   Game_SF07_gba_wring_ptr cls;
@@ -324,9 +324,9 @@ Game_SF07_gba_ptr Game_SF07_gba_wring_ltl2gba(node_ptr formula)
 
   cls = Game_SF07_gba_wring_create();
   Game_SF07_gba_wring_set_formula(cls, formula);
-  Game_SF07_gba_wring_set_binary_file_name(cls, NULL);
-  Game_SF07_gba_wring_set_input_file_name(cls, NULL);
-  Game_SF07_gba_wring_set_output_file_name(cls, NULL);
+  Game_SF07_gba_wring_set_binary_file_name(env,cls, NULL);
+  Game_SF07_gba_wring_set_input_file_name(env,cls, NULL);
+  Game_SF07_gba_wring_set_output_file_name(env,cls, NULL);
   Game_SF07_gba_wring_write_input_file(cls);
   status = Game_SF07_gba_wring_execute(cls);
   if (status == 0) {
@@ -335,7 +335,7 @@ Game_SF07_gba_ptr Game_SF07_gba_wring_ltl2gba(node_ptr formula)
   } else {
     res = GAME_SF07_GBA(NULL);
   }
-  Game_SF07_gba_wring_destroy(cls);
+  Game_SF07_gba_wring_destroy(env,cls);
 
   return res;
 }
@@ -387,8 +387,11 @@ Game_SF07_gba_wring_ptr Game_SF07_gba_wring_create()
   SeeAlso     [ Game_SF07_gba_wring_create ]
 
 ******************************************************************************/
-void Game_SF07_gba_wring_destroy(Game_SF07_gba_wring_ptr self)
+void Game_SF07_gba_wring_destroy(NuSMVEnv_ptr env,Game_SF07_gba_wring_ptr self)
 {
+
+  OptsHandler_ptr opts = OPTS_HANDLER(NuSMVEnv_get_value(env, ENV_OPTS_HANDLER));
+
   GAME_SF07_GBA_WRING_CHECK_INSTANCE(self);
 
   /* Don't destroy formula: node_ptr are shared. */
@@ -399,7 +402,7 @@ void Game_SF07_gba_wring_destroy(Game_SF07_gba_wring_ptr self)
   /* Don't close input_file: supposed to be closed already. */
   if (self->input_file_name != (char*) NULL) {
     /* Try to remove input file if required. */
-    if ((!opt_game_sf07_gba_wring_input_keep(OptsHandler_create())) &&
+    if ((!opt_game_sf07_gba_wring_input_keep(opts)) &&
         remove(self->input_file_name) == -1) {
       fprintf(nusmv_stderr,
               "Warning: error deleting file %s (errno = %d).\n",
@@ -414,7 +417,7 @@ void Game_SF07_gba_wring_destroy(Game_SF07_gba_wring_ptr self)
   /* Don't close output_file: supposed to be closed already. */
   if (self->output_file_name != (char*) NULL) {
     /* Try to remove output file if required. */
-    if ((!opt_game_sf07_gba_wring_output_keep(OptsHandler_create())) &&
+    if ((!opt_game_sf07_gba_wring_output_keep(opts)) &&
         remove(self->output_file_name) == -1) {
       fprintf(nusmv_stderr,
               "Warning: error deleting file %s (errno = %d).\n",
@@ -472,19 +475,22 @@ void Game_SF07_gba_wring_set_formula(Game_SF07_gba_wring_ptr self,
   SeeAlso     [ ]
 
 ******************************************************************************/
-void Game_SF07_gba_wring_set_binary_file_name(Game_SF07_gba_wring_ptr self,
+void Game_SF07_gba_wring_set_binary_file_name(NuSMVEnv_ptr env,
+                                              Game_SF07_gba_wring_ptr self,
                                               const char* binary_file_name)
 {
   const char* tmp;
+
+  OptsHandler_ptr opts = OPTS_HANDLER(NuSMVEnv_get_value(env, ENV_OPTS_HANDLER));
 
   GAME_SF07_GBA_WRING_CHECK_INSTANCE(self);
   nusmv_assert(self->binary_file_name == (char*) NULL);
 
   if (binary_file_name != (char*) NULL) {
     tmp = binary_file_name;
-  } else if (get_game_sf07_gba_wring_binary(OptsHandler_create()) !=
+  } else if (get_game_sf07_gba_wring_binary(opts) !=
              NULL) {
-    tmp = get_game_sf07_gba_wring_binary(OptsHandler_create());
+    tmp = get_game_sf07_gba_wring_binary(opts);
   } else {
     fprintf(nusmv_stderr,
             "Warning: option game_sf07_gba_wring_binary was NULL, reverting "
@@ -516,10 +522,14 @@ void Game_SF07_gba_wring_set_binary_file_name(Game_SF07_gba_wring_ptr self,
   SeeAlso     []
 
 ******************************************************************************/
-void Game_SF07_gba_wring_set_input_file_name(Game_SF07_gba_wring_ptr self,
+void Game_SF07_gba_wring_set_input_file_name(NuSMVEnv_ptr env,
+                                             Game_SF07_gba_wring_ptr self,
                                              const char* input_file_name)
 {
   GAME_SF07_GBA_WRING_CHECK_INSTANCE(self);
+
+  OptsHandler_ptr opts = OPTS_HANDLER(NuSMVEnv_get_value(env, ENV_OPTS_HANDLER));
+
   nusmv_assert(self->input_file_name == (char*) NULL);
 
   if (input_file_name != (char*) NULL) {
@@ -530,10 +540,10 @@ void Game_SF07_gba_wring_set_input_file_name(Game_SF07_gba_wring_ptr self,
     char* input_dir;
     char* input_templ;
 
-    input_dir = get_game_sf07_gba_wring_input_dir(OptsHandler_create());
+    input_dir = get_game_sf07_gba_wring_input_dir(opts);
     /* input_dir may be NULL */
     input_templ =
-      get_game_sf07_gba_wring_input_templ(OptsHandler_create());
+      get_game_sf07_gba_wring_input_templ(opts);
     if (input_templ == (char*) NULL) {
       fprintf(nusmv_stderr,
               "Warning: option game_sf07_gba_wring_input_templ was NULL, "
@@ -577,10 +587,14 @@ void Game_SF07_gba_wring_set_input_file_name(Game_SF07_gba_wring_ptr self,
   SeeAlso     [ ]
 
 ******************************************************************************/
-void Game_SF07_gba_wring_set_output_file_name(Game_SF07_gba_wring_ptr self,
+void Game_SF07_gba_wring_set_output_file_name(NuSMVEnv_ptr env,
+                                              Game_SF07_gba_wring_ptr self,
                                               const char* output_file_name)
 {
   GAME_SF07_GBA_WRING_CHECK_INSTANCE(self);
+
+  OptsHandler_ptr opts = OPTS_HANDLER(NuSMVEnv_get_value(env, ENV_OPTS_HANDLER));
+
   nusmv_assert(self->output_file_name == (char*) NULL);
 
   if (output_file_name != (char*) NULL) {
@@ -591,10 +605,10 @@ void Game_SF07_gba_wring_set_output_file_name(Game_SF07_gba_wring_ptr self,
     char* output_dir;
     char* output_templ;
 
-    output_dir = get_game_sf07_gba_wring_output_dir(OptsHandler_create());
+    output_dir = get_game_sf07_gba_wring_output_dir(opts);
     /* output_dir may be NULL */
     output_templ =
-      get_game_sf07_gba_wring_output_templ(OptsHandler_create());
+      get_game_sf07_gba_wring_output_templ(opts);
     if (output_templ == (char*) NULL) {
       fprintf(nusmv_stderr,
               "Warning: option game_sf07_gba_wring_output_templ was NULL, "
@@ -746,6 +760,10 @@ int Game_SF07_gba_wring_execute(Game_SF07_gba_wring_ptr self)
   char* cmdline;
   unsigned int len_cmdline;
 
+  const NuSMVEnv_ptr env = EnvObject_get_environment(ENV_OBJECT(self));
+
+  OptsHandler_ptr opts = OPTS_HANDLER(NuSMVEnv_get_value(env, ENV_OPTS_HANDLER));
+
   GAME_SF07_GBA_WRING_CHECK_INSTANCE(self);
   nusmv_assert(self->binary_file_name != (char*) NULL);
   nusmv_assert(self->input_file_name != (char*) NULL);
@@ -768,7 +786,7 @@ int Game_SF07_gba_wring_execute(Game_SF07_gba_wring_ptr self)
     len_cmdline += strlen(self->input_file_name);
     Slist_push(args, (void*) " -ltl ");
     len_cmdline += strlen(" -ltl ");
-    if (opt_game_sf07_gba_wring_has_cc(OptsHandler_create())) {
+    if (opt_game_sf07_gba_wring_has_cc(opts)) {
       Slist_push(args, (void*) " -cc");
       len_cmdline += strlen(" -cc");
     }
@@ -788,11 +806,11 @@ int Game_SF07_gba_wring_execute(Game_SF07_gba_wring_ptr self)
     Slist_destroy(args);
   }
 
-  if (opt_verbose_level_ge(OptsHandler_create(), 3)) {
+  if (opt_verbose_level_ge(opts, 3)) {
     fprintf(nusmv_stderr, "Executing %s\n", cmdline);
   }
   status = system(cmdline);
-  if (opt_verbose_level_ge(OptsHandler_create(), 3)) {
+  if (opt_verbose_level_ge(opts, 3)) {
     fprintf(nusmv_stderr,
             "Done executing %s. Return value: %d.\n",
             cmdline,

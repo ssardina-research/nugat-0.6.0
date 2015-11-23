@@ -114,6 +114,7 @@ boolean TypeCheckerGame_check_property(TypeChecker_ptr self,
 
   const NuSMVEnv_ptr env = EnvObject_get_environment(ENV_OBJECT(self));
   const NodeMgr_ptr nodemgr = NODE_MGR(NuSMVEnv_get_value(env, ENV_NODE_MGR));
+  OptsHandler_ptr opts = OPTS_HANDLER(NuSMVEnv_get_value(env, ENV_OPTS_HANDLER));
 
   TYPE_CHECKER_CHECK_INSTANCE(self);
 
@@ -139,7 +140,7 @@ boolean TypeCheckerGame_check_property(TypeChecker_ptr self,
 
   isOK = TypeChecker_is_specification_wellformed(self, exp);
 
-  if (opt_verbose_level_gt(OptsHandler_create(), 3)) {
+  if (opt_verbose_level_gt(opts, 3)) {
     if (isOK) {
       /* the property is not yet inserted to database => there is no index */
       fprintf(nusmv_stderr, "Successful type-checking of a property\n");

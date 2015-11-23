@@ -418,6 +418,8 @@ void Game_CheckLtlGameSpecSF07(NuSMVEnv_ptr env,
 
   const NodeMgr_ptr nodemgr = NODE_MGR(NuSMVEnv_get_value(env, ENV_NODE_MGR));
 
+  OptsHandler_ptr opts = OPTS_HANDLER(NuSMVEnv_get_value(env, ENV_OPTS_HANDLER));
+
   PROP_GAME_CHECK_INSTANCE(prop);
   nusmv_assert(Prop_get_status(PROP(prop)) == Prop_Unchecked);
   nusmv_assert(0 <= kmin);
@@ -427,13 +429,13 @@ void Game_CheckLtlGameSpecSF07(NuSMVEnv_ptr env,
                (w == GAME_WHO_ANTAGONIST) ||
                (w == GAME_WHO_PLAYER_1) ||
                (w == GAME_WHO_PLAYER_2));
-  nusmv_assert(opt_game_game_initial_condition(OptsHandler_create()) ==
+  nusmv_assert(opt_game_game_initial_condition(opts) ==
                'N');
 
   cls = Game_SF07_StructCheckLTLGameSF07_create(env,prop, params, kmin, kmax, w);
 
   /* As in gameGeneral.c::Game_BeforeCheckingSpec. */
-  if (opt_verbose_level_ge(OptsHandler_create(), 1)) {
+  if (opt_verbose_level_ge(opts, 1)) {
     fprintf(nusmv_stderr, "computing ");
     fprintf(nusmv_stderr, " ");
     Prop_print(PROP(cls->prop), (OStream_ptr)nusmv_stderr, PROP_PRINT_FMT_FORMULA);
@@ -441,7 +443,7 @@ void Game_CheckLtlGameSpecSF07(NuSMVEnv_ptr env,
   }
 
   /* Some additional info. */
-  if (opt_verbose_level_ge(OptsHandler_create(), 2)) {
+  if (opt_verbose_level_ge(opts, 2)) {
     fprintf(nusmv_stderr,
        "\nwith Game_CheckLtlGameSpecSF07 using kmin = %d, kmax = %d, w = %s.\n",
             cls->kmin,
@@ -512,11 +514,11 @@ void Game_CheckLtlGameSpecSF07(NuSMVEnv_ptr env,
 
   /* Print strategy. */
   if ((((cls->params != (gameParams_ptr) NULL) && params->strategy_printout) ||
-      opt_game_print_strategy(OptsHandler_create())) &&
+      opt_game_print_strategy(opts)) &&
       ((Prop_get_status(PROP(cls->prop)) == Prop_True) ||
        (Prop_get_status(PROP(cls->prop)) == Prop_False)))
   {
-    if (get_game_sf07_strategy_printing_mode(OptsHandler_create()) ==
+    if (get_game_sf07_strategy_printing_mode(opts) ==
         GAME_SF07_STRATEGY_PRINTING_MODE_SEXP) {
       Game_SF07_StructCheckLTLGameSF07_print_strategy_monitor_sexp(cls);
     } else {
@@ -836,7 +838,7 @@ static void Game_SF07_StructCheckLTLGameSF07_run_iteration
   const NuSMVEnv_ptr env = EnvObject_get_environment(ENV_OBJECT(self->symb_table));
   const ErrorMgr_ptr errmgr = ERROR_MGR(NuSMVEnv_get_value(env, ENV_ERROR_MANAGER));
   const NodeMgr_ptr nodemgr = NODE_MGR(NuSMVEnv_get_value(env, ENV_NODE_MGR));
-
+  OptsHandler_ptr opts = OPTS_HANDLER(NuSMVEnv_get_value(env, ENV_OPTS_HANDLER));
   /* Increase counter. */
   nusmv_assert(ltlgame_sf07_unique_number < 999999999);
   ltlgame_sf07_unique_number++;
@@ -846,7 +848,7 @@ static void Game_SF07_StructCheckLTLGameSF07_run_iteration
                                                     curr_player,
                                                     ltlgame_sf07_unique_number);
 
-  if (opt_verbose_level_ge(OptsHandler_create(), 2)) {
+  if (opt_verbose_level_ge(opts, 2)) {
     fprintf(nusmv_stderr,
             "\nGame_CheckLtlGameSpecSF07: performing iteration with curr_k = "
             "%d, curr_player = %d.\n\n",
@@ -875,7 +877,7 @@ static void Game_SF07_StructCheckLTLGameSF07_run_iteration
     ErrorMgr_nusmv_exit(errmgr,1);
   }
 
-  if (opt_verbose_level_ge(OptsHandler_create(), 2)) {
+  if (opt_verbose_level_ge(opts, 2)) {
     fprintf(nusmv_stderr,
             "\nGame_CheckLtlGameSpecSF07: finished iteration. Sub game is %s.\n",
             ((self->curr_goal_realizability == GAME_REALIZABLE) ?
@@ -924,6 +926,7 @@ static void Game_SF07_StructCheckLTLGameSF07_construct_ba
   const NodeMgr_ptr nodemgr = NODE_MGR(NuSMVEnv_get_value(env, ENV_NODE_MGR));
   const ErrorMgr_ptr  errmgr = ERROR_MGR(NuSMVEnv_get_value(env, ENV_ERROR_MANAGER));
   const MasterPrinter_ptr wffprint = MASTER_PRINTER(NuSMVEnv_get_value(env, ENV_WFF_PRINTER));
+  OptsHandler_ptr opts = OPTS_HANDLER(NuSMVEnv_get_value(env, ENV_OPTS_HANDLER));
 
   /* Has the ba already been constructed? */
   if (((self->curr_player == PLAYER_1) &&
@@ -974,7 +977,7 @@ static void Game_SF07_StructCheckLTLGameSF07_construct_ba
     nnfed = Wff2Nnf(env,booleanized);
 
     /* Log result. */
-    if (opt_verbose_level_ge(OptsHandler_create(), 4)) {
+    if (opt_verbose_level_ge(opts, 4)) {
       fprintf(nusmv_stderr,
               "\nGame_SF07_StructCheckLTLGameSF07_construct_ba: booleanized, "
               "nnfed formula is:\n");
@@ -986,7 +989,7 @@ static void Game_SF07_StructCheckLTLGameSF07_construct_ba
   }
 
   /* Construct ba. */
-  ba = Game_SF07_gba_wring_ltl2gba(nnfed);
+  ba = Game_SF07_gba_wring_ltl2gba(env,nnfed);
   if (ba == GAME_SF07_GBA(NULL)) {
     char* tmp;
     tmp = sprint_node(wffprint,formula);
@@ -1137,6 +1140,7 @@ static void Game_SF07_StructCheckLTLGameSF07_construct_monitor_sexp
     const NodeMgr_ptr nodemgr = NODE_MGR(NuSMVEnv_get_value(env, ENV_NODE_MGR));
     MasterPrinter_ptr wffprint = MASTER_PRINTER(NuSMVEnv_get_value(env, ENV_WFF_PRINTER));
     const UStringMgr_ptr strings = USTRING_MGR(NuSMVEnv_get_value(env, ENV_STRING_MGR));
+    OptsHandler_ptr opts = OPTS_HANDLER(NuSMVEnv_get_value(env, ENV_OPTS_HANDLER));
 
   GAME_SF07_STRUCT_CHECK_LTL_GAME_SF07_CHECK_INSTANCE(self);
   if (self->curr_player == PLAYER_1) {
@@ -1183,7 +1187,7 @@ static void Game_SF07_StructCheckLTLGameSF07_construct_monitor_sexp
                                 Nil),
                        monitor);
 
-    if (opt_verbose_level_ge(OptsHandler_create(), 4)) {
+    if (opt_verbose_level_ge(opts, 4)) {
       fprintf(nusmv_stderr,
               "\nGame_SF07_StructCheckLTLGameSF07_construct_monitor_sexp: "
               "player 2 monitor is:\n");
@@ -1225,7 +1229,7 @@ static void Game_SF07_StructCheckLTLGameSF07_construct_monitor_sexp
                                 Nil),
                        Nil);
 
-    if (opt_verbose_level_ge(OptsHandler_create(), 4)) {
+    if (opt_verbose_level_ge(opts, 4)) {
       fprintf(nusmv_stderr,
               "\nGame_SF07_StructCheckLTLGameSF07_construct_monitor_sexp: "
               "player 1 monitor is:\n");
@@ -2078,6 +2082,7 @@ static void Game_SF07_StructCheckLTLGameSF07_check
 
   const NuSMVEnv_ptr env = EnvObject_get_environment(ENV_OBJECT(self));
   const NodeMgr_ptr nodemgr = NODE_MGR(NuSMVEnv_get_value(env, ENV_NODE_MGR));
+  OptsHandler_ptr opts = OPTS_HANDLER(NuSMVEnv_get_value(env, ENV_OPTS_HANDLER));
 
   GAME_SF07_STRUCT_CHECK_LTL_GAME_SF07_CHECK_INSTANCE(self);
   GAME_BDD_FSM_CHECK_INSTANCE(self->curr_product_game_bdd_fsm);
@@ -2087,7 +2092,7 @@ static void Game_SF07_StructCheckLTLGameSF07_check
   /* Should a strategy be constructed? */
   construct_strategy = (((self->params != (gameParams_ptr) NULL) &&
                          (self->params)->strategy_printout) ||
-                        opt_game_print_strategy(OptsHandler_create()));
+                        opt_game_print_strategy(opts));
 
   /* Construct property. */
   expr = find_node(nodemgr,GAME_SPEC_WRAPPER,
@@ -2099,7 +2104,7 @@ static void Game_SF07_StructCheckLTLGameSF07_check
   PropGame_set_game_bdd_fsm(prop, self->curr_product_game_bdd_fsm);
 
   /* Log property. */
-  if (opt_verbose_level_ge(OptsHandler_create(), 4)) {
+  if (opt_verbose_level_ge(opts, 4)) {
     fprintf(nusmv_stderr,
             "\nGame_SF07_StructCheckLTLGameSF07_check: sub game goal is:\n");
     Prop_print(PROP(prop), (OStream_ptr)nusmv_stderr, PROP_PRINT_FMT_FORMULA);
@@ -2314,11 +2319,12 @@ static void Game_SF07_StructCheckLTLGameSF07_print_strategy_monitor_sexp
   NodeList_ptr vars_to_decl;
   const NuSMVEnv_ptr env = EnvObject_get_environment(ENV_OBJECT(self));
   MasterPrinter_ptr wffprint = MASTER_PRINTER(NuSMVEnv_get_value(env, ENV_WFF_PRINTER));
+  OptsHandler_ptr opts = OPTS_HANDLER(NuSMVEnv_get_value(env, ENV_OPTS_HANDLER));
 
   GAME_STRATEGY_CHECK_INSTANCE(self->strategy);
   {
     Game_SF07_StrategyPrintingMode m;
-    m = get_game_sf07_strategy_printing_mode(OptsHandler_create());
+    m = get_game_sf07_strategy_printing_mode(opts);
     nusmv_assert(m == GAME_SF07_STRATEGY_PRINTING_MODE_SEXP);
   }
 
@@ -2426,22 +2432,21 @@ static void Game_SF07_StructCheckLTLGameSF07_print_strategy_monitor_bdd
   array_t* layers_to_decl;
   NodeList_ptr vars;
   NodeList_ptr vars_to_decl;
-  NuSMVEnv_ptr env;
+  NuSMVEnv_ptr env = EnvObject_get_environment(ENV_OBJECT(self->symb_table));
 
+  MasterPrinter_ptr wffprint = MASTER_PRINTER(NuSMVEnv_get_value(env, ENV_WFF_PRINTER));
+  OptsHandler_ptr opts = OPTS_HANDLER(NuSMVEnv_get_value(env, ENV_OPTS_HANDLER));
 
   GAME_SF07_STRUCT_CHECK_LTL_GAME_SF07_CHECK_INSTANCE(self);
   GAME_STRATEGY_CHECK_INSTANCE(self->strategy);
   {
     Game_SF07_StrategyPrintingMode m;
-    m = get_game_sf07_strategy_printing_mode(OptsHandler_create());
+    m = get_game_sf07_strategy_printing_mode(opts);
     nusmv_assert((m == GAME_SF07_STRATEGY_PRINTING_MODE_BDD_SEPARATE) ||
                  (m == GAME_SF07_STRATEGY_PRINTING_MODE_BDD_CONJOINED));
   }
 
-  env = EnvObject_get_environment(ENV_OBJECT(self->symb_table));
 
-  MasterPrinter_ptr wffprint =
-            MASTER_PRINTER(NuSMVEnv_get_value(env, ENV_WFF_PRINTER));
 
   module_incr_number++;
   out = ((self->params != (gameParams_ptr) NULL) &&
@@ -2545,7 +2550,7 @@ static void Game_SF07_StructCheckLTLGameSF07_print_strategy_monitor_bdd
       bdd_or_accumulate(self->dd_manager, &init_bdd, tmp);
       bdd_free(self->dd_manager, tmp);
 
-      if (get_game_sf07_strategy_printing_mode(OptsHandler_create()) ==
+      if (get_game_sf07_strategy_printing_mode(opts) ==
           GAME_SF07_STRATEGY_PRINTING_MODE_BDD_CONJOINED) {
         bdd_and_accumulate(self->dd_manager,
                            &init_bdd,
@@ -2564,7 +2569,7 @@ static void Game_SF07_StructCheckLTLGameSF07_print_strategy_monitor_bdd
                            do_indentation,
                            strlen(init_str),
                            OSTREAM(out));
-      if (get_game_sf07_strategy_printing_mode(OptsHandler_create()) ==
+      if (get_game_sf07_strategy_printing_mode(opts) ==
           GAME_SF07_STRATEGY_PRINTING_MODE_BDD_SEPARATE) {
         fprintf(out, "%s", init_str);
         BddEnc_print_bdd_wff(self->bdd_enc,
@@ -2592,7 +2597,7 @@ static void Game_SF07_StructCheckLTLGameSF07_print_strategy_monitor_bdd
       bdd_or_accumulate(self->dd_manager, &trans_bdd, tmp);
       bdd_free(self->dd_manager, tmp);
 
-      if (get_game_sf07_strategy_printing_mode(OptsHandler_create()) ==
+      if (get_game_sf07_strategy_printing_mode(opts) ==
           GAME_SF07_STRATEGY_PRINTING_MODE_BDD_CONJOINED) {
         bdd_and_accumulate(self->dd_manager,
                            &trans_bdd,
@@ -2611,7 +2616,7 @@ static void Game_SF07_StructCheckLTLGameSF07_print_strategy_monitor_bdd
                            do_indentation,
                            strlen(trans_str),
                            OSTREAM(out));
-      if (get_game_sf07_strategy_printing_mode(OptsHandler_create()) ==
+      if (get_game_sf07_strategy_printing_mode(opts) ==
           GAME_SF07_STRATEGY_PRINTING_MODE_BDD_SEPARATE) {
         fprintf(out, "%s", trans_str);
         BddEnc_print_bdd_wff(self->bdd_enc,

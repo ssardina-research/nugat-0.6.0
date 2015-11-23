@@ -145,6 +145,7 @@ void Game_CheckGenReactivitySpec(NuSMVEnv_ptr env, PropGame_ptr prop, gameParams
 
   const NodeMgr_ptr nodemgr = NODE_MGR(NuSMVEnv_get_value(env, ENV_NODE_MGR));
   const UStringMgr_ptr strings = USTRING_MGR(NuSMVEnv_get_value(env, ENV_STRING_MGR));
+  OptsHandler_ptr opts = OPTS_HANDLER(NuSMVEnv_get_value(env, ENV_OPTS_HANDLER));
 
   /* The given property must be a general reactivity(1) property.
      Such a property has GAME_TWO_EXPR_LIST at top (see the
@@ -158,7 +159,7 @@ void Game_CheckGenReactivitySpec(NuSMVEnv_ptr env, PropGame_ptr prop, gameParams
   strategy = GAME_STRATEGY(NULL);
   construct_strategy = (((params != (gameParams_ptr) NULL) &&
                          params->strategy_printout) ||
-                        opt_game_print_strategy(OptsHandler_create()));
+                        opt_game_print_strategy(opts));
   Game_BeforeCheckingSpec(env,prop);
 
   /* Declare a special variable required for strategy printing. */
@@ -233,6 +234,8 @@ void Game_CheckBuchiGameSpec(NuSMVEnv_ptr env,PropGame_ptr prop, gameParams_ptr 
   const NodeMgr_ptr nodemgr = NODE_MGR(NuSMVEnv_get_value(env, ENV_NODE_MGR));
   const UStringMgr_ptr strings = USTRING_MGR(NuSMVEnv_get_value(env, ENV_STRING_MGR));
 
+  OptsHandler_ptr opts = OPTS_HANDLER(NuSMVEnv_get_value(env, ENV_OPTS_HANDLER));
+
   /* The given property must be a buchi game property. Such a
      property is a list of expressions (CONS at top) (see the
      parser). */
@@ -244,7 +247,7 @@ void Game_CheckBuchiGameSpec(NuSMVEnv_ptr env,PropGame_ptr prop, gameParams_ptr 
   strategy = GAME_STRATEGY(NULL);
   construct_strategy = (((params != (gameParams_ptr) NULL) &&
                          params->strategy_printout) ||
-                        opt_game_print_strategy(OptsHandler_create()));
+                        opt_game_print_strategy(opts));
   Game_BeforeCheckingSpec(env,prop);
 
   /* Declare a special variable required for strategy printing. */
@@ -439,6 +442,8 @@ static void game_declare_special_var(NuSMVEnv_ptr env,
   const NodeMgr_ptr nodemgr = NODE_MGR(NuSMVEnv_get_value(env, ENV_NODE_MGR));
   const UStringMgr_ptr strings = USTRING_MGR(NuSMVEnv_get_value(env, ENV_STRING_MGR));
 
+  OptsHandler_ptr opts = OPTS_HANDLER(NuSMVEnv_get_value(env, ENV_OPTS_HANDLER));
+
   /* Create a new temporal layer (with arbitrary name). */
   layer = SymbTable_create_layer(SYMB_TABLE(NuSMVEnv_get_value(env, ENV_SYMB_TABLE)),
                                  NULL, /* a new name will be created */
@@ -471,7 +476,7 @@ static void game_declare_special_var(NuSMVEnv_ptr env,
   *new_var = var;
   *new_layer = layer;
 
-  if(opt_verbose_level_gt(OptsHandler_create(), 0)) {
+  if(opt_verbose_level_gt(opts, 0)) {
     fprintf(nusmv_stdout, "\n -- VAR %s : 0 .. %d;", name, guaranteeNumber - 1);
   }
 
@@ -592,7 +597,7 @@ static boolean game_compute_gen_reactivity(node_ptr specExp,
   DDMgr_ptr dd_manager = BddEnc_get_dd_manager(enc);
   const NuSMVEnv_ptr env = EnvObject_get_environment(ENV_OBJECT(dd_manager));
   const NodeMgr_ptr nodemgr = NODE_MGR(NuSMVEnv_get_value(env, ENV_NODE_MGR));
-  OptsHandler_ptr oh = OptsHandler_create();
+  OptsHandler_ptr oh = OPTS_HANDLER(NuSMVEnv_get_value(env, ENV_OPTS_HANDLER));
 
   bdd_ptr init_1, init_2, invar_1, invar_2;
   bdd_ptr Z;
@@ -1172,7 +1177,7 @@ static boolean game_compute_gen_reactivity(node_ptr specExp,
         } else {
           tmp2 = bdd_dup(Z);
         }
-        *strategy = GameStrategy_construct(fsm, player, false, tmp, tmp2, trans);
+        *strategy = GameStrategy_construct(env,fsm, player, false, tmp, tmp2, trans);
         bdd_free(dd_manager, tmp2);
       }
       bdd_free(dd_manager, trans);
@@ -1269,8 +1274,7 @@ static boolean game_compute_buchi_game(NuSMVEnv_ptr env,
   const NodeMgr_ptr nodemgr = NODE_MGR(NuSMVEnv_get_value(env, ENV_NODE_MGR));
   const UStringMgr_ptr strings = USTRING_MGR(NuSMVEnv_get_value(env, ENV_STRING_MGR));
 
-  OptsHandler_ptr opt = OptsHandler_create();
-
+  OptsHandler_ptr opt = OPTS_HANDLER(NuSMVEnv_get_value(env, ENV_OPTS_HANDLER));
 
   /* flag which player this game is for */
   GamePlayer player =
@@ -1564,7 +1568,7 @@ static boolean game_compute_buchi_game(NuSMVEnv_ptr env,
 
       /* -- fill in the strategy structure -- */
       tmp = bdd_false(dd_manager);
-      *strategy = GameStrategy_construct(fsm, player, false, tmp, Z, trans);
+      *strategy = GameStrategy_construct(env,fsm, player, false, tmp, Z, trans);
 
       bdd_free(dd_manager, tmp);
       bdd_free(dd_manager, trans);

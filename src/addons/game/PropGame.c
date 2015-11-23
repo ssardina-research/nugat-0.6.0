@@ -647,10 +647,12 @@ void prop_game_verify(PropGame_ptr self)
 {
   const NuSMVEnv_ptr env = EnvObject_get_environment(ENV_OBJECT(self));
 
+  OptsHandler_ptr opts = OPTS_HANDLER(NuSMVEnv_get_value(env, ENV_OPTS_HANDLER));
+
   PROP_GAME_CHECK_INSTANCE(self);
   nusmv_assert(PropGame_type_is_game(Prop_get_type(PROP(self))));
   /* the input file contains game */
-  nusmv_assert(opt_game_game(OptsHandler_create()));
+  nusmv_assert(opt_game_game(opts));
 
   if (Prop_get_status(PROP(self)) == Prop_Unchecked)  {
     switch (Prop_get_type(PROP(self))) {

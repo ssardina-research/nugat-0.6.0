@@ -106,7 +106,8 @@ EXTERN GameStrategy_ptr GameStrategy_create ARGS((BddEnc_ptr bdd_enc,
 
 EXTERN void GameStrategy_destroy ARGS((GameStrategy_ptr self));
 
-EXTERN GameStrategy_ptr GameStrategy_construct ARGS((GameBddFsm_ptr fsm,
+EXTERN GameStrategy_ptr GameStrategy_construct ARGS((NuSMVEnv_ptr env,
+                                                     GameBddFsm_ptr fsm,
                                              GamePlayer player,
                                              boolean reverseInitialQuantifiers,
                                              bdd_ptr goal,

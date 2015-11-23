@@ -288,6 +288,7 @@ void Game_CommandBuildBddModel(NuSMVEnv_ptr env)
   SymbTable_ptr st = SYMB_TABLE(NuSMVEnv_get_value(env, ENV_SYMB_TABLE));
   GameSexpFsm_ptr scalar_fsm = PropDbGame_master_get_game_scalar_sexp_fsm(env, \
                                      PROP_DB_GAME(NuSMVEnv_get_value(env, ENV_PROP_DB)));
+  OptsHandler_ptr opts = OPTS_HANDLER(NuSMVEnv_get_value(env, ENV_OPTS_HANDLER));
 
   GameBddFsm_ptr bdd_fsm =
     Game_CreateGameBddFsm(global_fsm_builder,
@@ -295,7 +296,7 @@ void Game_CommandBuildBddModel(NuSMVEnv_ptr env)
                           scalar_fsm,
                           SymbTable_get_layer(st, MODEL_LAYER_1),
                           SymbTable_get_layer(st, MODEL_LAYER_2),
-                          get_partition_method(OptsHandler_create()));
+                          get_partition_method(opts));
   PropDbGame_master_set_game_bdd_fsm(PROP_DB_GAME(NuSMVEnv_get_value(env, ENV_PROP_DB)),
                                      bdd_fsm);
 }

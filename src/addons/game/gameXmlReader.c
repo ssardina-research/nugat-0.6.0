@@ -297,11 +297,12 @@ int Game_RatFileToGame(NuSMVEnv_ptr env,const char *filename)
   const NodeMgr_ptr nodemgr = NODE_MGR(NuSMVEnv_get_value(env, ENV_NODE_MGR));
   const UStringMgr_ptr strings =  USTRING_MGR(NuSMVEnv_get_value(env, ENV_STRING_MGR));
   const ErrorMgr_ptr errmgr = ERROR_MGR(NuSMVEnv_get_value(env, ENV_ERROR_MANAGER));
+  OptsHandler_ptr opts = OPTS_HANDLER(NuSMVEnv_get_value(env, ENV_OPTS_HANDLER));
 
   if (cmp_struct_get_read_model(cmps)) {
     fprintf(nusmv_stderr,
             "A model appears to be already read from file: %s.\n",
-            get_input_file(OptsHandler_create()));
+            get_input_file(opts));
     return(1);
   }
 
@@ -464,7 +465,7 @@ int Game_RatFileToGame(NuSMVEnv_ptr env,const char *filename)
   }
 
 
-  if (!opt_game_game(OptsHandler_create())) {
+  if (!opt_game_game(opts)) {
     Game_Mode_Enter(env);
   }
   cmp_struct_set_read_model(cmps);

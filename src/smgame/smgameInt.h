@@ -43,9 +43,9 @@
 #ifndef __SMGAME_INT_H__
 #define __SMGAME_INT_H__
 
-#if HAVE_CONFIG_H
+
 #include "config.h"
-#endif
+
 
 #include "utils/utils.h"
 
@@ -80,7 +80,7 @@
 EXTERN void Smgame_Init ARGS((NuSMVEnv_ptr env));
 EXTERN void Smgame_End ARGS((NuSMVEnv_ptr env));
 EXTERN void Smgame_Reset ARGS((NuSMVEnv_ptr env));
-EXTERN void Smgame_BatchMain ARGS(());
+EXTERN void Smgame_BatchMain ARGS((NuSMVEnv_ptr env));
 EXTERN void Smgame_AddCmd ARGS((NuSMVEnv_ptr env));
 EXTERN char* Smgame_NuGaTReadVersion ARGS((void));
 

@@ -146,9 +146,11 @@ static void game_check_first_player_recur ARGS((NuSMVEnv_ptr env,
 int Game_CommandFlattenHierarchy(NuSMVEnv_ptr env,boolean expand_bounded_arrays)
 {
   SymbTable_ptr st = SYMB_TABLE(NuSMVEnv_get_value(env, ENV_SYMB_TABLE));
+  OptsHandler_ptr opts = OPTS_HANDLER(NuSMVEnv_get_value(env, ENV_OPTS_HANDLER));
+
   int propErr;
 
-  if (opt_verbose_level_gt(OptsHandler_create(), 0)) {
+  if (opt_verbose_level_gt(opts, 0)) {
     fprintf(nusmv_stderr, "Flattening hierarchy...\n");
   }
 
@@ -218,21 +220,21 @@ int Game_CommandFlattenHierarchy(NuSMVEnv_ptr env,boolean expand_bounded_arrays)
 
   /* Disable static order heuristics (see warning in
      nusmv/src/enc/enc.c::Enc_init_bdd_encoding). */
-  set_bdd_static_order_heuristics(OptsHandler_create(),
+  set_bdd_static_order_heuristics(opts,
                                   BDD_STATIC_ORDER_HEURISTICS_NONE);
 
-  if (opt_use_coi_size_sorting(OptsHandler_create())) {
+  if (opt_use_coi_size_sorting(opts)) {
     fprintf(nusmv_stderr,
             "*** WARNING: "
             "Game addon does not support properties COI size sorting.  ***\n");
     fprintf(nusmv_stderr,
             "*** WARNING: "
             "Properties COI size sorting will be disabled.             ***\n");
-    unset_use_coi_size_sorting(OptsHandler_create());
+    unset_use_coi_size_sorting(opts);
   }
 
   cmp_struct_set_flatten_hrc(cmps);
-  if (opt_verbose_level_gt(OptsHandler_create(), 0)) {
+  if (opt_verbose_level_gt(opts, 0)) {
     fprintf(nusmv_stderr, "...done\n");
   }
 

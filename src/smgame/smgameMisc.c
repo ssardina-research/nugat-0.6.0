@@ -94,11 +94,9 @@ EXTERN DDMgr_ptr dd_manager;
   SeeAlso     [ ]
 
 ******************************************************************************/
-void Smgame_BatchMain()
+void Smgame_BatchMain(NuSMVEnv_ptr env)
 {
-  OptsHandler_ptr oh = OptsHandler_create();
-
-  const NuSMVEnv_ptr env = EnvObject_get_environment(ENV_OBJECT(oh));
+  OptsHandler_ptr oh = OPTS_HANDLER(NuSMVEnv_get_value(env, ENV_OPTS_HANDLER));
   const ErrorMgr_ptr errmgr =
         ERROR_MGR(NuSMVEnv_get_value(env, ENV_ERROR_MANAGER));
 

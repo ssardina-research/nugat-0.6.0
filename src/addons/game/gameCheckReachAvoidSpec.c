@@ -111,6 +111,8 @@ void Game_CheckReachTargetSpec(NuSMVEnv_ptr env, PropGame_ptr prop, gameParams_p
   Game_RealizabilityStatus status;
   GameStrategy_ptr strategy;
 
+  OptsHandler_ptr opts = OPTS_HANDLER(NuSMVEnv_get_value(env, ENV_OPTS_HANDLER));
+
   nusmv_assert(PROP_GAME(NULL) != prop &&
                PropGame_ReachTarget == Prop_get_type(PROP(prop)));
 
@@ -118,7 +120,7 @@ void Game_CheckReachTargetSpec(NuSMVEnv_ptr env, PropGame_ptr prop, gameParams_p
   strategy = GAME_STRATEGY(NULL);
   construct_strategy = (((params != (gameParams_ptr) NULL) &&
                          params->strategy_printout) ||
-                        opt_game_print_strategy(OptsHandler_create()));
+                        opt_game_print_strategy(opts));
   Game_BeforeCheckingSpec(env,prop);
 
   /* the checking itself */
@@ -153,6 +155,8 @@ void Game_CheckAvoidTargetSpec(NuSMVEnv_ptr env,PropGame_ptr prop, gameParams_pt
   Game_RealizabilityStatus status;
   GameStrategy_ptr strategy;
 
+  OptsHandler_ptr opts = OPTS_HANDLER(NuSMVEnv_get_value(env, ENV_OPTS_HANDLER));
+
   nusmv_assert(PROP_GAME(NULL) != prop &&
                PropGame_AvoidTarget == Prop_get_type(PROP(prop)));
 
@@ -160,7 +164,7 @@ void Game_CheckAvoidTargetSpec(NuSMVEnv_ptr env,PropGame_ptr prop, gameParams_pt
   strategy = GAME_STRATEGY(NULL);
   construct_strategy = (((params != (gameParams_ptr) NULL) &&
                          params->strategy_printout) ||
-                        opt_game_print_strategy(OptsHandler_create()));
+                        opt_game_print_strategy(opts));
   Game_BeforeCheckingSpec(env,prop);
 
   /* the checking itself */
@@ -197,6 +201,8 @@ void Game_CheckReachDeadlockSpec(NuSMVEnv_ptr env, PropGame_ptr prop, gameParams
   Game_RealizabilityStatus status;
   GameStrategy_ptr strategy;
 
+  OptsHandler_ptr opts = OPTS_HANDLER(NuSMVEnv_get_value(env, ENV_OPTS_HANDLER));
+
   nusmv_assert(PROP_GAME(NULL) != prop &&
                PropGame_ReachDeadlock == Prop_get_type(PROP(prop)));
 
@@ -204,7 +210,7 @@ void Game_CheckReachDeadlockSpec(NuSMVEnv_ptr env, PropGame_ptr prop, gameParams
   strategy = GAME_STRATEGY(NULL);
   construct_strategy = (((params != (gameParams_ptr) NULL) &&
                          params->strategy_printout) ||
-                        opt_game_print_strategy(OptsHandler_create()));
+                        opt_game_print_strategy(opts));
   Game_BeforeCheckingSpec(env,prop);
 
   /* the checking itself */
@@ -241,6 +247,8 @@ void Game_CheckAvoidDeadlockSpec(NuSMVEnv_ptr env, PropGame_ptr prop, gameParams
   Game_RealizabilityStatus status;
   GameStrategy_ptr strategy;
 
+  OptsHandler_ptr opts = OPTS_HANDLER(NuSMVEnv_get_value(env, ENV_OPTS_HANDLER));
+
   nusmv_assert(PROP_GAME(NULL) != prop &&
                PropGame_AvoidDeadlock == Prop_get_type(PROP(prop)));
 
@@ -248,7 +256,7 @@ void Game_CheckAvoidDeadlockSpec(NuSMVEnv_ptr env, PropGame_ptr prop, gameParams
   strategy = GAME_STRATEGY(NULL);
   construct_strategy = (((params != (gameParams_ptr) NULL) &&
                          params->strategy_printout) ||
-                        opt_game_print_strategy(OptsHandler_create()));
+                        opt_game_print_strategy(opts));
   Game_BeforeCheckingSpec(env,prop);
 
   /* the checking itself */
@@ -309,7 +317,7 @@ Game_RealizabilityStatus Game_UseStrongReachabilityAlgorithm(NuSMVEnv_ptr env, P
   const UStringMgr_ptr strings = USTRING_MGR(NuSMVEnv_get_value(env, ENV_STRING_MGR));
   const ErrorMgr_ptr errmgr = ERROR_MGR(NuSMVEnv_get_value(env, ENV_ERROR_MANAGER));
 
-  OptsHandler_ptr oh = OptsHandler_create();
+  OptsHandler_ptr oh = OPTS_HANDLER(NuSMVEnv_get_value(env, ENV_OPTS_HANDLER));
 
   PROP_GAME_CHECK_INSTANCE(prop);
   nusmv_assert(PropGame_ReachTarget == Prop_get_type(PROP(prop)) ||
@@ -543,7 +551,8 @@ Game_RealizabilityStatus Game_UseStrongReachabilityAlgorithm(NuSMVEnv_ptr env, P
 
       /* construct the strategy */
       *strategy =
-        GameStrategy_construct(fsm,
+        GameStrategy_construct(env,
+                               fsm,
                                player,
                                /* initial quantifiers have been
                                   reversed => reverse */
@@ -581,7 +590,8 @@ Game_RealizabilityStatus Game_UseStrongReachabilityAlgorithm(NuSMVEnv_ptr env, P
 
       /* construct the strategy */
       *strategy =
-        GameStrategy_construct(fsm,
+        GameStrategy_construct(env,
+                               fsm,
                                opponent,
                                /*initial quantifiers have been reversed
                                  => keep them */

@@ -109,13 +109,14 @@ int Game_CommandEncodeVariables(NuSMVEnv_ptr env, char* input_order_file_name)
   BddEnc_ptr bdd_enc;
 
   ErrorMgr_ptr const errmgr = ERROR_MGR(NuSMVEnv_get_value(env, ENV_ERROR_MANAGER));
+  OptsHandler_ptr opts = OPTS_HANDLER(NuSMVEnv_get_value(env, ENV_OPTS_HANDLER));
 
-  if (opt_verbose_level_gt(OptsHandler_create(), 0)) {
+  if (opt_verbose_level_gt(opts, 0)) {
     fprintf(nusmv_stderr, "Building variables...");
   }
 
   if (input_order_file_name != NIL(char)) {
-    set_input_order_file(OptsHandler_create(), input_order_file_name);
+    set_input_order_file(opts, input_order_file_name);
   }
 
   /* Creates the bdd encoding, and again commits the model layer. */
@@ -133,24 +134,24 @@ int Game_CommandEncodeVariables(NuSMVEnv_ptr env, char* input_order_file_name)
 
   cmp_struct_set_encode_variables(cmps);
 
-  if (!opt_reorder(OptsHandler_create()) &&
-      !is_default_order_file(OptsHandler_create()) &&
-      !util_is_string_null(get_output_order_file(OptsHandler_create()))) {
+  if (!opt_reorder(opts) &&
+      !is_default_order_file(opts) &&
+      !util_is_string_null(get_output_order_file(opts))) {
     VarOrderingType dump_type;
-    if (opt_write_order_dumps_bits(OptsHandler_create())) {
+    if (opt_write_order_dumps_bits(opts)) {
       dump_type = DUMP_BITS;
     }
     else dump_type = DUMP_DEFAULT;
 
     BddEnc_write_var_ordering(BddFsm_get_bdd_encoding(BDD_FSM(GAME_BDD_FSM(NULL))),
-                              get_output_order_file(OptsHandler_create()),
+                              get_output_order_file(opts),
                               dump_type);
 
     /* batch mode: */
-    if (opt_batch(OptsHandler_create())) { ErrorMgr_nusmv_exit(errmgr,0); }
+    if (opt_batch(opts)) { ErrorMgr_nusmv_exit(errmgr,0); }
   }
 
-  if (opt_verbose_level_gt(OptsHandler_create(), 0)) {
+  if (opt_verbose_level_gt(opts, 0)) {
     fprintf(nusmv_stderr, "...done\n");
   }
 

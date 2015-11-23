@@ -418,6 +418,7 @@ static int CommandReadRatFile(NuSMVEnv_ptr env,int argc, char** argv)
   char* input_file_name = (char*) NULL;
   const ErrorMgr_ptr errmgr =
                     ERROR_MGR(NuSMVEnv_get_value(env, ENV_ERROR_MANAGER));
+  OptsHandler_ptr opts = OPTS_HANDLER(NuSMVEnv_get_value(env, ENV_OPTS_HANDLER));
 
   util_getopt_reset();
   while((c = util_getopt(argc, argv, "hi:")) != EOF) {
@@ -438,15 +439,15 @@ static int CommandReadRatFile(NuSMVEnv_ptr env,int argc, char** argv)
   if (cmp_struct_get_read_model(cmps)) {
     fprintf(stderr,
             "A model appears to be already read from file: %s.\n",
-            get_input_file(OptsHandler_create()));
+            get_input_file(opts));
     goto CommandReadRatFile_return_1;
   }
 
   if (input_file_name != (char*) NULL) {
-    set_input_file(OptsHandler_create(), input_file_name);
+    set_input_file(opts, input_file_name);
   }
 
-  if (get_input_file(OptsHandler_create()) == (char*) NULL) {
+  if (get_input_file(opts) == (char*) NULL) {
     fprintf(stderr,
             "Input file is (null). You must set the input file before.\n");
     goto CommandReadRatFile_return_1;
@@ -454,18 +455,18 @@ static int CommandReadRatFile(NuSMVEnv_ptr env,int argc, char** argv)
 
   /* Parse the input file. */
 
-  if (opt_verbose_level_gt(OptsHandler_create(), 0)) {
+  if (opt_verbose_level_gt(opts, 0)) {
     fprintf(stderr,
             "Parsing RAT file \"%s\" ..... ",
-            get_input_file(OptsHandler_create()));
+            get_input_file(opts));
     fflush(stderr);
   }
 
-  if (Game_RatFileToGame(env,get_input_file(OptsHandler_create()))) {
+  if (Game_RatFileToGame(env,get_input_file(opts))) {
     goto CommandReadRatFile_exit_1;
   }
 
-  if (opt_verbose_level_gt(OptsHandler_create(), 0)) {
+  if (opt_verbose_level_gt(opts, 0)) {
     fprintf(stderr, "done.\n");
     fflush(stderr);
   }
@@ -532,9 +533,11 @@ static int CommandGameFlattenHierarchy(NuSMVEnv_ptr env,int argc, char** argv)
 {
     int c;
 
+    OptsHandler_ptr opts = OPTS_HANDLER(NuSMVEnv_get_value(env, ENV_OPTS_HANDLER));
+
     boolean expand_bounded_arrays = false;
 
-    nusmv_assert(opt_game_game(OptsHandler_create()));
+    nusmv_assert(opt_game_game(opts));
 
     util_getopt_reset();
     while ((c = util_getopt(argc, argv, "he")) != EOF) {
@@ -620,7 +623,9 @@ static int CommandGameEncodeVariables(NuSMVEnv_ptr env,int argc, char** argv)
     int c;
     char* input_order_file_name = NIL(char);
 
-    nusmv_assert(opt_game_game(OptsHandler_create()));
+    OptsHandler_ptr opts = OPTS_HANDLER(NuSMVEnv_get_value(env, ENV_OPTS_HANDLER));
+
+    nusmv_assert(opt_game_game(opts));
 
     util_getopt_reset();
     while ((c = util_getopt(argc,argv,"i:h")) != EOF) {
@@ -719,7 +724,9 @@ static int CommandGameBuildModel(NuSMVEnv_ptr env,int argc, char** argv)
     boolean force_build = false;
     char* partition_method = NIL(char);
 
-    nusmv_assert(opt_game_game(OptsHandler_create()));
+    OptsHandler_ptr opts = OPTS_HANDLER(NuSMVEnv_get_value(env, ENV_OPTS_HANDLER));
+
+    nusmv_assert(opt_game_game(opts));
 
     util_getopt_reset();
     while((c = util_getopt(argc,argv,"m:fh")) != EOF){
@@ -754,7 +761,7 @@ static int CommandGameBuildModel(NuSMVEnv_ptr env,int argc, char** argv)
     if (!force_build && cmp_struct_get_build_model(cmps)) {
         fprintf(stderr,
                 "A model appears to be already built from file: %s.\n",
-                get_input_file(OptsHandler_create()));
+                get_input_file(opts));
         goto command_game_build_model_return_1;
     }
 
@@ -762,7 +769,7 @@ static int CommandGameBuildModel(NuSMVEnv_ptr env,int argc, char** argv)
         if (TransType_from_string(partition_method) != TRANS_TYPE_INVALID) {
             if ((force_build) &&
                 (TransType_from_string(partition_method) ==
-                 get_partition_method(OptsHandler_create()))) {
+                 get_partition_method(opts))) {
                 if (cmp_struct_get_build_model(cmps)) {
                     fprintf(stderr,
                             "A model for the chosen method has already been "
@@ -770,7 +777,7 @@ static int CommandGameBuildModel(NuSMVEnv_ptr env,int argc, char** argv)
                     goto command_game_build_model_return_1;
                 }
             }
-            set_partition_method(OptsHandler_create(),
+            set_partition_method(opts,
                                  TransType_from_string(partition_method));
         } else {
             fprintf(stderr,
@@ -787,10 +794,10 @@ static int CommandGameBuildModel(NuSMVEnv_ptr env,int argc, char** argv)
     Game_CommandBuildBddModel(env);
     cmp_struct_set_build_model(cmps);
 
-    if (opt_verbose_level_gt(OptsHandler_create(), 0)) {
+    if (opt_verbose_level_gt(opts, 0)) {
         fprintf(stderr,
                 "\nThe model has been built from file %s.\n",
-                get_input_file(OptsHandler_create()));
+                get_input_file(opts));
     }
 
     if (partition_method != NIL(char)) FREE(partition_method);
@@ -848,7 +855,9 @@ static int CommandGameBuildFlatModel(NuSMVEnv_ptr env,int argc, char** argv)
 {
     int c;
 
-    nusmv_assert(opt_game_game(OptsHandler_create()));
+    OptsHandler_ptr opts = OPTS_HANDLER(NuSMVEnv_get_value(env, ENV_OPTS_HANDLER));
+    
+    nusmv_assert(opt_game_game(opts));
 
     util_getopt_reset();
     while((c = util_getopt(argc,argv,"h")) != EOF){
@@ -866,17 +875,17 @@ static int CommandGameBuildFlatModel(NuSMVEnv_ptr env,int argc, char** argv)
     if (cmp_struct_get_build_flat_model(cmps)) {
         fprintf(stderr,
                 "A model appears to be already built from file: %s.\n",
-                get_input_file(OptsHandler_create()));
+                get_input_file(opts));
         return 1;
     }
 
     Game_CommandBuildFlatModel(env);
     cmp_struct_set_build_flat_model(cmps);
 
-    if (opt_verbose_level_gt(OptsHandler_create(), 0)) {
+    if (opt_verbose_level_gt(opts, 0)) {
         fprintf(stderr,
                 "\nThe sexp model has been built from file %s.\n",
-                get_input_file(OptsHandler_create()));
+                get_input_file(opts));
     }
 
     return 0;
@@ -921,8 +930,9 @@ static int CommandGameBuildBooleanModel(NuSMVEnv_ptr env,int argc, char ** argv)
 {
     int c;
     boolean forced = false;
+    OptsHandler_ptr opts = OPTS_HANDLER(NuSMVEnv_get_value(env, ENV_OPTS_HANDLER));
 
-    nusmv_assert(opt_game_game(OptsHandler_create()));
+    nusmv_assert(opt_game_game(opts));
 
     util_getopt_reset();
     while((c = util_getopt(argc,argv,"hf")) != EOF){
@@ -942,7 +952,7 @@ static int CommandGameBuildBooleanModel(NuSMVEnv_ptr env,int argc, char ** argv)
     if (cmp_struct_get_build_bool_model(cmps) && !forced) {
         fprintf(stderr,
                 "A model appears to be already built from file: %s.\n",
-                get_input_file(OptsHandler_create()));
+                get_input_file(opts));
         return 1;
     }
 
@@ -952,10 +962,10 @@ static int CommandGameBuildBooleanModel(NuSMVEnv_ptr env,int argc, char ** argv)
     Game_CommandBuildBooleanModel(env);
     cmp_struct_set_build_bool_model(cmps);
 
-    if (opt_verbose_level_gt(OptsHandler_create(), 0)) {
+    if (opt_verbose_level_gt(opts, 0)) {
         fprintf(stderr,
                 "\nThe boolean sexp model has been built from file %s.\n",
-                get_input_file(OptsHandler_create()));
+                get_input_file(opts));
     }
 
     return 0;
@@ -1007,10 +1017,10 @@ static int CommandGameWriteModelFlat(NuSMVEnv_ptr env,int argc, char **argv)
     char* output_file = NIL(char);
     FILE* ofileid = NIL(FILE);
     int bSpecifiedFilename = FALSE;
-    ErrorMgr_ptr const errmgr =
-            ERROR_MGR(NuSMVEnv_get_value(env, ENV_ERROR_MANAGER));
+    ErrorMgr_ptr const errmgr = ERROR_MGR(NuSMVEnv_get_value(env, ENV_ERROR_MANAGER));
+    OptsHandler_ptr opts = OPTS_HANDLER(NuSMVEnv_get_value(env, ENV_OPTS_HANDLER));
 
-    nusmv_assert(opt_game_game(OptsHandler_create()));
+    nusmv_assert(opt_game_game(opts));
 
     util_getopt_reset();
     while ((c = util_getopt(argc, argv, "ho:")) != EOF) {
@@ -1038,7 +1048,7 @@ static int CommandGameWriteModelFlat(NuSMVEnv_ptr env,int argc, char **argv)
     }
 
     if (output_file == NIL(char)) {
-        output_file = get_output_flatten_model_file(OptsHandler_create());
+        output_file = get_output_flatten_model_file(opts);
     }
     if (output_file == NIL(char)) {
         ofileid = stdout;
@@ -1055,7 +1065,7 @@ static int CommandGameWriteModelFlat(NuSMVEnv_ptr env,int argc, char **argv)
         goto command_game_write_model_flat_return_1;
     }
 
-    if (opt_verbose_level_gt(OptsHandler_create(), 0)) {
+    if (opt_verbose_level_gt(opts, 0)) {
         fprintf(stderr, "Writing flat model into file \"%s\"..",
                 output_file == (char *)NULL ? "stdout" : output_file);
     }
@@ -1063,7 +1073,7 @@ static int CommandGameWriteModelFlat(NuSMVEnv_ptr env,int argc, char **argv)
     CATCH(errmgr) {
             Game_CommandWriteFlatModel(env,ofileid);
 
-            if (opt_verbose_level_gt(OptsHandler_create(), 0)) {
+            if (opt_verbose_level_gt(opts, 0)) {
                 fprintf(stderr, ".. done.\n");
             }
         }
@@ -1157,10 +1167,10 @@ static int CommandGameWriteModelFlatBool(NuSMVEnv_ptr env,int argc, char** argv)
     char* output_file = NIL(char);
     FILE* ofileid = NIL(FILE);
     int bSpecifiedFilename = FALSE;
-    ErrorMgr_ptr const errmgr =
-            ERROR_MGR(NuSMVEnv_get_value(env, ENV_ERROR_MANAGER));
+    ErrorMgr_ptr const errmgr = ERROR_MGR(NuSMVEnv_get_value(env, ENV_ERROR_MANAGER));
+    OptsHandler_ptr opts = OPTS_HANDLER(NuSMVEnv_get_value(env, ENV_OPTS_HANDLER));
 
-    nusmv_assert(opt_game_game(OptsHandler_create()));
+    nusmv_assert(opt_game_game(opts));
 
     util_getopt_reset();
     while ((c = util_getopt(argc, argv, "ho:")) != EOF) {
@@ -1187,7 +1197,7 @@ static int CommandGameWriteModelFlatBool(NuSMVEnv_ptr env,int argc, char** argv)
     }
 
     if (output_file == NIL(char)) {
-        output_file = get_output_boolean_model_file(OptsHandler_create());
+        output_file = get_output_boolean_model_file(opts);
     }
 
     if (output_file == NIL(char)) {
@@ -1209,7 +1219,7 @@ static int CommandGameWriteModelFlatBool(NuSMVEnv_ptr env,int argc, char** argv)
         return 1;
     }
 
-    if (opt_verbose_level_gt(OptsHandler_create(), 0)) {
+    if (opt_verbose_level_gt(opts, 0)) {
         fprintf(stderr,
                 "Writing boolean model into file \"%s\"..",
                 output_file == (char *)NULL ? "stdout" : output_file);
@@ -1218,7 +1228,7 @@ static int CommandGameWriteModelFlatBool(NuSMVEnv_ptr env,int argc, char** argv)
     CATCH(errmgr) {
             Game_CommandWriteBooleanModel(env,ofileid);
 
-            if (opt_verbose_level_gt(OptsHandler_create(), 0)) {
+            if (opt_verbose_level_gt(opts, 0)) {
                 fprintf(stderr, ".. done.\n");
             }
         } FAIL(errmgr) {
@@ -1298,8 +1308,9 @@ static int CommandGameCheckProperty(NuSMVEnv_ptr env,int argc, char** argv)
     ErrorMgr_ptr const errmgr =
             ERROR_MGR(NuSMVEnv_get_value(env, ENV_ERROR_MANAGER));
     PropDb_ptr prop_db  = PROP_DB(NuSMVEnv_get_value(env, ENV_PROP_DB));
+    OptsHandler_ptr opts = OPTS_HANDLER(NuSMVEnv_get_value(env, ENV_OPTS_HANDLER));
 
-    nusmv_assert(opt_game_game(OptsHandler_create()));
+    nusmv_assert(opt_game_game(opts));
 
     util_getopt_reset();
     while((c = util_getopt(argc, argv, "hn:r:aAdDblg")) != EOF){
@@ -1569,8 +1580,9 @@ static int CommandGameShowProperty(NuSMVEnv_ptr env,int argc, char** argv)
     ErrorMgr_ptr const errmgr =
             ERROR_MGR(NuSMVEnv_get_value(env, ENV_ERROR_MANAGER));
     PropDb_ptr prop_db  = PROP_DB(NuSMVEnv_get_value(env, ENV_PROP_DB));
+    OptsHandler_ptr opts = OPTS_HANDLER(NuSMVEnv_get_value(env, ENV_OPTS_HANDLER));
 
-    nusmv_assert(opt_game_game(OptsHandler_create()));
+    nusmv_assert(opt_game_game(opts));
 
     util_getopt_reset();
     while((c = util_getopt(argc, argv, "hsmo:utfn:r:aAdDblg")) != EOF) {
@@ -1891,9 +1903,10 @@ static int CommandGamePrintUsage(NuSMVEnv_ptr env,int argc, char **argv)
     PropDbGame_ptr pdb;
     PropDb_ptr prop_db  = PROP_DB(NuSMVEnv_get_value(env, ENV_PROP_DB));
     DDMgr_ptr dd_manager = (DDMgr_ptr )NuSMVEnv_get_value(env, ENV_DD_MGR);
+    OptsHandler_ptr opts = OPTS_HANDLER(NuSMVEnv_get_value(env, ENV_OPTS_HANDLER));
 
-    nusmv_assert(opt_game_game(OptsHandler_create()));
-    nusmv_assert(opt_cone_of_influence(OptsHandler_create()) == false);
+    nusmv_assert(opt_game_game(opts));
+    nusmv_assert(opt_cone_of_influence(opts) == false);
 
     util_getopt_reset();
     while((c = util_getopt(argc, argv, "h")) != EOF) {
@@ -2500,6 +2513,7 @@ static int game_invoke_game_command(NuSMVEnv_ptr env,int argc, char **argv, Prop
     FILE* strategy_stream =(FILE*) NULL;
     char* algorithm = NIL(char);
     PropDb_ptr prop_db  = PROP_DB(NuSMVEnv_get_value(env, ENV_PROP_DB));
+    OptsHandler_ptr opts = OPTS_HANDLER(NuSMVEnv_get_value(env, ENV_OPTS_HANDLER));
 
     /* command related parameters */
     command_function_ptr command_function;
@@ -2508,7 +2522,7 @@ static int game_invoke_game_command(NuSMVEnv_ptr env,int argc, char **argv, Prop
     ErrorMgr_ptr const errmgr =
             ERROR_MGR(NuSMVEnv_get_value(env, ENV_ERROR_MANAGER));
 
-    nusmv_assert(opt_game_game(OptsHandler_create()));
+    nusmv_assert(opt_game_game(opts));
 
     switch(type) {
         case PropGame_ReachTarget:
@@ -2877,8 +2891,9 @@ static int CommandCheckLtlGameSpecSF07(NuSMVEnv_ptr env,int argc, char **argv)
     const ErrorMgr_ptr errmgr = ERROR_MGR(NuSMVEnv_get_value(env, ENV_ERROR_MANAGER));
 
     PropDb_ptr prop_db  = PROP_DB(NuSMVEnv_get_value(env, ENV_PROP_DB));
+    OptsHandler_ptr opts = OPTS_HANDLER(NuSMVEnv_get_value(env, ENV_OPTS_HANDLER));
 
-    nusmv_assert(opt_game_game(OptsHandler_create()));
+    nusmv_assert(opt_game_game(opts));
 
     /*  --------  EVALUATING THE OPTIONS OF THE COMMAND --------- */
     util_getopt_reset();
@@ -2993,7 +3008,7 @@ static int CommandCheckLtlGameSpecSF07(NuSMVEnv_ptr env,int argc, char **argv)
         goto CommandCheckLtlGameSpecSF07_return_1;
     }
 
-    if (opt_game_game_initial_condition(OptsHandler_create()) != 'N') {
+    if (opt_game_game_initial_condition(opts) != 'N') {
         fprintf(stderr,
                 "Command check_ltlgame_sf07 only supports \'N\' as initial game "
                         "condition.\n");
@@ -3318,8 +3333,9 @@ static int CommandExtractUnrealizableCore(NuSMVEnv_ptr env,int argc, char **argv
     ErrorMgr_ptr const errmgr = ERROR_MGR(NuSMVEnv_get_value(env, ENV_ERROR_MANAGER));
     const NodeMgr_ptr nodemgr = NODE_MGR(NuSMVEnv_get_value(env, ENV_NODE_MGR));
     PropDb_ptr prop_db  = PROP_DB(NuSMVEnv_get_value(env, ENV_PROP_DB));
+    OptsHandler_ptr opts = OPTS_HANDLER(NuSMVEnv_get_value(env, ENV_OPTS_HANDLER));
 
-    nusmv_assert(opt_game_game(OptsHandler_create()));
+    nusmv_assert(opt_game_game(opts));
 
     /*  Evaluate options. */
 

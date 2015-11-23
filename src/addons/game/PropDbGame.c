@@ -585,6 +585,7 @@ int prop_db_game_prop_create_and_add(PropDbGame_ptr self,
   PropGame_ptr prop;
 
   const NuSMVEnv_ptr env = EnvObject_get_environment(ENV_OBJECT(self));
+  OptsHandler_ptr opts = OPTS_HANDLER(NuSMVEnv_get_value(env, ENV_OPTS_HANDLER));
 
   PROP_DB_GAME_CHECK_INSTANCE(self);
   SYMB_TABLE_CHECK_INSTANCE(symb_table);
@@ -605,13 +606,13 @@ int prop_db_game_prop_create_and_add(PropDbGame_ptr self,
   }
 
   /* Add property to database */
-  if (opt_verbose_level_gt(OptsHandler_create(), 3)) {
+  if (opt_verbose_level_gt(opts, 3)) {
     fprintf(nusmv_stdout,
             "Attempting to add %s property (index %d) to property list.\n",
             Prop_get_type_as_string(PROP(prop)), index);
   }
   retval = PropDb_add(PROP_DB(self), PROP(prop));
-  if (opt_verbose_level_gt(OptsHandler_create(), 3)) {
+  if (opt_verbose_level_gt(opts, 3)) {
     if (retval == 1) {
       fprintf(nusmv_stdout, \
               "Failing to add %s property (index %d) to property list.\n", \

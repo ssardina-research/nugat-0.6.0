@@ -480,6 +480,8 @@ int Game_CheckGameSpecAndComputeCores(NuSMVEnv_ptr env,
 {
   Game_UnrealizableCore_Struct_ptr cls;
 
+  OptsHandler_ptr opts = OPTS_HANDLER(NuSMVEnv_get_value(env, ENV_OPTS_HANDLER));
+
   PROP_GAME_CHECK_INSTANCE(prop);
   nusmv_assert(Prop_get_type(PROP(prop)) == PropGame_GenReactivity);
   nusmv_assert((algo == GAME_UNREALIZABLE_CORE_ALGORITHM_ACTIVATION_VARIABLES &&
@@ -496,7 +498,7 @@ int Game_CheckGameSpecAndComputeCores(NuSMVEnv_ptr env,
                 (ct == GAME_UNREALIZABLE_CORE_CORE_TYPE_CORE) &&
                 (N == -1)));
 
-  if (opt_game_print_strategy(OptsHandler_create())) {
+  if (opt_game_print_strategy(opts)) {
     fprintf(nusmv_stderr,
             "Strategy computation is not implemented when "
             "realizability/unrealizability core computation is enabled.\n");
@@ -682,7 +684,7 @@ Game_UnrealizableCore_Struct_create (NuSMVEnv_ptr env,
   cls = ALLOC(Game_UnrealizableCore_Struct, 1);
   GAME_UNREALIZABLE_CORE_STRUCT_CHECK_INSTANCE(cls);
 
-  cls->oh = OptsHandler_create();
+  cls->oh = OPTS_HANDLER(NuSMVEnv_get_value(env, ENV_OPTS_HANDLER));
   cls->st = SYMB_TABLE(NuSMVEnv_get_value(env, ENV_SYMB_TABLE));
   cls->bool_enc = BoolEncClient_get_bool_enc(BOOL_ENC_CLIENT(NULL));
   cls->bdd_enc = BddFsm_get_bdd_encoding(BDD_FSM(GAME_BDD_FSM(NULL)));
@@ -1533,7 +1535,7 @@ game_guard_game_hierarchy_with_parameters(Game_UnrealizableCore_Struct_ptr self)
   //{
   //  BddEnc_write_var_ordering(Enc_get_bdd_encoding(),
   //                            "game_unreal_core.ord",
-  //                      opt_write_order_dumps_bits(OptsHandler_create())
+  //                      opt_write_order_dumps_bits(opts)
   //                            ? DUMP_BITS : DUMP_DEFAULT);
   //}
 }

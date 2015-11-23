@@ -31,9 +31,9 @@ Lorenzo Dibenedetto - lorenzodibenedetto90@gmail.com , Sebastian Sardina - ssard
 5.warning: ggrammar.y:1076:38: warning: passing argument 1 of ‘opt_game_game’ makes pointer from integer without a cast
                         if (!opt_game_game(OptsHandler_get_instance())) {...
 
-    *   This is because NuSMV has renamed  OptsHandler_get_instance with OptsHandler_create
-    *   Rename all calls to OptsHandler_get_instance with OptsHandler_create in NuGat code.
+    *   replace 'OptsHandler_get_instance' with 'OptsHandler_ptr opts = OPTS_HANDLER(NuSMVEnv_get_value(env, ENV_OPTS_HANDLER));' in NuGat code.
 
+        
 6.warning: macro ...  
     .1 "new_node" requires 4 arguments, but only 3 given -> added 'nodemgr' parameter
     .2 "cons" requires 3 arguments, but only 2 given -> added 'nodemgr' parameter
@@ -271,7 +271,7 @@ Lorenzo Dibenedetto - lorenzodibenedetto90@gmail.com , Sebastian Sardina - ssard
                 
                 'CommandGameReset'
                 
-                'Smgame_Init', 'Smgame_AddCmd', 'Smgame_Reset', 'Smgame_End'
+                'Smgame_Init', 'Smgame_AddCmd', 'Smgame_Reset', 'Smgame_End','Smgame_BatchMain'
             
 30.warning: gameGeneral.c: implicit declaration of function ‘PropDb_set_fsm_to_master’
 

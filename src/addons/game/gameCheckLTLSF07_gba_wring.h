@@ -99,24 +99,24 @@ typedef struct Game_SF07_gba_wring_TAG *Game_SF07_gba_wring_ptr;
 /*---------------------------------------------------------------------------*/
 
 EXTERN Game_SF07_gba_ptr Game_SF07_gba_wring_ltl2gba
-ARGS((node_ptr formula));
+ARGS((NuSMVEnv_ptr env,node_ptr formula));
 
 EXTERN Game_SF07_gba_wring_ptr Game_SF07_gba_wring_create ARGS(());
 
 EXTERN void Game_SF07_gba_wring_destroy
-ARGS((Game_SF07_gba_wring_ptr self));
+ARGS((NuSMVEnv_ptr env,Game_SF07_gba_wring_ptr self));
 
 EXTERN void Game_SF07_gba_wring_set_formula
 ARGS((Game_SF07_gba_wring_ptr self, node_ptr formula));
 
 EXTERN void Game_SF07_gba_wring_set_binary_file_name
-ARGS((Game_SF07_gba_wring_ptr self, const char *binary_file_name));
+ARGS((NuSMVEnv_ptr env,Game_SF07_gba_wring_ptr self, const char *binary_file_name));
 
 EXTERN void Game_SF07_gba_wring_set_input_file_name
-ARGS((Game_SF07_gba_wring_ptr self, const char *input_file_name));
+ARGS((NuSMVEnv_ptr env,Game_SF07_gba_wring_ptr self, const char *input_file_name));
 
 EXTERN void Game_SF07_gba_wring_set_output_file_name
-ARGS((Game_SF07_gba_wring_ptr self, const char *output_file_name));
+ARGS((NuSMVEnv_ptr env,Game_SF07_gba_wring_ptr self, const char *output_file_name));
 
 EXTERN Game_SF07_gba_ptr Game_SF07_gba_wring_get_gba
 ARGS((Game_SF07_gba_wring_ptr self));
