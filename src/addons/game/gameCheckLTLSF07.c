@@ -283,6 +283,7 @@ typedef struct Game_SF07_StructCheckLTLGameSF07_TAG {
 
 EXTERN FILE* nusmv_stdout;
 EXTERN FILE* nusmv_stderr;
+FsmBuilder_ptr global_fsm_builder;
 
 /*---------------------------------------------------------------------------*/
 /* Macro declarations                                                        */

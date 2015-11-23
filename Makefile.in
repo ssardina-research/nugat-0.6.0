@@ -138,11 +138,11 @@ PROGRAMS = $(bin_PROGRAMS)
 am_NuGaT_OBJECTS = smgameMain.$(OBJEXT)
 NuGaT_OBJECTS = $(am_NuGaT_OBJECTS)
 NuGaT_DEPENDENCIES = libnugat.la \
-    $(NUSMV_DIR)/build/lib/libnusmvshell.a \
-    $(NUSMV_DIR)/build/lib/libnusmvaddonscore.a \
-    $(NUSMV_DIR)/build/lib/libnusmvcore.a  \
-    $(NUSMV_DIR)/build/lib/libnusmvgrammar.a \
-    $(NUSMV_DIR)/build/lib/libnusmvrbc.a
+	$(NUSMV_DIR)/build/lib/libnusmvshell.a \
+	$(NUSMV_DIR)/build/lib/libnusmvaddonscore.a \
+	$(NUSMV_DIR)/build/lib/libnusmvcore.a \
+	$(NUSMV_DIR)/build/lib/libnusmvgrammar.a \
+	$(NUSMV_DIR)/build/lib/libnusmvrbc.a
 DEFAULT_INCLUDES = -I.@am__isrc@
 depcomp = $(SHELL) $(top_srcdir)/helpers/depcomp
 am__depfiles_maybe = depfiles

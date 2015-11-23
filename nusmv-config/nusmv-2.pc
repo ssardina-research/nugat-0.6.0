@@ -6,7 +6,7 @@ datarootdir=/usr/local/share
 datadir=${datarootdir}/nusmv
 sharedir=${datarootdir}
 
-sat_available=yes
+sat_available=no
 minisat_libdir=/home/lorenzo/Documents/software/ClionProjects/NuSMV-2.6.0/NuSMV/build/build-MiniSat/minisat-37dc6c67e2af26379d88ce349eb9c4c6160e8543
 minisat_libname=MiniSat
 

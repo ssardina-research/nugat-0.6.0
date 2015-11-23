@@ -527,9 +527,9 @@ Lorenzo Dibenedetto - lorenzodibenedetto90@gmail.com , Sebastian Sardina - ssard
 
     *   replaced all 'cinit....lo' with 'cinit....c.o' with a new path
             
-            $(NUSMV_DIR)/build/code/nusmv/shell/cinit/CMakeFiles/code_nusmv_shell_cinit.dir/cinit.c.o \
             $(NUSMV_DIR)/build/code/nusmv/shell/cinit/CMakeFiles/code_nusmv_shell_cinit.dir/cinitCmd.c.o \
             $(NUSMV_DIR)/build/code/nusmv/core/cinit/CMakeFiles/code_nusmv_core_cinit.dir/cinitInit.c.o \
+            $(NUSMV_DIR)/build/code/nusmv/core/cinit/CMakeFiles/code_nusmv_core_cinit.dir/cinitBatch.c.o \
             $(NUSMV_DIR)/build/code/nusmv/core/cinit/CMakeFiles/code_nusmv_core_cinit.dir/cinitVers.c.o \
             $(NUSMV_DIR)/build/code/nusmv/core/cinit/CMakeFiles/code_nusmv_core_cinit.dir/cinitData.c.o
             
@@ -569,20 +569,10 @@ Lorenzo Dibenedetto - lorenzodibenedetto90@gmail.com , Sebastian Sardina - ssard
     undefined reference to `MMalloc' ... (1500 rows)
     
     *   include cudd library in 'config.status' ( copied from NuSMV2.5.4 file 'libnusmvcore.la' )
-        S["LIBS"]=" -L/home/lorenzo/Documents/software/ClionProjects/NuSMV-2.6.0/NuSMV/build/build-cudd/lib -lcudd -lutil -lmtr -lst -lreadline -ltermcap /usr/lib/x86_64-linux-gnu/libexpat.la -lm "
+        S["LIBS"]=" -L/home/lorenzo/Documents/software/ClionProjects/NuSMV-2.6.0/NuSMV/build/build-cudd/lib -lst -lcudd -lepd -lmtr -lutil -lreadline -ltermcap /usr/lib/x86_64-linux-gnu/libexpat.la -lm "
         
-63.gameCheckLTLSF07.c ( 1436 rows )
+63.gameCheckLTLSF07.c
 
-    undefined reference to `global_fsm_builder' for : ...  
-    
-        ./.libs/libnugat.a
-            src/addons/game/gameCheckLTLSF07.c
-            src/addons/game/gameUnrealCore.c
-            src/addons/game/gameBuildModel.c
-            src/addons/game/gameXmlReader.c
-            src/addons/game/TypeCheckerGame.c
-            src/addons/game/gameReqToGame.c
-            
         /home/lorenzo/Documents/software/ClionProjects/NuSMV-2.6.0/NuSMV/build/lib/libnusmvcore.a(BddEnc.c.o): In function `BddEnc_dump_expr':
             BddEnc.c:(.text+0x6b82): undefined reference to `log10'
             ...
@@ -604,13 +594,78 @@ Lorenzo Dibenedetto - lorenzodibenedetto90@gmail.com , Sebastian Sardina - ssard
             
     *   included in nusmv-2.pc Minisat library
     
-            sat_available=yes
+            sat_available=no
             minisat_libdir=/home/lorenzo/Documents/software/ClionProjects/NuSMV-2.6.0/NuSMV/build/build-MiniSat/minisat-37dc6c67e2af26379d88ce349eb9c4c6160e8543
             minisat_libname=MiniSat
             
+64.smgameMisc.c:
 
+    warning: passing argument 1 of ‘Bmc_GenSolveLtl’,'Bmc_GenSolveInvar' from incompatible pointer type
         
+        *   added 'env' parameter
+    
+    warning: implicit declaration of function ‘Bmc_check_psl_property’
+    
+        *   replaced  with 'Bmc_Gen_check_psl_property'
         
+    warning: implicit declaration of function ‘set_bmc_mode’,‘set_bmc_pb_length’
+  
+        *   included library '#include "bmc/bmc.h"'
+     
+             
+65.gameCheckLTLSF07.c : undefined reference to `global_fsm_builder' for :  
+         
+         ./.libs/libnugat.a
+             src/addons/game/gameCheckLTLSF07.c
+             src/addons/game/gameUnrealCore.c
+             src/addons/game/gameBuildModel.c
+     
+     *  added declaration 'FsmBuilder_ptr global_fsm_builder;'
+     
+66.gameUnrealCore.c : undefined reference to `boolean_range' , 'zero_number' , 'one_number'
+    
+    *   removed 'EXTERN' from declaration
+
+67.grammar.c: warning: implicit declaration of function ‘rpl_malloc’ 
+
+    *   removed '#define malloc rpl_malloc' form 'config.h'
+
+68.TraceXmlLoader.c
+
+    undefined reference to `xmlParseChunk' , `xmlCtxtGetLastError' , `xmlCreatePushParserCtxt' , `xmlFreeParserCtxt'
+
+    *   added '-lxml2' in LIBS variable <config.status>
+    
+69.SatMinisat.c undefined reference to :
+
+       `MiniSat_New_Variable'
+       `MiniSat_Add_Clause'
+       `MiniSat_Add_Clause'
+       `MiniSat_Add_Clause'
+       `MiniSat_Add_Clause'
+       `MiniSat_Add_Clause'
+       `MiniSat_Set_Preferred_Variable'
+       `MiniSat_Clear_Preferred_Variables'
+       `MiniSat_Solve_Assume'
+       `MiniSat_Nof_Variables'
+       `MiniSat_Get_Value'
+       `MiniSat_New_Variable'
+       `MiniSat_Add_Clause'
+       `MiniSat_Add_Clause'
+       `MiniSat_simplifyDB'
+       `MiniSat_Solve_Assume'
+       `MiniSat_Get_Nof_Conflict_Lits'
+       `MiniSat_Get_Conflict_Lits'
+       `MiniSat_Set_Random_Seed'
+       `MiniSat_Set_Polarity_Mode'
+       `MiniSat_Get_Polarity_Mode'
+       `MiniSat_Create'
+       `MiniSat_Delete'
+   
+    *   added '-lMiniSat' in LIBS variable <config.status>
+   
+  
+    
      
 ================================================================================
 EOF

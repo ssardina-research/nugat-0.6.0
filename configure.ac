@@ -298,7 +298,7 @@ AC_CHECK_LIB(expat, XML_ParserCreate,
     expat_libs=
     ], 
    [$expatlibdir])    
-LIBS="$LIBS_old -L/home/lorenzo/Documents/software/ClionProjects/NuSMV-2.6.0/NuSMV/build/build-cudd/lib -lcudd -lutil -lmtr -lst -lreadline -ltermcap /usr/lib/x86_64-linux-gnu/libexpat.la -lm "
+LIBS="$LIBS_old -L/home/lorenzo/Documents/software/ClionProjects/NuSMV-2.6.0/NuSMV/build/build-cudd/lib -lst -lcudd -lepd -lmtr -lutil -lxml2 -lMiniSat -lreadline -ltermcap /usr/lib/x86_64-linux-gnu/libexpat.la -lm "
 
 else 
   expat_libs=

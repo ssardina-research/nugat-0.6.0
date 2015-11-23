@@ -198,7 +198,7 @@ void Smgame_BatchMain()
 
           rel_loop = Bmc_Utils_ConvertLoopFromString(get_bmc_pb_loop(oh),
                                                      NULL);
-          Bmc_GenSolveLtl(prop, get_bmc_pb_length(oh),
+          Bmc_GenSolveLtl(env,prop, get_bmc_pb_length(oh),
                           rel_loop,
                           /*increasing length*/ TRUE ,
                           TRUE,
@@ -214,7 +214,7 @@ void Smgame_BatchMain()
           /* skip if -ips option is given */
           if (opt_ignore_pslspec(oh)) break;
 
-          Bmc_check_psl_property(prop,
+          Bmc_Gen_check_psl_property(env,prop,
                                  false,
                                  false,
                                  false,
@@ -227,7 +227,7 @@ void Smgame_BatchMain()
         /* skip if -ii option is given */
         if (opt_ignore_invar(oh)) break;
 
-        Bmc_GenSolveInvar(prop, TRUE, BMC_DUMP_NONE, NULL);
+        Bmc_GenSolveInvar(env,prop, TRUE, BMC_DUMP_NONE, NULL);
         break;
 
       default:
@@ -259,7 +259,7 @@ void Smgame_BatchMain()
           rel_loop = Bmc_Utils_ConvertLoopFromString(get_bmc_pb_loop(oh),
                                                      NULL);
 
-          Bmc_GenSolveLtl(prop,
+          Bmc_GenSolveLtl(env,prop,
                           get_bmc_pb_length(oh),
                           rel_loop,
                           /*increasing length*/ TRUE,
@@ -287,7 +287,7 @@ void Smgame_BatchMain()
 
         lsForEachItem(props, iterator, prop) {
           if (Prop_is_psl_ltl(prop)) {
-            Bmc_check_psl_property(prop,
+            Bmc_Gen_check_psl_property(env,prop,
                                    false,
                                    false,
                                    false,
@@ -313,7 +313,7 @@ void Smgame_BatchMain()
         nusmv_assert(props != LS_NIL);
 
         lsForEachItem(props, iterator, prop) {
-          Bmc_GenSolveInvar(prop, TRUE, BMC_DUMP_NONE, NULL);
+          Bmc_GenSolveInvar(env,prop, TRUE, BMC_DUMP_NONE, NULL);
         }
 
         lsDestroy(props, NULL); /* the list is no longer needed */

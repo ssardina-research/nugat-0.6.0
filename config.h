@@ -2,7 +2,7 @@
 /* config.h.in.  Generated from configure.ac by autoheader.  */
 
 /* Define to 1 if the `closedir' function returns void instead of `int'. */
-/* #undef CLOSEDIR_VOID */
+#define CLOSEDIR_VOID 1
 
 /* Executable file names suffix */
 #define EXEEXT ""
@@ -23,26 +23,29 @@
 /* Define to 1 if you have the <errno.h> header file. */
 #define HAVE_ERRNO_H 1
 
+/* Define to 1 if the system has EXTERN and ARGS */
+#define HAVE_EXTERN_ARGS_MACROS 1
+
 /* Define to 1 if you have the <float.h> header file. */
 #define HAVE_FLOAT_H 1
 
 /* Define to 1 if you have the `floor' function. */
-#define HAVE_FLOOR 1
+/* #undef HAVE_FLOOR */
 
 /* Enables the named addon */
 #define HAVE_GAME 1
 
 /* Define to 1 if you have the `getenv' function. */
-#define HAVE_GETENV 1
+/* #undef HAVE_GETENV */
 
 /* Define to 1 if you have the `getpid' function. */
-#define HAVE_GETPID 1
+/* #undef HAVE_GETPID */
 
 /* Define to 1 if you have the <inttypes.h> header file. */
 #define HAVE_INTTYPES_H 1
 
 /* Define to 1 if you have the `isatty' function. */
-#define HAVE_ISATTY 1
+/* #undef HAVE_ISATTY */
 
 /* Disables expat usage */
 #define HAVE_LIBEXPAT 1
@@ -58,66 +61,66 @@
 
 /* Define to 1 if your system has a GNU libc compatible `malloc' function, and
    to 0 otherwise. */
-#define HAVE_MALLOC 1
+#define HAVE_MALLOC 0
 
 /* Defined to 1 if the system provides malloc.h */
 #define HAVE_MALLOC_H 1
 
 /* Define to 1 if you have the `memmove' function. */
-#define HAVE_MEMMOVE 1
+/* #undef HAVE_MEMMOVE */
 
 /* Define to 1 if you have the <memory.h> header file. */
 #define HAVE_MEMORY_H 1
 
 /* Define to 1 if you have the `memset' function. */
-#define HAVE_MEMSET 1
+/* #undef HAVE_MEMSET */
 
 /* Define to 1 if you have the `mkstemp' function. */
-#define HAVE_MKSTEMP 1
+/* #undef HAVE_MKSTEMP */
 
 /* Define to 1 if you have the `mktemp' function. */
-#define HAVE_MKTEMP 1
+/* #undef HAVE_MKTEMP */
 
 /* Define to 1 if you have the <ndir.h> header file, and it defines `DIR'. */
 /* #undef HAVE_NDIR_H */
 
 /* Define to 1 if you have the `popen' function. */
-#define HAVE_POPEN 1
+/* #undef HAVE_POPEN */
 
 /* Define to 1 if you have the `pow' function. */
-#define HAVE_POW 1
+/* #undef HAVE_POW */
 
 /* Define to 1 if you have the `random' function. */
-#define HAVE_RANDOM 1
+/* #undef HAVE_RANDOM */
 
 /* Define to 1 if your system has a GNU libc compatible `realloc' function,
    and to 0 otherwise. */
-#define HAVE_REALLOC 1
+#define HAVE_REALLOC 0
 
 /* Define to 1 if you have the <regex.h> header file. */
 #define HAVE_REGEX_H 1
 
 /* No sat solvers available */
-#define HAVE_SAT_SOLVER 1
+#define HAVE_SAT_SOLVER 0
 
 /* Define to 1 if you have the `setvbuf' function. */
-#define HAVE_SETVBUF 1
+/* #undef HAVE_SETVBUF */
 
 /* Define to 1 if you have the <signal.h> header file. */
 #define HAVE_SIGNAL_H 1
 
 /* Dont have minisat */
-#define HAVE_SOLVER_MINISAT 0
+#define HAVE_SOLVER_MINISAT 1
 
 /* Dont have zchaff */
 #define HAVE_SOLVER_ZCHAFF 0
 
 /* Define to 1 if you have the `srandom' function. */
-#define HAVE_SRANDOM 1
+/* #undef HAVE_SRANDOM */
 
 /* Define to 1 if `stat' has the bug that it succeeds when given the
    zero-length file name argument. */
-/* #undef HAVE_STAT_EMPTY_STRING_BUG */
+#define HAVE_STAT_EMPTY_STRING_BUG 1
 
 /* Define to 1 if stdbool.h conforms to C99. */
 #define HAVE_STDBOOL_H 1
@@ -132,10 +135,10 @@
 #define HAVE_STDLIB_H 1
 
 /* Define to 1 if you have the `strcasecmp' function. */
-#define HAVE_STRCASECMP 1
+/* #undef HAVE_STRCASECMP */
 
 /* Define to 1 if you have the `strchr' function. */
-#define HAVE_STRCHR 1
+/* #undef HAVE_STRCHR */
 
 /* Define to 1 if you have the <strings.h> header file. */
 #define HAVE_STRINGS_H 1
@@ -144,16 +147,16 @@
 #define HAVE_STRING_H 1
 
 /* Define to 1 if you have the `strrchr' function. */
-#define HAVE_STRRCHR 1
+/* #undef HAVE_STRRCHR */
 
 /* Define to 1 if you have the `strstr' function. */
-#define HAVE_STRSTR 1
+/* #undef HAVE_STRSTR */
 
 /* Define to 1 if you have the `strtol,' function. */
 /* #undef HAVE_STRTOL_ */
 
 /* Define to 1 if you have the `system' function. */
-#define HAVE_SYSTEM 1
+/* #undef HAVE_SYSTEM */
 
 /* Define to 1 if you have the <sys/dir.h> header file, and it defines `DIR'.
    */
@@ -188,26 +191,23 @@
 #define HAVE_SYS_TYPES_H 1
 
 /* Define to 1 if you have the `tmpnam' function. */
-#define HAVE_TMPNAM 1
+/* #undef HAVE_TMPNAM */
 
 /* Define to 1 if you have the <unistd.h> header file. */
 #define HAVE_UNISTD_H 1
 
 /* Define to 1 if you have the `vprintf' function. */
-#define HAVE_VPRINTF 1
+/* #undef HAVE_VPRINTF */
 
 /* Define to 1 if the system has the type `_Bool'. */
 #define HAVE__BOOL 1
-
-/* Define to 1 if the system has EXTERN and ARGS */
-#define HAVE_EXTERN_ARGS_MACROS 1
 
 /* Names of linked addons */
 #define LINKED_ADDONS "game "
 
 /* Define to 1 if `lstat' dereferences a symlink specified with a trailing
    slash. */
-#define LSTAT_FOLLOWS_SLASHED_SYMLINK 1
+/* #undef LSTAT_FOLLOWS_SLASHED_SYMLINK */
 
 /* Define to the sub-directory in which libtool stores uninstalled libraries.
    */
@@ -223,7 +223,7 @@
 #define PACKAGE_BUGREPORT "nugat@list.fbk.eu"
 
 /* Build date */
-#define PACKAGE_BUILD_DATE "Sun Nov 22 23:35:58 UTC 2015"
+#define PACKAGE_BUILD_DATE "Mon Nov 23 04:21:22 UTC 2015"
 
 /* Define to the full name of this package. */
 #define PACKAGE_NAME "NuGaT"

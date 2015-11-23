@@ -16776,7 +16776,7 @@ done
 $as_echo "ok" >&6; }
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking Configured files" >&5
 $as_echo_n "checking Configured files... " >&6; }
-for f in $nusmv_config_dir/$nusmv_pkg ; do
+for f in $nusmv_config_dir/$nusmv_pkg; do
   if ! test -f $f; then
       as_fn_error $? "File $f not found. See configure option --with-nusmv-dir" "$LINENO" 5
   fi
@@ -17279,7 +17279,7 @@ $as_echo "#define HAVE_LIBEXPAT 0" >>confdefs.h
 
 fi
 
-LIBS=$LIBS_old
+LIBS="$LIBS_old -L/home/lorenzo/Documents/software/ClionProjects/NuSMV-2.6.0/NuSMV/build/build-cudd/lib -lst -lcudd -lepd -lmtr -lutil -lxml2 -lMiniSat -lreadline -ltermcap /usr/lib/x86_64-linux-gnu/libexpat.la -lm "
 
 else
   expat_libs=
@@ -17314,7 +17314,7 @@ $as_echo "#define HAVE_SAT_SOLVER 0" >>confdefs.h
 fi
 
 # zchaff?
-have_solver_zchaff=$(grep -c "define HAVE_SOLVER_ZCHAFF 1" $nusmv_dir/build/nusmv-config.h)
+have_solver_zchaff=$(grep -c "define NUSMV_HAVE_SOLVER_ZCHAFF 1" $nusmv_dir/build/nusmv-config.h)
 if test "x$have_solver_zchaff" = "x1"; then
 
 $as_echo "#define HAVE_SOLVER_ZCHAFF 1" >>confdefs.h
@@ -17326,7 +17326,7 @@ $as_echo "#define HAVE_SOLVER_ZCHAFF 0" >>confdefs.h
 fi
 
 # minisat?
-have_solver_minisat=$(grep -c "define HAVE_SOLVER_MINISAT 1" $nusmv_dir/build/nusmv-config.h)
+have_solver_minisat=$(grep -c "define NUSMV_HAVE_SOLVER_MINISAT 1" $nusmv_dir/build/nusmv-config.h)
 if test "x$have_solver_minisat" = "x1"; then
 
 $as_echo "#define HAVE_SOLVER_MINISAT 1" >>confdefs.h
@@ -17336,6 +17336,10 @@ else
 $as_echo "#define HAVE_SOLVER_MINISAT 0" >>confdefs.h
 
 fi
+
+
+$as_echo "#define HAVE_EXTERN_ARGS_MACROS 1" >>confdefs.h
+
 
 # ======================================================================
 #                          Addons checking

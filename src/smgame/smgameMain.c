@@ -48,6 +48,7 @@
 #include "cmd/cmd.h"
 #include "opt/opt.h"
 #include "opt/optCmd.h"
+#include "bmc/bmc.h"
 #include "cinit/cinit.h" //#include "sm/sm.h"
 #include "utils/utils.h"
 #include "../addons/addons.h"

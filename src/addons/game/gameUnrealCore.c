@@ -371,9 +371,9 @@ typedef struct GameGameFsms_TAG GameGameFsms;
 ******************************************************************************/
 static int game_unrealizable_core_unique_num = 0;
 
-EXTERN node_ptr boolean_range;
-EXTERN node_ptr zero_number;
-EXTERN node_ptr one_number;
+node_ptr boolean_range;
+node_ptr zero_number;
+node_ptr one_number;
 EXTERN FILE* nusmv_stdout;
 EXTERN FILE* nusmv_stderr;
 EXTERN FsmBuilder_ptr global_fsm_builder;

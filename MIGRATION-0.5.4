@@ -9,8 +9,8 @@ Nitin Yadav - nitin.yadav@rmit.edu.au
 
 1. NuSMV-2.5.4 requires nusmv-config.h that is placed outside its src directory.
    Hence, all makefiles(.am and .in) in NuGAT need to be updated:
-   CHANGE: replace "INCLUDES = -I$(top_srcdir)/src -I$(CUDD_DIR)/include -I$(NUSMV_DIR)/code/nusmv/core" with
-   "INCLUDES = -I$(top_srcdir)/src -I$(CUDD_DIR)/include -I$(NUSMV_DIR)/code/nusmv/core -I$(NUSMV_DIR)"
+   CHANGE: replace "INCLUDES = -I$(top_srcdir)/src -I$(CUDD_DIR)/include -I$(NUSMV_DIR)/src" with
+   "INCLUDES = -I$(top_srcdir)/src -I$(CUDD_DIR)/include -I$(NUSMV_DIR)/src -I$(NUSMV_DIR)"
 
     Affected files: all Makefile.am and Makefile.in
 

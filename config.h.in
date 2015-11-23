@@ -22,6 +22,9 @@
 /* Define to 1 if you have the <errno.h> header file. */
 #undef HAVE_ERRNO_H
 
+/* Define to 1 if the system has EXTERN and ARGS */
+#undef HAVE_EXTERN_ARGS_MACROS
+
 /* Define to 1 if you have the <float.h> header file. */
 #undef HAVE_FLOAT_H
 
@@ -197,9 +200,6 @@
 
 /* Define to 1 if the system has the type `_Bool'. */
 #undef HAVE__BOOL
-
-/* Define to 1 if the system has EXTERN and ARGS */
-#define HAVE_EXTERN_ARGS_MACROS 1
 
 /* Names of linked addons */
 #undef LINKED_ADDONS
