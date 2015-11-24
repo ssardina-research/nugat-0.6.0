@@ -695,6 +695,13 @@ Lorenzo Dibenedetto - lorenzodibenedetto90@gmail.com , Sebastian Sardina - ssard
        $ make
        $ sudo make install
     
+72.PropDbGame.c
+    Inspection Warning : Called object is not a function (at line 357)
+    
+    *   removed macro ARGS()
+        
+        'prop_game_set_game_scalar_sexp_fsm' , 'prop_game_set_game_bool_sexp_fsm'
+        'prop_game_set_game_bdd_fsm' , 'prop_game_set_game_be_fsm'
     
      
 ================================================================================
