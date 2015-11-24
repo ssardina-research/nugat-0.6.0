@@ -65,10 +65,6 @@ set(SOURCE_FILES
     src/addons/game/TypeCheckerGame.h
     src/addons/addons.h
     src/addons/addonsPkg.c
-    src/parser/grammar.y.1.55
-    src/parser/grammar.y.2.55
-    src/parser/input.l.1.55
-    src/parser/input.l.2.55
     src/parser/Makefile.am
     src/parser/Makefile.in
     src/smgame/smgameCmd.c
@@ -82,3 +78,4 @@ set(SOURCE_FILES
 add_executable(NuGaT ${SOURCE_FILES})
 
 add_definitions(-DHAVE_EXTERN_ARGS_MACROS)
+add_definitions(-DHAVE_CONFIG_H)
