@@ -1,10 +1,12 @@
 cmake_minimum_required(VERSION 3.2)
 project(NuGaT_0_60)
+include_directories("/home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4")
 include_directories("/home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src")
 include_directories("/home/lorenzo/Documents/software/ClionProjects/NuSMV-2.6.0/cudd-2.4.1.1/include")
 include_directories("/home/lorenzo/Documents/software/ClionProjects/NuSMV-2.6.0/NuSMV")
 include_directories("/home/lorenzo/Documents/software/ClionProjects/NuSMV-2.6.0/NuSMV/build")
 include_directories("/home/lorenzo/Documents/software/ClionProjects/NuSMV-2.6.0/NuSMV/code")
+include_directories("/home/lorenzo/Documents/software/ClionProjects/NuSMV-2.6.0/NuSMV/code/nusmv")
 include_directories("/home/lorenzo/Documents/software/ClionProjects/NuSMV-2.6.0/NuSMV/code/nusmv/core")
 include_directories("/home/lorenzo/Documents/software/ClionProjects/NuSMV-2.6.0/NuSMV/code/nusmv/shell")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
@@ -77,4 +79,6 @@ set(SOURCE_FILES
     src/smgame/smgameMisc.c
     src/smgame/smgameVers.c)
 
-add_executable(NuGaT_0_60 ${SOURCE_FILES})
+add_executable(NuGaT ${SOURCE_FILES})
+
+add_definitions(-DHAVE_EXTERN_ARGS_MACROS)

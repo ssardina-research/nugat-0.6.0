@@ -24,10 +24,8 @@ Lorenzo Dibenedetto - lorenzodibenedetto90@gmail.com , Sebastian Sardina - ssard
 
 4.error: statement EXTERN is missing 
     
-    *   added this line in 'configure.ac'
+    *   added 'add_definitions(-DHAVE_EXTERN_ARGS_MACROS)' in 'CMakeLists.txt' file
     
-            'AC_DEFINE(HAVE_EXTERN_ARGS_MACROS, 1, Define to 1 if the system has EXTERN and ARGS)'
-
 5.warning: ggrammar.y:1076:38: warning: passing argument 1 of ‘opt_game_game’ makes pointer from integer without a cast
                         if (!opt_game_game(OptsHandler_get_instance())) {...
 
