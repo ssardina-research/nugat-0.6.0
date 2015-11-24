@@ -73,11 +73,11 @@ static char rcsid[] UTIL_UNUSED = "$Id: smMain.c,v 1.28.2.14.2.5.2.31.4.32 2010-
 /* Used to return a value from sm_parselineoptions */
 static char * NuSMV_CMD_LINE = (char *) NULL;
 
-FILE* nusmv_stderr;
-FILE* nusmv_stdout;
-DDMgr_ptr dd_manager;
+EXTERN FILE* nusmv_stderr;
+EXTERN FILE* nusmv_stdout;
+EXTERN DDMgr_ptr dd_manager;
 
-GameParams gameParams;
+EXTERN GameParams gameParams;
 
 /**AutomaticStart*************************************************************/
 
