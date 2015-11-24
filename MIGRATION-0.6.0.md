@@ -696,13 +696,27 @@ Lorenzo Dibenedetto - lorenzodibenedetto90@gmail.com , Sebastian Sardina - ssard
        $ sudo make install
     
 72.PropDbGame.c
-    Inspection Warning : Called object is not a function (at line 357)
+    Inspection Warning : 
     
-    *   removed macro ARGS()
+        Called object is not a function (at line 357)
+    
+            *   removed macro ARGS()
+                
+                'prop_game_set_game_scalar_sexp_fsm' , 'prop_game_set_game_bool_sexp_fsm'
+                'prop_game_set_game_bdd_fsm' , 'prop_game_set_game_be_fsm'
+                
+        Can't resolve type 'bool'
         
-        'prop_game_set_game_scalar_sexp_fsm' , 'prop_game_set_game_bool_sexp_fsm'
-        'prop_game_set_game_bdd_fsm' , 'prop_game_set_game_be_fsm'
-    
+            *   included '#include <stdbool.h>' library
+            
+        Instantiating an unknown structure without a reference at line
+        
+            *   added bracket for single value enum types
+            
+                typedef enum { Game_Who_TAG } Game_Who;
+                typedef enum { Game_UnrealizableCore_Algorithm_TAG } Game_UnrealizableCore_Algorithm;
+                typedef enum { Game_UnrealizableCore_CoreType_TAG } Game_UnrealizableCore_CoreType;
+                typedef enum { Game_SF07_StrategyPrintingMode_TAG } Game_SF07_StrategyPrintingMode
      
 ================================================================================
 EOF

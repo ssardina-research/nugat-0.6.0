@@ -856,7 +856,7 @@ static int CommandGameBuildFlatModel(NuSMVEnv_ptr env,int argc, char** argv)
     int c;
 
     OptsHandler_ptr opts = OPTS_HANDLER(NuSMVEnv_get_value(env, ENV_OPTS_HANDLER));
-    
+
     nusmv_assert(opt_game_game(opts));
 
     util_getopt_reset();

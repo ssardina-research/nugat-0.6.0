@@ -102,7 +102,7 @@ typedef struct GameParams_TAG* gameParams_ptr;
   SeeAlso     [ ]
 
 ******************************************************************************/
-typedef enum Game_Who_TAG Game_Who;
+typedef enum { Game_Who_TAG } Game_Who;
 
 /**Type************************************************************************
 
@@ -114,8 +114,7 @@ typedef enum Game_Who_TAG Game_Who;
   SeeAlso     [ ]
 
 ******************************************************************************/
-typedef enum Game_UnrealizableCore_Algorithm_TAG
-  Game_UnrealizableCore_Algorithm;
+typedef enum { Game_UnrealizableCore_Algorithm_TAG } Game_UnrealizableCore_Algorithm;
 
 /**Type************************************************************************
 
@@ -127,8 +126,7 @@ typedef enum Game_UnrealizableCore_Algorithm_TAG
   SeeAlso     [ ]
 
 ******************************************************************************/
-typedef enum Game_UnrealizableCore_CoreType_TAG
-  Game_UnrealizableCore_CoreType;
+typedef enum { Game_UnrealizableCore_CoreType_TAG } Game_UnrealizableCore_CoreType;
 
 /**Type************************************************************************
 
@@ -139,7 +137,7 @@ typedef enum Game_UnrealizableCore_CoreType_TAG
   SeeAlso     [ ]
 
 ******************************************************************************/
-typedef enum Game_SF07_StrategyPrintingMode_TAG Game_SF07_StrategyPrintingMode;
+typedef enum { Game_SF07_StrategyPrintingMode_TAG } Game_SF07_StrategyPrintingMode;
 
 /*---------------------------------------------------------------------------*/
 /* Variable declarations                                                     */

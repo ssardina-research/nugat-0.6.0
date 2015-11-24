@@ -58,10 +58,6 @@
       <sourceFolder url="file://$MODULE_DIR$/src/addons/game/walkers/PrinterSexpGame_private.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/parser/Makefile.am" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/parser/Makefile.in" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/parser/grammar.y.1.55" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/parser/grammar.y.2.55" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/parser/input.l.1.55" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/parser/input.l.2.55" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/smgame/smgameCmd.c" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/smgame/smgameDummyMac.c" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/smgame/smgameInit.c" isTestSource="false" />

@@ -59,6 +59,7 @@
 #include "utils/error.h"
 
 #include <stdio.h>
+#include <stdbool.h>
 
 /*---------------------------------------------------------------------------*/
 static char rcsid[] UTIL_UNUSED = "$Id: gameWriteModel.c,v 1.1.2.6 2010-02-08 17:12:44 nusmv Exp $";
