@@ -552,22 +552,24 @@ Lorenzo Dibenedetto - lorenzodibenedetto90@gmail.com , Sebastian Sardina - ssard
     warning: undefined reference to `nusmv_stderr' ...
     
         *   removed all 'EXTERN ' before declarations
-        
+-----------------------------------------------------------------------------------------------------------------      
 61.make[2]: *** No rule to make target `/home/lorenzo/Documents/software/ClionProjects/NuSMV-2.6.0/NuSMV/libnusmvcore.la', needed by `NuGaT'.  Stop. 
    make[2]: *** No rule to make target `/home/lorenzo/Documents/software/ClionProjects/NuSMV-2.6.0/NuSMV/librbcdag.la', needed by `NuGaT'.  Stop.
    
    *   replaced with "*.a" files with a new path
 
+            $(NUSMV_DIR)/build/lib/libnusmvshell.a \
             $(NUSMV_DIR)/build/lib/libnusmvaddonscore.a \
-            $(NUSMV_DIR)/build/lib/libnusmvcore.a \
-            $(NUSMV_DIR)/build/lib/libnusmvshell.a
+            $(NUSMV_DIR)/build/lib/libnusmvcore.a  \
+            $(NUSMV_DIR)/build/lib/libnusmvgrammar.a \
+            $(NUSMV_DIR)/build/lib/libnusmvrbc.a
 
 62.smgameMain.c  [ TODO : find a solution for variable LIBS ( include in Makefile.am/.in or configure.ac ) ]
 
-    undefined reference to `MMalloc' ... (1500 rows)
+    undefined reference to `MMalloc' ... 
     
     *   include cudd library in 'config.status' ( copied from NuSMV2.5.4 file 'libnusmvcore.la' )
-        S["LIBS"]=" -L/home/lorenzo/Documents/software/ClionProjects/NuSMV-2.6.0/NuSMV/build/build-cudd/lib -lst -lcudd -lepd -lmtr -lutil -lreadline -ltermcap /usr/lib/x86_64-linux-gnu/libexpat.la -lm "
+        S["LIBS"]=" -L/home/lorenzo/Documents/software/ClionProjects/NuSMV-2.6.0/NuSMV/build/build-cudd/lib -lst -lcudd -lepd -lmtr -lutil -lxml2 -lMiniSat -lstdc++ -lreadline -ltermcap /usr/lib/x86_64-linux-gnu/libexpat.la -lm "
         
 63.gameCheckLTLSF07.c
 
@@ -611,7 +613,7 @@ Lorenzo Dibenedetto - lorenzodibenedetto90@gmail.com , Sebastian Sardina - ssard
         *   included library '#include "bmc/bmc.h"'
      
              
-65.gameCheckLTLSF07.c : undefined reference to `global_fsm_builder' for :  
+65.gameCheckLTLSF07.c : warning: undefined reference to `global_fsm_builder' for :  
          
          ./.libs/libnugat.a
              src/addons/game/gameCheckLTLSF07.c
@@ -620,7 +622,7 @@ Lorenzo Dibenedetto - lorenzodibenedetto90@gmail.com , Sebastian Sardina - ssard
      
      *  added declaration 'FsmBuilder_ptr global_fsm_builder;'
      
-66.gameUnrealCore.c : undefined reference to `boolean_range' , 'zero_number' , 'one_number'
+66.gameUnrealCore.c : warning: undefined reference to `boolean_range' , 'zero_number' , 'one_number' [ #CHECK AT RUNTIME ] 
     
     *   removed 'EXTERN' from declaration
 
@@ -628,61 +630,33 @@ Lorenzo Dibenedetto - lorenzodibenedetto90@gmail.com , Sebastian Sardina - ssard
 
     *   commented line 'AC_FUNC_MALLOC' in 'configure.ac'
 
-68.TraceXmlLoader.c
+68.TraceXmlLoader.c : warning: undefined reference to
 
-    undefined reference to `xmlParseChunk' , `xmlCtxtGetLastError' , `xmlCreatePushParserCtxt' , `xmlFreeParserCtxt'
+     `xmlParseChunk' , `xmlCtxtGetLastError' , `xmlCreatePushParserCtxt' , `xmlFreeParserCtxt'
 
     *   added '-lxml2' in LIBS variable <config.status>
     
-69.SatMinisat.c undefined reference to :
+69.SatMinisat.c warning: undefined reference to :
 
-       `MiniSat_New_Variable'
-       `MiniSat_Add_Clause'
-       `MiniSat_Add_Clause'
-       `MiniSat_Add_Clause'
-       `MiniSat_Add_Clause'
-       `MiniSat_Add_Clause'
-       `MiniSat_Set_Preferred_Variable'
-       `MiniSat_Clear_Preferred_Variables'
-       `MiniSat_Solve_Assume'
-       `MiniSat_Nof_Variables'
-       `MiniSat_Get_Value'
-       `MiniSat_New_Variable'
-       `MiniSat_Add_Clause'
-       `MiniSat_Add_Clause'
-       `MiniSat_simplifyDB'
-       `MiniSat_Solve_Assume'
-       `MiniSat_Get_Nof_Conflict_Lits'
-       `MiniSat_Get_Conflict_Lits'
-       `MiniSat_Set_Random_Seed'
-       `MiniSat_Set_Polarity_Mode'
-       `MiniSat_Get_Polarity_Mode'
-       `MiniSat_Create'
-       `MiniSat_Delete'
+       `MiniSat_New_Variable' , `MiniSat_Add_Clause' , `MiniSat_Add_Clause' , `MiniSat_Add_Clause'
+       `MiniSat_Add_Clause' , `MiniSat_Add_Clause' , ...
    
     *   added '-lMiniSat' in LIBS variable <config.status>
     
-70. undefined reference to
+70.warning: undefined reference to
 
     Solver_C.cc for :
 
-        `operator new(unsigned long)'
-        `operator delete(void*)'
-        `__cxa_allocate_exception'
-        `__cxa_throw'
-        `operator delete(void*)'
-        `__cxa_guard_acquire'
-        `__cxa_guard_release'
+        `operator new(unsigned long)' , `operator delete(void*)' , `__cxa_allocate_exception'
+        `__cxa_throw' , `operator delete(void*)' , `__cxa_guard_acquire' , `__cxa_guard_release'
   
-      SimpSolver.cc for :
+    SimpSolver.cc for :
       
-       `__cxa_allocate_exception'
-         `__cxa_throw'
-         `operator delete(void*)'
+       `__cxa_allocate_exception' , `__cxa_throw' , `operator delete(void*)'
    
     *   included '-lstdc++' library in LIBS variable <config.status>
    
-71.aclocal.m4:16: warning: this file was generated for autoconf 2.65.
+71.warning: aclocal.m4:16: this file was generated for autoconf 2.65.
    You have another version of autoconf.  It may work, but is not guaranteed to.
    If you have problems, you may need to regenerate the build system entirely.
    
@@ -720,19 +694,46 @@ Lorenzo Dibenedetto - lorenzodibenedetto90@gmail.com , Sebastian Sardina - ssard
 
 73.Runtime Errors
 
-    smgameCmd.c in Smgame_AddCmd :  Assertion `res' failed.
+    smgameMain.c : Segmentation fault.
+    
+    *    in 'BannerPrint' replaced 'nusmv_stdout' with 'stdout' and 'nusmv_stderr' with 'stderr'
+
+    smgameCmd.c in 'Smgame_AddCmd' :  Assertion `res' failed.
     
     *   temporary COMMENTED 
-    
-    smgameMain.c in BannerPrint (env=<optimized out>, file=0x0)
-    
-    *   replaced 
-            BannerPrint(env,nusmv_stdout); with BannerPrint(env,stdout);
-            BannerPrint(env,nusmv_stderr); with BannerPrint(env,stderr);
     
     unknown command 'read_model'
     
     *   update file 'smgameMisc.c' like NuSMV-2.6.0 file 'cinitBatch.c'
+    
+74.CMake Partial Migration for Debug Purpose
+
+    undefined reference to `MMalloc' ...
+    
+    *   added in CMakeLists.txt
+    
+            target_link_libraries(NuGaT
+                    ${NUSMV_DIR}/build/build-cudd/lib/libst.a
+                    ${NUSMV_DIR}/build/build-cudd/lib/libcudd.a
+                    ...)
+                    
+    libxml2.a : 
+    
+        in `xmlFreeZMemBuff': undefined reference to `deflateEnd' ...
+    
+        *   added '/usr/lib/x86_64-linux-gnu/libz.a' in target_link_libraries() for 'CMakeLists.txt'
+    
+        in `xz_decomp' : undefined reference to `lzma_code'
+    
+        *   installed apt-get install liblzma-dev
+
+-----------------------------------------------------------------------------------------------------------------   
+
+
+
+
+
+
 
 ================================================================================
 EOF
