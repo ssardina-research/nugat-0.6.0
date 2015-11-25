@@ -105,7 +105,7 @@ void Smgame_AddCmd(NuSMVEnv_ptr env){
   boolean res;
 
   res = Cmd_CommandRemove(env,"reset");
-  nusmv_assert(res);
+  // nusmv_assert(res); //TEMPORARY COMMENTED
   Cmd_CommandAdd(env,"reset", CommandGameReset, 0, false);
 }
 

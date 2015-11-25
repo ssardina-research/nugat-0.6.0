@@ -717,7 +717,23 @@ Lorenzo Dibenedetto - lorenzodibenedetto90@gmail.com , Sebastian Sardina - ssard
                 typedef enum { Game_UnrealizableCore_Algorithm_TAG } Game_UnrealizableCore_Algorithm;
                 typedef enum { Game_UnrealizableCore_CoreType_TAG } Game_UnrealizableCore_CoreType;
                 typedef enum { Game_SF07_StrategyPrintingMode_TAG } Game_SF07_StrategyPrintingMode
-     
+
+73.Runtime Errors
+
+    smgameCmd.c in Smgame_AddCmd :  Assertion `res' failed.
+    
+    *   temporary COMMENTED 
+    
+    smgameMain.c in BannerPrint (env=<optimized out>, file=0x0)
+    
+    *   replaced 
+            BannerPrint(env,nusmv_stdout); with BannerPrint(env,stdout);
+            BannerPrint(env,nusmv_stderr); with BannerPrint(env,stderr);
+    
+    unknown command 'read_model'
+    
+    *   update file 'smgameMisc.c' like NuSMV-2.6.0 file 'cinitBatch.c'
+
 ================================================================================
 EOF
 ================================================================================

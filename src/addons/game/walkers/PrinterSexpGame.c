@@ -119,12 +119,12 @@ static void printer_sexp_game_finalize(Object_ptr object, void* dummy);
   SeeAlso     [ PrinterSexpGame_destroy ]
 
 ******************************************************************************/
-PrinterSexpGame_ptr PrinterSexpGame_create(const char* name)
+PrinterSexpGame_ptr PrinterSexpGame_create(NuSMVEnv_ptr env,const char* name)
 {
   PrinterSexpGame_ptr self = ALLOC(PrinterSexpGame, 1);
   PRINTER_SEXP_GAME_CHECK_INSTANCE(self);
 
-  printer_sexp_game_init(self,
+  printer_sexp_game_init(env,self,
                          name,
                          NUSMV_GAME_SYMBOL_FIRST,
                          NUSMV_GAME_SYMBOL_LAST - NUSMV_GAME_SYMBOL_FIRST);
@@ -147,12 +147,12 @@ PrinterSexpGame_ptr PrinterSexpGame_create(const char* name)
   SeeAlso     [ PrinterSexpGame_create ]
 
 ******************************************************************************/
-void printer_sexp_game_init(PrinterSexpGame_ptr self,
+void printer_sexp_game_init(NuSMVEnv_ptr env,
+                            PrinterSexpGame_ptr self,
                             const char* name,
                             int low,
                             size_t num)
 {
-  const NuSMVEnv_ptr env = EnvObject_get_environment(ENV_OBJECT(self));
 
   /* base class initialization */
   printer_base_init(PRINTER_BASE(self),env, name, low, num, false);

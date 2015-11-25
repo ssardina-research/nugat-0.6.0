@@ -146,7 +146,7 @@ int main(int  argc, char ** argv)
     /* Initiliazes the commands to handle with options. */
 
     Opt_Cmd_init(env);
-    BannerPrint(env,nusmv_stdout);
+    BannerPrint(env,stdout);
     if (!opt_ignore_init_file(opts)) {
       (void) Cmd_Misc_NusmvrcSource(env);
     }
@@ -182,7 +182,7 @@ int main(int  argc, char ** argv)
     /*       (void) Sm_NusmvrcSource(); */
     /*     } */
 
-    BannerPrint(env,nusmv_stdout);
+    BannerPrint(env,stdout);
 
     if (opt_verbose_level_gt(opts, 0)) {
       fprintf(nusmv_stdout, "Starting the batch interaction.\n");
@@ -240,7 +240,7 @@ static void UsagePrint(const NuSMVEnv_ptr env,char * program, char * unknown_opt
 {
   char *libraryName;
 
-  BannerPrint(env,nusmv_stderr);
+  BannerPrint(env,stderr);
 
   fprintf(nusmv_stderr,"\n");
 
@@ -470,9 +470,9 @@ static void sm_ParseLineOptions(const NuSMVEnv_ptr env,int argc, char ** argv, O
 
 #if HAVE_SETVBUF
 # if SETVBUF_REVERSED
-      setvbuf(nusmv_stdout, _IOLBF, (char *) NULL, 0);
+      setvbuf(stdout, _IOLBF, (char *) NULL, 0);
 # else
-      setvbuf(nusmv_stdout, (char *) NULL, _IOLBF, 0);
+      setvbuf(stdout, (char *) NULL, _IOLBF, 0);
 # endif
 #endif
 
@@ -574,9 +574,9 @@ static void sm_ParseLineOptions(const NuSMVEnv_ptr env,int argc, char ** argv, O
       }
 #if HAVE_SETVBUF
 # if SETVBUF_REVERSED
-      setvbuf(nusmv_stdout, _IOLBF, (char *) NULL, 0);
+      setvbuf(stdout, _IOLBF, (char *) NULL, 0);
 # else
-      setvbuf(nusmv_stdout, (char *)NULL, _IOLBF, 0);
+      setvbuf(stdout, (char *)NULL, _IOLBF, 0);
 # endif
 #endif
       continue;

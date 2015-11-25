@@ -98,7 +98,7 @@ typedef struct PrinterSexpGame_TAG* PrinterSexpGame_ptr;
 /*---------------------------------------------------------------------------*/
 /* Function prototypes                                                       */
 /*---------------------------------------------------------------------------*/
-EXTERN PrinterSexpGame_ptr PrinterSexpGame_create ARGS((const char* name));
+EXTERN PrinterSexpGame_ptr PrinterSexpGame_create ARGS((NuSMVEnv_ptr env,const char* name));
 
 /**AutomaticEnd***************************************************************/
 

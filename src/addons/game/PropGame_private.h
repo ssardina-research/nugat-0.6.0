@@ -102,17 +102,17 @@ void prop_game_print(const PropGame_ptr self, FILE* file);
 void prop_game_print_db(const PropGame_ptr self, FILE* file);
 void prop_game_verify(PropGame_ptr self);
 
-void prop_game_set_game_scalar_sexp_fsm (PropGame_ptr self,
+void prop_game_set_game_scalar_sexp_fsm ARGS((PropGame_ptr self,
                                               GameSexpFsm_ptr fsm,
-                                              const boolean duplicate);
-void prop_game_set_game_bool_sexp_fsm (PropGame_ptr self,
+                                              const boolean duplicate));
+void prop_game_set_game_bool_sexp_fsm ARGS((PropGame_ptr self,
                                             GameSexpFsm_ptr fsm,
-                                            const boolean duplicate);
-void prop_game_set_game_bdd_fsm (PropGame_ptr self,
+                                            const boolean duplicate));
+void prop_game_set_game_bdd_fsm ARGS((PropGame_ptr self,
                                       GameBddFsm_ptr fsm,
-                                      const boolean duplicate);
-void prop_game_set_game_be_fsm (PropGame_ptr self,
+                                      const boolean duplicate));
+void prop_game_set_game_be_fsm ARGS((PropGame_ptr self,
                                      GameBeFsm_ptr fsm,
-                                     const boolean duplicate);
+                                     const boolean duplicate));
 
 #endif /* __PROP_GAME_PRIVATE_H__ */

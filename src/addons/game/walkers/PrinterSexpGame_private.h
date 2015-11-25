@@ -103,7 +103,7 @@ typedef struct PrinterSexpGame_TAG
 /* ---------------------------------------------------------------------- */
 /* Private methods to be used by derivated and friend classes only        */
 /* ---------------------------------------------------------------------- */
-EXTERN void printer_sexp_game_init ARGS((PrinterSexpGame_ptr self,
+EXTERN void printer_sexp_game_init ARGS((NuSMVEnv_ptr env,PrinterSexpGame_ptr self,
                                          const char* name,
                                          int low,
                                          size_t num));
