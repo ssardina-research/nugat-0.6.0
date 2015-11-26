@@ -314,12 +314,12 @@ static void game_pkg_switch_to_prop_db_game(NuSMVEnv_ptr env)
   PropDb_ptr db;
   PropDbGame_ptr dbg;
 
-  db = PROP_DB(NuSMVEnv_get_value(env, ENV_PROP_DB));
+  db = PROP_DB(NuSMVEnv_remove_value(env, ENV_PROP_DB));
   if (db != PROP_DB(NULL)) {
     PropDb_destroy(db);
   }
   dbg = PropDbGame_create(env);
-  NuSMVEnv_set_value(env, ENV_PROP_DB,PROP_DB(dbg));
+  NuSMVEnv_set_value(env, ENV_PROP_DB , PROP_DB(dbg));
 }
 
 /**Function********************************************************************
@@ -338,7 +338,7 @@ static void game_pkg_switch_to_prop_db(NuSMVEnv_ptr env)
   PropDbGame_ptr dbg;
   PropDb_ptr db;
 
-  dbg = PROP_DB_GAME(NuSMVEnv_get_value(env, ENV_PROP_DB));
+  dbg = PROP_DB(NuSMVEnv_remove_value(env, ENV_PROP_DB));
   if (dbg != PROP_DB_GAME(NULL)) {
     PropDbGame_destroy(dbg);
   }

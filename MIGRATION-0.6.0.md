@@ -739,8 +739,15 @@ Lorenzo Dibenedetto - lorenzodibenedetto90@gmail.com , Sebastian Sardina - ssard
     
     2.PropDbGame.c:531 in prop_db_game_init for  NuSMVEnv_set_value ()
     
-        *   commented functions with master usage ( obsolete? )
+        *   commented functions with master usage in 'prop_db_game_init' ( obsolete? ) 
         
+    3.gamePkg.c:322 : game_pkg_switch_to_prop_db_game (env=0x907ce0)
+    
+    *   replaced 
+            'dbg = PROP_DB_GAME(NuSMVEnv_get_value(env, ENV_PROP_DB));' with 'dbg = PROP_DB_GAME(NuSMVEnv_remove_value(env, ENV_PROP_DB));'
+            'db = PROP_DB_GAME(NuSMVEnv_get_value(env, ENV_PROP_DB));' with 'db = PROP_DB_GAME(NuSMVEnv_remove_value(env, ENV_PROP_DB));'
+    
+
 
 -----------------------------------------------------------------------------------------------------------------   
 
@@ -755,5 +762,7 @@ EOF
 ================================================================================
 
 FUTURE TODO
+
+    REMOVE ALL COMMENTED LINES
 
     RECONVERT LOG IN A SMART WAY (like a list, remove all rendundant words)
