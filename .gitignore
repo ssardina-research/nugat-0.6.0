@@ -162,8 +162,13 @@ jackagt.jar
 Makefile
 config.status
 config.log
+*.iml
 .idea/
-/NuGaT
+NuGaT
 .externalToolBuilders/
 config.h
 libtool
+
+build/
+configure
+

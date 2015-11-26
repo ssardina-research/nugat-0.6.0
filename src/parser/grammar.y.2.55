@@ -6,8 +6,8 @@ game_begin    : {
     YYABORT;
   }
 #if HAVE_GAME
-  if (opt_game_game(OptsHandler_create())) {
-    Game_Mode_Exit(NuSMVEnv_get_value(__nusmv_parser_env__, ENV_STRING_MGR));
+  if (opt_game_game(GET_OPTS)) {
+    Game_Mode_Exit(__nusmv_parser_env__);
   }
   game_parser_spec_list = Nil;
   game_parser_player_1 = Nil;
@@ -17,7 +17,7 @@ game_begin    : {
                game_module_list
                 {
 #if HAVE_GAME
-                  if (!opt_game_game(OptsHandler_create())) {
+                  if (!opt_game_game(GET_OPTS)) {
                     /*this is a usual SMV file*/
                     parsed_tree = $2;
                   }
@@ -36,7 +36,7 @@ game_begin    : {
                                                      $2)));
                   }
 #else /* no GAME */
-                  parsed_tree = $2;            
+                  parsed_tree = $2;
 #endif
                 }
               | {
@@ -93,11 +93,11 @@ game_definition
                      {
 #if HAVE_GAME
                        /* check that the game is not redeclared */
-                       if (opt_game_game(OptsHandler_create())) {
+                       if (opt_game_game(GET_OPTS)) {
                          nusmv_yyerror_lined("redefinition of a GAME", $1);
                        }
                        else {
-                         Game_Mode_Enter(NuSMVEnv_get_value(__nusmv_parser_env__, ENV_STRING_MGR));
+                         Game_Mode_Enter(__nusmv_parser_env__);
                        }
 #else
                        nusmv_yyerror_lined("GAME declaration cannot be processes "
