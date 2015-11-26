@@ -165,3 +165,5 @@ config.log
 .idea/
 /NuGaT
 .externalToolBuilders/
+config.h
+libtool

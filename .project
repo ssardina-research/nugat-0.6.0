@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>NuGAT</name>
+	<name>NuGAT-0.6.0</name>
 	<comment></comment>
 	<projects>
-		<project>NuSMV</project>
+		<project>NuGAT-0.6.0</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
