@@ -568,7 +568,7 @@ Lorenzo Dibenedetto - lorenzodibenedetto90@gmail.com , Sebastian Sardina - ssard
 
     undefined reference to `MMalloc' ... 
     
-    *   include cudd library in 'config.status' ( copied from NuSMV2.5.4 file 'libnusmvcore.la' )
+    *   include cudd library in 'configure.ac' ( copied from NuSMV2.5.4 file 'libnusmvcore.la' )
         S["LIBS"]=" -L/home/lorenzo/Documents/software/ClionProjects/NuSMV-2.6.0/NuSMV/build/build-cudd/lib -lst -lcudd -lepd -lmtr -lutil -lxml2 -lMiniSat -lstdc++ -lreadline -ltermcap /usr/lib/x86_64-linux-gnu/libexpat.la -lm "
         
 63.gameCheckLTLSF07.c
@@ -634,14 +634,14 @@ Lorenzo Dibenedetto - lorenzodibenedetto90@gmail.com , Sebastian Sardina - ssard
 
      `xmlParseChunk' , `xmlCtxtGetLastError' , `xmlCreatePushParserCtxt' , `xmlFreeParserCtxt'
 
-    *   added '-lxml2' in LIBS variable <config.status>
+    *   added '-lxml2' in LIBS variable <configure.ac>
     
 69.SatMinisat.c warning: undefined reference to :
 
        `MiniSat_New_Variable' , `MiniSat_Add_Clause' , `MiniSat_Add_Clause' , `MiniSat_Add_Clause'
        `MiniSat_Add_Clause' , `MiniSat_Add_Clause' , ...
    
-    *   added '-lMiniSat' in LIBS variable <config.status>
+    *   added '-lMiniSat' in LIBS variable <configure.ac>
     
 70.warning: undefined reference to
 
@@ -654,7 +654,7 @@ Lorenzo Dibenedetto - lorenzodibenedetto90@gmail.com , Sebastian Sardina - ssard
       
        `__cxa_allocate_exception' , `__cxa_throw' , `operator delete(void*)'
    
-    *   included '-lstdc++' library in LIBS variable <config.status>
+    *   included '-lstdc++' library in LIBS variable <configure.ac>
    
 71.warning: aclocal.m4:16: this file was generated for autoconf 2.65.
    You have another version of autoconf.  It may work, but is not guaranteed to.
