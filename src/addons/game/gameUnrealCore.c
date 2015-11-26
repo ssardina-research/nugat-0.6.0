@@ -371,9 +371,6 @@ typedef struct GameGameFsms_TAG GameGameFsms;
 ******************************************************************************/
 static int game_unrealizable_core_unique_num = 0;
 
-node_ptr boolean_range;
-node_ptr zero_number;
-node_ptr one_number;
 EXTERN FILE* nusmv_stdout;
 EXTERN FILE* nusmv_stderr;
 EXTERN FsmBuilder_ptr global_fsm_builder;
@@ -1128,6 +1125,7 @@ static node_ptr game_create_new_param(Game_UnrealizableCore_Struct_ptr self,
 {
 
     const NuSMVEnv_ptr env = EnvObject_get_environment(ENV_OBJECT(self));
+    const ExprMgr_ptr exprs = EXPR_MGR(NuSMVEnv_get_value(env, ENV_EXPR_MANAGER));
     const NodeMgr_ptr nodemgr = NODE_MGR(NuSMVEnv_get_value(env, ENV_NODE_MGR));
 
   if (player == PLAYER_1) ++(self->constraints_1_total_num);
@@ -1181,7 +1179,7 @@ static node_ptr game_create_new_param(Game_UnrealizableCore_Struct_ptr self,
   if (is_new_var) {
     nusmv_assert(SymbLayer_can_declare_var(self->layer, var));
 
-    SymbType_ptr symbolicType = SymbType_create(env,SYMB_TYPE_ENUM, boolean_range);
+    SymbType_ptr symbolicType = SymbType_create(env,SYMB_TYPE_ENUM, ExprMgr_boolean_range(exprs));
 
     SymbLayer_declare_frozen_var(self->layer, var, symbolicType);
 
@@ -1851,6 +1849,7 @@ void game_process_unrealizable_core_with_params(
   boolean is_realizable;
 
     const NuSMVEnv_ptr env = EnvObject_get_environment(ENV_OBJECT(self));
+    const ExprMgr_ptr exprs = EXPR_MGR(NuSMVEnv_get_value(env, ENV_EXPR_MANAGER));
     MasterPrinter_ptr wffprint = MASTER_PRINTER(NuSMVEnv_get_value(env, ENV_WFF_PRINTER));
 
   nusmv_assert(PropGame_PropGame_Type_First < Prop_get_type(PROP(self->prop)) &&
@@ -2104,10 +2103,10 @@ void game_process_unrealizable_core_with_params(
         }
 
         /* only 0 and 1 can be assigned */
-        nusmv_assert(one_number == exp || zero_number == exp);
+        nusmv_assert(ExprMgr_number(exprs, 1) == exp || ExprMgr_number(exprs, 0) == exp);
         /* Do not keep constraints of the player and do not remove the
            constraints of the opponent. */
-        if ((remove && zero_number == exp) || (!remove && one_number == exp))  {
+        if ((remove && ExprMgr_number(exprs, 0) == exp) || (!remove && ExprMgr_number(exprs, 1) == exp))  {
           if (something_printed) fprintf(nusmv_stdout, ",");
           print_node(wffprint,nusmv_stdout, var);
           something_printed = true;

@@ -102,10 +102,10 @@ static int UsageGameReset (void);
 
 ******************************************************************************/
 void Smgame_AddCmd(NuSMVEnv_ptr env){
-  boolean res;
 
-  res = Cmd_CommandRemove(env,"reset");
-  // nusmv_assert(res); //TEMPORARY COMMENTED
+  //replace NuSMV reset with NuGaT reset
+  Cmd_CommandRemove(env,"reset");
+
   Cmd_CommandAdd(env,"reset", CommandGameReset, 0, false);
 }
 

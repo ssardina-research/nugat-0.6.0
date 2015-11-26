@@ -581,7 +581,7 @@ Lorenzo Dibenedetto - lorenzodibenedetto90@gmail.com , Sebastian Sardina - ssard
         dagStat.c:(.text+0x1d3): undefined reference to `pow'
             
     *   replaced 
-            'grep -c "define NUSMV_HAVE_SOLVER_MINISAT 1"' with 'grep -c "define NUSMV_HAVE_SOLVER_MINISAT 1"'
+            'grep -c "define HAVE_SOLVER_MINISAT 1"' with 'grep -c "define NUSMV_HAVE_SOLVER_MINISAT 1"'
             'yylineno' with 'nusmv_yylineno' in : (resolved 13 rows)
             
                     src/addons/game
@@ -613,7 +613,7 @@ Lorenzo Dibenedetto - lorenzodibenedetto90@gmail.com , Sebastian Sardina - ssard
         *   included library '#include "bmc/bmc.h"'
      
              
-65.gameCheckLTLSF07.c : warning: undefined reference to `global_fsm_builder' for :  
+65.gameCheckLTLSF07.c : warning: undefined reference to `global_fsm_builder' for :  [ #CHECK AT RUNTIME ] 
          
          ./.libs/libnugat.a
              src/addons/game/gameCheckLTLSF07.c
@@ -622,11 +622,11 @@ Lorenzo Dibenedetto - lorenzodibenedetto90@gmail.com , Sebastian Sardina - ssard
      
      *  added declaration 'FsmBuilder_ptr global_fsm_builder;'
      
-66.gameUnrealCore.c : warning: undefined reference to `boolean_range' , 'zero_number' , 'one_number' [ #CHECK AT RUNTIME ] 
+66.gameUnrealCore.c : warning: undefined reference to `boolean_range' , 'zero_number' , 'one_number' [ #TODO CHANGE DESCRIPTION ] 
     
-    *   removed 'EXTERN' from declaration
+    *   replaced with Mgr functions ....
 
-67.grammar.c: warning: implicit declaration of function ‘rpl_malloc’ 
+67.grammar.c: warning: implicit declaration of function ‘rpl_malloc’ [ #pending ]
 
     *   commented line 'AC_FUNC_MALLOC' in 'configure.ac'
 
@@ -700,7 +700,7 @@ Lorenzo Dibenedetto - lorenzodibenedetto90@gmail.com , Sebastian Sardina - ssard
 
     smgameCmd.c in 'Smgame_AddCmd' :  Assertion `res' failed.
     
-    *   temporary COMMENTED 
+    *   replace NuSMV reset with NuGaT reset
     
     unknown command 'read_model'
     
