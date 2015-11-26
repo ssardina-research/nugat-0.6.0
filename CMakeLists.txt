@@ -96,6 +96,8 @@ file(GLOB_RECURSE NUSMV_SRC
 
         "/home/lorenzo/Documents/software/ClionProjects/NuSMV-2.6.0/NuSMV/code/nusmv/core/cinit/cinitInit.c"
         "/home/lorenzo/Documents/software/ClionProjects/NuSMV-2.6.0/NuSMV/code/nusmv/core/opt/optPkg.c"
+        "/home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/parser/grammar.c"
+        "/home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/parser/input.c"
         )
 
 add_executable(NuGaT ${SOURCE_FILES} ${NUSMV_SRC} )

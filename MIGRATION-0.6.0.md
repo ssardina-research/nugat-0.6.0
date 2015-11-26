@@ -727,12 +727,20 @@ Lorenzo Dibenedetto - lorenzodibenedetto90@gmail.com , Sebastian Sardina - ssard
     
         *   installed apt-get install liblzma-dev
         
-75.NuGaT: /home/lorenzo/Desktop/NuSMV-2.6.0/NuSMV/code/nusmv/core/cinit/NuSMVEnv.c:174: NuSMVEnv_get_value: Assertion `(void*)((void *)0) != res' failed.
+75.Runtime Error
 
-    *   grammar.y.2.55
-            replaced  
+    1.NuGaT: /home/lorenzo/Desktop/NuSMV-2.6.0/NuSMV/code/nusmv/core/cinit/NuSMVEnv.c:174: NuSMVEnv_get_value: Assertion `(void*)((void *)0) != res' failed.
+
+        grammar.y.2.55
+        
+        *   replaced  
                 'NuSMVEnv_get_value(__nusmv_parser_env__, ENV_STRING_MGR)' with '__nusmv_parser_env__' for Game_Mode_Enter() and Game_Mode_Exit() functions
                 'OptsHandler_create()' with 'GET_OPTS' macro
+    
+    2.PropDbGame.c:531 in prop_db_game_init for  NuSMVEnv_set_value ()
+    
+        *   commented functions with master usage ( obsolete? )
+        
 
 -----------------------------------------------------------------------------------------------------------------   
 

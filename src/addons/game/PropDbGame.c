@@ -527,15 +527,15 @@ void prop_db_game_init(PropDbGame_ptr self,const NuSMVEnv_ptr env)
 
   /* Members initialization. Here: just replace master with a game
      property. */
-  Prop_destroy(NuSMVEnv_get_value(env, ENV_PROP_DB));
-  NuSMVEnv_set_value(env, ENV_PROP_DB, PROP(PropGame_create(env)));
+  //Prop_destroy(NuSMVEnv_get_value(env, ENV_PROP_DB));
+  //NuSMVEnv_set_value(env, ENV_PROP_DB, PROP(PropGame_create(env)));
 
   /* virtual methods settings */
   OVERRIDE(Object, finalize) = prop_db_game_finalize;
   OVERRIDE(PropDb, prop_create_and_add) =
     (PropDb_prop_create_and_add_method) prop_db_game_prop_create_and_add;
 
-  Prop_set_environment_fsms(env, PROP(prop_db_game_set_fsm_to_master));
+  //Prop_set_environment_fsms(env, PROP(prop_db_game_set_fsm_to_master));
 
   OVERRIDE(PropDb, verify_all) =
     (PropDb_verify_all_method) prop_db_game_verify_all;
