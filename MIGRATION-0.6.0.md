@@ -106,17 +106,13 @@ Lorenzo Dibenedetto - lorenzodibenedetto90@gmail.com , Sebastian Sardina - ssard
 
 15.warning: GameStrategy.c : implicit declaration of function ‘Enc_get_bdd_encoding’
 
-    *   is replaced with: if 'fsm' variable is 
+    *   is replaced with: if 'fsm/scalar_fsm' variable is 
         -present 
-        
-                BddFsm_get_bdd_encoding(BDD_FSM(fsm))
+                BddFsm_get_bdd_encoding(BDD_FSM(fsm)) 
                 BddFsm_get_bdd_encoding(BDD_FSM(scalar_fsm)) 
-                BddFsm_get_bdd_encoding(BDD_FSM(bool_fsm)) ('enc' and 'st' dropped below the 'bool_fsm' declaration)
                 
         -not present
-                
-                BddFsm_get_bdd_encoding(BDD_FSM(GAME_BDD_FSM(NULL)));
-                BddFsm_get_bdd_encoding(BDD_FSM(GAME_SEXP_FSM(NULL)));
+                NuSMVEnv_get_value(env, ENV_BDD_ENCODER);
                 
 16.warning: GameStrategy.c: passing argument 1 of ‘print_node’ from incompatible pointer type
    
@@ -365,7 +361,7 @@ Lorenzo Dibenedetto - lorenzodibenedetto90@gmail.com , Sebastian Sardina - ssard
             
 44.warning: implicit declaration of function ‘Enc_get_bool_encoding()’  [ #CHECK AT RUNTIME ]
 
-    *   replaced with 'BoolEncClient_get_bool_enc(BOOL_ENC_CLIENT(..ARG..))'
+    *   replaced with 'NuSMVEnv_get_value(env, ENV_BOOL_ENCODER);'
         ARG is replaced with : 
         
             'enc' in gameBuildModel.c   

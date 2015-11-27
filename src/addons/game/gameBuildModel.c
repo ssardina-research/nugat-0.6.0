@@ -194,7 +194,7 @@ void Game_CommandBuildBooleanModel(NuSMVEnv_ptr env)
 
     int reord_status;
     dd_reorderingtype rt;
-    BddEnc_ptr enc = BddFsm_get_bdd_encoding(BDD_FSM(GAME_SEXP_FSM(NULL)));
+    BddEnc_ptr enc = NuSMVEnv_get_value(env, ENV_BDD_ENCODER);
     DDMgr_ptr dd;
 
     /* temporary disables reordering */
