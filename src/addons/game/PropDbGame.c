@@ -525,14 +525,6 @@ void prop_db_game_init(PropDbGame_ptr self,const NuSMVEnv_ptr env)
   /* base class initialization */
   prop_db_init(PROP_DB(self),env);
 
-    /* for master replacement */
-    NuSMVEnv_set_value(env,ENV_PROP_DB,Prop_create(env));
-
-    /* Members initialization. Here: just replace master with a game
-       property. */
-    Prop_destroy(PROP(NuSMVEnv_remove_value(env,ENV_PROP_DB)));
-    NuSMVEnv_set_value(env,ENV_PROP_DB, PROP(PropGame_create(env)));
-
   /* virtual methods settings */
   OVERRIDE(Object, finalize) = prop_db_game_finalize;
   OVERRIDE(PropDb, prop_create_and_add) =
