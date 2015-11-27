@@ -704,7 +704,13 @@ Lorenzo Dibenedetto - lorenzodibenedetto90@gmail.com , Sebastian Sardina - ssard
     
     3.unknown command 'read_model'
     
-    *   update file 'smgameMisc.c' like NuSMV-2.6.0 file 'cinitBatch.c'
+    *   included this code in main() of NuGaT after 'FP_V_E iq_fns[][2] = {{NuGaTAddons_Init, NuGaTAddons_Quit}' declaration
+    
+            #if NUSMV_HAVE_INTERACTIVE_SHELL
+                /* these are for the interactive shell */
+                {CInit_init_cmd, CInit_quit_cmd},
+                {Compass_init_cmd, Compass_Cmd_quit},
+            #endif
     
 74.CMake Partial Migration for Debug Purpose
 
@@ -746,18 +752,10 @@ Lorenzo Dibenedetto - lorenzodibenedetto90@gmail.com , Sebastian Sardina - ssard
     *   replaced 
             'dbg = PROP_DB_GAME(NuSMVEnv_get_value(env, ENV_PROP_DB));' with 'dbg = PROP_DB_GAME(NuSMVEnv_remove_value(env, ENV_PROP_DB));'
             'db = PROP_DB_GAME(NuSMVEnv_get_value(env, ENV_PROP_DB));' with 'db = PROP_DB_GAME(NuSMVEnv_remove_value(env, ENV_PROP_DB));'
-    
-    4.gamePkg.c:635: game_pkg_store_remove_cmd: Assertion `Cmd_CommandDefined(env,name)' failed
-    
-    *   included this code in main() of NuGaT after 'FP_V_E iq_fns[][2] = {{NuGaTAddons_Init, NuGaTAddons_Quit}' declaration
-    
-            #if NUSMV_HAVE_INTERACTIVE_SHELL
-                /* these are for the interactive shell */
-                {CInit_init_cmd, CInit_quit_cmd},
-                {Compass_init_cmd, Compass_Cmd_quit},
-            #endif
        
+    4.gameFlatten.c:227  fprintf (__fmt=0x6892d8 "*** WARNING: Game addon does not support properties COI size sorting.  ***\n", __stream=<optimized out>)
     
+    *   replaced
 
 -----------------------------------------------------------------------------------------------------------------   
  
