@@ -238,7 +238,7 @@ void Game_Mode_Enter(NuSMVEnv_ptr env)
     fprintf(nusmv_stderr, "Entering game mode...\n");
   }
 
-  //game_pkg_switch_to_prop_db_game(env); temporary
+  game_pkg_switch_to_prop_db_game(env);
   game_pkg_switch_to_game_cmds(env,
                                Game_cmd_get_generic_commands(),
                                Game_cmd_get_dependent_commands(),
@@ -280,7 +280,7 @@ void Game_Mode_Exit(NuSMVEnv_ptr env)
     GameHierarchy_destroy(mainGameHierarchy);
     mainGameHierarchy = GAME_HIERARCHY(NULL);
   }
-  //game_pkg_switch_to_prop_db(env); temporary
+  game_pkg_switch_to_prop_db(env);
   game_pkg_switch_from_game_cmds(env,
                                  Game_cmd_get_dependent_commands(),
                                  Game_cmd_get_specific_commands());

@@ -458,9 +458,6 @@ Lorenzo Dibenedetto - lorenzodibenedetto90@gmail.com , Sebastian Sardina - ssard
     2.error: ‘struct PropDb_TAG’ has no member named ‘master’ "prop = PROP_GAME(PROP_DB(self)->master);" 
     
         *   removed all instruction with 'master' because there are 2 new functions 'game_pkg_switch_to_prop_db' and 'game_pkg_switch_to_prop_db_game'
-        *   temporary commented 
-                game_pkg_switch_to_prop_db_game in Game_Mode_Enter
-                game_pkg_switch_to_prop_db in Game_Mode_Exit
         
     3.missing parameter
         
@@ -752,6 +749,9 @@ Lorenzo Dibenedetto - lorenzodibenedetto90@gmail.com , Sebastian Sardina - ssard
     
     *   replaced 'nusmv_stderr' with 'stderr' in Game_CommandFlattenHierarchy()
 
+    5.PropDbGame.c:330: PropDbGame_master_get_game_scalar_sexp_fsm: Assertion `PropGame_type_is_game_or_notype(Prop_get_type(((Prop_ptr) prop)))'
+    
+    
 -----------------------------------------------------------------------------------------------------------------   
  
 
