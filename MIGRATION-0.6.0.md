@@ -451,19 +451,18 @@ Lorenzo Dibenedetto - lorenzodibenedetto90@gmail.com , Sebastian Sardina - ssard
                         
 53.PropDbGame.c [ #CHECK .2.3 AT RUNTIME ]
     
-    warning: passing argument 2 of ‘Prop_print_db’ from incompatible pointer type
+    1.warning: passing argument 2 of ‘Prop_print_db’ from incompatible pointer type
     
         *   add cast with 'OSTREAM(file)'
         
-    error: ‘struct PropDb_TAG’ has no member named ‘master’ "prop = PROP_GAME(PROP_DB(self)->master);" 
+    2.error: ‘struct PropDb_TAG’ has no member named ‘master’ "prop = PROP_GAME(PROP_DB(self)->master);" 
     
         *   replaced 'PROP_DB(self)->master' with 'NuSMVEnv_get_value(env, ENV_PROP_DB)'
         *   replaced 'PROP_DB(self)->master = PROP(PropGame_create(env))' with 'NuSMVEnv_set_value(env, ENV_PROP_DB, PROP(PropGame_create(env)))'
         
-        *   replaced this 'OVERRIDE(PropDb, set_fsm_to_master) = (PropDb_set_fsm_to_master_method) prop_db_game_set_fsm_to_master;' 
-                with 'Prop_set_environment_fsms(env, PROP(prop_db_game_set_fsm_to_master));' 
+        *   commented this 'OVERRIDE(PropDb, set_fsm_to_master) = (PropDb_set_fsm_to_master_method) prop_db_game_set_fsm_to_master;' 
     
-    missing parameter
+    3.missing parameter
         
         *   added 'env' parameter for 'PropDbGame_create' , 'PropDbGame_clean' , 'prop_db_game_init' , 'prop_db_init'
     
