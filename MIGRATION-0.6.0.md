@@ -740,7 +740,7 @@ Lorenzo Dibenedetto - lorenzodibenedetto90@gmail.com , Sebastian Sardina - ssard
     
     2.PropDbGame.c:531 in prop_db_game_init for  NuSMVEnv_set_value ()
     
-        *   commented functions with master usage in 'prop_db_game_init' ( obsolete? ) 
+        *   see 53.2 revision
         
     3.gamePkg.c:322 : game_pkg_switch_to_prop_db_game (env=0x907ce0)
     
