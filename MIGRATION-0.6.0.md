@@ -755,7 +755,7 @@ Lorenzo Dibenedetto - lorenzodibenedetto90@gmail.com , Sebastian Sardina - ssard
        
     4.gameFlatten.c:227  fprintf (__fmt=0x6892d8 "*** WARNING: Game addon does not support properties COI size sorting.  ***\n", __stream=<optimized out>)
     
-    *   replaced
+    *   replaced 'nusmv_stderr' with 'stderr' in Game_CommandFlattenHierarchy()
 
 -----------------------------------------------------------------------------------------------------------------   
  

@@ -224,10 +224,10 @@ int Game_CommandFlattenHierarchy(NuSMVEnv_ptr env,boolean expand_bounded_arrays)
                                   BDD_STATIC_ORDER_HEURISTICS_NONE);
 
   if (opt_use_coi_size_sorting(opts)) {
-    fprintf(nusmv_stderr,
+    fprintf(stderr,
             "*** WARNING: "
             "Game addon does not support properties COI size sorting.  ***\n");
-    fprintf(nusmv_stderr,
+    fprintf(stderr,
             "*** WARNING: "
             "Properties COI size sorting will be disabled.             ***\n");
     unset_use_coi_size_sorting(opts);
@@ -235,7 +235,7 @@ int Game_CommandFlattenHierarchy(NuSMVEnv_ptr env,boolean expand_bounded_arrays)
 
   cmp_struct_set_flatten_hrc(cmps);
   if (opt_verbose_level_gt(opts, 0)) {
-    fprintf(nusmv_stderr, "...done\n");
+    fprintf(stderr, "...done\n");
   }
 
   return 0;
