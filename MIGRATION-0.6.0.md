@@ -694,21 +694,21 @@ Lorenzo Dibenedetto - lorenzodibenedetto90@gmail.com , Sebastian Sardina - ssard
 
 73.Runtime Errors
 
-    smgameMain.c : Segmentation fault.
+    1.smgameMain.c : Segmentation fault.
     
     *    in 'BannerPrint' replaced 'nusmv_stdout' with 'stdout' and 'nusmv_stderr' with 'stderr'
 
-    smgameCmd.c in 'Smgame_AddCmd' :  Assertion `res' failed.
+    2.smgameCmd.c in 'Smgame_AddCmd' :  Assertion `res' failed.
     
     *   replace NuSMV reset with NuGaT reset
     
-    unknown command 'read_model'
+    3.unknown command 'read_model'
     
     *   update file 'smgameMisc.c' like NuSMV-2.6.0 file 'cinitBatch.c'
     
 74.CMake Partial Migration for Debug Purpose
 
-    undefined reference to `MMalloc' ...
+    1.undefined reference to `MMalloc' ...
     
     *   added in CMakeLists.txt
     
@@ -717,7 +717,7 @@ Lorenzo Dibenedetto - lorenzodibenedetto90@gmail.com , Sebastian Sardina - ssard
                     ${NUSMV_DIR}/build/build-cudd/lib/libcudd.a
                     ...)
                     
-    libxml2.a : 
+    2.libxml2.a : 
     
         in `xmlFreeZMemBuff': undefined reference to `deflateEnd' ...
     
@@ -747,10 +747,20 @@ Lorenzo Dibenedetto - lorenzodibenedetto90@gmail.com , Sebastian Sardina - ssard
             'dbg = PROP_DB_GAME(NuSMVEnv_get_value(env, ENV_PROP_DB));' with 'dbg = PROP_DB_GAME(NuSMVEnv_remove_value(env, ENV_PROP_DB));'
             'db = PROP_DB_GAME(NuSMVEnv_get_value(env, ENV_PROP_DB));' with 'db = PROP_DB_GAME(NuSMVEnv_remove_value(env, ENV_PROP_DB));'
     
-
+    4.gamePkg.c:635: game_pkg_store_remove_cmd: Assertion `Cmd_CommandDefined(env,name)' failed
+    
+    *   included this code in main() of NuGaT after 'FP_V_E iq_fns[][2] = {{NuGaTAddons_Init, NuGaTAddons_Quit}' declaration
+    
+            #if NUSMV_HAVE_INTERACTIVE_SHELL
+                /* these are for the interactive shell */
+                {CInit_init_cmd, CInit_quit_cmd},
+                {Compass_init_cmd, Compass_Cmd_quit},
+            #endif
+       
+    
 
 -----------------------------------------------------------------------------------------------------------------   
-
+ 
 
 
 

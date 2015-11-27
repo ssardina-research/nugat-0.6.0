@@ -6,9 +6,8 @@ set(NUSMV_DIR /home/lorenzo/Documents/software/ClionProjects/NuSMV-2.6.0/NuSMV)
 
 include_directories("${NUGAT_DIR}")
 include_directories("${NUGAT_DIR}/src")
+include_directories("${NUGAT_DIR}/src/parser")
 
-
-include_directories("/home/lorenzo/Documents/software/ClionProjects/NuSMV-2.6.0/NuSMV")
 include_directories("${NUSMV_DIR}")
 include_directories("${NUSMV_DIR}/cudd-2.4.1.1/include")
 include_directories("${NUSMV_DIR}/build")
@@ -89,15 +88,32 @@ set(SOURCE_FILES
 
 
 file(GLOB_RECURSE NUSMV_SRC
-        "/home/lorenzo/Documents/software/ClionProjects/NuSMV-2.6.0/NuSMV/code/nusmv/core/parser/parser.h"
-        "/home/lorenzo/Documents/software/ClionProjects/NuSMV-2.6.0/NuSMV/code/nusmv/core/parser/parser.c"
-        "/home/lorenzo/Documents/software/ClionProjects/NuSMV-2.6.0/NuSMV/code/nusmv/core/parser/parserUtil.c"
-        "/home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/parser/grammar.c"
 
-        "/home/lorenzo/Documents/software/ClionProjects/NuSMV-2.6.0/NuSMV/code/nusmv/core/cinit/cinitInit.c"
-        "/home/lorenzo/Documents/software/ClionProjects/NuSMV-2.6.0/NuSMV/code/nusmv/core/opt/optPkg.c"
-        "/home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/parser/grammar.c"
-        "/home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4/src/parser/input.c"
+        "${NUGAT_DIR}/src/parser/*.c"
+        "${NUSMV_DIR}/code/*.c"
+        )
+
+list(REMOVE_ITEM NUSMV_SRC
+        "${NUSMV_DIR}/code/nusmv/core/dag/dagEn.c"
+        "${NUSMV_DIR}/code/nusmv/core/sat/solvers/SatZchaff.c"
+        "${NUSMV_DIR}/code/nusmv/core/trace/loaders/TraceXmlLoader.c"
+        "${NUSMV_DIR}/code/nusmv/core/utils/utils_msvc.c"
+        "${NUSMV_DIR}/code/nusmv/core/utils/BigWordNumberMgr.c"
+        "${NUSMV_DIR}/code/nusmv/core/utils/BigWordNumberInt.c"
+        "${NUSMV_DIR}/code/nusmv/core/utils/bignumbers/bignumbers.c"
+        ${NUSMV_DIR}/code/nusmv/core/utils/bignumbers/numbers.c
+        "${NUSMV_DIR}/code/nusmv/core/utils/BigWordNumber.c"
+        "${NUSMV_DIR}/code/nusmv/core/parser/psl/psl.c"
+        "${NUSMV_DIR}/code/wtest/src/main.c"
+        "${NUSMV_DIR}/code/nusmv/core/bmc/bmcPkg.c"
+        "${NUSMV_DIR}/code/nusmv/core/compile/compileBEval.c"
+        "${NUSMV_DIR}/code/nusmv/core/trace/pkg_trace.c"
+
+        "${NUSMV_DIR}/code/nusmv/ltl2smvMain.c"
+        "${NUSMV_DIR}/code/nusmv/main.c"
+        "${NUSMV_DIR}/build/build-MiniSat/minisat-37dc6c67e2af26379d88ce349eb9c4c6160e8543/CMakeFiles/3.2.2/CompilerIdC/CMakeCCompilerId.c"
+
+
         )
 
 add_executable(NuGaT ${SOURCE_FILES} ${NUSMV_SRC} )

@@ -130,28 +130,16 @@ void Smgame_BatchMain(NuSMVEnv_ptr env)
           goto batch_exit_fail;
   }
 
-  {  /* 2: Flatten hierarchy */
-      res = CompileFlatten_flatten_smv(env, true, false);
-      if (res)
-          goto batch_exit_fail;
-  }
+          /* ================================================== */
+          /*  2: Flatten hierarchy                              */
+          /* ================================================== */
+          if (Cmd_CommandExecute(env,"flatten_hierarchy")) ErrorMgr_nusmv_exit(errmgr,1);
 
-  /* If the -lp option is used, list the properties and exit */
-  if (opt_list_properties(opts)) {
-      res = PropDb_show_property(
-              prop_db,
-              false  /* print_props_num */,
-              PROPDB_PRINT_FMT_DEFAULT,
-              Prop_NoType,
-              Prop_NoStatus,
-              -1  /* prop_no */,
-              OStream_get_stream(outstream));
-
-      if (res)
-          goto batch_exit_fail;
-      else
-          goto batch_exit_success;
-  }
+          /* If the -lp option is used, list the properties and exit */
+          if (opt_list_properties(opts) == true) {
+              if (Cmd_CommandExecute(env,"show_property")) ErrorMgr_nusmv_exit(errmgr,1);
+              return;
+          }
 
   {  /* 3: Builds the encodings */
       res = Compile_encode_variables(env,

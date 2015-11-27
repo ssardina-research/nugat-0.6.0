@@ -58,6 +58,8 @@
 #include <stdlib.h>
 #include <sys/stat.h>
 #include "printStrategy.h"
+#include "nusmv/shell/cinit/cinit.h"
+#include "nusmv/addons_core/compass/compassCmd.h"
 
 static char rcsid[] UTIL_UNUSED = "$Id: smMain.c,v 1.28.2.14.2.5.2.31.4.32 2010-02-23 13:38:37 nusmv Exp $";
 
@@ -115,7 +117,14 @@ int main(int  argc, char ** argv)
   OptsHandler_ptr opts;
 
   boolean requires_shutdown = true;
-  FP_V_E iq_fns[][2] = {{NuGaTAddons_Init, NuGaTAddons_Quit}};
+  FP_V_E iq_fns[][2] = {{NuGaTAddons_Init, NuGaTAddons_Quit},
+
+#if NUSMV_HAVE_INTERACTIVE_SHELL
+    /* these are for the interactive shell */
+    {CInit_init_cmd, CInit_quit_cmd},
+    {Compass_init_cmd, Compass_Cmd_quit},
+#endif
+  };
 
   /* Initializes data such as tool name, tool version, email.. */
   NuSMVCore_init_data();

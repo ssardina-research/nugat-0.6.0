@@ -487,6 +487,8 @@ static void game_check_first_player(NuSMVEnv_ptr env,
                                     FlatHierarchy_ptr player_1,
                                     NodeList_ptr vars)
 {
+  NodeMgr_ptr nodemgr = NODE_MGR(NuSMVEnv_get_value(env, ENV_NODE_MGR));
+
   /* check init */
   game_check_first_player_recur(env,
                                 st,
@@ -525,7 +527,7 @@ static void game_check_first_player(NuSMVEnv_ptr env,
   /* check assign. "map" is used to get rid of processes names */
   game_check_first_player_recur(env,
                                 st,
-                                map(0,cdr, FlatHierarchy_get_assign(player_1)),
+                                map(nodemgr,cdr, FlatHierarchy_get_assign(player_1)),
                                 vars,
                                 false,
                                 false);
