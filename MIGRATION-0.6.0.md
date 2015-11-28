@@ -95,10 +95,8 @@ Lorenzo Dibenedetto - lorenzodibenedetto90@gmail.com , Sebastian Sardina - ssard
                    
 13.error: GamePlayer.c : ‘USTRING_MGR’ undeclared (first use in this function)
 
-    *   'USTRING_MGR' has been replaced by 'USTRING_MGR(NuSMVEnv_get_value(__nusmv_parser_env__, ENV_STRING_MGR))'
-    *   added this line below the #include code
-            
-            extern NuSMVEnv_ptr __nusmv_parser_env__;
+    *   'USTRING_MGR' has been replaced by 'USTRING_MGR(NuSMVEnv_get_value(env, ENV_STRING_MGR))'
+    *   added 'env' parameter 
     
 14.warning: GameStrategy.c : passing argument 1 of ‘bdd_free’ from incompatible pointer type
 

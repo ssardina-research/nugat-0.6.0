@@ -100,8 +100,8 @@ typedef enum GamePlayer_TAG GamePlayer;
 /* Function prototypes                                                       */
 /*---------------------------------------------------------------------------*/
 
-EXTERN string_ptr Game_PlayerToStr ARGS((GamePlayer player));
-EXTERN GamePlayer Game_StrToPlayer ARGS((string_ptr str));
+EXTERN string_ptr Game_PlayerToStr ARGS((NuSMVEnv_ptr env,GamePlayer player));
+EXTERN GamePlayer Game_StrToPlayer ARGS((NuSMVEnv_ptr env,string_ptr str));
 
 /**AutomaticEnd***************************************************************/
 

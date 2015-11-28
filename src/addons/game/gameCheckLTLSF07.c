@@ -597,7 +597,7 @@ Game_SF07_StructCheckLTLGameSF07_create(NuSMVEnv_ptr env,
   /* The iteration-invariant parts. */
 
   res->prop = prop;
-  res->player = Game_StrToPlayer(PropGame_get_player(prop));
+  res->player = Game_StrToPlayer(env,PropGame_get_player(prop));
   res->params = params;
   res->kmin = kmin;
   res->kmax = kmax;

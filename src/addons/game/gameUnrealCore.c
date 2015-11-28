@@ -697,7 +697,7 @@ Game_UnrealizableCore_Struct_create (NuSMVEnv_ptr env,
   cls->w = w;
   cls->N = N;
 
-  cls->player = Game_StrToPlayer(PropGame_get_player(prop));
+  cls->player = Game_StrToPlayer(env,PropGame_get_player(prop));
 
   cls->init1 = Nil;
   cls->invar1 = Nil;

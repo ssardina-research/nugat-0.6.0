@@ -183,7 +183,7 @@ void Game_CheckGenReactivitySpec(NuSMVEnv_ptr env, PropGame_ptr prop, gameParams
   isSuccess =
     game_compute_gen_reactivity(env,
                                 Prop_get_expr_core(PROP(prop)),
-                                Game_StrToPlayer(PropGame_get_player(prop)),
+                                Game_StrToPlayer(env,PropGame_get_player(prop)),
                                 PropGame_get_game_bdd_fsm(prop),
                                 GAME_INIT_TERM_NORMAL,
                                 (construct_strategy ?
