@@ -350,7 +350,7 @@ void PropDbGame_master_set_game_scalar_sexp_fsm(const NuSMVEnv_ptr env, PropDbGa
   PropGame_ptr prop;
 
   PROP_DB_GAME_CHECK_INSTANCE(self);
-  prop = PROP_GAME(NuSMVEnv_get_value(env, ENV_PROP_DB));
+  prop = PROP_GAME(NuSMVEnv_get_value(env, ENV_SEXP_FSM));
   PROP_GAME_CHECK_INSTANCE(prop);
   nusmv_assert(PropGame_type_is_game_or_notype(Prop_get_type(PROP(prop))));
 
@@ -645,12 +645,14 @@ void prop_db_game_set_fsm_to_master(PropDbGame_ptr self, PropGame_ptr prop)
 
   nusmv_assert(PropGame_type_is_game(Prop_get_type(PROP(prop))));
 
-  PropGame_set_game_scalar_sexp_fsm(prop,
-                              PropDbGame_master_get_game_scalar_sexp_fsm(env,self));
-  PropGame_set_game_bool_sexp_fsm(prop,
-                                PropDbGame_master_get_game_bool_sexp_fsm(env,self));
-  PropGame_set_game_bdd_fsm(prop, PropDbGame_master_get_game_bdd_fsm(env,self));
-  PropGame_set_game_be_fsm(prop, PropDbGame_master_get_game_be_fsm(self));
+  PropGame_set_game_scalar_sexp_fsm(prop,GAME_SEXP_FSM(NuSMVEnv_get_value(env, ENV_SEXP_FSM)));
+                              //PropDbGame_master_get_game_scalar_sexp_fsm(env,self));
+  PropGame_set_game_bool_sexp_fsm(prop,GAME_SEXP_FSM(NuSMVEnv_get_value(env, ENV_BOOL_FSM)));
+                                //PropDbGame_master_get_game_bool_sexp_fsm(env,self));
+  PropGame_set_game_bdd_fsm(prop, GAME_BDD_FSM(NuSMVEnv_get_value(env, ENV_BDD_FSM)));
+    //PropDbGame_master_get_game_bdd_fsm(env,self));
+  PropGame_set_game_be_fsm(prop, GAME_BE_FSM(NuSMVEnv_get_value(env, ENV_BE_FSM)));
+    //PropDbGame_master_get_game_be_fsm(self));
 }
 
 /**Function********************************************************************

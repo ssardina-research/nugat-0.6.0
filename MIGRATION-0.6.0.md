@@ -751,7 +751,12 @@ Lorenzo Dibenedetto - lorenzodibenedetto90@gmail.com , Sebastian Sardina - ssard
 
     5.PropDbGame.c:330: PropDbGame_master_get_game_scalar_sexp_fsm: Assertion `PropGame_type_is_game_or_notype(Prop_get_type(((Prop_ptr) prop)))'
     
-    
+    *   replaced 
+            'if (GAME_SEXP_FSM(NULL) == PropDbGame_master_get_game_scalar_sexp_fsm(PROP_DB_GAME(PropPkg_get_prop_database())))' 
+                with 'if (!NuSMVEnv_has_value(env, ENV_SEXP_FSM))'
+            'PropDbGame_master_set_game_scalar_sexp_fsm( env,PROP_DB_GAME(NuSMVEnv_get_value(env, ENV_PROP_DB)), scalar_fsm);' 
+                with 'NuSMVEnv_set_value(env, ENV_SEXP_FSM, scalar_fsm);'
+            and others with 'BOOL' and 'BDD', commented previous lines for testing
 -----------------------------------------------------------------------------------------------------------------   
  
 

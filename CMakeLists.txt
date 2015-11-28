@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.2)
-project(NuGaT_0_60)
+project(NuGaT_0_6_0)
 
 set(NUGAT_DIR  /home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4)
 set(NUSMV_DIR /home/lorenzo/Documents/software/ClionProjects/NuSMV-2.6.0/NuSMV)
