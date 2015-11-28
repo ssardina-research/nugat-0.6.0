@@ -453,7 +453,11 @@ Lorenzo Dibenedetto - lorenzodibenedetto90@gmail.com , Sebastian Sardina - ssard
     2.error: ‘struct PropDb_TAG’ has no member named ‘master’ "prop = PROP_GAME(PROP_DB(self)->master);" 
     
         *   removed all instruction with 'master' because there are 2 new functions 'game_pkg_switch_to_prop_db' and 'game_pkg_switch_to_prop_db_game'
-        
+        *   replaced
+                'OVERRIDE(PropDb, set_fsm_to_master) = (PropDb_set_fsm_to_master_method) prop_db_game_set_fsm_to_master;'
+            with
+                'OVERRIDE(Prop, set_environment_fsms) = (Prop_set_environment_fsms_method) Prop_set_environment_fsms;'
+                
     3.missing parameter
         
         *   added 'env' parameter for 'PropDbGame_create' , 'PropDbGame_clean' , 'prop_db_game_init' , 'prop_db_init'
