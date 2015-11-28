@@ -143,7 +143,7 @@ int Game_CommandEncodeVariables(NuSMVEnv_ptr env, char* input_order_file_name)
     }
     else dump_type = DUMP_DEFAULT;
 
-    BddEnc_write_var_ordering(BddFsm_get_bdd_encoding(BDD_FSM(GAME_BDD_FSM(NULL))),
+    BddEnc_write_var_ordering(bdd_enc,
                               get_output_order_file(opts),
                               dump_type);
 

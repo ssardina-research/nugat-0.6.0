@@ -106,13 +106,8 @@ Lorenzo Dibenedetto - lorenzodibenedetto90@gmail.com , Sebastian Sardina - ssard
 
 15.warning: GameStrategy.c : implicit declaration of function ‘Enc_get_bdd_encoding’
 
-    *   is replaced with: if 'fsm/scalar_fsm' variable is 
-        -present 
-                BddFsm_get_bdd_encoding(BDD_FSM(fsm)) 
-                BddFsm_get_bdd_encoding(BDD_FSM(scalar_fsm)) 
-                
-        -not present
-                NuSMVEnv_get_value(env, ENV_BDD_ENCODER);
+    *   replaced with 'NuSMVEnv_get_value(env, ENV_BDD_ENCODER);'
+        and 'Enc_get_bool_encoding' with 'NuSMVEnv_get_value(env, ENV_BOOL_ENCODER);'
                 
 16.warning: GameStrategy.c: passing argument 1 of ‘print_node’ from incompatible pointer type
    
@@ -605,14 +600,10 @@ Lorenzo Dibenedetto - lorenzodibenedetto90@gmail.com , Sebastian Sardina - ssard
         *   included library '#include "bmc/bmc.h"'
      
              
-65.gameCheckLTLSF07.c : warning: undefined reference to `global_fsm_builder' for :  [ #CHECK AT RUNTIME ] 
-         
-         ./.libs/libnugat.a
-             src/addons/game/gameCheckLTLSF07.c
-             src/addons/game/gameUnrealCore.c
-             src/addons/game/gameBuildModel.c
-     
-     *  added declaration 'FsmBuilder_ptr global_fsm_builder;'
+65.gameCheckLTLSF07.c : warning: undefined reference to `global_fsm_builder' for :  [ #CHECK AT RUNTIME, ANOTHER DECLARATION ] 
+             
+     *  replaced 'global_fsm_builder'  with 'FsmBuilder_ptr builder = FSM_BUILDER(NuSMVEnv_get_value(env, ENV_FSM_BUILDER));'
+     *  removed all 'global_fsm_builder' declarations
      
 66.gameUnrealCore.c : warning: undefined reference to `boolean_range' , 'zero_number' , 'one_number' [ #TODO CHANGE DESCRIPTION ] 
     

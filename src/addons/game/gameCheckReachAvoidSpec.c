@@ -310,7 +310,7 @@ Game_RealizabilityStatus Game_UseStrongReachabilityAlgorithm(NuSMVEnv_ptr env, P
                                                     GameStrategy_ptr* strategy)
 {
   GameBddFsm_ptr fsm = PropGame_get_game_bdd_fsm(prop);
-  BddEnc_ptr enc = BddFsm_get_bdd_encoding(BDD_FSM(fsm));
+  BddEnc_ptr enc = BDD_ENC(NuSMVEnv_get_value(env, ENV_BDD_ENCODER));
   DDMgr_ptr dd_manager = BddEnc_get_dd_manager(enc);
 
   const NodeMgr_ptr nodemgr = NODE_MGR(NuSMVEnv_get_value(env, ENV_NODE_MGR));

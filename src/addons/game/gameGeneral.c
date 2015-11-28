@@ -123,7 +123,7 @@ void Game_BeforeCheckingSpec(NuSMVEnv_ptr env,PropGame_ptr prop)
        this var and so on for all var. Then invoke standard
        Prop_apply_coi_for_bdd
     */
-    /*Prop_apply_coi_for_bdd(prop, global_fsm_builder);*/
+    /*Prop_apply_coi_for_bdd(prop, FSM_BUILDER(NuSMVEnv_get_value(env, ENV_FSM_BUILDER)));*/
   }
 
   fsm = PropGame_get_game_bdd_fsm(prop);

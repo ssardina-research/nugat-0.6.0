@@ -283,8 +283,6 @@ typedef struct Game_SF07_StructCheckLTLGameSF07_TAG {
 
 EXTERN FILE* nusmv_stdout;
 EXTERN FILE* nusmv_stderr;
-FsmBuilder_ptr global_fsm_builder;
-
 /*---------------------------------------------------------------------------*/
 /* Macro declarations                                                        */
 /*---------------------------------------------------------------------------*/
@@ -1777,6 +1775,8 @@ static void Game_SF07_StructCheckLTLGameSF07_construct_monitor_game_bdd_fsm
   BddFsm_ptr player1_monitor_bdd_fsm;
   BddFsm_ptr player2_monitor_bdd_fsm;
 
+  FsmBuilder_ptr builder = FSM_BUILDER(NuSMVEnv_get_value(env, ENV_FSM_BUILDER));
+
   GAME_SF07_STRUCT_CHECK_LTL_GAME_SF07_CHECK_INSTANCE(self);
   nusmv_assert(self->curr_player2_monitor_sexp != Nil);
   nusmv_assert(self->curr_player1_monitor_sexp != Nil);
@@ -1911,7 +1911,7 @@ static void Game_SF07_StructCheckLTLGameSF07_construct_monitor_game_bdd_fsm
 
     /* Construct fsm. */
     player2_monitor_bdd_fsm =
-      FsmBuilder_create_bdd_fsm_of_vars(global_fsm_builder,
+      FsmBuilder_create_bdd_fsm_of_vars(builder,
                                         player2_monitor_sexp_fsm,
                                         trans_type,
                                         self->bdd_enc,
@@ -1990,7 +1990,7 @@ static void Game_SF07_StructCheckLTLGameSF07_construct_monitor_game_bdd_fsm
 
     /* Construct fsm. */
     player1_monitor_bdd_fsm =
-      FsmBuilder_create_bdd_fsm_of_vars(global_fsm_builder,
+      FsmBuilder_create_bdd_fsm_of_vars(builder,
                                         player1_monitor_sexp_fsm,
                                         trans_type,
                                         self->bdd_enc,

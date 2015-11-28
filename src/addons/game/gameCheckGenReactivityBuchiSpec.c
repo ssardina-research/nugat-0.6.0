@@ -83,7 +83,7 @@ EXTERN options_ptr options;
 /* Static function prototypes                                                */
 /*---------------------------------------------------------------------------*/
 static boolean
-game_compute_gen_reactivity ARGS((node_ptr specExp,
+game_compute_gen_reactivity ARGS((NuSMVEnv_ptr env,node_ptr specExp,
                                   GamePlayer player,
                                   GameBddFsm_ptr fsm,
                                   Game_InitTermination earlierTermination,
@@ -181,7 +181,8 @@ void Game_CheckGenReactivitySpec(NuSMVEnv_ptr env, PropGame_ptr prop, gameParams
 
   /* Verification of the property. */
   isSuccess =
-    game_compute_gen_reactivity(Prop_get_expr_core(PROP(prop)),
+    game_compute_gen_reactivity(env,
+                                Prop_get_expr_core(PROP(prop)),
                                 Game_StrToPlayer(PropGame_get_player(prop)),
                                 PropGame_get_game_bdd_fsm(prop),
                                 GAME_INIT_TERM_NORMAL,
@@ -306,7 +307,8 @@ void Game_CheckBuchiGameSpec(NuSMVEnv_ptr env,PropGame_ptr prop, gameParams_ptr 
   SeeAlso     [ ]
 
 ******************************************************************************/
-boolean Game_ComputeGenReactivity(node_ptr specExp,
+boolean Game_ComputeGenReactivity(NuSMVEnv_ptr env,
+                                  node_ptr specExp,
                                   GamePlayer player,
                                   GameBddFsm_ptr fsm,
                                   Game_InitTermination earlierTermination,
@@ -314,7 +316,8 @@ boolean Game_ComputeGenReactivity(node_ptr specExp,
                                   bdd_ptr underapproxWinStates,
                                   bdd_ptr* winningStates)
 {
-  return game_compute_gen_reactivity(specExp,
+  return game_compute_gen_reactivity(env,
+                                     specExp,
                                      player,
                                      fsm,
                                      earlierTermination,
@@ -442,6 +445,9 @@ static void game_declare_special_var(NuSMVEnv_ptr env,
   const NodeMgr_ptr nodemgr = NODE_MGR(NuSMVEnv_get_value(env, ENV_NODE_MGR));
   const UStringMgr_ptr strings = USTRING_MGR(NuSMVEnv_get_value(env, ENV_STRING_MGR));
 
+  BddEnc_ptr  bdd_enc = BDD_ENC(NuSMVEnv_get_value(env, ENV_BDD_ENCODER));
+  BoolEnc_ptr bool_enc = BOOL_ENC(NuSMVEnv_get_value(env, ENV_BOOL_ENCODER));
+
   OptsHandler_ptr opts = OPTS_HANDLER(NuSMVEnv_get_value(env, ENV_OPTS_HANDLER));
 
   /* Create a new temporal layer (with arbitrary name). */
@@ -468,9 +474,9 @@ static void game_declare_special_var(NuSMVEnv_ptr env,
   SymbLayer_declare_state_var(layer, var, symbolicType);
 
   /* Commit the layer to all encodings. */
-  BaseEnc_commit_layer(BASE_ENC(BoolEncClient_get_bool_enc(BOOL_ENC_CLIENT(NULL))),
+  BaseEnc_commit_layer(BASE_ENC(bool_enc),
                        SymbLayer_get_name(layer));
-  BaseEnc_commit_layer(BASE_ENC(BddFsm_get_bdd_encoding(BDD_FSM(GAME_SEXP_FSM(NULL)))),
+  BaseEnc_commit_layer(BASE_ENC(bdd_enc),
                        SymbLayer_get_name(layer));
 
   *new_var = var;
@@ -499,12 +505,15 @@ static void game_undeclare_special_var(NuSMVEnv_ptr env,SymbLayer_ptr layer)
 {
   const char* name = SymbLayer_get_name(layer);
 
+  BddEnc_ptr  bdd_enc = BDD_ENC(NuSMVEnv_get_value(env, ENV_BDD_ENCODER));
+  BoolEnc_ptr bool_enc = BOOL_ENC(NuSMVEnv_get_value(env, ENV_BOOL_ENCODER));
+
   /* remove the layer from all encodings (bool and bdd) */
-  if (BaseEnc_layer_occurs(BASE_ENC(BddFsm_get_bdd_encoding(BDD_FSM(GAME_SEXP_FSM(NULL)))), name)) {
-    BaseEnc_remove_layer(BASE_ENC(BddFsm_get_bdd_encoding(BDD_FSM(GAME_SEXP_FSM(NULL)))), name);
+  if (BaseEnc_layer_occurs(BASE_ENC(bdd_enc), name)) {
+    BaseEnc_remove_layer(BASE_ENC(bdd_enc), name);
   }
-  if (BaseEnc_layer_occurs(BASE_ENC(BoolEncClient_get_bool_enc(BOOL_ENC_CLIENT(NULL))), name)) {
-    BaseEnc_remove_layer(BASE_ENC(BoolEncClient_get_bool_enc(BOOL_ENC_CLIENT(NULL))), name);
+  if (BaseEnc_layer_occurs(BASE_ENC(bool_enc), name)) {
+    BaseEnc_remove_layer(BASE_ENC(bool_enc), name);
   }
 
   SymbTable_remove_layer(SYMB_TABLE(NuSMVEnv_get_value(env, ENV_SYMB_TABLE)), layer);
@@ -581,7 +590,8 @@ static void game_undeclare_special_var(NuSMVEnv_ptr env,SymbLayer_ptr layer)
 static int totalZIterations = 0;
 static int totalYIterations = 0;
 static int totalXIterations = 0;
-static boolean game_compute_gen_reactivity(node_ptr specExp,
+static boolean game_compute_gen_reactivity(NuSMVEnv_ptr env,
+                                           node_ptr specExp,
                                           GamePlayer player,
                                           GameBddFsm_ptr fsm,
                                         Game_InitTermination earlierTermination,
@@ -593,9 +603,8 @@ static boolean game_compute_gen_reactivity(node_ptr specExp,
 {
 //long time_tmp = util_cpu_time();
 //long time_init_check;
-  BddEnc_ptr enc = BddFsm_get_bdd_encoding(BDD_FSM(fsm));
+  BddEnc_ptr enc = BDD_ENC(NuSMVEnv_get_value(env, ENV_BDD_ENCODER));
   DDMgr_ptr dd_manager = BddEnc_get_dd_manager(enc);
-  const NuSMVEnv_ptr env = EnvObject_get_environment(ENV_OBJECT(dd_manager));
   const NodeMgr_ptr nodemgr = NODE_MGR(NuSMVEnv_get_value(env, ENV_NODE_MGR));
   OptsHandler_ptr oh = OPTS_HANDLER(NuSMVEnv_get_value(env, ENV_OPTS_HANDLER));
 
@@ -1268,7 +1277,7 @@ static boolean game_compute_buchi_game(NuSMVEnv_ptr env,
                                        node_ptr jxVar)
 {
   GameBddFsm_ptr fsm = PropGame_get_game_bdd_fsm(prop);
-  BddEnc_ptr enc = BddFsm_get_bdd_encoding(BDD_FSM(fsm));
+  BddEnc_ptr enc = BDD_ENC(NuSMVEnv_get_value(env, ENV_BDD_ENCODER));
   DDMgr_ptr dd_manager = BddEnc_get_dd_manager(enc);
 
   const NodeMgr_ptr nodemgr = NODE_MGR(NuSMVEnv_get_value(env, ENV_NODE_MGR));

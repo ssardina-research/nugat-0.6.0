@@ -438,7 +438,7 @@ EXTERN void Game_AfterCheckingSpec ARGS((NuSMVEnv_ptr env,PropGame_ptr prop,
                                          node_ptr varList2,
                                          gameParams_ptr params));
 
-EXTERN boolean Game_ComputeGenReactivity ARGS((node_ptr specExp,
+EXTERN boolean Game_ComputeGenReactivity ARGS((NuSMVEnv_ptr env,node_ptr specExp,
                                  GamePlayer player,
                                  GameBddFsm_ptr fsm,
                                  Game_InitTermination earlierTermination,

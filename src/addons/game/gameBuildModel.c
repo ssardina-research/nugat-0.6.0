@@ -76,7 +76,6 @@ static char rcsid[] UTIL_UNUSED = "$Id: gameBuildModel.c,v 1.1.2.8 2010-02-10 14
 /*---------------------------------------------------------------------------*/
 /* Variable declarations                                                     */
 /*---------------------------------------------------------------------------*/
-EXTERN FsmBuilder_ptr global_fsm_builder;
 EXTERN int nusmv_yylineno;
 
 /*---------------------------------------------------------------------------*/
@@ -197,14 +196,15 @@ void Game_CommandBuildBooleanModel(NuSMVEnv_ptr env)
     SymbLayer_ptr determ_layer_2;
 
     const ErrorMgr_ptr errmgr = ERROR_MGR(NuSMVEnv_get_value(env, ENV_ERROR_MANAGER));
+    BddEnc_ptr  bdd_enc = BDD_ENC(NuSMVEnv_get_value(env, ENV_BDD_ENCODER));
+    BoolEnc_ptr bool_enc = BOOL_ENC(NuSMVEnv_get_value(env, ENV_BOOL_ENCODER));
 
     int reord_status;
     dd_reorderingtype rt;
-    BddEnc_ptr enc = BddFsm_get_bdd_encoding(BDD_FSM(GAME_SEXP_FSM(NULL)));
     DDMgr_ptr dd;
 
     /* temporary disables reordering */
-    dd = BddEnc_get_dd_manager(enc);
+    dd = BddEnc_get_dd_manager(bdd_enc);
     reord_status = dd_reordering_status(dd, &rt);
     if (reord_status == 1) { dd_autodyn_disable(dd); }
 
@@ -223,7 +223,7 @@ void Game_CommandBuildBooleanModel(NuSMVEnv_ptr env)
                                      PROP_DB_GAME(NuSMVEnv_get_value(env, ENV_PROP_DB)));
 
     bool_fsm = GameSexpFsm_scalar_to_boolean(scalar_fsm,
-                                             enc,
+                                             bdd_enc,
                                              determ_layer_1,
                                              determ_layer_2);
     NuSMVEnv_set_value(env, ENV_BOOL_FSM, bool_fsm);
@@ -231,14 +231,14 @@ void Game_CommandBuildBooleanModel(NuSMVEnv_ptr env)
                            PROP_DB_GAME(NuSMVEnv_get_value(env, ENV_PROP_DB)), bool_fsm);
 
     /* commits layers to the encodings */
-    BaseEnc_commit_layer(BASE_ENC(BoolEncClient_get_bool_enc(BOOL_ENC_CLIENT(enc))),
+    BaseEnc_commit_layer(BASE_ENC(bool_enc),
                          DETERM_LAYER_1);
-    BaseEnc_commit_layer(BASE_ENC(BoolEncClient_get_bool_enc(BOOL_ENC_CLIENT(enc))),
+    BaseEnc_commit_layer(BASE_ENC(bool_enc),
                          DETERM_LAYER_2);
 
-    BaseEnc_commit_layer(BASE_ENC(BddFsm_get_bdd_encoding(BDD_FSM(GAME_SEXP_FSM(NULL)))),
+    BaseEnc_commit_layer(BASE_ENC(bdd_enc),
                          DETERM_LAYER_1);
-    BaseEnc_commit_layer(BASE_ENC(BddFsm_get_bdd_encoding(BDD_FSM(GAME_SEXP_FSM(NULL)))),
+    BaseEnc_commit_layer(BASE_ENC(bdd_enc),
                          DETERM_LAYER_2);
 
      /*NEW_CODE_START*/
@@ -295,10 +295,12 @@ void Game_CommandBuildBddModel(NuSMVEnv_ptr env)
   GameSexpFsm_ptr scalar_fsm = GAME_SEXP_FSM(NuSMVEnv_get_value(env, ENV_SEXP_FSM)); //PropDbGame_master_get_game_scalar_sexp_fsm(env, \
                                      PROP_DB_GAME(NuSMVEnv_get_value(env, ENV_PROP_DB)));
   OptsHandler_ptr opts = OPTS_HANDLER(NuSMVEnv_get_value(env, ENV_OPTS_HANDLER));
+  FsmBuilder_ptr builder = FSM_BUILDER(NuSMVEnv_get_value(env, ENV_FSM_BUILDER));
+  BddEnc_ptr bdd_enc = BDD_ENC(NuSMVEnv_get_value(env, ENV_BDD_ENCODER));
 
   GameBddFsm_ptr bdd_fsm =
-    Game_CreateGameBddFsm(global_fsm_builder,
-                          BddFsm_get_bdd_encoding(BDD_FSM(scalar_fsm)),
+    Game_CreateGameBddFsm(builder,
+                          bdd_enc,
                           scalar_fsm,
                           SymbTable_get_layer(st, MODEL_LAYER_1),
                           SymbTable_get_layer(st, MODEL_LAYER_2),

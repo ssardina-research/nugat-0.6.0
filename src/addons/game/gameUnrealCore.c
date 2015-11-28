@@ -373,7 +373,6 @@ static int game_unrealizable_core_unique_num = 0;
 
 EXTERN FILE* nusmv_stdout;
 EXTERN FILE* nusmv_stderr;
-EXTERN FsmBuilder_ptr global_fsm_builder;
 
 /*---------------------------------------------------------------------------*/
 /* Static function prototypes                                                */
@@ -1021,6 +1020,7 @@ static GameGameFsms_ptr game_construct_game_fsms(NuSMVEnv_ptr env,
   SymbLayer_ptr model_layer_1 = SymbTable_get_layer(self->st, MODEL_LAYER_1);
   SymbLayer_ptr model_layer_2 = SymbTable_get_layer(self->st, MODEL_LAYER_2);
 
+  FsmBuilder_ptr builder = FSM_BUILDER(NuSMVEnv_get_value(env, ENV_FSM_BUILDER));
 
 
    /*NEW_CODE_START*/
@@ -1056,7 +1056,7 @@ static GameGameFsms_ptr game_construct_game_fsms(NuSMVEnv_ptr env,
                                   set1,
                                   set2);
 
-  fsms->bdd = Game_CreateGameBddFsm(global_fsm_builder,
+  fsms->bdd = Game_CreateGameBddFsm(builder,
                                     self->bdd_enc,
                                     fsms->sexp,
                                     model_layer_1,
@@ -2183,7 +2183,8 @@ static void game_compute_core_using_parameters(NuSMVEnv_ptr env,
   nusmv_assert(GAME_BDD_FSM(NULL) == PropGame_get_game_bdd_fsm(self->prop));
 
   /* only gen-reactivity is implemented */
-  Game_ComputeGenReactivity(Prop_get_expr_core(PROP(self->prop)),
+  Game_ComputeGenReactivity(env,
+                            Prop_get_expr_core(PROP(self->prop)),
                             self->player,
                             fsm->bdd,
                             /* It seems that GAME_INIT_TERM_CONJUNCT
@@ -2719,7 +2720,8 @@ static boolean game_minimize_players_constraints(
           /* create all the necessary FSMs */
           GameGameFsms_ptr new_fsm = game_construct_game_fsms(env,self);
 
-          boolean newReal = Game_ComputeGenReactivity(property,
+          boolean newReal = Game_ComputeGenReactivity(env,
+                                                      property,
                                                       self->player,
                                                       new_fsm->bdd,
                         /* for a realizable game win-states are exact
@@ -3073,7 +3075,8 @@ static void game_compute_core_switching_constraints(
   /* create all the necessary FSMs */
   fsm = game_construct_game_fsms(env,self);
 
-  realizable = Game_ComputeGenReactivity(spec,
+  realizable = Game_ComputeGenReactivity(env,
+                                         spec,
                                          self->player,
                                          fsm->bdd,
                                          /* NONE is used to obtain
@@ -3129,7 +3132,8 @@ static void game_compute_core_switching_constraints(
       fsm = game_construct_game_fsms(env,self);
 
       bdd_ptr tmp = winningStates;
-      realizable2 = Game_ComputeGenReactivity(spec,
+      realizable2 = Game_ComputeGenReactivity(env,
+                                              spec,
                                               self->player,
                                               fsm->bdd,
                                               /* NONE is used to
