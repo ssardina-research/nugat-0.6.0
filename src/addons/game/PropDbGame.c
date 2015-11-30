@@ -320,12 +320,12 @@ void PropDbGame_print_all_type_player_status(const PropDbGame_ptr self,
 
 ******************************************************************************/
 GameSexpFsm_ptr
-PropDbGame_master_get_game_scalar_sexp_fsm(const NuSMVEnv_ptr env,const PropDbGame_ptr self)
+PropDbGame_master_get_game_scalar_sexp_fsm(const PropDbGame_ptr self)
 {
   PropGame_ptr prop;
 
   PROP_DB_GAME_CHECK_INSTANCE(self);
-  prop = PROP_GAME(NuSMVEnv_get_value(env, ENV_PROP_DB));
+  prop = PROP_GAME(PropDb_get_prop_at_index(PROP_DB(self),0));
   PROP_GAME_CHECK_INSTANCE(prop);
   nusmv_assert(PropGame_type_is_game_or_notype(Prop_get_type(PROP(prop))));
 
@@ -344,13 +344,12 @@ PropDbGame_master_get_game_scalar_sexp_fsm(const NuSMVEnv_ptr env,const PropDbGa
   SeeAlso     [ ]
 
 ******************************************************************************/
-void PropDbGame_master_set_game_scalar_sexp_fsm(const NuSMVEnv_ptr env, PropDbGame_ptr self,
-                                                GameSexpFsm_ptr fsm)
+void PropDbGame_master_set_game_scalar_sexp_fsm(PropDbGame_ptr self,GameSexpFsm_ptr fsm)
 {
   PropGame_ptr prop;
 
   PROP_DB_GAME_CHECK_INSTANCE(self);
-  prop = PROP_GAME(NuSMVEnv_get_value(env, ENV_SEXP_FSM));
+  prop = PROP_GAME(PropDb_get_prop_at_index(PROP_DB(self),0));
   PROP_GAME_CHECK_INSTANCE(prop);
   nusmv_assert(PropGame_type_is_game_or_notype(Prop_get_type(PROP(prop))));
 
@@ -369,12 +368,12 @@ void PropDbGame_master_set_game_scalar_sexp_fsm(const NuSMVEnv_ptr env, PropDbGa
 
 ******************************************************************************/
 GameSexpFsm_ptr
-PropDbGame_master_get_game_bool_sexp_fsm(const NuSMVEnv_ptr env, const PropDbGame_ptr self)
+PropDbGame_master_get_game_bool_sexp_fsm(const PropDbGame_ptr self)
 {
   PropGame_ptr prop;
 
   PROP_DB_GAME_CHECK_INSTANCE(self);
-  prop = PROP_GAME(NuSMVEnv_get_value(env, ENV_PROP_DB));
+  prop = PROP_GAME(PropDb_get_prop_at_index(PROP_DB(self),0));
   PROP_GAME_CHECK_INSTANCE(prop);
   nusmv_assert(PropGame_type_is_game_or_notype(Prop_get_type(PROP(prop))));
 
@@ -394,14 +393,12 @@ PropDbGame_master_get_game_bool_sexp_fsm(const NuSMVEnv_ptr env, const PropDbGam
   SeeAlso     [ ]
 
 ******************************************************************************/
-void PropDbGame_master_set_game_bool_sexp_fsm(const NuSMVEnv_ptr env,
-                                              PropDbGame_ptr self,
-                                              GameSexpFsm_ptr fsm)
+void PropDbGame_master_set_game_bool_sexp_fsm(PropDbGame_ptr self,GameSexpFsm_ptr fsm)
 {
   PropGame_ptr prop;
 
   PROP_DB_GAME_CHECK_INSTANCE(self);
-  prop = PROP_GAME(NuSMVEnv_get_value(env, ENV_PROP_DB));
+  prop = PROP_GAME(PropDb_get_prop_at_index(PROP_DB(self),0));
   PROP_GAME_CHECK_INSTANCE(prop);
   nusmv_assert(PropGame_type_is_game_or_notype(Prop_get_type(PROP(prop))));
 
@@ -419,12 +416,12 @@ void PropDbGame_master_set_game_bool_sexp_fsm(const NuSMVEnv_ptr env,
   SeeAlso     [ ]
 
 ******************************************************************************/
-GameBddFsm_ptr PropDbGame_master_get_game_bdd_fsm(const NuSMVEnv_ptr env,const PropDbGame_ptr self)
+GameBddFsm_ptr PropDbGame_master_get_game_bdd_fsm(const PropDbGame_ptr self)
 {
   PropGame_ptr prop;
 
   PROP_DB_GAME_CHECK_INSTANCE(self);
-  prop = PROP_GAME(NuSMVEnv_get_value(env, ENV_PROP_DB));
+  prop = PROP_GAME(PropDb_get_prop_at_index(PROP_DB(self),0));
   PROP_GAME_CHECK_INSTANCE(prop);
   nusmv_assert(PropGame_type_is_game_or_notype(Prop_get_type(PROP(prop))));
 
@@ -443,13 +440,12 @@ GameBddFsm_ptr PropDbGame_master_get_game_bdd_fsm(const NuSMVEnv_ptr env,const P
   SeeAlso     [ ]
 
 ******************************************************************************/
-void PropDbGame_master_set_game_bdd_fsm(PropDbGame_ptr self,
-                                        GameBddFsm_ptr fsm)
+void PropDbGame_master_set_game_bdd_fsm(PropDbGame_ptr self,GameBddFsm_ptr fsm)
 {
   PropGame_ptr prop;
 
   PROP_DB_GAME_CHECK_INSTANCE(self);
-  prop = PROP_GAME(PROP_DB(self));
+  prop = PROP_GAME(PropDb_get_prop_at_index(PROP_DB(self),0));
   PROP_GAME_CHECK_INSTANCE(prop);
   nusmv_assert(PropGame_type_is_game_or_notype(Prop_get_type(PROP(prop))));
 
@@ -472,7 +468,7 @@ GameBeFsm_ptr PropDbGame_master_get_game_be_fsm(const PropDbGame_ptr self)
   PropGame_ptr prop;
 
   PROP_DB_GAME_CHECK_INSTANCE(self);
-  prop = PROP_GAME(PROP_DB(self));
+  prop = PROP_GAME(PropDb_get_prop_at_index(PROP_DB(self),0));
   PROP_GAME_CHECK_INSTANCE(prop);
   nusmv_assert(PropGame_type_is_game_or_notype(Prop_get_type(PROP(prop))));
 
@@ -496,7 +492,7 @@ void PropDbGame_master_set_game_be_fsm(PropDbGame_ptr self, GameBeFsm_ptr fsm)
   PropGame_ptr prop;
 
   PROP_DB_GAME_CHECK_INSTANCE(self);
-  prop = PROP_GAME(PROP_DB(self));
+  prop = PROP_GAME(PropDb_get_prop_at_index(PROP_DB(self),0));
   PROP_GAME_CHECK_INSTANCE(prop);
   nusmv_assert(PropGame_type_is_game_or_notype(Prop_get_type(PROP(prop))));
 
@@ -525,10 +521,20 @@ void prop_db_game_init(PropDbGame_ptr self,const NuSMVEnv_ptr env)
   /* base class initialization */
   prop_db_init(PROP_DB(self),env);
 
+    /* Members initialization. Here: just replace master with a game
+     property. */
+    //Prop_destroy(PropDb_get_prop_at_index(PROP_DB(self),0));
+    //PropDb_add(PROP_DB(self),PROP(Prop_create(env)));
+
   /* virtual methods settings */
   OVERRIDE(Object, finalize) = prop_db_game_finalize;
   OVERRIDE(PropDb, prop_create_and_add) =
     (PropDb_prop_create_and_add_method) prop_db_game_prop_create_and_add;
+
+  /*OVERRIDE(PropDb, set_fsm_to_master) =
+        (PropDb_set_fsm_to_master_method) prop_db_game_set_fsm_to_master;*/
+
+  //prop_db_game_set_fsm_to_master(self,PROP_GAME((self))); //TODO
 
   OVERRIDE(PropDb, verify_all) =
     (PropDb_verify_all_method) prop_db_game_verify_all;
@@ -638,18 +644,12 @@ void prop_db_game_set_fsm_to_master(PropDbGame_ptr self, PropGame_ptr prop)
   PROP_DB_GAME_CHECK_INSTANCE(self);
   PROP_GAME_CHECK_INSTANCE(prop);
 
-  const NuSMVEnv_ptr env = EnvObject_get_environment(ENV_OBJECT(self));
-
   nusmv_assert(PropGame_type_is_game(Prop_get_type(PROP(prop))));
 
-  PropGame_set_game_scalar_sexp_fsm(prop,GAME_SEXP_FSM(NuSMVEnv_get_value(env, ENV_SEXP_FSM)));
-                              //PropDbGame_master_get_game_scalar_sexp_fsm(env,self));
-  PropGame_set_game_bool_sexp_fsm(prop,GAME_SEXP_FSM(NuSMVEnv_get_value(env, ENV_BOOL_FSM)));
-                                //PropDbGame_master_get_game_bool_sexp_fsm(env,self));
-  PropGame_set_game_bdd_fsm(prop, GAME_BDD_FSM(NuSMVEnv_get_value(env, ENV_BDD_FSM)));
-    //PropDbGame_master_get_game_bdd_fsm(env,self));
-  PropGame_set_game_be_fsm(prop, GAME_BE_FSM(NuSMVEnv_get_value(env, ENV_BE_FSM)));
-    //PropDbGame_master_get_game_be_fsm(self));
+    PropGame_set_game_scalar_sexp_fsm(prop,PropDbGame_master_get_game_scalar_sexp_fsm(self));
+    PropGame_set_game_bool_sexp_fsm(prop,PropDbGame_master_get_game_bool_sexp_fsm(self));
+    PropGame_set_game_bdd_fsm(prop, PropDbGame_master_get_game_bdd_fsm(self));
+    PropGame_set_game_be_fsm(prop, PropDbGame_master_get_game_be_fsm(self));
 }
 
 /**Function********************************************************************

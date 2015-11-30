@@ -1934,11 +1934,9 @@ static int CommandGamePrintUsage(NuSMVEnv_ptr env,int argc, char **argv)
             "--------------------\n");
 
     pdb = PROP_DB_GAME(prop_db);
-//    if (PropDbGame_master_get_game_bdd_fsm(env,pdb) != GAME_BDD_FSM(NULL)) {
-    if (!NuSMVEnv_has_value(env, ENV_BDD_FSM)){
+    if (PropDbGame_master_get_game_bdd_fsm(pdb) != GAME_BDD_FSM(NULL)) {
 
-        //GameBddFsm_print_info(PropDbGame_master_get_game_bdd_fsm(env,pdb), stdout);
-        GameBddFsm_print_info(GAME_BDD_FSM(NuSMVEnv_get_value(env, ENV_BDD_FSM)), stdout);
+        GameBddFsm_print_info(PropDbGame_master_get_game_bdd_fsm(pdb), stdout);
     }
 
     return 0;

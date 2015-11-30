@@ -105,9 +105,7 @@ EXTERN int nusmv_yylineno;
 ******************************************************************************/
 void Game_CommandBuildFlatModel(NuSMVEnv_ptr env)
 {
-  //if (GAME_SEXP_FSM(NULL) == PropDbGame_master_get_game_scalar_sexp_fsm(env, \
-                                   PROP_DB_GAME(NuSMVEnv_get_value(env, ENV_PROP_DB)))) {
-    if (!NuSMVEnv_has_value(env, ENV_SEXP_FSM)){
+  if (GAME_SEXP_FSM(NULL) == PropDbGame_master_get_game_scalar_sexp_fsm(PROP_DB_GAME(NuSMVEnv_get_value(env, ENV_PROP_DB)))) {
 
     SymbTable_ptr st;
     SymbLayer_ptr model_layer_1;
@@ -153,9 +151,7 @@ void Game_CommandBuildFlatModel(NuSMVEnv_ptr env)
                          set1,
                          set2);
 
-    NuSMVEnv_set_value(env, ENV_SEXP_FSM, scalar_fsm);
-//    PropDbGame_master_set_game_scalar_sexp_fsm( env, \
-//                         PROP_DB_GAME(NuSMVEnv_get_value(env, ENV_PROP_DB)), scalar_fsm);
+    PropDbGame_master_set_game_scalar_sexp_fsm(PROP_DB_GAME(NuSMVEnv_get_value(env, ENV_PROP_DB)), scalar_fsm);
 
     Set_ReleaseSet(set2);
     Set_ReleaseSet(set1);
@@ -184,10 +180,7 @@ void Game_CommandBuildFlatModel(NuSMVEnv_ptr env)
 ******************************************************************************/
 void Game_CommandBuildBooleanModel(NuSMVEnv_ptr env)
 {
-  //if (GAME_SEXP_FSM(NULL) == PropDbGame_master_get_game_bool_sexp_fsm(env, \
-                                   PROP_DB_GAME(NuSMVEnv_get_value(env, ENV_PROP_DB)))) {
-
-    if (!NuSMVEnv_has_value(env, ENV_BOOL_FSM)){
+  if (GAME_SEXP_FSM(NULL) == PropDbGame_master_get_game_bool_sexp_fsm(PROP_DB_GAME(NuSMVEnv_get_value(env, ENV_PROP_DB)))) {
 
     GameSexpFsm_ptr scalar_fsm;
     GameSexpFsm_ptr bool_fsm;
@@ -219,16 +212,14 @@ void Game_CommandBuildBooleanModel(NuSMVEnv_ptr env)
                                             SYMB_LAYER_POS_BOTTOM);
 
     /* convert existing scalar FSM to the boolean FSM */
-    scalar_fsm = GAME_SEXP_FSM(NuSMVEnv_get_value(env, ENV_SEXP_FSM)); //PropDbGame_master_get_game_scalar_sexp_fsm(env, \
-                                     PROP_DB_GAME(NuSMVEnv_get_value(env, ENV_PROP_DB)));
+    scalar_fsm = PropDbGame_master_get_game_scalar_sexp_fsm(PROP_DB_GAME(NuSMVEnv_get_value(env, ENV_PROP_DB)));
 
     bool_fsm = GameSexpFsm_scalar_to_boolean(scalar_fsm,
                                              bdd_enc,
                                              determ_layer_1,
                                              determ_layer_2);
-    NuSMVEnv_set_value(env, ENV_BOOL_FSM, bool_fsm);
-//    PropDbGame_master_set_game_bool_sexp_fsm( env, \
-                           PROP_DB_GAME(NuSMVEnv_get_value(env, ENV_PROP_DB)), bool_fsm);
+
+    PropDbGame_master_set_game_bool_sexp_fsm( PROP_DB_GAME(NuSMVEnv_get_value(env, ENV_PROP_DB)), bool_fsm);
 
     /* commits layers to the encodings */
     BaseEnc_commit_layer(BASE_ENC(bool_enc),
@@ -291,9 +282,10 @@ void Game_CommandBuildBooleanModel(NuSMVEnv_ptr env)
 ******************************************************************************/
 void Game_CommandBuildBddModel(NuSMVEnv_ptr env)
 {
+  PropDbGame_ptr propDbGame = PROP_DB_GAME(NuSMVEnv_get_value(env, ENV_PROP_DB));
+
   SymbTable_ptr st = SYMB_TABLE(NuSMVEnv_get_value(env, ENV_SYMB_TABLE));
-  GameSexpFsm_ptr scalar_fsm = GAME_SEXP_FSM(NuSMVEnv_get_value(env, ENV_SEXP_FSM)); //PropDbGame_master_get_game_scalar_sexp_fsm(env, \
-                                     PROP_DB_GAME(NuSMVEnv_get_value(env, ENV_PROP_DB)));
+  GameSexpFsm_ptr scalar_fsm = PropDbGame_master_get_game_scalar_sexp_fsm(propDbGame);
   OptsHandler_ptr opts = OPTS_HANDLER(NuSMVEnv_get_value(env, ENV_OPTS_HANDLER));
   FsmBuilder_ptr builder = FSM_BUILDER(NuSMVEnv_get_value(env, ENV_FSM_BUILDER));
   BddEnc_ptr bdd_enc = BDD_ENC(NuSMVEnv_get_value(env, ENV_BDD_ENCODER));
@@ -305,9 +297,8 @@ void Game_CommandBuildBddModel(NuSMVEnv_ptr env)
                           SymbTable_get_layer(st, MODEL_LAYER_1),
                           SymbTable_get_layer(st, MODEL_LAYER_2),
                           get_partition_method(opts));
-    NuSMVEnv_set_value(env, ENV_BDD_FSM, bdd_fsm);
-//  PropDbGame_master_set_game_bdd_fsm(PROP_DB_GAME(NuSMVEnv_get_value(env, ENV_PROP_DB)),
-//                                     bdd_fsm);
+
+    PropDbGame_master_set_game_bdd_fsm(propDbGame,bdd_fsm);
 }
 
 /**Function********************************************************************

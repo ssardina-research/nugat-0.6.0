@@ -135,22 +135,20 @@ EXTERN void PropDbGame_print_all_type_player_status ARGS((PropDbGame_ptr self,
 
 /* Master's FSMs getters: */
 EXTERN GameSexpFsm_ptr
-PropDbGame_master_get_game_scalar_sexp_fsm ARGS((const NuSMVEnv_ptr env,const PropDbGame_ptr self));
+PropDbGame_master_get_game_scalar_sexp_fsm ARGS((const PropDbGame_ptr self));
 EXTERN GameSexpFsm_ptr
-PropDbGame_master_get_game_bool_sexp_fsm ARGS((const NuSMVEnv_ptr env,const PropDbGame_ptr self));
+PropDbGame_master_get_game_bool_sexp_fsm ARGS((const PropDbGame_ptr self));
 EXTERN GameBddFsm_ptr
-PropDbGame_master_get_game_bdd_fsm ARGS((const NuSMVEnv_ptr env,const PropDbGame_ptr self));
+PropDbGame_master_get_game_bdd_fsm ARGS((const PropDbGame_ptr self));
 EXTERN GameBeFsm_ptr
 PropDbGame_master_get_game_be_fsm ARGS((const PropDbGame_ptr self));
 
 /* Master's FSMs setters: */
 EXTERN void
-PropDbGame_master_set_game_scalar_sexp_fsm ARGS((const NuSMVEnv_ptr env,
-                                                 PropDbGame_ptr self,
+PropDbGame_master_set_game_scalar_sexp_fsm ARGS((PropDbGame_ptr self,
                                                  GameSexpFsm_ptr fsm));
 EXTERN void
-PropDbGame_master_set_game_bool_sexp_fsm ARGS((const NuSMVEnv_ptr env,
-                                               PropDbGame_ptr self,
+PropDbGame_master_set_game_bool_sexp_fsm ARGS((PropDbGame_ptr self,
                                                GameSexpFsm_ptr fsm));
 EXTERN void
 PropDbGame_master_set_game_bdd_fsm ARGS((PropDbGame_ptr self,

@@ -450,7 +450,7 @@ Lorenzo Dibenedetto - lorenzodibenedetto90@gmail.com , Sebastian Sardina - ssard
         
     2.error: ‘struct PropDb_TAG’ has no member named ‘master’ "prop = PROP_GAME(PROP_DB(self)->master);" 
     
-        *   removed all instruction with 'master' because there are 2 new functions 'game_pkg_switch_to_prop_db' and 'game_pkg_switch_to_prop_db_game'
+        *   replaced 'PROP_DB(self)->master' with 'PropDb_get_prop_at_index(PROP_DB(self),0)'
         *   removed 'OVERRIDE(PropDb, set_fsm_to_master) = (PropDb_set_fsm_to_master_method) prop_db_game_set_fsm_to_master;'
                 
     3.missing parameter
@@ -741,12 +741,7 @@ Lorenzo Dibenedetto - lorenzodibenedetto90@gmail.com , Sebastian Sardina - ssard
 
     5.PropDbGame.c:330: PropDbGame_master_get_game_scalar_sexp_fsm: Assertion `PropGame_type_is_game_or_notype(Prop_get_type(((Prop_ptr) prop)))'
     
-    *   replaced 
-            'if (GAME_SEXP_FSM(NULL) == PropDbGame_master_get_game_scalar_sexp_fsm(PROP_DB_GAME(PropPkg_get_prop_database())))' 
-                with 'if (!NuSMVEnv_has_value(env, ENV_SEXP_FSM))'
-            'PropDbGame_master_set_game_scalar_sexp_fsm( env,PROP_DB_GAME(NuSMVEnv_get_value(env, ENV_PROP_DB)), scalar_fsm);' 
-                with 'NuSMVEnv_set_value(env, ENV_SEXP_FSM, scalar_fsm);'
-            and others with 'BOOL' and 'BDD', commented previous lines for testing
+    *   replaced 'PropPkg_get_prop_database' with NuSMVEnv_get_value(env, ENV_PROP_DB)
 -----------------------------------------------------------------------------------------------------------------   
  
 
