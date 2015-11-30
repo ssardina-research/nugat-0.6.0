@@ -395,7 +395,7 @@ Game_RealizabilityStatus Game_UseStrongReachabilityAlgorithm(NuSMVEnv_ptr env, P
   {
     /* init is zero */
     if (bdd_is_false(dd_manager, init_1) || bdd_is_false(dd_manager, init_2)) {
-      fprintf(nusmv_stderr, "\n********   WARNING   ********\n"
+      fprintf(stderr, "\n********   WARNING   ********\n"
               "Initial states set for %s is empty.\n"
               "******** END WARNING ********\n",
               bdd_is_false(dd_manager, init_1) ? PLAYER_NAME_1 : PLAYER_NAME_2);
@@ -406,14 +406,14 @@ Game_RealizabilityStatus Game_UseStrongReachabilityAlgorithm(NuSMVEnv_ptr env, P
     if ((PropGame_ReachTarget == Prop_get_type(PROP(prop))
          || PropGame_AvoidTarget == Prop_get_type(PROP(prop)))
         && bdd_is_false(dd_manager, originalTarget)) {
-      fprintf(nusmv_stderr, "\n********   WARNING   ********\n"
+      fprintf(stderr, "\n********   WARNING   ********\n"
               "The target states set is empty.\n"
               "******** END WARNING ********\n");
       /* continue the check because deadlock state may allow to win */
     }
     /* target is reached at step zero */
     if (isTargetReached) {
-      fprintf(nusmv_stderr, "\n********   WARNING   ********\n"
+      fprintf(stderr, "\n********   WARNING   ********\n"
               "The target states are reached at step 0.\n"
               "Probably this is not what was intended.\n"
               "******** END WARNING ********\n");
@@ -428,7 +428,7 @@ Game_RealizabilityStatus Game_UseStrongReachabilityAlgorithm(NuSMVEnv_ptr env, P
     bdd_ptr previousReachStates = bdd_dup(allReachStates);
 
     if(opt_verbose_level_gt(oh, 0)) {
-      fprintf(nusmv_stdout, "\n-----------------------------\n"
+      fprintf(stdout, "\n-----------------------------\n"
               "Reach-target algorithm: iteration %d\n", pathLength);
     }
 
@@ -462,7 +462,7 @@ Game_RealizabilityStatus Game_UseStrongReachabilityAlgorithm(NuSMVEnv_ptr env, P
 
   /* auxiliary info */
   if(opt_verbose_level_gt(oh, 0)) {
-    fprintf(nusmv_stdout,
+    fprintf(stdout,
             "The number of iterations for strategy computation is %d.\n",
             pathLength);
   }

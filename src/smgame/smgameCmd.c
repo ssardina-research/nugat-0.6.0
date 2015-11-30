@@ -170,7 +170,7 @@ static int CommandGameReset(NuSMVEnv_ptr env,int argc, char ** argv)
 
 static int UsageGameReset()
 {
-  fprintf(nusmv_stderr, "usage: reset [-h]\n");
-  fprintf(nusmv_stderr, "   -h \t\tPrints the command usage.\n");
+  fprintf(stderr, "usage: reset [-h]\n");
+  fprintf(stderr, "   -h \t\tPrints the command usage.\n");
   return 1;
 }

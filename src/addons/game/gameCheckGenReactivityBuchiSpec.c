@@ -483,7 +483,7 @@ static void game_declare_special_var(NuSMVEnv_ptr env,
   *new_layer = layer;
 
   if(opt_verbose_level_gt(opts, 0)) {
-    fprintf(nusmv_stdout, "\n -- VAR %s : 0 .. %d;", name, guaranteeNumber - 1);
+    fprintf(stdout, "\n -- VAR %s : 0 .. %d;", name, guaranteeNumber - 1);
   }
 
   return;
@@ -675,7 +675,7 @@ static boolean game_compute_gen_reactivity(NuSMVEnv_ptr env,
         bdd_and_accumulate(dd_manager, &((*constraints)[i]), invar_2);
 
         if (bdd_is_false(dd_manager, (*constraints)[i])) {
-          fprintf(nusmv_stderr,
+          fprintf(stderr,
                   "\n********   WARNING   ********\n"
                   "An %s condition is false.\n"
                   "Probably this is not what was intended.\n",
@@ -692,7 +692,7 @@ static boolean game_compute_gen_reactivity(NuSMVEnv_ptr env,
           i = 1; /* to terminate internal loop */
         }
         else if (bdd_is_true(dd_manager, (*constraints)[i])) {
-          fprintf(nusmv_stderr,
+          fprintf(stderr,
                   "\n********   WARNING   ********\n"
                   "An %s condition is true.\n"
                   "Probably this is not what was intended.\n",
@@ -728,7 +728,7 @@ static boolean game_compute_gen_reactivity(NuSMVEnv_ptr env,
   /* Check whether an initial condition is zero and print a
      corresponding warning. */
   if (bdd_is_false(dd_manager, init_1) || bdd_is_false(dd_manager, init_2)) {
-    fprintf(nusmv_stderr,
+    fprintf(stderr,
             "\n********   WARNING   ********\n"
             "Initial states set for %s is empty.\n"
             "******** END WARNING ********\n",
@@ -750,7 +750,7 @@ static boolean game_compute_gen_reactivity(NuSMVEnv_ptr env,
   */
   Z = bdd_dup(overapproxWinStates);
 
-//fprintf(nusmv_stderr,
+//fprintf(stderr,
 //        "Init Time : %f\n", (util_cpu_time() - time_tmp)/(double)1000);
 //time_init_check = util_cpu_time();
   /* Earlier termination.  earlierTermination controls how the check
@@ -792,14 +792,14 @@ static boolean game_compute_gen_reactivity(NuSMVEnv_ptr env,
   while (!isZFixpointReached && isRealizable) {
     /* --- Z least fix point loop */
     if (opt_verbose_level_gt(oh, 0)) {
-      fprintf(nusmv_stderr, "Z loop begin\n\n");
+      fprintf(stderr, "Z loop begin\n\n");
     }
     int j;
     bdd_ptr previousZ = bdd_dup(Z);
 
     for (j = 0; j < guaranteesN; ++j) {/* --- loop over guarantees */
       if (opt_verbose_level_gt(oh, 0)) {
-        fprintf(nusmv_stderr, "  guarantee number %d \n", j);
+        fprintf(stderr, "  guarantee number %d \n", j);
       }
 
       /* It may be worth to make initial value of Y = initial value of
@@ -864,7 +864,7 @@ static boolean game_compute_gen_reactivity(NuSMVEnv_ptr env,
             ++xIterations;
           } /* while !isXFixpointReached */
           if (opt_verbose_level_gt(oh, 0)) {
-            fprintf(nusmv_stderr,
+            fprintf(stderr,
                     "X fixpoint for assumption %d required %d iterations\n",
                     i,
                     xIterations);
@@ -892,7 +892,7 @@ static boolean game_compute_gen_reactivity(NuSMVEnv_ptr env,
         if (previousY == Y) {
           isYFixpointReached = true; /* fixpoint is reached */
           if (opt_verbose_level_gt(oh, 0)) {
-            fprintf(nusmv_stderr, "FIXpoint on Y\n");
+            fprintf(stderr, "FIXpoint on Y\n");
           }
         }
         /* additional check -- earlier termination. Y cannot be > Z.
@@ -906,7 +906,7 @@ static boolean game_compute_gen_reactivity(NuSMVEnv_ptr env,
         */
         else if (Y == Z) {
           if (opt_verbose_level_gt(oh, 0)) {
-            fprintf(nusmv_stderr, "Y reached Z\n");
+            fprintf(stderr, "Y reached Z\n");
           }
           bdd_ptr* newXArray;
           int i;
@@ -934,7 +934,7 @@ static boolean game_compute_gen_reactivity(NuSMVEnv_ptr env,
     } /* for j = 1 ... */
 
     if(opt_verbose_level_gt(oh, 3)) {
-      fprintf(nusmv_stdout,
+      fprintf(stdout,
               "\n --- Gen-Reactive. end of external loop interation\n");
     }
 
@@ -994,7 +994,7 @@ static boolean game_compute_gen_reactivity(NuSMVEnv_ptr env,
   } /* while !zFixpointReached && isRealizable) */
 
   if (opt_verbose_level_gt(oh, 0)) {
-    fprintf(nusmv_stderr,
+    fprintf(stderr,
             "\nNUMBER OF ITERATIONS. Z = %d, Y = %d, X = %d\n\n",
             totalZIterations,
             totalYIterations,
@@ -1013,13 +1013,13 @@ static boolean game_compute_gen_reactivity(NuSMVEnv_ptr env,
                                      opt_game_game_initial_condition(oh));
    }
    //time_init_check = util_cpu_time() - time_init_check;
-   //fprintf(nusmv_stderr, "Loop Time : %f\n",
+   //fprintf(stderr, "Loop Time : %f\n",
    //        (util_cpu_time() - time_tmp - time_init_check)/(double)1000);
-   //fprintf(nusmv_stderr,
+   //fprintf(stderr,
    //        "Init-check Time : %f\n", time_init_check/(double)1000);
 
   if(opt_verbose_level_gt(oh, 1)) {
-    fprintf(nusmv_stdout, "\n --- Gen-Reactive spec has been computed\n");
+    fprintf(stdout, "\n --- Gen-Reactive spec has been computed\n");
   }
 
   {
@@ -1199,7 +1199,7 @@ static boolean game_compute_gen_reactivity(NuSMVEnv_ptr env,
          GR(1) games see, e.g.: R. Koenighofer, G. Hofferek, R. Bloem:
          Debugging Formal Specifications Using Simple
          Counterstrategies. FMCAD'09 */
-      fprintf(nusmv_stderr,
+      fprintf(stderr,
               "\n********   WARNING   ********\n"
               "Computation of a strategy for an opponent in an unrealizable "
               "Reactivity(1) Game\n"
@@ -1349,7 +1349,7 @@ static boolean game_compute_buchi_game(NuSMVEnv_ptr env,
     int i;
     /* init is zero */
     if (bdd_is_false(dd_manager, init_1) || bdd_is_false(dd_manager, init_2)) {
-      fprintf(nusmv_stderr, "\n********   WARNING   ********\n"
+      fprintf(stderr, "\n********   WARNING   ********\n"
               "Initial states set for %s is empty.\n"
               "******** END WARNING ********\n",
               bdd_is_false(dd_manager, init_1) ? PLAYER_NAME_1 : PLAYER_NAME_2);
@@ -1361,7 +1361,7 @@ static boolean game_compute_buchi_game(NuSMVEnv_ptr env,
     for (i = 0; i < buchiConditionsN; ++i) {
       if (bdd_is_false(dd_manager, buchiConditions[i]) ||
           bdd_is_false(dd_manager, buchiConditions[i])) {
-        fprintf(nusmv_stderr, "\n********   WARNING   ********\n"
+        fprintf(stderr, "\n********   WARNING   ********\n"
                 "A Buchi condition is %s.\n"
                 "Probably this is not what was intended.\n"
                 "******** END WARNING ********\n",
@@ -1459,7 +1459,7 @@ static boolean game_compute_buchi_game(NuSMVEnv_ptr env,
     } /* for j = 1 ... */
 
     if(opt_verbose_level_gt(opt, 3)) {
-      fprintf(nusmv_stdout,
+      fprintf(stdout,
               "\n --- Buchi-Game. end of external loop interation\n");
     }
 
@@ -1481,7 +1481,7 @@ static boolean game_compute_buchi_game(NuSMVEnv_ptr env,
   } /* while !zFixpointReached && isRealizable */
 
   if(opt_verbose_level_gt(opt, 1)) {
-    fprintf(nusmv_stdout, "\n --- Buchi-Game spec has been computed\n");
+    fprintf(stdout, "\n --- Buchi-Game spec has been computed\n");
   }
 
   /*-----------------------------------------------------------------------*/
@@ -1585,7 +1585,7 @@ static boolean game_compute_buchi_game(NuSMVEnv_ptr env,
 
     /* the game is unrealizable => compute the strategy for the opponent */
     else {
-      fprintf(nusmv_stderr, "\n********   WARNING   ********\n"
+      fprintf(stderr, "\n********   WARNING   ********\n"
               "Computation of a strategy for an opponent in an unrealizable "
               "Buchi Game\n"
               "is not implemented yet.\n"

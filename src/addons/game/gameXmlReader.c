@@ -300,7 +300,7 @@ int Game_RatFileToGame(NuSMVEnv_ptr env,const char *filename)
   OptsHandler_ptr opts = OPTS_HANDLER(NuSMVEnv_get_value(env, ENV_OPTS_HANDLER));
 
   if (cmp_struct_get_read_model(cmps)) {
-    fprintf(nusmv_stderr,
+    fprintf(stderr,
             "A model appears to be already read from file: %s.\n",
             get_input_file(opts));
     return(1);
@@ -377,12 +377,12 @@ int Game_RatFileToGame(NuSMVEnv_ptr env,const char *filename)
     module1 = module2 = Nil;
 
 //     /* debugging printing */
-//   fprintf(nusmv_stderr, "\n--PARSED XML FILE:\n");
-//   fprintf(nusmv_stderr, "\n--ASSUMPTION:\n--");
+//   fprintf(stderr, "\n--PARSED XML FILE:\n");
+//   fprintf(stderr, "\n--ASSUMPTION:\n--");
 //   print_node(nusmv_stderr, parseResult->assumptions);
-//   fprintf(nusmv_stderr, "\n\n--GUARANTEES:\n--");
+//   fprintf(stderr, "\n\n--GUARANTEES:\n--");
 //   print_node(nusmv_stderr, parseResult->guarantees);
-//   fprintf(nusmv_stderr, "\n\n");
+//   fprintf(stderr, "\n\n");
 
     /* Divide each of the assumptions and guarantees on 3 sets, i.e.,
        initial condition (no temporal operators), transitions relation
@@ -446,22 +446,22 @@ int Game_RatFileToGame(NuSMVEnv_ptr env,const char *filename)
                                      Nil /*module list is empty*/)));
 
 //     /* debugging printing */
-//   fprintf(nusmv_stderr, "PARSED XML FILE:\nGAME\n\n");
-//   fprintf(nusmv_stderr, "PLAYER_1\nVAR ");
+//   fprintf(stderr, "PARSED XML FILE:\nGAME\n\n");
+//   fprintf(stderr, "PLAYER_1\nVAR ");
 //   print_sexp(nusmv_stderr, parseResult->input_vars);
-//   fprintf(nusmv_stderr, "\nINIT :\n");
+//   fprintf(stderr, "\nINIT :\n");
 //   print_node(nusmv_stderr, init1);
-//   fprintf(nusmv_stderr, "\nTRANS :\n");
+//   fprintf(stderr, "\nTRANS :\n");
 //   print_node(nusmv_stderr, trans1);
-//   fprintf(nusmv_stderr, "\n\nPLAYER_2\nVAR :\n");
+//   fprintf(stderr, "\n\nPLAYER_2\nVAR :\n");
 //   print_sexp(nusmv_stderr, parseResult->output_vars);
-//   fprintf(nusmv_stderr, "\nINIT:\n");
+//   fprintf(stderr, "\nINIT:\n");
 //   print_node(nusmv_stderr, init2);
-//   fprintf(nusmv_stderr, "\nTRANS:\n");
+//   fprintf(stderr, "\nTRANS:\n");
 //   print_node(nusmv_stderr, trans2);
-//   fprintf(nusmv_stderr, "\nPROPERTY:\n");
+//   fprintf(stderr, "\nPROPERTY:\n");
 //   print_node(nusmv_stderr, property);
-//   fprintf(nusmv_stderr, "\n\n");
+//   fprintf(stderr, "\n\n");
   }
 
 

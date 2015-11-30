@@ -434,15 +434,15 @@ void Game_CheckLtlGameSpecSF07(NuSMVEnv_ptr env,
 
   /* As in gameGeneral.c::Game_BeforeCheckingSpec. */
   if (opt_verbose_level_ge(opts, 1)) {
-    fprintf(nusmv_stderr, "computing ");
-    fprintf(nusmv_stderr, " ");
+    fprintf(stderr, "computing ");
+    fprintf(stderr, " ");
     Prop_print(PROP(cls->prop), (OStream_ptr)nusmv_stderr, PROP_PRINT_FMT_FORMULA);
-    fprintf(nusmv_stderr, "\n");
+    fprintf(stderr, "\n");
   }
 
   /* Some additional info. */
   if (opt_verbose_level_ge(opts, 2)) {
-    fprintf(nusmv_stderr,
+    fprintf(stderr,
        "\nwith Game_CheckLtlGameSpecSF07 using kmin = %d, kmax = %d, w = %s.\n",
             cls->kmin,
             cls->kmax,
@@ -489,19 +489,19 @@ void Game_CheckLtlGameSpecSF07(NuSMVEnv_ptr env,
 
   /* Announce result. */
   {
-    fprintf(nusmv_stdout, "-- ");
-    fprintf(nusmv_stdout, " ");
+    fprintf(stdout, "-- ");
+    fprintf(stdout, " ");
     Prop_print(PROP(prop), (OStream_ptr)nusmv_stdout, PROP_PRINT_FMT_FORMULA);
 
     switch (Prop_get_status(PROP(cls->prop))) {
     case Prop_True:
-      fprintf(nusmv_stdout, " : the strategy has been found\n");
+      fprintf(stdout, " : the strategy has been found\n");
       break;
     case Prop_False:
-      fprintf(nusmv_stdout, " : no strategy exists\n");
+      fprintf(stdout, " : no strategy exists\n");
       break;
     case Prop_Unchecked:
-      fprintf(nusmv_stdout, " : existence of a strategy is unknown\n");
+      fprintf(stdout, " : existence of a strategy is unknown\n");
       nusmv_assert(cls->strategy == GAME_STRATEGY(NULL));
       break;
     default:
@@ -524,7 +524,7 @@ void Game_CheckLtlGameSpecSF07(NuSMVEnv_ptr env,
     }
   }
 
-  fprintf(nusmv_stdout, "\n");
+  fprintf(stdout, "\n");
 
   /* Clean up. */
   if (Prop_get_status(PROP(cls->prop)) == Prop_True ||
@@ -847,7 +847,7 @@ static void Game_SF07_StructCheckLTLGameSF07_run_iteration
                                                     ltlgame_sf07_unique_number);
 
   if (opt_verbose_level_ge(opts, 2)) {
-    fprintf(nusmv_stderr,
+    fprintf(stderr,
             "\nGame_CheckLtlGameSpecSF07: performing iteration with curr_k = "
             "%d, curr_player = %d.\n\n",
             curr_k,
@@ -870,13 +870,13 @@ static void Game_SF07_StructCheckLTLGameSF07_run_iteration
     }
   }
   FAIL(errmgr) {
-    fprintf(nusmv_stderr,
+    fprintf(stderr,
             "Error executing an iteration of the sf07 algorithm.\n");
     ErrorMgr_nusmv_exit(errmgr,1);
   }
 
   if (opt_verbose_level_ge(opts, 2)) {
-    fprintf(nusmv_stderr,
+    fprintf(stderr,
             "\nGame_CheckLtlGameSpecSF07: finished iteration. Sub game is %s.\n",
             ((self->curr_goal_realizability == GAME_REALIZABLE) ?
              "realizable" :
@@ -962,7 +962,7 @@ static void Game_SF07_StructCheckLTLGameSF07_construct_ba
     if (NodeList_get_length(/*SymbLayer_get_all_symbols(det_layer)*/syms) != 0) {
       char* tmp;
       tmp = sprint_node(wffprint,formula);
-      fprintf(nusmv_stderr,
+      fprintf(stderr,
               "Error generating B\"uchi automaton for formula %s: "
               "booleanization introduced determinization variables.\n",
               tmp);
@@ -976,11 +976,11 @@ static void Game_SF07_StructCheckLTLGameSF07_construct_ba
 
     /* Log result. */
     if (opt_verbose_level_ge(opts, 4)) {
-      fprintf(nusmv_stderr,
+      fprintf(stderr,
               "\nGame_SF07_StructCheckLTLGameSF07_construct_ba: booleanized, "
               "nnfed formula is:\n");
       print_node(wffprint,nusmv_stderr, nnfed);
-      fprintf(nusmv_stderr,
+      fprintf(stderr,
               "\nGame_SF07_StructCheckLTLGameSF07_construct_ba: end "
               "booleanized, nnfed formula\n");
     }
@@ -991,7 +991,7 @@ static void Game_SF07_StructCheckLTLGameSF07_construct_ba
   if (ba == GAME_SF07_GBA(NULL)) {
     char* tmp;
     tmp = sprint_node(wffprint,formula);
-    fprintf(nusmv_stderr,
+    fprintf(stderr,
             "Error generating B\"uchi automaton for formula %s.\n",
             tmp);
     FREE(tmp);
@@ -1000,7 +1000,7 @@ static void Game_SF07_StructCheckLTLGameSF07_construct_ba
   if (Game_SF07_gba_get_fairness_constraints_count(ba) > 1) {
     char* tmp;
     tmp = sprint_node(wffprint,formula);
-    fprintf(nusmv_stderr,
+    fprintf(stderr,
             "Error generating B\"uchi automaton for formula %s: result has "
             "more than 1 fairness constraints.\n",
             tmp);
@@ -1186,14 +1186,14 @@ static void Game_SF07_StructCheckLTLGameSF07_construct_monitor_sexp
                        monitor);
 
     if (opt_verbose_level_ge(opts, 4)) {
-      fprintf(nusmv_stderr,
+      fprintf(stderr,
               "\nGame_SF07_StructCheckLTLGameSF07_construct_monitor_sexp: "
               "player 2 monitor is:\n");
       Game_SF07_StructCheckLTLGameSF07_print_monitor(wffprint,
                                                      nusmv_stderr,
                                                      monitor,
                                                      false);
-      fprintf(nusmv_stderr,
+      fprintf(stderr,
               "\nGame_SF07_StructCheckLTLGameSF07_construct_monitor_sexp: end "
               "player 2 monitor\n");
     }
@@ -1228,14 +1228,14 @@ static void Game_SF07_StructCheckLTLGameSF07_construct_monitor_sexp
                        Nil);
 
     if (opt_verbose_level_ge(opts, 4)) {
-      fprintf(nusmv_stderr,
+      fprintf(stderr,
               "\nGame_SF07_StructCheckLTLGameSF07_construct_monitor_sexp: "
               "player 1 monitor is:\n");
       Game_SF07_StructCheckLTLGameSF07_print_monitor(wffprint,
                                                      nusmv_stderr,
                                                      monitor,
                                                      false);
-      fprintf(nusmv_stderr,
+      fprintf(stderr,
               "\nGame_SF07_StructCheckLTLGameSF07_construct_monitor_sexp: end "
               "player 1 monitor\n");
     }
@@ -2105,10 +2105,10 @@ static void Game_SF07_StructCheckLTLGameSF07_check
 
   /* Log property. */
   if (opt_verbose_level_ge(opts, 4)) {
-    fprintf(nusmv_stderr,
+    fprintf(stderr,
             "\nGame_SF07_StructCheckLTLGameSF07_check: sub game goal is:\n");
     Prop_print(PROP(prop), (OStream_ptr)nusmv_stderr, PROP_PRINT_FMT_FORMULA);
-    fprintf(nusmv_stderr,
+    fprintf(stderr,
             "\nGame_SF07_StructCheckLTLGameSF07_check: end sub game goal\n");
   }
 

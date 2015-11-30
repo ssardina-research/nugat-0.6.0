@@ -742,6 +742,14 @@ Lorenzo Dibenedetto - lorenzodibenedetto90@gmail.com , Sebastian Sardina - ssard
     5.PropDbGame.c:330: PropDbGame_master_get_game_scalar_sexp_fsm: Assertion `PropGame_type_is_game_or_notype(Prop_get_type(((Prop_ptr) prop)))'
     
     *   replaced 'PropPkg_get_prop_database' with NuSMVEnv_get_value(env, ENV_PROP_DB)
+    
+    6.gameGeneral.c:185 : iofwrite.c: No such file or directory.
+    
+    *   replaced all 'nusmv_stdout' with 'stdout' and all 'nusmv_stderr' with 'stderr'  
+    
+    7.gameGeneral.c:133: Game_BeforeCheckingSpec: Assertion `((GameBddFsm_ptr) fsm) != ((GameBddFsm_ptr) ((void *)0))' failed.
+    
+    *   
 -----------------------------------------------------------------------------------------------------------------   
  
 

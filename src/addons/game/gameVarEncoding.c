@@ -112,7 +112,7 @@ int Game_CommandEncodeVariables(NuSMVEnv_ptr env, char* input_order_file_name)
   OptsHandler_ptr opts = OPTS_HANDLER(NuSMVEnv_get_value(env, ENV_OPTS_HANDLER));
 
   if (opt_verbose_level_gt(opts, 0)) {
-    fprintf(nusmv_stderr, "Building variables...");
+    fprintf(stderr, "Building variables...");
   }
 
   if (input_order_file_name != NIL(char)) {
@@ -152,7 +152,7 @@ int Game_CommandEncodeVariables(NuSMVEnv_ptr env, char* input_order_file_name)
   }
 
   if (opt_verbose_level_gt(opts, 0)) {
-    fprintf(nusmv_stderr, "...done\n");
+    fprintf(stderr, "...done\n");
   }
 
   return 0;

@@ -151,7 +151,7 @@ int Game_CommandFlattenHierarchy(NuSMVEnv_ptr env,boolean expand_bounded_arrays)
   int propErr;
 
   if (opt_verbose_level_gt(opts, 0)) {
-    fprintf(nusmv_stderr, "Flattening hierarchy...\n");
+    fprintf(stderr, "Flattening hierarchy...\n");
   }
 
   /* Initializes the flattener, that must be initialized *after* the
@@ -432,7 +432,7 @@ game_flatten_game_hierarchy(SymbTable_ptr symbol_table,
 
   if (FlatHierarchy_get_compassion(player_1) != Nil ||
       FlatHierarchy_get_compassion(player_2) != Nil) {
-    fprintf(nusmv_stdout,
+    fprintf(stdout,
          "WARNING *** The model contains COMPASSION declarations.        ***\n"
          "WARNING *** Full fairness is not yet fully supported in NuGaT. ***\n"
          "WARNING *** Currently, COMPASSION declarations are only        ***\n"

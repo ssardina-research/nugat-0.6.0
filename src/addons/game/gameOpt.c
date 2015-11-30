@@ -438,7 +438,7 @@ static boolean game_opt_check_initial_condition(OptsHandler_ptr opt,
   }
 
   FREE(val);
-  fprintf(nusmv_stderr,
+  fprintf(stderr,
           "Error: supplied an invalid interpretation of game initial "
           "conditions.\n"
           "Possible values: N, A and E.\n"

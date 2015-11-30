@@ -106,9 +106,9 @@ void Game_BeforeCheckingSpec(NuSMVEnv_ptr env,PropGame_ptr prop)
   PROP_GAME_CHECK_INSTANCE(prop);
 
   if (opt_verbose_level_gt(opts, 0)) {
-    fprintf(nusmv_stderr, "computing ");
+    fprintf(stderr, "computing ");
     game_print_prop_exp(nusmv_stderr, prop);
-    fprintf(nusmv_stderr, "\n");
+    fprintf(stderr, "\n");
   }
 
   if (opt_cone_of_influence(opts) == true) {
@@ -182,23 +182,23 @@ void Game_AfterCheckingSpec(NuSMVEnv_ptr env,
   has_params = ((gameParams_ptr) NULL != params);
 
   /* ----------  Print the result ----------- */
-  fprintf(nusmv_stdout, "-- ");
-  game_print_prop_exp(nusmv_stdout, prop);
+  fprintf(stdout, "-- ");
+  game_print_prop_exp(stdout, prop);
 
   /* strategy reached */
   switch (status) {
   case GAME_REALIZABLE:
     Prop_set_status(PROP(prop), Prop_True);
-    fprintf(nusmv_stdout, " : the strategy has been found\n");
+    fprintf(stdout, " : the strategy has been found\n");
     break;
   case GAME_UNREALIZABLE:
     Prop_set_status(PROP(prop), Prop_False);
-    fprintf(nusmv_stdout, " : no strategy exists\n");
+    fprintf(stdout, " : no strategy exists\n");
     break;
   case GAME_UNKNOWN:
     /* status should remain unknown */
     nusmv_assert(Prop_Unchecked == Prop_get_status(PROP(prop)));
-    fprintf(nusmv_stdout, " : existence of a strategy is unknown\n");
+    fprintf(stdout, " : existence of a strategy is unknown\n");
     break;
   default: ErrorMgr_internal_error(errmgr,"unknown status of a problem");
   }
@@ -251,7 +251,7 @@ void Game_AfterCheckingSpec(NuSMVEnv_ptr env,
         NodeList_ptr syms2;
         SymbLayer_gen_iter(dl2, &iter2, STT_ALL);
         syms2 = SymbLayer_iter_to_list(dl2, iter2);
-        fprintf(nusmv_stdout,"Hi\n");
+        fprintf(stdout,"Hi\n");
         nusmv_assert((dl1 == SYMB_LAYER(NULL)) ||
                      (NodeList_get_length(syms1) ==
                       0));
@@ -283,12 +283,12 @@ void Game_AfterCheckingSpec(NuSMVEnv_ptr env,
       /* free strategy */
       GameStrategy_destroy(strategy);
     } else {
-      fprintf(nusmv_stderr,
+      fprintf(stderr,
               "\nWarning: strategy printing requested, but strategy = NULL.\n");
     }
   }
 
-  fprintf(nusmv_stdout,"\n");
+  fprintf(stdout,"\n");
   return;
 }
 

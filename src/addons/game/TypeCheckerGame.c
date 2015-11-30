@@ -143,7 +143,7 @@ boolean TypeCheckerGame_check_property(TypeChecker_ptr self,
   if (opt_verbose_level_gt(opts, 3)) {
     if (isOK) {
       /* the property is not yet inserted to database => there is no index */
-      fprintf(nusmv_stderr, "Successful type-checking of a property\n");
+      fprintf(stderr, "Successful type-checking of a property\n");
     }
   }
 

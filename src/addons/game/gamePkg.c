@@ -147,7 +147,7 @@ void Game_Init(NuSMVEnv_ptr env)
     SymbTable_ptr symb_table = SYMB_TABLE(NuSMVEnv_get_value(env, ENV_SYMB_TABLE));
 
   if (opt_verbose_level_gt(opts, 0)) {
-    fprintf(nusmv_stderr, "Initializing the Game package... \n");
+    fprintf(stderr, "Initializing the Game package... \n");
   }
 
   nusmv_assert(GAME_HIERARCHY(NULL) == mainGameHierarchy);
@@ -200,7 +200,7 @@ void Game_Quit(NuSMVEnv_ptr env)
     OptsHandler_ptr opts = OPTS_HANDLER(NuSMVEnv_get_value(env, ENV_OPTS_HANDLER));
 
   if (opt_verbose_level_gt(opts, 0)) {
-    fprintf(nusmv_stderr, "Quitting the Game package... \n");
+    fprintf(stderr, "Quitting the Game package... \n");
   }
 
   if (opt_game_game(opts)) {
@@ -235,7 +235,7 @@ void Game_Mode_Enter(NuSMVEnv_ptr env)
   nusmv_assert(!opt_game_game(opts));
 
   if (!opt_batch(opts)) {
-    fprintf(nusmv_stderr, "Entering game mode...\n");
+    fprintf(stderr, "Entering game mode...\n");
   }
 
   game_pkg_switch_to_prop_db_game(env);
@@ -246,7 +246,7 @@ void Game_Mode_Enter(NuSMVEnv_ptr env)
   set_game_game(opts);
 
   if (!opt_batch(opts)) {
-    fprintf(nusmv_stderr,
+    fprintf(stderr,
             "Done entering game mode.\n"
             "Note that now game commands apply.\n");
   }
@@ -270,10 +270,10 @@ void Game_Mode_Exit(NuSMVEnv_ptr env)
 {
     OptsHandler_ptr opts = OPTS_HANDLER(NuSMVEnv_get_value(env, ENV_OPTS_HANDLER));
 
-  nusmv_assert(opt_game_game(opts));
+  assert(opt_game_game(opts));
 
   if (!opt_batch(opts)) {
-    fprintf(nusmv_stderr, "Exiting game mode...\n");
+    fprintf(stderr, "Exiting game mode...\n");
   }
 
   if (GAME_HIERARCHY(NULL) != mainGameHierarchy) {
@@ -287,7 +287,7 @@ void Game_Mode_Exit(NuSMVEnv_ptr env)
   unset_game_game(opts);
 
   if (!opt_batch(opts)) {
-    fprintf(nusmv_stderr,
+    fprintf(stderr,
             "Done exiting game mode.\n"
             "Note that now the commands from before entering game mode "
             "apply.\n");
