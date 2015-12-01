@@ -354,7 +354,7 @@ void Smgame_BatchMain(NuSMVEnv_ptr env)
       ErrorMgr_nusmv_exit(errmgr,1);
     }
  #endif
-    BddFsm_check_machine(Prop_get_bdd_fsm(PROP(NuSMVEnv_get_value(env, ENV_PROP_DB))));
+    BddFsm_check_machine(BDD_FSM(NuSMVEnv_get_value(env, ENV_BDD_FSM)));
   }
 
   if (get_prop_no(oh) != -1) {
@@ -473,7 +473,7 @@ void Smgame_BatchMain(NuSMVEnv_ptr env)
     }
 #endif
 
-    BddFsm_print_reachable_states_info(Prop_get_bdd_fsm(PROP(NuSMVEnv_get_value(env, ENV_PROP_DB))),
+    BddFsm_print_reachable_states_info(BDD_FSM(NuSMVEnv_get_value(env, ENV_BDD_FSM)),
                                        false, /* do not print states */
                                        false, /* do not print defines */
                                        false, /* do not print formula */
