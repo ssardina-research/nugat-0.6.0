@@ -490,7 +490,7 @@ void Game_CheckLtlGameSpecSF07(PropGame_ptr prop,
   {
     fprintf(stdout, "-- ");
     fprintf(stdout, " ");
-    Prop_print(PROP(prop), (OStream_ptr)nusmv_stdout, PROP_PRINT_FMT_FORMULA);
+    Prop_print(PROP(prop), (OStream_ptr)stdout, PROP_PRINT_FMT_FORMULA);
 
     switch (Prop_get_status(PROP(cls->prop))) {
     case Prop_True:
