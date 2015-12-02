@@ -327,10 +327,10 @@ Game_SF07_gba_ptr Game_SF07_gba_wring_ltl2gba(NuSMVEnv_ptr env,node_ptr formula)
   Game_SF07_gba_wring_set_binary_file_name(env,cls, NULL);
   Game_SF07_gba_wring_set_input_file_name(env,cls, NULL);
   Game_SF07_gba_wring_set_output_file_name(env,cls, NULL);
-  Game_SF07_gba_wring_write_input_file(cls);
-  status = Game_SF07_gba_wring_execute(cls);
+  Game_SF07_gba_wring_write_input_file(env,cls);
+  status = Game_SF07_gba_wring_execute(env,cls);
   if (status == 0) {
-    Game_SF07_gba_wring_parse_output_file(cls);
+    Game_SF07_gba_wring_parse_output_file(env,cls);
     res = Game_SF07_gba_wring_get_gba(cls);
   } else {
     res = GAME_SF07_GBA(NULL);
@@ -699,14 +699,13 @@ Game_SF07_gba_ptr Game_SF07_gba_wring_get_gba(Game_SF07_gba_wring_ptr self)
   SeeAlso     [ ]
 
 ******************************************************************************/
-void Game_SF07_gba_wring_write_input_file(Game_SF07_gba_wring_ptr self)
+void Game_SF07_gba_wring_write_input_file(NuSMVEnv_ptr env,Game_SF07_gba_wring_ptr self)
 {
   GAME_SF07_GBA_WRING_CHECK_INSTANCE(self);
   nusmv_assert(self->formula != Nil);
   nusmv_assert(self->input_file_name != (char*) NULL);
   nusmv_assert(self->gba == GAME_SF07_GBA(NULL));
 
-  const NuSMVEnv_ptr env = EnvObject_get_environment(ENV_OBJECT(self->gba));
   const ErrorMgr_ptr errmgr = ERROR_MGR(NuSMVEnv_get_value(env, ENV_ERROR_MANAGER));
 
   /* Write translated formula into self->iw_s. */
@@ -754,13 +753,11 @@ void Game_SF07_gba_wring_write_input_file(Game_SF07_gba_wring_ptr self)
   SeeAlso     [ ]
 
 ******************************************************************************/
-int Game_SF07_gba_wring_execute(Game_SF07_gba_wring_ptr self)
+int Game_SF07_gba_wring_execute(NuSMVEnv_ptr env,Game_SF07_gba_wring_ptr self)
 {
   int status;
   char* cmdline;
   unsigned int len_cmdline;
-
-  const NuSMVEnv_ptr env = EnvObject_get_environment(ENV_OBJECT(self));
 
   OptsHandler_ptr opts = OPTS_HANDLER(NuSMVEnv_get_value(env, ENV_OPTS_HANDLER));
 
@@ -846,7 +843,7 @@ int Game_SF07_gba_wring_execute(Game_SF07_gba_wring_ptr self)
   SeeAlso     [ ]
 
 ******************************************************************************/
-void Game_SF07_gba_wring_parse_output_file(Game_SF07_gba_wring_ptr self)
+void Game_SF07_gba_wring_parse_output_file(NuSMVEnv_ptr env,Game_SF07_gba_wring_ptr self)
 {
   hash_ptr state_id_2_state; /* Maps state_ids (string_ptrs) to states. */
   int res;                   /* Signals success (== 0) or failure. */
@@ -854,7 +851,6 @@ void Game_SF07_gba_wring_parse_output_file(Game_SF07_gba_wring_ptr self)
   GAME_SF07_GBA_WRING_CHECK_INSTANCE(self);
   nusmv_assert(self->output_file_name != (char*) NULL);
 
-  const NuSMVEnv_ptr env = EnvObject_get_environment(ENV_OBJECT(self->gba));
   const ErrorMgr_ptr errmgr = ERROR_MGR(NuSMVEnv_get_value(env, ENV_ERROR_MANAGER));
   const NodeMgr_ptr nodemgr = NODE_MGR(NuSMVEnv_get_value(env, ENV_NODE_MGR));
   const UStringMgr_ptr strings = USTRING_MGR(NuSMVEnv_get_value(env, ENV_STRING_MGR));

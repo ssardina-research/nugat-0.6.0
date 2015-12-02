@@ -332,29 +332,29 @@ static void Game_SF07_StructCheckLTLGameSF07_destroy_iteration
 ARGS((NodeMgr_ptr nodemgr,Game_SF07_StructCheckLTLGameSF07_ptr self));
 
 static void Game_SF07_StructCheckLTLGameSF07_run_iteration
-ARGS((Game_SF07_StructCheckLTLGameSF07_ptr self,
+ARGS((NuSMVEnv_ptr env,Game_SF07_StructCheckLTLGameSF07_ptr self,
       unsigned int curr_k,
       GamePlayer curr_player));
 
 static void Game_SF07_StructCheckLTLGameSF07_construct_ba
-ARGS((Game_SF07_StructCheckLTLGameSF07_ptr self));
+ARGS((NuSMVEnv_ptr env,Game_SF07_StructCheckLTLGameSF07_ptr self));
 
 static void Game_SF07_StructCheckLTLGameSF07_construct_goal
-ARGS((Game_SF07_StructCheckLTLGameSF07_ptr self));
+ARGS((NuSMVEnv_ptr env,Game_SF07_StructCheckLTLGameSF07_ptr self));
 
 static void Game_SF07_StructCheckLTLGameSF07_construct_monitor_sexp
-ARGS((Game_SF07_StructCheckLTLGameSF07_ptr self));
+ARGS((NuSMVEnv_ptr env,Game_SF07_StructCheckLTLGameSF07_ptr self));
 
 static node_ptr Game_SF07_StructCheckLTLGameSF07_construct_monitor_var_decls
-ARGS((Game_SF07_StructCheckLTLGameSF07_ptr self));
+ARGS((NuSMVEnv_ptr env,Game_SF07_StructCheckLTLGameSF07_ptr self));
 
 static node_ptr
 Game_SF07_StructCheckLTLGameSF07_construct_monitor_init_statements
-ARGS((Game_SF07_StructCheckLTLGameSF07_ptr self));
+ARGS((NuSMVEnv_ptr env,Game_SF07_StructCheckLTLGameSF07_ptr self));
 
 static node_ptr
 Game_SF07_StructCheckLTLGameSF07_construct_monitor_trans_statements
-ARGS((Game_SF07_StructCheckLTLGameSF07_ptr self));
+ARGS((NuSMVEnv_ptr env,Game_SF07_StructCheckLTLGameSF07_ptr self));
 
 static void Game_SF07_StructCheckLTLGameSF07_construct_monitor_game_bdd_fsm
 ARGS((NuSMVEnv_ptr env,Game_SF07_StructCheckLTLGameSF07_ptr self));
@@ -363,10 +363,10 @@ static void Game_SF07_StructCheckLTLGameSF07_construct_product_game_bdd_fsm
 ARGS((Game_SF07_StructCheckLTLGameSF07_ptr self));
 
 static void Game_SF07_StructCheckLTLGameSF07_check
-ARGS((Game_SF07_StructCheckLTLGameSF07_ptr self));
+ARGS((NuSMVEnv_ptr env,Game_SF07_StructCheckLTLGameSF07_ptr self));
 
 static node_ptr Game_SF07_StructCheckLTLGameSF07_gba_state_to_var_name
-ARGS((Game_SF07_StructCheckLTLGameSF07_ptr self,
+ARGS((NuSMVEnv_ptr env,Game_SF07_StructCheckLTLGameSF07_ptr self,
       Game_SF07_gba_state_ptr state));
 
 static node_ptr find_node_number ARGS((NodeMgr_ptr nodemgr, int n));
@@ -460,7 +460,7 @@ void Game_CheckLtlGameSpecSF07(PropGame_ptr prop,
     } else {
       curr_player = PLAYER_2;
     }
-    Game_SF07_StructCheckLTLGameSF07_run_iteration(cls, curr_k, curr_player);
+    Game_SF07_StructCheckLTLGameSF07_run_iteration(env,cls, curr_k, curr_player);
     if ((Prop_get_status(PROP(cls->prop)) == Prop_True) ||
         (Prop_get_status(PROP(cls->prop)) == Prop_False)) {
       done = true;
@@ -472,7 +472,7 @@ void Game_CheckLtlGameSpecSF07(PropGame_ptr prop,
       } else {
         curr_player = PLAYER_1;
       }
-      Game_SF07_StructCheckLTLGameSF07_run_iteration(cls, curr_k, curr_player);
+      Game_SF07_StructCheckLTLGameSF07_run_iteration(env,cls, curr_k, curr_player);
       if ((Prop_get_status(PROP(cls->prop)) == Prop_True) ||
           (Prop_get_status(PROP(cls->prop)) == Prop_False)) {
         done = true;
@@ -611,7 +611,7 @@ Game_SF07_StructCheckLTLGameSF07_create(NuSMVEnv_ptr env,
   res->symb_table = SYMB_TABLE(NuSMVEnv_get_value(env, ENV_SYMB_TABLE));
 
   if (!cmp_struct_get_bmc_init(cmps)) {
-      wff_pkg_init(env);
+      NuSMVEnv_get_handled_hash_ptr(env, ENV_W2W_WFF2NNF_HASH);
   }
 
   /* The iteration-variant parts. */
@@ -665,7 +665,7 @@ static void Game_SF07_StructCheckLTLGameSF07_destroy
   /* Don't destroy symb_table: doesn't belong here. */
 
   if (!cmp_struct_get_bmc_init(cmps)) {
-      wff_pkg_quit(env);
+      clear_assoc(NuSMVEnv_get_handled_hash_ptr(env, ENV_W2W_WFF2NNF_HASH));
   }
 
   /* The iteration-variant parts. */
@@ -824,7 +824,7 @@ static void Game_SF07_StructCheckLTLGameSF07_destroy_iteration
 
 ******************************************************************************/
 static void Game_SF07_StructCheckLTLGameSF07_run_iteration
-(Game_SF07_StructCheckLTLGameSF07_ptr self,
+(NuSMVEnv_ptr env,Game_SF07_StructCheckLTLGameSF07_ptr self,
  unsigned int curr_k,
  GamePlayer curr_player)
 {
@@ -832,7 +832,6 @@ static void Game_SF07_StructCheckLTLGameSF07_run_iteration
 
   GAME_SF07_STRUCT_CHECK_LTL_GAME_SF07_CHECK_INSTANCE(self);
 
-  const NuSMVEnv_ptr env = EnvObject_get_environment(ENV_OBJECT(self->symb_table));
   const ErrorMgr_ptr errmgr = ERROR_MGR(NuSMVEnv_get_value(env, ENV_ERROR_MANAGER));
   const NodeMgr_ptr nodemgr = NODE_MGR(NuSMVEnv_get_value(env, ENV_NODE_MGR));
   OptsHandler_ptr opts = OPTS_HANDLER(NuSMVEnv_get_value(env, ENV_OPTS_HANDLER));
@@ -854,12 +853,12 @@ static void Game_SF07_StructCheckLTLGameSF07_run_iteration
   }
 
   CATCH(errmgr) {
-    Game_SF07_StructCheckLTLGameSF07_construct_ba(self);
-    Game_SF07_StructCheckLTLGameSF07_construct_goal(self);
-    Game_SF07_StructCheckLTLGameSF07_construct_monitor_sexp(self);
+    Game_SF07_StructCheckLTLGameSF07_construct_ba(env,self);
+    Game_SF07_StructCheckLTLGameSF07_construct_goal(env,self);
+    Game_SF07_StructCheckLTLGameSF07_construct_monitor_sexp(env,self);
     Game_SF07_StructCheckLTLGameSF07_construct_monitor_game_bdd_fsm(env,self);
     Game_SF07_StructCheckLTLGameSF07_construct_product_game_bdd_fsm(self);
-    Game_SF07_StructCheckLTLGameSF07_check(self);
+    Game_SF07_StructCheckLTLGameSF07_check(env,self);
     if (self->curr_goal_realizability == GAME_REALIZABLE) {
       if (self->player == self->curr_player) {
         Prop_set_status(PROP(self->prop), Prop_True);
@@ -909,7 +908,7 @@ static void Game_SF07_StructCheckLTLGameSF07_run_iteration
 
 ******************************************************************************/
 static void Game_SF07_StructCheckLTLGameSF07_construct_ba
-(Game_SF07_StructCheckLTLGameSF07_ptr self)
+(NuSMVEnv_ptr env,Game_SF07_StructCheckLTLGameSF07_ptr self)
 {
   node_ptr formula;
   node_ptr booleanized;
@@ -919,7 +918,6 @@ static void Game_SF07_StructCheckLTLGameSF07_construct_ba
   GAME_SF07_STRUCT_CHECK_LTL_GAME_SF07_CHECK_INSTANCE(self);
   PROP_GAME_CHECK_INSTANCE(self->prop);
 
-  const NuSMVEnv_ptr  env = EnvObject_get_environment(ENV_OBJECT(self->symb_table));
   const NodeMgr_ptr nodemgr = NODE_MGR(NuSMVEnv_get_value(env, ENV_NODE_MGR));
   const ErrorMgr_ptr  errmgr = ERROR_MGR(NuSMVEnv_get_value(env, ENV_ERROR_MANAGER));
   const MasterPrinter_ptr wffprint = MASTER_PRINTER(NuSMVEnv_get_value(env, ENV_WFF_PRINTER));
@@ -1052,14 +1050,13 @@ static void Game_SF07_StructCheckLTLGameSF07_construct_ba
 
 ******************************************************************************/
 static void Game_SF07_StructCheckLTLGameSF07_construct_goal
-(Game_SF07_StructCheckLTLGameSF07_ptr self)
+(NuSMVEnv_ptr env,Game_SF07_StructCheckLTLGameSF07_ptr self)
 {
   Game_SF07_gba_ptr ba;
   Slist_ptr states;
   Siter s_iter;
   node_ptr avoidtarget_statement;
 
-  NuSMVEnv_ptr const env = EnvObject_get_environment(ENV_OBJECT(self));
   const NodeMgr_ptr nodemgr = NODE_MGR(NuSMVEnv_get_value(env, ENV_NODE_MGR));
 
   GAME_SF07_STRUCT_CHECK_LTL_GAME_SF07_CHECK_INSTANCE(self);
@@ -1086,7 +1083,7 @@ static void Game_SF07_StructCheckLTLGameSF07_construct_goal
 
     state = GAME_SF07_GBA_STATE(Siter_element(s_iter));
     state_var_name =
-      Game_SF07_StructCheckLTLGameSF07_gba_state_to_var_name(self, state);
+      Game_SF07_StructCheckLTLGameSF07_gba_state_to_var_name(env,self, state);
 
     if (Game_SF07_gba_is_state_in_first_fairness_constraint(ba, state)) {
       avoidtarget_statement = find_node(nodemgr,OR,
@@ -1125,7 +1122,7 @@ static void Game_SF07_StructCheckLTLGameSF07_construct_goal
 #define GAME_SF07_PLAYER1_MONITOR_MODULE_BASE_NAME "game_sf07_player1_monitor_"
 #define GAME_SF07_PLAYER2_MONITOR_MODULE_BASE_NAME "game_sf07_player2_monitor_"
 static void Game_SF07_StructCheckLTLGameSF07_construct_monitor_sexp
-(Game_SF07_StructCheckLTLGameSF07_ptr self)
+(NuSMVEnv_ptr env,Game_SF07_StructCheckLTLGameSF07_ptr self)
 {
   node_ptr var_decls;
   node_ptr init_statements;
@@ -1133,7 +1130,6 @@ static void Game_SF07_StructCheckLTLGameSF07_construct_monitor_sexp
   char* module_name;
   node_ptr monitor;
 
-    const NuSMVEnv_ptr env = EnvObject_get_environment(ENV_OBJECT(self));
     const NodeMgr_ptr nodemgr = NODE_MGR(NuSMVEnv_get_value(env, ENV_NODE_MGR));
     MasterPrinter_ptr wffprint = MASTER_PRINTER(NuSMVEnv_get_value(env, ENV_WFF_PRINTER));
     const UStringMgr_ptr strings = USTRING_MGR(NuSMVEnv_get_value(env, ENV_STRING_MGR));
@@ -1163,11 +1159,11 @@ static void Game_SF07_StructCheckLTLGameSF07_construct_monitor_sexp
 
     /* Construct parts. */
     var_decls =
-      Game_SF07_StructCheckLTLGameSF07_construct_monitor_var_decls(self);
+      Game_SF07_StructCheckLTLGameSF07_construct_monitor_var_decls(env,self);
     init_statements =
-      Game_SF07_StructCheckLTLGameSF07_construct_monitor_init_statements(self);
+      Game_SF07_StructCheckLTLGameSF07_construct_monitor_init_statements(env,self);
     trans_statements =
-      Game_SF07_StructCheckLTLGameSF07_construct_monitor_trans_statements(self);
+      Game_SF07_StructCheckLTLGameSF07_construct_monitor_trans_statements(env,self);
 
     /* Link parts. */
     monitor = Nil;
@@ -1264,7 +1260,7 @@ static void Game_SF07_StructCheckLTLGameSF07_construct_monitor_sexp
 
 ******************************************************************************/
 static node_ptr Game_SF07_StructCheckLTLGameSF07_construct_monitor_var_decls
-(Game_SF07_StructCheckLTLGameSF07_ptr self)
+(NuSMVEnv_ptr env,Game_SF07_StructCheckLTLGameSF07_ptr self)
 {
   Game_SF07_gba_ptr ba;
   Slist_ptr states;
@@ -1273,7 +1269,6 @@ static node_ptr Game_SF07_StructCheckLTLGameSF07_construct_monitor_var_decls
   node_ptr var_decls;
   node_ptr res;
 
-    const NuSMVEnv_ptr env = EnvObject_get_environment(ENV_OBJECT(self));
     const NodeMgr_ptr nodemgr = NODE_MGR(NuSMVEnv_get_value(env, ENV_NODE_MGR));
 
   GAME_SF07_STRUCT_CHECK_LTL_GAME_SF07_CHECK_INSTANCE(self);
@@ -1304,7 +1299,7 @@ static node_ptr Game_SF07_StructCheckLTLGameSF07_construct_monitor_var_decls
 
     state = GAME_SF07_GBA_STATE(Siter_element(s_iter));
     state_var_name =
-      Game_SF07_StructCheckLTLGameSF07_gba_state_to_var_name(self, state);
+      Game_SF07_StructCheckLTLGameSF07_gba_state_to_var_name(env,self, state);
     var_decl = new_node(nodemgr,COLON, state_var_name, var_type);
     var_decls = new_node(nodemgr,CONS, var_decl, var_decls);
   }
@@ -1354,7 +1349,7 @@ static node_ptr Game_SF07_StructCheckLTLGameSF07_construct_monitor_var_decls
 ******************************************************************************/
 static node_ptr
 Game_SF07_StructCheckLTLGameSF07_construct_monitor_init_statements
-(Game_SF07_StructCheckLTLGameSF07_ptr self)
+(NuSMVEnv_ptr env,Game_SF07_StructCheckLTLGameSF07_ptr self)
 {
   Game_SF07_gba_ptr ba;
   Slist_ptr states;
@@ -1362,7 +1357,6 @@ Game_SF07_StructCheckLTLGameSF07_construct_monitor_init_statements
   node_ptr init_statements;
   node_ptr res;
 
-    const NuSMVEnv_ptr env = EnvObject_get_environment(ENV_OBJECT(self));
     const NodeMgr_ptr nodemgr = NODE_MGR(NuSMVEnv_get_value(env, ENV_NODE_MGR));
 
   GAME_SF07_STRUCT_CHECK_LTL_GAME_SF07_CHECK_INSTANCE(self);
@@ -1389,7 +1383,7 @@ Game_SF07_StructCheckLTLGameSF07_construct_monitor_init_statements
 
     state = GAME_SF07_GBA_STATE(Siter_element(s_iter));
     state_var_name =
-      Game_SF07_StructCheckLTLGameSF07_gba_state_to_var_name(self, state);
+      Game_SF07_StructCheckLTLGameSF07_gba_state_to_var_name(env,self, state);
 
     if (!Game_SF07_gba_is_state_initial(ba, state)) {
       init_statement = new_node(nodemgr,INIT,
@@ -1527,7 +1521,7 @@ Game_SF07_StructCheckLTLGameSF07_construct_monitor_init_statements
 ******************************************************************************/
 static node_ptr
 Game_SF07_StructCheckLTLGameSF07_construct_monitor_trans_statements
-(Game_SF07_StructCheckLTLGameSF07_ptr self)
+(NuSMVEnv_ptr env,Game_SF07_StructCheckLTLGameSF07_ptr self)
 {
   Game_SF07_gba_ptr ba;
   Slist_ptr states;
@@ -1535,7 +1529,6 @@ Game_SF07_StructCheckLTLGameSF07_construct_monitor_trans_statements
   node_ptr trans_statements;
   node_ptr res;
 
-    const NuSMVEnv_ptr env = EnvObject_get_environment(ENV_OBJECT(self));
     const NodeMgr_ptr nodemgr = NODE_MGR(NuSMVEnv_get_value(env, ENV_NODE_MGR));
 
   GAME_SF07_STRUCT_CHECK_LTL_GAME_SF07_CHECK_INSTANCE(self);
@@ -1565,7 +1558,7 @@ Game_SF07_StructCheckLTLGameSF07_construct_monitor_trans_statements
 
     state = GAME_SF07_GBA_STATE(Siter_element(s_iter));
     state_var_name =
-      Game_SF07_StructCheckLTLGameSF07_gba_state_to_var_name(self, state);
+      Game_SF07_StructCheckLTLGameSF07_gba_state_to_var_name(env,self, state);
 
     /* handle outgoing transitions */
     transitions = Game_SF07_gba_state_get_outgoing(state);
@@ -1593,7 +1586,7 @@ Game_SF07_StructCheckLTLGameSF07_construct_monitor_trans_statements
         transition = GAME_SF07_GBA_TRANSITION(Siter_element(t_iter));
         target_state = Game_SF07_gba_transition_get_target(transition);
         target_state_var_name =
-          Game_SF07_StructCheckLTLGameSF07_gba_state_to_var_name(self,
+          Game_SF07_StructCheckLTLGameSF07_gba_state_to_var_name(env,self,
                                                                  target_state);
         next_of_target_state_var_name = find_node(nodemgr,NEXT,
                                                   target_state_var_name,
@@ -1670,7 +1663,7 @@ Game_SF07_StructCheckLTLGameSF07_construct_monitor_trans_statements
           transition = GAME_SF07_GBA_TRANSITION(Siter_element(t_iter));
           source_state = Game_SF07_gba_transition_get_source(transition);
           source_state_var_name =
-            Game_SF07_StructCheckLTLGameSF07_gba_state_to_var_name(self,
+            Game_SF07_StructCheckLTLGameSF07_gba_state_to_var_name(env,self,
                                                                 source_state);
 
           if (!Game_SF07_gba_is_state_in_first_fairness_constraint(ba,
@@ -2073,13 +2066,12 @@ static void Game_SF07_StructCheckLTLGameSF07_construct_product_game_bdd_fsm
 
 ******************************************************************************/
 static void Game_SF07_StructCheckLTLGameSF07_check
-(Game_SF07_StructCheckLTLGameSF07_ptr self)
+(NuSMVEnv_ptr env,Game_SF07_StructCheckLTLGameSF07_ptr self)
 {
   boolean construct_strategy;
   node_ptr expr;
   PropGame_ptr prop;
 
-  const NuSMVEnv_ptr env = EnvObject_get_environment(ENV_OBJECT(self));
   const NodeMgr_ptr nodemgr = NODE_MGR(NuSMVEnv_get_value(env, ENV_NODE_MGR));
   OptsHandler_ptr opts = OPTS_HANDLER(NuSMVEnv_get_value(env, ENV_OPTS_HANDLER));
 
@@ -2146,13 +2138,12 @@ static void Game_SF07_StructCheckLTLGameSF07_check
 ******************************************************************************/
 #define GAME_SF07_MONITOR_STATE_BASE_NAME "ltlgame"
 static node_ptr Game_SF07_StructCheckLTLGameSF07_gba_state_to_var_name
-(Game_SF07_StructCheckLTLGameSF07_ptr self, Game_SF07_gba_state_ptr state)
+(NuSMVEnv_ptr env,Game_SF07_StructCheckLTLGameSF07_ptr self, Game_SF07_gba_state_ptr state)
 {
   char* res_s;
   char* state_id_s;
   node_ptr res;
 
-  const NuSMVEnv_ptr env = EnvObject_get_environment(ENV_OBJECT(self));
   const NodeMgr_ptr nodemgr = NODE_MGR(NuSMVEnv_get_value(env, ENV_NODE_MGR));
   const UStringMgr_ptr strings = USTRING_MGR(NuSMVEnv_get_value(env, ENV_STRING_MGR));
 

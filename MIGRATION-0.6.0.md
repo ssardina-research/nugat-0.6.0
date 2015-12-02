@@ -412,11 +412,12 @@ Lorenzo Dibenedetto - lorenzodibenedetto90@gmail.com , Sebastian Sardina - ssard
         
 51.gameCheckLTLSF07.c  
 
-    warning: implicit declaration of function ‘w2w_init_wff2nnf()’ and ‘w2w_quit_wff2nnf()’
+    1.warning: implicit declaration of function ‘w2w_init_wff2nnf()’ and ‘w2w_quit_wff2nnf()’
     
-        *   replaced with 'wff_pkg_init(env)' and 'wff_pkg_quit(env)'
+        *   replaced with 'NuSMVEnv_get_handled_hash_ptr(env, ENV_W2W_WFF2NNF_HASH);' and 'clear_assoc(NuSMVEnv_get_handled_hash_ptr(env, ENV_W2W_WFF2NNF_HASH));'
+            Note: the 'NuSMVEnv_get_handled_hash_ptr' have inside a setter
         
-    warning: passing argument 1 of ‘Compile_FlattenHierarchy’ from incompatible pointer type
+    2.warning: passing argument 1 of ‘Compile_FlattenHierarchy’ from incompatible pointer type
     
         *   added 'env' and new parameter 'expand_bounded_arrays' with 'false' (default value)
 

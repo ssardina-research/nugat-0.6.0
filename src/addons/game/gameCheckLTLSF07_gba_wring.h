@@ -122,12 +122,12 @@ EXTERN Game_SF07_gba_ptr Game_SF07_gba_wring_get_gba
 ARGS((Game_SF07_gba_wring_ptr self));
 
 EXTERN void Game_SF07_gba_wring_write_input_file
-ARGS((Game_SF07_gba_wring_ptr self));
+ARGS((NuSMVEnv_ptr env,Game_SF07_gba_wring_ptr self));
 
 EXTERN int Game_SF07_gba_wring_execute
-ARGS((Game_SF07_gba_wring_ptr self));
+ARGS((NuSMVEnv_ptr env,Game_SF07_gba_wring_ptr self));
 
 EXTERN void Game_SF07_gba_wring_parse_output_file
-ARGS((Game_SF07_gba_wring_ptr self));
+ARGS((NuSMVEnv_ptr env,Game_SF07_gba_wring_ptr self));
 
 #endif /* __GAME_CHECKLTLSF07_GBA_WRING_H__ */
