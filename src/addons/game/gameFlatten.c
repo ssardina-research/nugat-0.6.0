@@ -105,7 +105,7 @@ EXTERN node_ptr parsed_tree;
 /*---------------------------------------------------------------------------*/
 /* flatten hierarchy functions */
 static GameHierarchy_ptr
-  game_flatten_game_hierarchy ARGS((SymbTable_ptr symbol_table,
+  game_flatten_game_hierarchy ARGS((NuSMVEnv_ptr env,SymbTable_ptr symbol_table,
                                     SymbLayer_ptr model_layer_1,
                                     node_ptr module_1,
                                     SymbLayer_ptr model_layer_2,
@@ -184,7 +184,8 @@ int Game_CommandFlattenHierarchy(NuSMVEnv_ptr env,boolean expand_bounded_arrays)
      Note that two special modules PLAYER_NAME_1 and PLAYER_NAME_2 are
      actually the players\' declarations.
   */
-  mainGameHierarchy = game_flatten_game_hierarchy(st,
+  mainGameHierarchy = game_flatten_game_hierarchy(env,
+                                                  st,
                                                   model_layer_1,
                                                   sym_intern(env,PLAYER_NAME_1),
                                                   model_layer_2,
@@ -272,7 +273,8 @@ int Game_CommandFlattenHierarchy(NuSMVEnv_ptr env,boolean expand_bounded_arrays)
 
 ******************************************************************************/
 static GameHierarchy_ptr
-game_flatten_game_hierarchy(SymbTable_ptr symbol_table,
+game_flatten_game_hierarchy(NuSMVEnv_ptr env,
+                            SymbTable_ptr symbol_table,
                             SymbLayer_ptr model_layer_1,
                             node_ptr module_1,
                             SymbLayer_ptr model_layer_2,
@@ -293,7 +295,6 @@ game_flatten_game_hierarchy(SymbTable_ptr symbol_table,
   node_ptr ltlgame = Nil;
   node_ptr genreactivity = Nil;
 
-  const NuSMVEnv_ptr env = EnvObject_get_environment(ENV_OBJECT(symbol_table));
   const NodeMgr_ptr nodemgr = NODE_MGR(NuSMVEnv_get_value(env, ENV_NODE_MGR));
   const ErrorMgr_ptr errmgr = ERROR_MGR(NuSMVEnv_get_value(env, ENV_ERROR_MANAGER));
 

@@ -460,6 +460,7 @@ void prop_game_init(PropGame_ptr self,const NuSMVEnv_ptr env)
   OVERRIDE(Prop, print) = (Prop_print_method) prop_game_print;
   OVERRIDE(Prop, print_db_tabular) = (Prop_print_db_method) prop_game_print_db;
   OVERRIDE(Prop, verify) = (Prop_verify_method) prop_game_verify;
+  OVERRIDE(Prop, set_environment_fsms) = (Prop_set_environment_fsms_method) prop_game_set_environment_fsms;
 }
 
 /**Function********************************************************************
@@ -657,33 +658,65 @@ void prop_game_verify(PropGame_ptr self)
   if (Prop_get_status(PROP(self)) == Prop_Unchecked)  {
     switch (Prop_get_type(PROP(self))) {
     case PropGame_ReachTarget:
-      Game_CheckReachTargetSpec(env,self, &gameParams);
+      Game_CheckReachTargetSpec(self, &gameParams);
       break;
     case PropGame_AvoidTarget:
-      Game_CheckAvoidTargetSpec(env,self, &gameParams);
+      Game_CheckAvoidTargetSpec(self, &gameParams);
       break;
     case PropGame_ReachDeadlock:
-      Game_CheckReachDeadlockSpec(env,self, &gameParams);
+      Game_CheckReachDeadlockSpec(self, &gameParams);
       break;
     case PropGame_AvoidDeadlock:
-      Game_CheckAvoidDeadlockSpec(env,self, &gameParams);
+      Game_CheckAvoidDeadlockSpec(self, &gameParams);
       break;
     case PropGame_BuchiGame:
-      Game_CheckBuchiGameSpec(env,self, &gameParams);
+      Game_CheckBuchiGameSpec(self, &gameParams);
       break;
     case PropGame_LtlGame:
-      Game_CheckLtlGameSpecSF07(env,self,
+      Game_CheckLtlGameSpecSF07(self,
                                 &gameParams,
                                 DEFAULT_GAME_CHECK_LTL_GAME_SPEC_SF07_KMIN,
                                 DEFAULT_GAME_CHECK_LTL_GAME_SPEC_SF07_KMAX,
                                 DEFAULT_GAME_CHECK_LTL_GAME_SPEC_SF07_W);
       break;
     case PropGame_GenReactivity:
-      Game_CheckGenReactivitySpec(env,self, &gameParams);
+      Game_CheckGenReactivitySpec(self, &gameParams);
       break;
     default: nusmv_assert(false); /* invalid type */
     }
   }
+}
+
+
+/**Function********************************************************************
+
+  Synopsis    [ Copies the FSMs of the master property into prop. ]
+
+  Description [ ]
+
+  SideEffects [ ]
+
+  SeeAlso     [ prop_set_environment_fsms ]
+
+******************************************************************************/
+void prop_game_set_environment_fsms(const NuSMVEnv_ptr env, PropGame_ptr prop)
+{
+    PROP_GAME_CHECK_INSTANCE(prop);
+    nusmv_assert(PropGame_type_is_game(Prop_get_type(PROP(prop))));
+
+    if (NuSMVEnv_has_value(env, ENV_SEXP_FSM)) {
+        PropGame_set_game_scalar_sexp_fsm(prop, GAME_SEXP_FSM(NuSMVEnv_get_value(env, ENV_SEXP_FSM)));
+    }
+    if (NuSMVEnv_has_value(env, ENV_BOOL_FSM)) {
+        PropGame_set_game_bool_sexp_fsm(prop, GAME_SEXP_FSM(NuSMVEnv_get_value(env, ENV_BOOL_FSM)));
+    }
+    if (NuSMVEnv_has_value(env, ENV_BDD_FSM)) {
+        PropGame_set_game_bdd_fsm(prop, GAME_BDD_FSM(NuSMVEnv_get_value(env, ENV_BDD_FSM)));
+    }
+    if (NuSMVEnv_has_value(env, ENV_BE_FSM)) {
+        PropGame_set_game_be_fsm(prop, GAME_BE_FSM(NuSMVEnv_get_value(env, ENV_BE_FSM)));
+    }
+
 }
 
 /*---------------------------------------------------------------------------*/

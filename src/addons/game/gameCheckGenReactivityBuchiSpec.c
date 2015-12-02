@@ -133,7 +133,7 @@ static void game_undeclare_special_var ARGS((NuSMVEnv_ptr env,
   SeeAlso     [ ]
 
 ******************************************************************************/
-void Game_CheckGenReactivitySpec(NuSMVEnv_ptr env, PropGame_ptr prop, gameParams_ptr params)
+void Game_CheckGenReactivitySpec(PropGame_ptr prop, gameParams_ptr params)
 {
   boolean construct_strategy;
   boolean isSuccess;
@@ -143,6 +143,7 @@ void Game_CheckGenReactivitySpec(NuSMVEnv_ptr env, PropGame_ptr prop, gameParams
   node_ptr varList1 = Nil;
   node_ptr varList2 = Nil;
 
+  NuSMVEnv_ptr env = EnvObject_get_environment(ENV_OBJECT(prop));
   const NodeMgr_ptr nodemgr = NODE_MGR(NuSMVEnv_get_value(env, ENV_NODE_MGR));
   const UStringMgr_ptr strings = USTRING_MGR(NuSMVEnv_get_value(env, ENV_STRING_MGR));
   OptsHandler_ptr opts = OPTS_HANDLER(NuSMVEnv_get_value(env, ENV_OPTS_HANDLER));
@@ -160,7 +161,7 @@ void Game_CheckGenReactivitySpec(NuSMVEnv_ptr env, PropGame_ptr prop, gameParams
   construct_strategy = (((params != (gameParams_ptr) NULL) &&
                          params->strategy_printout) ||
                         opt_game_print_strategy(opts));
-  Game_BeforeCheckingSpec(env,prop);
+  Game_BeforeCheckingSpec(prop);
 
   /* Declare a special variable required for strategy printing. */
   if (construct_strategy) {
@@ -195,8 +196,7 @@ void Game_CheckGenReactivitySpec(NuSMVEnv_ptr env, PropGame_ptr prop, gameParams
                                 NULL);
 
   /* Printing the results and cleaning up. */
-  Game_AfterCheckingSpec(env,
-                         prop,
+  Game_AfterCheckingSpec(prop,
                          isSuccess ? GAME_REALIZABLE : GAME_UNREALIZABLE,
                          strategy,
                          varList1,
@@ -222,7 +222,7 @@ void Game_CheckGenReactivitySpec(NuSMVEnv_ptr env, PropGame_ptr prop, gameParams
   SeeAlso     [ ]
 
 ******************************************************************************/
-void Game_CheckBuchiGameSpec(NuSMVEnv_ptr env,PropGame_ptr prop, gameParams_ptr params)
+void Game_CheckBuchiGameSpec(PropGame_ptr prop, gameParams_ptr params)
 {
   boolean construct_strategy;
   boolean isSuccess;
@@ -232,6 +232,7 @@ void Game_CheckBuchiGameSpec(NuSMVEnv_ptr env,PropGame_ptr prop, gameParams_ptr 
   node_ptr varList1 = Nil;
   node_ptr varList2 = Nil;
 
+  NuSMVEnv_ptr env = EnvObject_get_environment(ENV_OBJECT(prop));
   const NodeMgr_ptr nodemgr = NODE_MGR(NuSMVEnv_get_value(env, ENV_NODE_MGR));
   const UStringMgr_ptr strings = USTRING_MGR(NuSMVEnv_get_value(env, ENV_STRING_MGR));
 
@@ -249,7 +250,7 @@ void Game_CheckBuchiGameSpec(NuSMVEnv_ptr env,PropGame_ptr prop, gameParams_ptr 
   construct_strategy = (((params != (gameParams_ptr) NULL) &&
                          params->strategy_printout) ||
                         opt_game_print_strategy(opts));
-  Game_BeforeCheckingSpec(env,prop);
+  Game_BeforeCheckingSpec(prop);
 
   /* Declare a special variable required for strategy printing. */
   if (construct_strategy) {
@@ -277,8 +278,7 @@ void Game_CheckBuchiGameSpec(NuSMVEnv_ptr env,PropGame_ptr prop, gameParams_ptr 
                                       var);
 
   /* Printing the results and cleaning up. */
-  Game_AfterCheckingSpec(env,
-                         prop,
+  Game_AfterCheckingSpec(prop,
                          isSuccess ? GAME_REALIZABLE : GAME_UNREALIZABLE,
                          strategy,
                          varList1,

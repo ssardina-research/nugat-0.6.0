@@ -450,8 +450,16 @@ Lorenzo Dibenedetto - lorenzodibenedetto90@gmail.com , Sebastian Sardina - ssard
         
     2.error: ‘struct PropDb_TAG’ has no member named ‘master’ "prop = PROP_GAME(PROP_DB(self)->master);" 
     
-        *   replaced 'PROP_DB(self)->master' with 'PropDb_get_prop_at_index(PROP_DB(self),0)'
-        *   removed 'OVERRIDE(PropDb, set_fsm_to_master) = (PropDb_set_fsm_to_master_method) prop_db_game_set_fsm_to_master;'
+        *   removed 
+                all lines with 'PROP_DB(self)->master' and added 
+                'OVERRIDE(PropDb, set_fsm_to_master) = (PropDb_set_fsm_to_master_method) prop_db_game_set_fsm_to_master;'
+                prop_db_game_set_fsm_to_master function from PropDbGame.c/PropDbGame_private.h and added in PropGame.c/PropGame_private.h
+                    'OVERRIDE(Prop, set_environment_fsms) = (Prop_set_environment_fsms_method) prop_game_set_environment_fsms;' and 
+                    'prop_game_set_environment_fsms' function
+                    
+        *   replaced 
+                'if(PropDbGame_master_get_game_bdd_fsm(pdb) != GAME_BDD_FSM(NULL))' with 'if(NuSMVEnv_has_value(env, ENV_BDD_FSM))'
+                'PropDbGame_master_set_game_scalar_sexp_fsm(PROP_DB_GAME(NuSMVEnv_get_value(env, ENV_PROP_DB)), scalar_fsm);'   with 'NuSMVEnv_set_value(env, ENV_SEXP_FSM, scalar_fsm);'
                 
     3.missing parameter
         
@@ -477,21 +485,21 @@ Lorenzo Dibenedetto - lorenzodibenedetto90@gmail.com , Sebastian Sardina - ssard
 
         *   removed line because 'util.h' is not present
         
-56.smgameMisc.c [ #CHECK .3 AT RUNTIME ]
+56.smgameMisc.c [ #CHECK .3 AT RUNTIME ] 
 
-    warning: implicit declaration of function ‘util_resetlongjmp()’
+    1.warning: implicit declaration of function ‘util_resetlongjmp()’
     
         *   replaced with 'ErrorMgr_reset_long_jmp(errmgr)'
         
-    warning: passing argument 1 of ‘Cmd_CommandExecute’ from incompatible pointer type
+    2.warning: passing argument 1 of ‘Cmd_CommandExecute’ from incompatible pointer type
     
         *   added 'env' parameter
         
-    warning: implicit declaration of function ‘PropDb_master_get_bdd_fsm’ [...]
+    3.warning: implicit declaration of function ‘PropDb_master_get_bdd_fsm(PropPkg_get_prop_database())’ 
     
-        *   replaced with 'Prop_get_bdd_fsm' (line 478 miss round bracket ) and changed 'PROB_DB' in 'PROB'
+        *   replaced with 'BDD_FSM(NuSMVEnv_get_value(env, ENV_BDD_FSM))'
         
-    warning: passing argument 5 of ‘BddFsm_print_reachable_states_info’ from incompatible pointer type
+    4.warning: passing argument 5 of ‘BddFsm_print_reachable_states_info’ from incompatible pointer type
     
         *   added cast for 'nusmv_stdout' with 'OSTREAM(nusmv_stdout)'
         
@@ -749,12 +757,9 @@ Lorenzo Dibenedetto - lorenzodibenedetto90@gmail.com , Sebastian Sardina - ssard
     
     7.gameGeneral.c:133: Game_BeforeCheckingSpec: Assertion `((GameBddFsm_ptr) fsm) != ((GameBddFsm_ptr) ((void *)0))' failed.
     
-    *   
+    *   see 53.2 revision   
 -----------------------------------------------------------------------------------------------------------------   
  
-
-
-
 
 
 

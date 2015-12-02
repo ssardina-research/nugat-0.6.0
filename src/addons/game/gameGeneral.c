@@ -97,10 +97,11 @@ static void game_print_prop_exp ARGS((FILE *file, PropGame_ptr prop));
   SeeAlso     [ Game_AfterCheckingSpec ]
 
 ******************************************************************************/
-void Game_BeforeCheckingSpec(NuSMVEnv_ptr env,PropGame_ptr prop)
+void Game_BeforeCheckingSpec(PropGame_ptr prop)
 {
   GameBddFsm_ptr fsm;
 
+  NuSMVEnv_ptr env = EnvObject_get_environment(ENV_OBJECT(prop));
   OptsHandler_ptr opts = OPTS_HANDLER(NuSMVEnv_get_value(env, ENV_OPTS_HANDLER));
 
   PROP_GAME_CHECK_INSTANCE(prop);
@@ -163,8 +164,7 @@ void Game_BeforeCheckingSpec(NuSMVEnv_ptr env,PropGame_ptr prop)
   SeeAlso     [ Game_BeforeCheckingSpec ]
 
 ******************************************************************************/
-void Game_AfterCheckingSpec(NuSMVEnv_ptr env,
-                            PropGame_ptr prop,
+void Game_AfterCheckingSpec(PropGame_ptr prop,
                             Game_RealizabilityStatus status,
                             GameStrategy_ptr strategy,
                             node_ptr varList1,
@@ -174,6 +174,7 @@ void Game_AfterCheckingSpec(NuSMVEnv_ptr env,
 {
   boolean has_params;
 
+  NuSMVEnv_ptr env = EnvObject_get_environment(ENV_OBJECT(prop));
   const ErrorMgr_ptr errmgr = ERROR_MGR(NuSMVEnv_get_value(env, ENV_ERROR_MANAGER));
   OptsHandler_ptr opts = OPTS_HANDLER(NuSMVEnv_get_value(env, ENV_OPTS_HANDLER));
 

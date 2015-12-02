@@ -105,12 +105,13 @@ EXTERN options_ptr options;
   SeeAlso     [ ]
 
 ******************************************************************************/
-void Game_CheckReachTargetSpec(NuSMVEnv_ptr env, PropGame_ptr prop, gameParams_ptr params)
+void Game_CheckReachTargetSpec(PropGame_ptr prop, gameParams_ptr params)
 {
   boolean construct_strategy;
   Game_RealizabilityStatus status;
   GameStrategy_ptr strategy;
 
+  NuSMVEnv_ptr env = EnvObject_get_environment(ENV_OBJECT(prop));
   OptsHandler_ptr opts = OPTS_HANDLER(NuSMVEnv_get_value(env, ENV_OPTS_HANDLER));
 
   nusmv_assert(PROP_GAME(NULL) != prop &&
@@ -121,17 +122,16 @@ void Game_CheckReachTargetSpec(NuSMVEnv_ptr env, PropGame_ptr prop, gameParams_p
   construct_strategy = (((params != (gameParams_ptr) NULL) &&
                          params->strategy_printout) ||
                         opt_game_print_strategy(opts));
-  Game_BeforeCheckingSpec(env,prop);
+  Game_BeforeCheckingSpec(prop);
 
   /* the checking itself */
-  status = Game_UseStrongReachabilityAlgorithm(env,
-                                               prop,
+  status = Game_UseStrongReachabilityAlgorithm(prop,
                                                (construct_strategy ?
                                                 (&strategy) :
                                                 (GameStrategy_ptr*) NULL));
 
   /* printing the results and cleaning up */
-  Game_AfterCheckingSpec(env,prop, status, strategy, Nil, Nil, params);
+  Game_AfterCheckingSpec(prop, status, strategy, Nil, Nil, params);
 }
 
 /**Function********************************************************************
@@ -149,12 +149,13 @@ void Game_CheckReachTargetSpec(NuSMVEnv_ptr env, PropGame_ptr prop, gameParams_p
   SeeAlso     [ ]
 
 ******************************************************************************/
-void Game_CheckAvoidTargetSpec(NuSMVEnv_ptr env,PropGame_ptr prop, gameParams_ptr params)
+void Game_CheckAvoidTargetSpec(PropGame_ptr prop, gameParams_ptr params)
 {
   boolean construct_strategy;
   Game_RealizabilityStatus status;
   GameStrategy_ptr strategy;
 
+  NuSMVEnv_ptr env = EnvObject_get_environment(ENV_OBJECT(prop));
   OptsHandler_ptr opts = OPTS_HANDLER(NuSMVEnv_get_value(env, ENV_OPTS_HANDLER));
 
   nusmv_assert(PROP_GAME(NULL) != prop &&
@@ -165,17 +166,16 @@ void Game_CheckAvoidTargetSpec(NuSMVEnv_ptr env,PropGame_ptr prop, gameParams_pt
   construct_strategy = (((params != (gameParams_ptr) NULL) &&
                          params->strategy_printout) ||
                         opt_game_print_strategy(opts));
-  Game_BeforeCheckingSpec(env,prop);
+  Game_BeforeCheckingSpec(prop);
 
   /* the checking itself */
-  status = Game_UseStrongReachabilityAlgorithm(env,
-                                               prop,
+  status = Game_UseStrongReachabilityAlgorithm(prop,
                                                (construct_strategy ?
                                                 (&strategy) :
                                                 (GameStrategy_ptr*) NULL));
 
   /* printing the results and cleaning up */
-  Game_AfterCheckingSpec(env,prop, status, strategy, Nil, Nil, params);
+  Game_AfterCheckingSpec(prop, status, strategy, Nil, Nil, params);
 }
 
 /**Function********************************************************************
@@ -195,12 +195,13 @@ void Game_CheckAvoidTargetSpec(NuSMVEnv_ptr env,PropGame_ptr prop, gameParams_pt
   SeeAlso     [ ]
 
 ******************************************************************************/
-void Game_CheckReachDeadlockSpec(NuSMVEnv_ptr env, PropGame_ptr prop, gameParams_ptr params)
+void Game_CheckReachDeadlockSpec(PropGame_ptr prop, gameParams_ptr params)
 {
   boolean construct_strategy;
   Game_RealizabilityStatus status;
   GameStrategy_ptr strategy;
 
+  NuSMVEnv_ptr env = EnvObject_get_environment(ENV_OBJECT(prop));
   OptsHandler_ptr opts = OPTS_HANDLER(NuSMVEnv_get_value(env, ENV_OPTS_HANDLER));
 
   nusmv_assert(PROP_GAME(NULL) != prop &&
@@ -211,17 +212,16 @@ void Game_CheckReachDeadlockSpec(NuSMVEnv_ptr env, PropGame_ptr prop, gameParams
   construct_strategy = (((params != (gameParams_ptr) NULL) &&
                          params->strategy_printout) ||
                         opt_game_print_strategy(opts));
-  Game_BeforeCheckingSpec(env,prop);
+  Game_BeforeCheckingSpec(prop);
 
   /* the checking itself */
-  status = Game_UseStrongReachabilityAlgorithm(env,
-                                               prop,
+  status = Game_UseStrongReachabilityAlgorithm(prop,
                                                (construct_strategy ?
                                                 (&strategy) :
                                                 (GameStrategy_ptr*) NULL));
 
   /* printing the results and cleaning up */
-  Game_AfterCheckingSpec(env,prop, status, strategy, Nil, Nil, params);
+  Game_AfterCheckingSpec(prop, status, strategy, Nil, Nil, params);
 }
 
 /**Function********************************************************************
@@ -241,12 +241,13 @@ void Game_CheckReachDeadlockSpec(NuSMVEnv_ptr env, PropGame_ptr prop, gameParams
   SeeAlso     [ ]
 
 ******************************************************************************/
-void Game_CheckAvoidDeadlockSpec(NuSMVEnv_ptr env, PropGame_ptr prop, gameParams_ptr params)
+void Game_CheckAvoidDeadlockSpec(PropGame_ptr prop, gameParams_ptr params)
 {
   boolean construct_strategy;
   Game_RealizabilityStatus status;
   GameStrategy_ptr strategy;
 
+  NuSMVEnv_ptr env = EnvObject_get_environment(ENV_OBJECT(prop));
   OptsHandler_ptr opts = OPTS_HANDLER(NuSMVEnv_get_value(env, ENV_OPTS_HANDLER));
 
   nusmv_assert(PROP_GAME(NULL) != prop &&
@@ -257,17 +258,16 @@ void Game_CheckAvoidDeadlockSpec(NuSMVEnv_ptr env, PropGame_ptr prop, gameParams
   construct_strategy = (((params != (gameParams_ptr) NULL) &&
                          params->strategy_printout) ||
                         opt_game_print_strategy(opts));
-  Game_BeforeCheckingSpec(env,prop);
+  Game_BeforeCheckingSpec(prop);
 
-  /* the checking itself */
-  status = Game_UseStrongReachabilityAlgorithm(env,
-                                               prop,
-                                               (construct_strategy ?
-                                                (&strategy) :
-                                                (GameStrategy_ptr*) NULL));
+    /* the checking itself */
+    status = Game_UseStrongReachabilityAlgorithm(prop,
+                                                 (construct_strategy ?
+                                                  (&strategy) :
+                                                  (GameStrategy_ptr*) NULL));
 
   /* printing the results and cleaning up */
-  Game_AfterCheckingSpec(env,prop, status, strategy, Nil, Nil, params);
+  Game_AfterCheckingSpec(prop, status, strategy, Nil, Nil, params);
 }
 
 /**Function********************************************************************
@@ -306,9 +306,11 @@ void Game_CheckAvoidDeadlockSpec(NuSMVEnv_ptr env, PropGame_ptr prop, gameParams
   SeeAlso     [ ]
 
 ******************************************************************************/
-Game_RealizabilityStatus Game_UseStrongReachabilityAlgorithm(NuSMVEnv_ptr env, PropGame_ptr prop,
+Game_RealizabilityStatus Game_UseStrongReachabilityAlgorithm(PropGame_ptr prop,
                                                     GameStrategy_ptr* strategy)
 {
+
+  NuSMVEnv_ptr env = EnvObject_get_environment(ENV_OBJECT(prop));
   GameBddFsm_ptr fsm = PropGame_get_game_bdd_fsm(prop);
   BddEnc_ptr enc = BDD_ENC(NuSMVEnv_get_value(env, ENV_BDD_ENCODER));
   DDMgr_ptr dd_manager = BddEnc_get_dd_manager(enc);

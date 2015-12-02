@@ -73,7 +73,7 @@ static char rcsid[] UTIL_UNUSED = "$Id: gameCmd.c,v 1.1.2.10 2010-02-08 12:25:25
   SeeAlso     [ game_invoke_game_command ]
 
 ******************************************************************************/
-typedef void (*command_function_ptr) (NuSMVEnv_ptr env, PropGame_ptr prop, gameParams_ptr params);
+typedef void (*command_function_ptr) (PropGame_ptr prop, gameParams_ptr params);
 
 /*---------------------------------------------------------------------------*/
 /* Static function prototypes                                                */
@@ -1934,9 +1934,9 @@ static int CommandGamePrintUsage(NuSMVEnv_ptr env,int argc, char **argv)
             "--------------------\n");
 
     pdb = PROP_DB_GAME(prop_db);
-    if (PropDbGame_master_get_game_bdd_fsm(pdb) != GAME_BDD_FSM(NULL)) {
+    if (NuSMVEnv_has_value(env, ENV_BDD_FSM)) {
 
-        GameBddFsm_print_info(PropDbGame_master_get_game_bdd_fsm(pdb), stdout);
+        GameBddFsm_print_info(GAME_BDD_FSM(NuSMVEnv_get_value(env, ENV_BDD_FSM)), stdout);
     }
 
     return 0;
@@ -2700,7 +2700,7 @@ static int game_invoke_game_command(NuSMVEnv_ptr env,int argc, char **argv, Prop
                              (strategy_stream == (FILE*) NULL)) ||
                              ((strategyFileName != NIL(char)) &&
                              (strategy_stream != (FILE*) NULL)));
-                command_function(env,PROP_GAME(p), &params);
+                command_function(PROP_GAME(p), &params);
             }
         FAIL(errmgr) {
             goto game_invoke_game_command_return_1;
@@ -2727,7 +2727,7 @@ static int game_invoke_game_command(NuSMVEnv_ptr env,int argc, char **argv, Prop
                     Prop_ptr p = PropDb_get_prop_at_index(prop_db, i);
 
                     if (Prop_get_type(p) == type) {
-                        command_function(env,PROP_GAME(p), &params);
+                        command_function(PROP_GAME(p), &params);
                     }
                 }
             }
@@ -3097,7 +3097,7 @@ static int CommandCheckLtlGameSpecSF07(NuSMVEnv_ptr env,int argc, char **argv)
                 (NIL(char) == strategyFileName ||
                 (FILE*) NULL != strategy_stream) );
 
-                Game_CheckLtlGameSpecSF07(env,PROP_GAME(p), &params, kmin, kmax, w);
+                Game_CheckLtlGameSpecSF07(PROP_GAME(p), &params, kmin, kmax, w);
             }
         FAIL(errmgr) {
             goto CommandCheckLtlGameSpecSF07_return_1;
@@ -3126,7 +3126,7 @@ static int CommandCheckLtlGameSpecSF07(NuSMVEnv_ptr env,int argc, char **argv)
                     Prop_ptr p = PropDb_get_prop_at_index(prop_db, i);
 
                     if (Prop_get_type(p) == PropGame_LtlGame) {
-                        Game_CheckLtlGameSpecSF07(env,PROP_GAME(p), &params, kmin, kmax, w);
+                        Game_CheckLtlGameSpecSF07(PROP_GAME(p), &params, kmin, kmax, w);
                     }
                 }
             }

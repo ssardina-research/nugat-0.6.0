@@ -215,7 +215,7 @@ void Game_CommandWriteBooleanModel(NuSMVEnv_ptr env,FILE* ofileid)
 
   nusmv_assert((FILE *) NULL != ofileid);
 
-  bool_fsm = PropDbGame_master_get_game_bool_sexp_fsm(PROP_DB_GAME(NuSMVEnv_get_value(env, ENV_PROP_DB)));
+  bool_fsm = GAME_SEXP_FSM(NuSMVEnv_get_value(env, ENV_BOOL_FSM));
   enc = NuSMVEnv_get_value(env, ENV_BDD_ENCODER);
   st = BaseEnc_get_symb_table(BASE_ENC(enc));
 

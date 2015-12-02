@@ -163,27 +163,27 @@ EXTERN void Game_CommandWriteBooleanModel ARGS((NuSMVEnv_ptr env,FILE* ofileid))
 
 /* checking specification */
 EXTERN void
-Game_CheckReachTargetSpec ARGS((NuSMVEnv_ptr env,PropGame_ptr prop, gameParams_ptr params));
+Game_CheckReachTargetSpec ARGS((PropGame_ptr prop, gameParams_ptr params));
 
-EXTERN void Game_CheckAvoidTargetSpec ARGS((NuSMVEnv_ptr env,PropGame_ptr prop, gameParams_ptr params));
-
-EXTERN void
-Game_CheckReachDeadlockSpec ARGS((NuSMVEnv_ptr env,PropGame_ptr prop, gameParams_ptr params));
+EXTERN void Game_CheckAvoidTargetSpec ARGS((PropGame_ptr prop, gameParams_ptr params));
 
 EXTERN void
-Game_CheckAvoidDeadlockSpec ARGS((NuSMVEnv_ptr env,PropGame_ptr prop, gameParams_ptr params));
+Game_CheckReachDeadlockSpec ARGS((PropGame_ptr prop, gameParams_ptr params));
 
 EXTERN void
-Game_CheckBuchiGameSpec ARGS((NuSMVEnv_ptr env,PropGame_ptr prop, gameParams_ptr params));
+Game_CheckAvoidDeadlockSpec ARGS((PropGame_ptr prop, gameParams_ptr params));
 
-EXTERN void Game_CheckLtlGameSpecSF07 ARGS((NuSMVEnv_ptr env,PropGame_ptr prop,
+EXTERN void
+Game_CheckBuchiGameSpec ARGS((PropGame_ptr prop, gameParams_ptr params));
+
+EXTERN void Game_CheckLtlGameSpecSF07 ARGS((PropGame_ptr prop,
                                             gameParams_ptr params,
                                             unsigned int kmin,
                                             unsigned int kmax,
                                             Game_Who w));
 
 EXTERN void
-Game_CheckGenReactivitySpec ARGS((NuSMVEnv_ptr env, PropGame_ptr prop, gameParams_ptr params));
+Game_CheckGenReactivitySpec ARGS((PropGame_ptr prop, gameParams_ptr params));
 
 EXTERN int Game_CheckGameSpecAndComputeCores ARGS((NuSMVEnv_ptr env,NodeMgr_ptr nodemgr,
                                                    PropGame_ptr prop,

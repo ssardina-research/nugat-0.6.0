@@ -93,7 +93,6 @@ int prop_db_game_prop_create_and_add(PropDbGame_ptr self,
                                      SymbTable_ptr symb_table,
                                      node_ptr spec,
                                      PropGame_Type type);
-void prop_db_game_set_fsm_to_master(PropDbGame_ptr self, PropGame_ptr prop);
 void prop_db_game_verify_all(const PropDbGame_ptr self);
 
 #endif /* __PROP_DB_GAME_PRIVATE_H__ */

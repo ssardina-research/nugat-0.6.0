@@ -402,8 +402,7 @@ static void Game_SF07_StructCheckLTLGameSF07_free_node ARGS((NodeMgr_ptr nodemgr
   SeeAlso     [ ]
 
 ******************************************************************************/
-void Game_CheckLtlGameSpecSF07(NuSMVEnv_ptr env,
-                                PropGame_ptr prop,
+void Game_CheckLtlGameSpecSF07(PropGame_ptr prop,
                                gameParams_ptr params,
                                unsigned int kmin,
                                unsigned int kmax,
@@ -414,8 +413,8 @@ void Game_CheckLtlGameSpecSF07(NuSMVEnv_ptr env,
   GamePlayer curr_player;
   boolean done;
 
+  NuSMVEnv_ptr env = EnvObject_get_environment(ENV_OBJECT(prop));
   const NodeMgr_ptr nodemgr = NODE_MGR(NuSMVEnv_get_value(env, ENV_NODE_MGR));
-
   OptsHandler_ptr opts = OPTS_HANDLER(NuSMVEnv_get_value(env, ENV_OPTS_HANDLER));
 
   PROP_GAME_CHECK_INSTANCE(prop);
@@ -2114,7 +2113,7 @@ static void Game_SF07_StructCheckLTLGameSF07_check
 
   /* Check */
   self->curr_goal_realizability =
-    Game_UseStrongReachabilityAlgorithm(env, prop,
+    Game_UseStrongReachabilityAlgorithm(prop,
                                         (construct_strategy ?
                                          (&self->strategy) :
                                          (GameStrategy_ptr*) NULL));
