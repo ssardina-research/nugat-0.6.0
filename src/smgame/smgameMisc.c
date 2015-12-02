@@ -477,7 +477,7 @@ void Smgame_BatchMain(NuSMVEnv_ptr env)
                                        false, /* do not print states */
                                        false, /* do not print defines */
                                        false, /* do not print formula */
-                                       OSTREAM(nusmv_stdout));
+                                       OSTREAM(stdout));
   }
 
   } FAIL(errmgr) {

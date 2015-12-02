@@ -988,7 +988,7 @@ void GameStrategy_print_module(GameStrategy_ptr self,
   out = ((params != (gameParams_ptr) NULL) &&
          (params->strategy_stream != (FILE*) NULL)) ?
     params->strategy_stream :
-    nusmv_stdout;
+    stdout;
   do_sharing = ((params != (gameParams_ptr) NULL) &&
                 params->printout_as_dag);
   do_indentation = ((params != (gameParams_ptr) NULL) &&

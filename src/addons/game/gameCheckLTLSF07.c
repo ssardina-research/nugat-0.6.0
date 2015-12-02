@@ -2374,7 +2374,7 @@ static void Game_SF07_StructCheckLTLGameSF07_print_strategy_monitor_sexp
     out = (((self->params != (gameParams_ptr) NULL) &&
             (self->params)->strategy_stream != (FILE *) NULL)
            ? (self->params)->strategy_stream
-           : nusmv_stdout);
+           : stdout);
     monitor_body =
       cdr(self->curr_player2_monitor_sexp_copy);
     Game_SF07_StructCheckLTLGameSF07_print_monitor(wffprint, out,  monitor_body, true);
@@ -2442,7 +2442,7 @@ static void Game_SF07_StructCheckLTLGameSF07_print_strategy_monitor_bdd
   out = ((self->params != (gameParams_ptr) NULL) &&
          (self->params)->strategy_stream != (FILE *) NULL)
     ? (self->params)->strategy_stream
-    : nusmv_stdout;
+    : stdout;
   do_sharing = (self->params != (gameParams_ptr) NULL) &&
     self->params->printout_as_dag;
   do_indentation = (self->params != (gameParams_ptr) NULL) &&

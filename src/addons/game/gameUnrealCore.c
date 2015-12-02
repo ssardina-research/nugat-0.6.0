@@ -1878,7 +1878,7 @@ void game_process_unrealizable_core_with_params(
   /* Output the specification and whether it is realizable or not. */
   {
     fprintf(stdout, "--   ");
-    game_output_spec_without_params(self, wffprint, nusmv_stdout);
+    game_output_spec_without_params(self, wffprint, stdout);
     fprintf(stdout,
             is_realizable ?
             " : the strategy has been found\n" :
@@ -1947,7 +1947,7 @@ void game_process_unrealizable_core_with_params(
           int kind = node_get_type(car(exp_list));
           node_ptr exp = car(car(exp_list));
 
-          print_node(wffprint,nusmv_stdout, param);
+          print_node(wffprint,stdout, param);
           fprintf(stdout, " \t");
           switch (kind) {
           case INIT:
@@ -1982,7 +1982,7 @@ void game_process_unrealizable_core_with_params(
           default: nusmv_assert(false); /* unsupported kind */
           }
 
-          print_node(wffprint,nusmv_stdout, exp);
+          print_node(wffprint,stdout, exp);
           fprintf(stdout, "\n");
         } /* for (exp_list) */
       } /* for (activation vars)*/
@@ -2056,7 +2056,7 @@ void game_process_unrealizable_core_with_params(
                            false,
                            false,
                            0,
-                           (OStream_ptr)nusmv_stdout);
+                           (OStream_ptr)stdout);
       fprintf(stderr,
               "\ngame_process_unrealizable_core_with_params: end set of "
               "cores\n");
@@ -2108,7 +2108,7 @@ void game_process_unrealizable_core_with_params(
            constraints of the opponent. */
         if ((remove && ExprMgr_number(exprs, 0) == exp) || (!remove && ExprMgr_number(exprs, 1) == exp))  {
           if (something_printed) fprintf(stdout, ",");
-          print_node(wffprint,nusmv_stdout, var);
+          print_node(wffprint,stdout, var);
           something_printed = true;
 
           /* collect BDDs of all used assignments */
@@ -2973,7 +2973,7 @@ static void game_output_game_after_minimization(
         if (node_get_type(exp) != TRUEEXP ||
             !function[i].doMinimize) { /* this exp has not been removed */
           fprintf(stdout, "%s ", function[i].name);
-          print_node(wffprint,nusmv_stdout, exp);
+          print_node(wffprint,stdout, exp);
           fprintf(stdout, "\n");
           something_was_printed = true;
           ++remainedConstr;
