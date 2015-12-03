@@ -286,7 +286,14 @@ void Game_Mode_Exit(NuSMVEnv_ptr env)
                                  Game_cmd_get_specific_commands());
   unset_game_game(opts);
 
-  if (!opt_batch(opts)) {
+
+  // Master Property Destroy
+  NuSMVEnv_remove_value(env, ENV_SEXP_FSM);
+  NuSMVEnv_remove_value(env, ENV_BOOL_FSM);
+  NuSMVEnv_remove_value(env, ENV_BDD_FSM);
+  NuSMVEnv_remove_value(env, ENV_BE_FSM);
+
+    if (!opt_batch(opts)) {
     fprintf(stderr,
             "Done exiting game mode.\n"
             "Note that now the commands from before entering game mode "

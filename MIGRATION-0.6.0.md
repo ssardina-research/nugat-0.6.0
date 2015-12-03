@@ -460,7 +460,8 @@ Lorenzo Dibenedetto - lorenzodibenedetto90@gmail.com , Sebastian Sardina - ssard
                     
         *   replaced 
                 'if(PropDbGame_master_get_game_bdd_fsm(pdb) != GAME_BDD_FSM(NULL))' with 'if(NuSMVEnv_has_value(env, ENV_BDD_FSM))'
-                'PropDbGame_master_set_game_scalar_sexp_fsm(PROP_DB_GAME(NuSMVEnv_get_value(env, ENV_PROP_DB)), scalar_fsm);'   with 'NuSMVEnv_set_value(env, ENV_SEXP_FSM, scalar_fsm);'
+                'PropDbGame_master_set_game_scalar_sexp_fsm(PROP_DB_GAME(NuSMVEnv_get_value(env, ENV_PROP_DB)), scalar_fsm);'   
+                    with 'NuSMVEnv_set_value(env, ENV_SEXP_FSM, scalar_fsm);'
                 
     3.missing parameter
         
@@ -759,6 +760,13 @@ Lorenzo Dibenedetto - lorenzodibenedetto90@gmail.com , Sebastian Sardina - ssard
     7.gameGeneral.c:133: Game_BeforeCheckingSpec: Assertion `((GameBddFsm_ptr) fsm) != ((GameBddFsm_ptr) ((void *)0))' failed.
     
     *   see 53.2 revision   
+    
+    8.dd.c Program received signal SIGSEGV, Segmentation fault. 0x00000000006a3faa in Cudd_RecursiveDeref () for Compile_quit(env) -> BddFsm_destroy(bdd_fsm)
+    
+    *   removed all master property variables from Environment
+    
+                NuSMVEnv_remove_value(env, ENV_SEXP_FSM); NuSMVEnv_remove_value(env, ENV_BOOL_FSM);
+                NuSMVEnv_remove_value(env, ENV_BDD_FSM); NuSMVEnv_remove_value(env, ENV_BE_FSM);
 -----------------------------------------------------------------------------------------------------------------   
  
 
@@ -771,5 +779,7 @@ EOF
 FUTURE TODO
 
     REMOVE ALL COMMENTED LINES
+    
+    MIGRATION FROM fprintf to [ StreamMgr_print_error(streams , OStream_printf , ... ]
 
     RECONVERT LOG IN A SMART WAY (like a list, remove all rendundant words)
