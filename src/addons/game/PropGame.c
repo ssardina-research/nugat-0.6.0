@@ -550,11 +550,10 @@ const char* prop_game_get_type_as_string(const PropGame_ptr self)
   SeeAlso     [ prop_print ]
 
 ******************************************************************************/
-void prop_game_print(const PropGame_ptr self, FILE* file)
+void prop_game_print(const PropGame_ptr self, OStream_ptr file)
 {
   node_ptr p;
   node_ptr context;
-  int i;
 
   const NuSMVEnv_ptr env = EnvObject_get_environment(ENV_OBJECT(self));
   MasterPrinter_ptr wffprint = MASTER_PRINTER(NuSMVEnv_get_value(env, ENV_WFF_PRINTER));
@@ -570,25 +569,19 @@ void prop_game_print(const PropGame_ptr self, FILE* file)
     p = cdr(p);
   }
 
-  /* Print the specification type and the player responsible for the
-     specification. */
+    /* Print the specification type and the player responsible for the
+       specification. */
+    OStream_printf(file,
+            " %s %s ",
+            Prop_get_type_as_string(PROP(self)),
+            UStringMgr_get_string_text(PropGame_get_player(self)));
 
-  for(i=0; i < OStream_get_indent_size(OSTREAM(file)); i++) fprintf(file, "  ");
+    OStream_nprintf(file, wffprint, "%N ", p);
 
-  fprintf(file,
-          " %s %s ",
-          Prop_get_type_as_string(PROP(self)),
-          (char*)UStringMgr_get_string_text(PropGame_get_player(self)));
+    if (context != Nil) {
+        OStream_nprintf(file, wffprint, "IN %N", context);
+    }
 
-  for(i=0; i < OStream_get_indent_size(OSTREAM(file)); i++) fprintf(file, "  ");
-  fprintf(file, "%s", "");
-  print_node(wffprint,file, p);
-  fprintf(file, "%s", " ");
-
-  if (context != Nil) {
-    fprintf(file, "IN ");
-    print_node(wffprint,file, context);
-  }
 }
 
 /**Function********************************************************************
@@ -606,7 +599,7 @@ void prop_game_print(const PropGame_ptr self, FILE* file)
   SeeAlso     [ prop_print_db ]
 
 ******************************************************************************/
-void prop_game_print_db(const PropGame_ptr self, FILE* file)
+void prop_game_print_db(const PropGame_ptr self, OStream_ptr file)
 {
 
   const NuSMVEnv_ptr env = EnvObject_get_environment(ENV_OBJECT(self));
@@ -615,19 +608,19 @@ void prop_game_print_db(const PropGame_ptr self, FILE* file)
   PROP_GAME_CHECK_INSTANCE(self);
   nusmv_assert(PropGame_type_is_game(Prop_get_type(PROP(self))));
 
-  fprintf(file, "%.3d : ", (PROP(self))->index);
+  OStream_printf(file, "%.3d : ", (PROP(self))->index);
   prop_game_print(self, file);
-  fprintf(file, "\n");
+  OStream_printf(file, "\n");
 
-  fprintf(file, "  [%-15s", Prop_get_type_as_string(PROP(self)));
-  fprintf(file, "%-15s", Prop_get_status_as_string(PROP(self)));
+  OStream_printf(file, "  [%-15s", Prop_get_type_as_string(PROP(self)));
+  OStream_printf(file, "%-15s", Prop_get_status_as_string(PROP(self)));
 
-  if ((PROP(self))->trace == 0) fprintf(file, "N/A    ");
-  else fprintf(file, "%-7d", (PROP(self))->trace);
+  if ((PROP(self))->trace == 0) OStream_printf(file, "N/A    ");
+  else OStream_printf(file, "%-7d", (PROP(self))->trace);
 
-  if ((PROP(self))->name != Nil) print_node(wffprint,file, (PROP(self))->name);
-  else fprintf(file, "N/A");
-  fprintf(file, "]\n");
+  if ((PROP(self))->name != Nil) print_node(wffprint,(FILE*)file, (PROP(self))->name);
+  else OStream_printf(file, "N/A");
+  OStream_printf(file, "]\n");
 }
 
 /**Function********************************************************************

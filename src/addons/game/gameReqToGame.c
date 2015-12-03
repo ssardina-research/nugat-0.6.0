@@ -281,7 +281,7 @@ boolean Game_PropertyToGame(NuSMVEnv_ptr env,
     exp_1 = game_normalize_syntactically(exp_1, false);
 
 //    /* debugging printing */
-//    fprintf(stderr,"\n-- SIMPLIFIED:"); print_node(nusmv_stderr, exp_1);
+//    fprintf(errstream,"\n-- SIMPLIFIED:"); print_node(errstream, exp_1);
 
     game_property_to_game(env,
                           &exp_1,
@@ -296,7 +296,7 @@ boolean Game_PropertyToGame(NuSMVEnv_ptr env,
     exp_2 = game_normalize_syntactically(exp_2, false);
 
 //    /* debugging printing */
-//    fprintf(stderr,"\n-- SIMPLIFIED:"); print_node(nusmv_stderr, exp_2);
+//    fprintf(errstream,"\n-- SIMPLIFIED:"); print_node(errstream, exp_2);
 
     game_property_to_game(env,
                           &exp_2,
@@ -307,7 +307,7 @@ boolean Game_PropertyToGame(NuSMVEnv_ptr env,
                           &req_2);
   }
 
-//  fprintf(stderr,"\n\n");/* debugging printing */
+//  fprintf(errstream,"\n\n");/* debugging printing */
 
   /* All the expressions were processed. */
   nusmv_assert(Nil == exp_1 && Nil == exp_2);

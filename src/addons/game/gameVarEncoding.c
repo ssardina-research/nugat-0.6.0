@@ -71,7 +71,7 @@ static char rcsid[] UTIL_UNUSED = "$Id: gameVarEncoding.c,v 1.1.2.2 2010-02-08 1
 /*---------------------------------------------------------------------------*/
 /* Variable declarations                                                     */
 /*---------------------------------------------------------------------------*/
-EXTERN FILE* nusmv_stderr;
+
 EXTERN cmp_struct_ptr cmps;
 
 /*---------------------------------------------------------------------------*/
@@ -110,9 +110,11 @@ int Game_CommandEncodeVariables(NuSMVEnv_ptr env, char* input_order_file_name)
 
   ErrorMgr_ptr const errmgr = ERROR_MGR(NuSMVEnv_get_value(env, ENV_ERROR_MANAGER));
   OptsHandler_ptr opts = OPTS_HANDLER(NuSMVEnv_get_value(env, ENV_OPTS_HANDLER));
+  StreamMgr_ptr streams = STREAM_MGR(NuSMVEnv_get_value(env, ENV_STREAM_MANAGER));
+  FILE* errstream = StreamMgr_get_error_stream(streams);
 
   if (opt_verbose_level_gt(opts, 0)) {
-    fprintf(stderr, "Building variables...");
+    fprintf(errstream, "Building variables...");
   }
 
   if (input_order_file_name != NIL(char)) {
@@ -152,7 +154,7 @@ int Game_CommandEncodeVariables(NuSMVEnv_ptr env, char* input_order_file_name)
   }
 
   if (opt_verbose_level_gt(opts, 0)) {
-    fprintf(stderr, "...done\n");
+    fprintf(errstream, "...done\n");
   }
 
   return 0;

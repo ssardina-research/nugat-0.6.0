@@ -60,8 +60,8 @@ static char rcsid[] UTIL_UNUSED = "$Id$";
 /*---------------------------------------------------------------------------*/
 /* Variable declarations                                                     */
 /*---------------------------------------------------------------------------*/
-EXTERN FILE* nusmv_stderr;
-EXTERN FILE* nusmv_stdout;
+
+
 
 /*---------------------------------------------------------------------------*/
 /* Static function prototypes                                                */
@@ -432,13 +432,16 @@ static boolean game_opt_check_initial_condition(OptsHandler_ptr opt,
                                                 const char* value)
 {
   char* val = (char*)game_opt_get_string(opt, value);
+  NuSMVEnv_ptr env = EnvObject_get_environment(ENV_OBJECT(opt));
+  StreamMgr_ptr streams = STREAM_MGR(NuSMVEnv_get_value(env, ENV_STREAM_MANAGER));
+  FILE* errstream = StreamMgr_get_error_stream(streams);
 
   if (strlen(val) == 1 && (val[0] == 'N' || val[0] == 'A' || val[0] == 'E')) {
     return true;
   }
 
   FREE(val);
-  fprintf(stderr,
+  fprintf(errstream,
           "Error: supplied an invalid interpretation of game initial "
           "conditions.\n"
           "Possible values: N, A and E.\n"

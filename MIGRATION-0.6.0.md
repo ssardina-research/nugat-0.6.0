@@ -163,7 +163,11 @@ Lorenzo Dibenedetto - lorenzodibenedetto90@gmail.com , Sebastian Sardina - ssard
 
 19.error: gameCmd.c:  ‘nusmv_stderr’ undeclared (first use in this function) 
 
-    *   replaced 'nusmv_stdout' with 'stdout' and 'nusmv_stderr' with 'stderr'
+    *   replaced 'nusmv_stdout' with 'outstream' and 'nusmv_stderr' with 'errstream'
+        *   added declaration 
+                StreamMgr_ptr streams = STREAM_MGR(NuSMVEnv_get_value(env, ENV_STREAM_MANAGER));
+                FILE* outstream = StreamMgr_get_output_stream(streams);
+                FILE* errstream = StreamMgr_get_error_stream(streams);
     
 20.warning: gameCmd.c:  implicit declaration of function ‘nusmv_exit’ 
 
@@ -198,12 +202,6 @@ Lorenzo Dibenedetto - lorenzodibenedetto90@gmail.com , Sebastian Sardina - ssard
 23.error: gameCmd.c: ‘USTRING_MGR’ undeclared (first use in this function)
 
     *   *   'USTRING_MGR' has been replaced by 'USTRING_MGR(NuSMVEnv_get_value(env, ENV_STRING_MGR))'
-    
-24.warning: gameCmd.c:  passing argument 2 of ‘PropDb_print_list_header’ from incompatible pointer type
-
-    *   added "OStream_ptr ostream_ptr_nusmv_output = OStream_create(nusmv_stdout);" before the 'PropDb_print_list_header()' function
-    *   replaced for :
-            'PropDb_print_list_header()' and 'PropDb_print_prop_at_index()' -> 'nusmv_output' with 'ostream_ptr_nusmv_output'
             
 25.error: gameCmd.c:  ‘dd_manager’ undeclared (first use in this function)
 
@@ -394,19 +392,21 @@ Lorenzo Dibenedetto - lorenzodibenedetto90@gmail.com , Sebastian Sardina - ssard
             
 50.gameUnrealCore.c
 
-    warning: passing argument 1 of ‘SymbType_create’ makes pointer from integer without a cast
+    1.warning: passing argument 1 of ‘SymbType_create’ makes pointer from integer without a cast
     
         *   added 'env' parameter
     
-    error: macro "find_atom" requires 2 arguments
+    2.error: macro "find_atom" requires 2 arguments
             
         *   added 'nodemgr' parameter
     
-    warning: passing argument 7 of ‘BddEnc_print_bdd_wff’ from incompatible pointer type
+    3.warning: passing argument 7 of ‘BddEnc_print_bdd_wff’ from incompatible pointer type
     
-        *   add cast '(OStream_ptr)' to 'nusmv_stdout' parameter
-        
-    warning: passing argument 8 of ‘game_minimize_players_constraints’ from incompatible pointer type
+        *   added parameter 'outostream'
+                StreamMgr_ptr streams = STREAM_MGR(NuSMVEnv_get_value(env, ENV_STREAM_MANAGER));
+                FILE* outostream = StreamMgr_get_output_ostream(streams);
+                
+    4.warning: passing argument 8 of ‘game_minimize_players_constraints’ from incompatible pointer type
     
         *   add cast '(game_is_game_still_correct)' to 'game_is_opponent_constraint_minimal' parameter
         
@@ -477,10 +477,6 @@ Lorenzo Dibenedetto - lorenzodibenedetto90@gmail.com , Sebastian Sardina - ssard
     
         *   added 'env' parameter for 'SymbTablePkg_error_type'
         
-    error: ‘nusmv_stderr’ undeclared (first use in this function)
-    
-        *   replaced with 'stderr'
-        
 55.src/addons/addons.h
     
     fatal error: util.h: No such file or directory  '#include "util.h"'
@@ -503,7 +499,9 @@ Lorenzo Dibenedetto - lorenzodibenedetto90@gmail.com , Sebastian Sardina - ssard
         
     4.warning: passing argument 5 of ‘BddFsm_print_reachable_states_info’ from incompatible pointer type
     
-        *   added cast for 'nusmv_stdout' with 'OSTREAM(nusmv_stdout)'
+        *   added parameter 'outostream'
+                        StreamMgr_ptr streams = STREAM_MGR(NuSMVEnv_get_value(env, ENV_STREAM_MANAGER));
+                        FILE* outostream = StreamMgr_get_output_ostream(streams);
         
 57.gameCheckLTLSF07_gba_wring.c
 
@@ -545,9 +543,6 @@ Lorenzo Dibenedetto - lorenzodibenedetto90@gmail.com , Sebastian Sardina - ssard
     
         *   replaced with 'Cmd_Misc_NusmvrcSource(env)'
 
-    warning: undefined reference to `nusmv_stderr' ...
-    
-        *   removed all 'EXTERN ' before declarations
 -----------------------------------------------------------------------------------------------------------------      
 61.make[2]: *** No rule to make target `/home/lorenzo/Documents/software/ClionProjects/NuSMV-2.6.0/NuSMV/libnusmvcore.la', needed by `NuGaT'.  Stop. 
    make[2]: *** No rule to make target `/home/lorenzo/Documents/software/ClionProjects/NuSMV-2.6.0/NuSMV/librbcdag.la', needed by `NuGaT'.  Stop.
@@ -686,10 +681,6 @@ Lorenzo Dibenedetto - lorenzodibenedetto90@gmail.com , Sebastian Sardina - ssard
 
 73.Runtime Errors
 
-    1.smgameMain.c : Segmentation fault.
-    
-    *    in 'BannerPrint' replaced 'nusmv_stdout' with 'stdout' and 'nusmv_stderr' with 'stderr'
-
     2.smgameCmd.c in 'Smgame_AddCmd' :  Assertion `res' failed.
     
     *   replace NuSMV reset with NuGaT reset
@@ -734,10 +725,6 @@ Lorenzo Dibenedetto - lorenzodibenedetto90@gmail.com , Sebastian Sardina - ssard
         *   replaced  
                 'NuSMVEnv_get_value(__nusmv_parser_env__, ENV_STRING_MGR)' with '__nusmv_parser_env__' for Game_Mode_Enter() and Game_Mode_Exit() functions
                 'OptsHandler_create()' with 'GET_OPTS' macro
-    
-    2.PropDbGame.c:531 in prop_db_game_init for  NuSMVEnv_set_value ()
-    
-        *   see 53.2 revision
         
     3.gamePkg.c:322 : game_pkg_switch_to_prop_db_game (env=0x907ce0)
     
@@ -753,14 +740,6 @@ Lorenzo Dibenedetto - lorenzodibenedetto90@gmail.com , Sebastian Sardina - ssard
     
     *   replaced 'PropPkg_get_prop_database' with NuSMVEnv_get_value(env, ENV_PROP_DB)
     
-    6.gameGeneral.c:185 : iofwrite.c: No such file or directory.
-    
-    *   replaced all 'nusmv_stdout' with 'stdout' and all 'nusmv_stderr' with 'stderr'  
-    
-    7.gameGeneral.c:133: Game_BeforeCheckingSpec: Assertion `((GameBddFsm_ptr) fsm) != ((GameBddFsm_ptr) ((void *)0))' failed.
-    
-    *   see 53.2 revision   
-    
     8.dd.c Program received signal SIGSEGV, Segmentation fault. 0x00000000006a3faa in Cudd_RecursiveDeref () for Compile_quit(env) -> BddFsm_destroy(bdd_fsm)
     
     *   removed all master property variables from environment
@@ -768,7 +747,7 @@ Lorenzo Dibenedetto - lorenzodibenedetto90@gmail.com , Sebastian Sardina - ssard
                 NuSMVEnv_remove_value(env, ENV_SEXP_FSM); NuSMVEnv_remove_value(env, ENV_BOOL_FSM);
                 NuSMVEnv_remove_value(env, ENV_BDD_FSM); NuSMVEnv_remove_value(env, ENV_BE_FSM);
 
-.
+
 
 ================================================================================
 EOF
@@ -776,8 +755,10 @@ EOF
 
 FUTURE TODO
 
-    - MIGRATION FROM fprintf to [ StreamMgr_print_error(streams , OStream_printf , ... ]
-    - REMOVE ALL COMMENTED LINES
+    *   REMOVE ALL COMMENTED LINES
+    *   check outstream usage in "CommandGameShowProperty()" for gameCmd.c file
+    *   there are 4 stderr in smgameMain.c ( replace in errstream ??? )
     
 ----
-    - RECONVERT LOG IN A SMART WAY (like a list, remove all rendundant words)
+
+    *   RECONVERT LOG IN A SMART WAY (like a list, remove all rendundant words)

@@ -98,8 +98,8 @@ EXTERN void prop_game_deinit ARGS((PropGame_ptr self));
 
 Expr_ptr prop_game_get_expr(const PropGame_ptr self);
 const char* prop_game_get_type_as_string(const PropGame_ptr self);
-void prop_game_print(const PropGame_ptr self, FILE* file);
-void prop_game_print_db(const PropGame_ptr self, FILE* file);
+void prop_game_print(const PropGame_ptr self, OStream_ptr file);
+void prop_game_print_db(const PropGame_ptr self, OStream_ptr file);
 void prop_game_verify(PropGame_ptr self);
 void prop_game_set_environment_fsms(NuSMVEnv_ptr env, PropGame_ptr prop);
 

@@ -67,7 +67,7 @@ static char rcsid[] UTIL_UNUSED = "$Id: smCmd.c,v 1.11.2.20.4.2 2006-05-15 09:06
 /*---------------------------------------------------------------------------*/
 /* Variable declarations                                                     */
 /*---------------------------------------------------------------------------*/
-EXTERN FILE* nusmv_stderr;
+
 
 
 /*---------------------------------------------------------------------------*/
@@ -81,7 +81,7 @@ EXTERN FILE* nusmv_stderr;
 /* Static function prototypes                                                */
 /*---------------------------------------------------------------------------*/
 static int CommandGameReset(NuSMVEnv_ptr env, int argc, char **argv);
-static int UsageGameReset (void);
+static int UsageGameReset (NuSMVEnv_ptr env);
 
 /**AutomaticEnd***************************************************************/
 
@@ -165,12 +165,15 @@ static int CommandGameReset(NuSMVEnv_ptr env,int argc, char ** argv)
   return 0;
 
  CommandGameReset_return_usage:
-  return UsageGameReset();
+  return UsageGameReset(env);
 }
 
-static int UsageGameReset()
+static int UsageGameReset(NuSMVEnv_ptr env)
 {
-  fprintf(stderr, "usage: reset [-h]\n");
-  fprintf(stderr, "   -h \t\tPrints the command usage.\n");
+  StreamMgr_ptr streams = STREAM_MGR(NuSMVEnv_get_value(env, ENV_STREAM_MANAGER));
+  FILE* errstream = StreamMgr_get_error_stream(streams);
+
+  fprintf(errstream, "usage: reset [-h]\n");
+  fprintf(errstream, "   -h \t\tPrints the command usage.\n");
   return 1;
 }

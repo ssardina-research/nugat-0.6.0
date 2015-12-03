@@ -71,13 +71,13 @@ static char rcsid[] UTIL_UNUSED = "$Id: gameGeneral.c,v 1.1.2.9 2010-02-05 17:19
 /*---------------------------------------------------------------------------*/
 /* Variable declarations                                                     */
 /*---------------------------------------------------------------------------*/
-EXTERN FILE* nusmv_stderr;
-EXTERN FILE* nusmv_stdout;
+
+
 
 /*---------------------------------------------------------------------------*/
 /* Static function prototypes                                                */
 /*---------------------------------------------------------------------------*/
-static void game_print_prop_exp ARGS((FILE *file, PropGame_ptr prop));
+static void game_print_prop_exp ARGS((OStream_ptr file, PropGame_ptr prop));
 
 /*---------------------------------------------------------------------------*/
 /* Definition of exported functions                                          */
@@ -103,13 +103,16 @@ void Game_BeforeCheckingSpec(PropGame_ptr prop)
 
   NuSMVEnv_ptr env = EnvObject_get_environment(ENV_OBJECT(prop));
   OptsHandler_ptr opts = OPTS_HANDLER(NuSMVEnv_get_value(env, ENV_OPTS_HANDLER));
+  StreamMgr_ptr streams = STREAM_MGR(NuSMVEnv_get_value(env, ENV_STREAM_MANAGER));
+  FILE* errstream = StreamMgr_get_error_stream(streams);
+  OStream_ptr errostream = StreamMgr_get_error_ostream(streams);
 
   PROP_GAME_CHECK_INSTANCE(prop);
 
   if (opt_verbose_level_gt(opts, 0)) {
-    fprintf(stderr, "computing ");
-    game_print_prop_exp(nusmv_stderr, prop);
-    fprintf(stderr, "\n");
+    fprintf(errstream, "computing ");
+    game_print_prop_exp(errostream, prop);
+    fprintf(errstream, "\n");
   }
 
   if (opt_cone_of_influence(opts) == true) {
@@ -177,29 +180,33 @@ void Game_AfterCheckingSpec(PropGame_ptr prop,
   NuSMVEnv_ptr env = EnvObject_get_environment(ENV_OBJECT(prop));
   const ErrorMgr_ptr errmgr = ERROR_MGR(NuSMVEnv_get_value(env, ENV_ERROR_MANAGER));
   OptsHandler_ptr opts = OPTS_HANDLER(NuSMVEnv_get_value(env, ENV_OPTS_HANDLER));
+  StreamMgr_ptr streams = STREAM_MGR(NuSMVEnv_get_value(env, ENV_STREAM_MANAGER));
+  FILE* outstream = StreamMgr_get_output_stream(streams);
+  FILE* errstream = StreamMgr_get_error_stream(streams);
+  OStream_ptr outostream = StreamMgr_get_output_ostream(streams);
 
   PROP_GAME_CHECK_INSTANCE(prop);
 
   has_params = ((gameParams_ptr) NULL != params);
 
   /* ----------  Print the result ----------- */
-  fprintf(stdout, "-- ");
-  game_print_prop_exp(stdout, prop);
+  fprintf(outstream, "-- ");
+  game_print_prop_exp(outostream, prop);
 
   /* strategy reached */
   switch (status) {
   case GAME_REALIZABLE:
     Prop_set_status(PROP(prop), Prop_True);
-    fprintf(stdout, " : the strategy has been found\n");
+    fprintf(outstream, " : the strategy has been found\n");
     break;
   case GAME_UNREALIZABLE:
     Prop_set_status(PROP(prop), Prop_False);
-    fprintf(stdout, " : no strategy exists\n");
+    fprintf(outstream, " : no strategy exists\n");
     break;
   case GAME_UNKNOWN:
     /* status should remain unknown */
     nusmv_assert(Prop_Unchecked == Prop_get_status(PROP(prop)));
-    fprintf(stdout, " : existence of a strategy is unknown\n");
+    fprintf(outstream, " : existence of a strategy is unknown\n");
     break;
   default: ErrorMgr_internal_error(errmgr,"unknown status of a problem");
   }
@@ -252,7 +259,7 @@ void Game_AfterCheckingSpec(PropGame_ptr prop,
         NodeList_ptr syms2;
         SymbLayer_gen_iter(dl2, &iter2, STT_ALL);
         syms2 = SymbLayer_iter_to_list(dl2, iter2);
-        fprintf(stdout,"Hi\n");
+        fprintf(outstream,"Hi\n");
         nusmv_assert((dl1 == SYMB_LAYER(NULL)) ||
                      (NodeList_get_length(syms1) ==
                       0));
@@ -284,12 +291,12 @@ void Game_AfterCheckingSpec(PropGame_ptr prop,
       /* free strategy */
       GameStrategy_destroy(strategy);
     } else {
-      fprintf(stderr,
+      fprintf(errstream,
               "\nWarning: strategy printing requested, but strategy = NULL.\n");
     }
   }
 
-  fprintf(stdout,"\n");
+  fprintf(outstream,"\n");
   return;
 }
 
@@ -371,8 +378,8 @@ const char* Game_Who_to_string(const Game_Who w)
   SeeAlso            []
 
 ******************************************************************************/
-static void game_print_prop_exp(FILE *file, PropGame_ptr prop)
+static void game_print_prop_exp(OStream_ptr file, PropGame_ptr prop)
 {
-  fprintf(file, " ");
-  Prop_print(PROP(prop), (OStream_ptr)file, PROP_PRINT_FMT_FORMULA);
+  OStream_printf(file, " ");
+  Prop_print(PROP(prop), file, PROP_PRINT_FMT_FORMULA);
 }

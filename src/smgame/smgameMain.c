@@ -75,8 +75,6 @@ static char rcsid[] UTIL_UNUSED = "$Id: smMain.c,v 1.28.2.14.2.5.2.31.4.32 2010-
 /* Used to return a value from sm_parselineoptions */
 static char * NuSMV_CMD_LINE = (char *) NULL;
 
-FILE* nusmv_stderr;
-FILE* nusmv_stdout;
 DDMgr_ptr dd_manager;
 
 GameParams gameParams;
@@ -115,6 +113,9 @@ int main(int  argc, char ** argv)
   int status = 0;
   NuSMVEnv_ptr env = NuSMVEnv_create();
   OptsHandler_ptr opts;
+  StreamMgr_ptr streams;
+  FILE* outstream;
+  FILE *errstream;
 
   boolean requires_shutdown = true;
   FP_V_E iq_fns[][2] = {{NuGaTAddons_Init, NuGaTAddons_Quit},
@@ -136,6 +137,9 @@ int main(int  argc, char ** argv)
   NuSMVCore_init(env,iq_fns, sizeof(iq_fns)/sizeof(iq_fns[0]));
 
   opts = OPTS_HANDLER(NuSMVEnv_get_value(env, ENV_OPTS_HANDLER));
+  streams = STREAM_MGR(NuSMVEnv_get_value(env, ENV_STREAM_MANAGER));
+  outstream = StreamMgr_get_output_stream(streams);
+  errstream = StreamMgr_get_error_stream(streams);
 
   /* Adds the command line options of NuSMV */
   NuSMVCore_init_cmd_options(env);
@@ -155,7 +159,7 @@ int main(int  argc, char ** argv)
     /* Initiliazes the commands to handle with options. */
 
     Opt_Cmd_init(env);
-    BannerPrint(env,stdout);
+    BannerPrint(env,outstream);
     if (!opt_ignore_init_file(opts)) {
       (void) Cmd_Misc_NusmvrcSource(env);
     }
@@ -173,7 +177,7 @@ int main(int  argc, char ** argv)
         FREE(command);
       }
       else {
-        fprintf(stderr, "No such file or directory. Exiting...\n");
+        fprintf(errstream, "No such file or directory. Exiting...\n");
         quit_flag = -1; /* require immediate quit */
       }
       FREE(NuSMV_CMD_LINE);
@@ -191,10 +195,10 @@ int main(int  argc, char ** argv)
     /*       (void) Sm_NusmvrcSource(); */
     /*     } */
 
-    BannerPrint(env,stdout);
+    BannerPrint(env,outstream);
 
     if (opt_verbose_level_gt(opts, 0)) {
-      fprintf(stdout, "Starting the batch interaction.\n");
+      fprintf(outstream, "Starting the batch interaction.\n");
     }
 
     Smgame_BatchMain(env);
@@ -247,21 +251,24 @@ int main(int  argc, char ** argv)
 ******************************************************************************/
 static void UsagePrint(const NuSMVEnv_ptr env,char * program, char * unknown_option)
 {
+  const StreamMgr_ptr streams = STREAM_MGR(NuSMVEnv_get_value(env, ENV_STREAM_MANAGER));
+  FILE* errstream = StreamMgr_get_error_stream(streams);
+
   char *libraryName;
 
-  BannerPrint(env,stderr);
+  BannerPrint(env,errstream);
 
-  fprintf(stderr,"\n");
+  fprintf(errstream,"\n");
 
   if (unknown_option != NULL) {
-    fprintf(stderr,
+    fprintf(errstream,
             "The command line option \"%s\" is unknown.\n",
             unknown_option);
   }
-  fprintf(stderr,
+  fprintf(errstream,
           "Usage:\t%s [-h | -help]  [-quiet] [-int] \\\n",
           program);
-  fprintf(stderr,
+  fprintf(errstream,
       "\t[[-source script_file | -load script_file]] \\\n"
       "\t[-s] [-old] [-old_div_op] [-dcx] \\\n"
       "\t[-ctt] [-lp] [-n idx] [-v vl] [-cpp] [-pre pp_list] \\\n"
@@ -272,113 +279,113 @@ static void UsagePrint(const NuSMVEnv_ptr env,char * program, char * unknown_opt
       "\t[-coi] [-noaffinity] [-iwls95preorder] [-bmc] [-sat_solver name] \\\n"
       "\t[-bmc_length k] [-ofm fm_file] [-obm bm_file] \\\n"
       "\t[-sin on|off] [-rin on|off] [-ojeba algorithm] \\\n");
-  fprintf(stderr, "\t[input-file]\n");
+  fprintf(errstream, "\t[input-file]\n");
 
-  fprintf(stderr, "Where:\n");
-  fprintf(stderr, "\t -h | -help\t prints out current message\n");
-  fprintf(stderr, "\t -quiet\t\t suppresses printing of the banner\n");
-  fprintf(stderr, "\t -int\t\t enables interactive mode\n");
-  fprintf(stderr, "\t -source sc_file executes %s commands from file \"sc_file\"\n", program);
-  fprintf(stderr, "\t -load sc_file\t same as -source (deprecated)\n");
-  fprintf(stderr, "\t              \t in the interactive shell.\n");
+  fprintf(errstream, "Where:\n");
+  fprintf(errstream, "\t -h | -help\t prints out current message\n");
+  fprintf(errstream, "\t -quiet\t\t suppresses printing of the banner\n");
+  fprintf(errstream, "\t -int\t\t enables interactive mode\n");
+  fprintf(errstream, "\t -source sc_file executes %s commands from file \"sc_file\"\n", program);
+  fprintf(errstream, "\t -load sc_file\t same as -source (deprecated)\n");
+  fprintf(errstream, "\t              \t in the interactive shell.\n");
   {
-    fprintf(stderr, "\t -s\t\t does not read any initialization file\n");
+    fprintf(errstream, "\t -s\t\t does not read any initialization file\n");
     libraryName = CInit_NuSMVObtainLibrary();
-    fprintf(stderr, "\t   \t\t (%s/master.nusmvrc, ~/.nusmvrc)\n\t\t\t (default in batch mode)\n", libraryName);
+    fprintf(errstream, "\t   \t\t (%s/master.nusmvrc, ~/.nusmvrc)\n\t\t\t (default in batch mode)\n", libraryName);
     FREE(libraryName);
   }
-  fprintf(stderr, "\t -old\t\t keeps backward compatibility with older versions of \n"
+  fprintf(errstream, "\t -old\t\t keeps backward compatibility with older versions of \n"
                         "\t\t\t %s\n", program);
-  fprintf(stderr, "\t -old_div_op \t enables the old semantics of \"/\" and \"mod\" operations\n"
+  fprintf(errstream, "\t -old_div_op \t enables the old semantics of \"/\" and \"mod\" operations\n"
                         "\t\t\t instead of ANSI C semantics\n");
-  fprintf(stderr, "\t -dcx \t\t disables computation of counter-examples \n");
-  fprintf(stderr, "\t -ctt\t\t enables checking for the totality of the transition\n\t\t\t relation\n");
-  fprintf(stderr, "\t -lp\t\t lists all properties in SMV model\n");
-  fprintf(stderr, "\t -n idx\t\t specifies which property of SMV model\n" \
+  fprintf(errstream, "\t -dcx \t\t disables computation of counter-examples \n");
+  fprintf(errstream, "\t -ctt\t\t enables checking for the totality of the transition\n\t\t\t relation\n");
+  fprintf(errstream, "\t -lp\t\t lists all properties in SMV model\n");
+  fprintf(errstream, "\t -n idx\t\t specifies which property of SMV model\n" \
           "\t\t\t should be checked\n");
-  fprintf(stderr, "\t -v vl\t\t sets verbose level to \"vl\"\n");
+  fprintf(errstream, "\t -v vl\t\t sets verbose level to \"vl\"\n");
   {
-    fprintf(stderr, "\t -cpp\t\t runs preprocessor on SMV files before\n"
+    fprintf(errstream, "\t -cpp\t\t runs preprocessor on SMV files before\n"
             "\t\t\t any specified with -pre.\n");
 # if HAVE_CPP
 #   if HAVE_GETENV
-    fprintf(stderr, "\t\t\t Environment variable 'CPP' can be used to\n");
-    fprintf(stderr, "\t\t\t specify a different preprocessor.\n");
+    fprintf(errstream, "\t\t\t Environment variable 'CPP' can be used to\n");
+    fprintf(errstream, "\t\t\t specify a different preprocessor.\n");
 #   endif
 # else
-    fprintf(stderr, "\t\t\t Preprocessor was not found when %s had been \n", program);
-    fprintf(stderr, "\t\t\t configured, then 'cpp' will be searched at runtime\n");
-    fprintf(stderr, "\t\t\t when needed");
+    fprintf(errstream, "\t\t\t Preprocessor was not found when %s had been \n", program);
+    fprintf(errstream, "\t\t\t configured, then 'cpp' will be searched at runtime\n");
+    fprintf(errstream, "\t\t\t when needed");
 #   if HAVE_GETENV
-    fprintf(stderr, ", or the 'CPP' environment variable\n");
-    fprintf(stderr, "\t\t\t will be used when defined by the user");
+    fprintf(errstream, ", or the 'CPP' environment variable\n");
+    fprintf(errstream, "\t\t\t will be used when defined by the user");
 #   endif
-    fprintf(stderr, ".\n");
+    fprintf(errstream, ".\n");
 # endif
-    fprintf(stderr, "\t\t\t Deprecated: use -pre option instead.\n");
+    fprintf(errstream, "\t\t\t Deprecated: use -pre option instead.\n");
   }
   {
-    fprintf(stderr, "\t -pre pp_list\t defines a space-separated list of pre-processors\n"\
+    fprintf(errstream, "\t -pre pp_list\t defines a space-separated list of pre-processors\n"\
             "\t\t\t to run (in the order given) on the input file.\n"\
             "\t\t\t The list must be in double quotes if there is more\n"\
             "\t\t\t than one pre-processor named.\n");
     if (get_preprocessors_num(env) > 0) {
       char* preps = get_preprocessor_names(env);
-      fprintf(stderr, "\t\t\t The available preprocessors are: %s\n", preps);
+      fprintf(errstream, "\t\t\t The available preprocessors are: %s\n", preps);
       FREE(preps);
     }
     else {
-      fprintf(stderr, "\t\t\t Warning: there are no available preprocessors.\n");
+      fprintf(errstream, "\t\t\t Warning: there are no available preprocessors.\n");
     }
   }
-  fprintf(stderr, "\t -is\t\t does not check SPEC\n");
-  fprintf(stderr, "\t -ic\t\t does not check COMPUTE\n");
-  fprintf(stderr, "\t -ils\t\t does not check LTLSPEC\n");
-  fprintf(stderr, "\t -ips\t\t does not check PSLSPEC\n");
-  fprintf(stderr, "\t -ii\t\t does not check INVARSPEC\n");
-  fprintf(stderr, "\t -r\t\t enables printing of reachable states\n");
-  fprintf(stderr, "\t -f\t\t computes the reachable states (forward search)\n"
+  fprintf(errstream, "\t -is\t\t does not check SPEC\n");
+  fprintf(errstream, "\t -ic\t\t does not check COMPUTE\n");
+  fprintf(errstream, "\t -ils\t\t does not check LTLSPEC\n");
+  fprintf(errstream, "\t -ips\t\t does not check PSLSPEC\n");
+  fprintf(errstream, "\t -ii\t\t does not check INVARSPEC\n");
+  fprintf(errstream, "\t -r\t\t enables printing of reachable states\n");
+  fprintf(errstream, "\t -f\t\t computes the reachable states (forward search)\n"
                         "\t\t\t (default)\n");
-  fprintf(stderr, "\t -df\t\t disables the computation of reachable states\n");
-  fprintf(stderr, "\t -flt\t\t computes the reachable states also for the LTL Tableau\n");
-  fprintf(stderr, "\t -AG\t\t enables AG only search\n");
-  fprintf(stderr, "\t -i iv_file\t reads order of variables from file \"iv_file\"\n");
-  fprintf(stderr, "\t -o ov_file\t prints order of variables to file \"ov_file\"\n");
-  fprintf(stderr, "\t -t tv_file\t reads order of vars for clustering from file \"tv_file\"\n");
-  fprintf(stderr, "\t -reorder\t enables reordering of variables before exiting\n");
-  fprintf(stderr, "\t -dynamic\t enables dynamic reordering of variables\n");
-  fprintf(stderr, "\t -m method\t sets the variable ordering method to \"method\".\n");
-  fprintf(stderr, "\t\t\t Reordering will be activated\n");
-  fprintf(stderr, "\t -disable_bdd_cache    disables caching of expressions evaluation to BDD\n");
-  fprintf(stderr, "\t -bdd_soh heuristics   sets the static variable ordering heuristics\n"
+  fprintf(errstream, "\t -df\t\t disables the computation of reachable states\n");
+  fprintf(errstream, "\t -flt\t\t computes the reachable states also for the LTL Tableau\n");
+  fprintf(errstream, "\t -AG\t\t enables AG only search\n");
+  fprintf(errstream, "\t -i iv_file\t reads order of variables from file \"iv_file\"\n");
+  fprintf(errstream, "\t -o ov_file\t prints order of variables to file \"ov_file\"\n");
+  fprintf(errstream, "\t -t tv_file\t reads order of vars for clustering from file \"tv_file\"\n");
+  fprintf(errstream, "\t -reorder\t enables reordering of variables before exiting\n");
+  fprintf(errstream, "\t -dynamic\t enables dynamic reordering of variables\n");
+  fprintf(errstream, "\t -m method\t sets the variable ordering method to \"method\".\n");
+  fprintf(errstream, "\t\t\t Reordering will be activated\n");
+  fprintf(errstream, "\t -disable_bdd_cache    disables caching of expressions evaluation to BDD\n");
+  fprintf(errstream, "\t -bdd_soh heuristics   sets the static variable ordering heuristics\n"
                         "\t\t\t to \"heuristics\".\n");
-  fprintf(stderr, "\t -mono\t\t enables monolithic transition relation\n");
-  fprintf(stderr, "\t -thresh cp_t\t conjunctive partitioning with threshold of each\n");
-  fprintf(stderr, "\t\t\t partition set to \"cp_t\" (DEFAULT, with cp_t=1000)\n");
-  fprintf(stderr, "\t -cp cp_t\t DEPRECATED: use -thresh instead.\n");
-  fprintf(stderr, "\t -iwls95 cp_t\t enables Iwls95 conjunctive partitioning and sets\n");
-  fprintf(stderr, "\t\t\t the threshold of each partition to \"cp_t\"\n");
-  fprintf(stderr, "\t -coi\t\t enables cone of influence reduction\n");
-  fprintf(stderr, "\t -noaffinity\t disables affinity clustering\n");
-  fprintf(stderr, "\t -iwls95preorder enables iwls95 preordering\n");
-  fprintf(stderr, "\t -bmc\t\t enables BMC instead of BDD model checking\n");
-  fprintf(stderr, "\t -sat_solver str sets the sat_solver variable, used by BMC\n");
-  fprintf(stderr,"\t\t\t "); Sat_PrintAvailableSolvers(nusmv_stderr);
-  fprintf(stderr, "\t -bmc_length k\t sets bmc_length variable, used by BMC\n");
-  fprintf(stderr, "\t -ofm fm_file\t prints flattened model to file \"fn_file\"\n");
-  fprintf(stderr, "\t -obm bm_file\t prints boolean model to file \"bn_file\"\n");
-  fprintf(stderr, "\t -sin on|off\t enables (on) or disables sexp inlining (default is off)\n");
-  fprintf(stderr, "\t -rin on|off\t enables (on) or disables rbc inlining (default is on)\n");
+  fprintf(errstream, "\t -mono\t\t enables monolithic transition relation\n");
+  fprintf(errstream, "\t -thresh cp_t\t conjunctive partitioning with threshold of each\n");
+  fprintf(errstream, "\t\t\t partition set to \"cp_t\" (DEFAULT, with cp_t=1000)\n");
+  fprintf(errstream, "\t -cp cp_t\t DEPRECATED: use -thresh instead.\n");
+  fprintf(errstream, "\t -iwls95 cp_t\t enables Iwls95 conjunctive partitioning and sets\n");
+  fprintf(errstream, "\t\t\t the threshold of each partition to \"cp_t\"\n");
+  fprintf(errstream, "\t -coi\t\t enables cone of influence reduction\n");
+  fprintf(errstream, "\t -noaffinity\t disables affinity clustering\n");
+  fprintf(errstream, "\t -iwls95preorder enables iwls95 preordering\n");
+  fprintf(errstream, "\t -bmc\t\t enables BMC instead of BDD model checking\n");
+  fprintf(errstream, "\t -sat_solver str sets the sat_solver variable, used by BMC\n");
+  fprintf(errstream,"\t\t\t "); Sat_PrintAvailableSolvers(errstream);
+  fprintf(errstream, "\t -bmc_length k\t sets bmc_length variable, used by BMC\n");
+  fprintf(errstream, "\t -ofm fm_file\t prints flattened model to file \"fn_file\"\n");
+  fprintf(errstream, "\t -obm bm_file\t prints boolean model to file \"bn_file\"\n");
+  fprintf(errstream, "\t -sin on|off\t enables (on) or disables sexp inlining (default is off)\n");
+  fprintf(errstream, "\t -rin on|off\t enables (on) or disables rbc inlining (default is on)\n");
   {
-    fprintf(stderr, "\t -ojeba str \t sets the algorthim used for BDD-based language\n"
+    fprintf(errstream, "\t -ojeba str \t sets the algorthim used for BDD-based language\n"
             "\t\t\t emptiness of B�chi fair transition systems\n"
             "\t\t\t (default is %s)\n",
             Bdd_BddOregJusticeEmptinessBddAlgorithmType_to_string(DEFAULT_OREG_JUSTICE_EMPTINESS_BDD_ALGORITHM));
-    fprintf(stderr,"\t\t\t ");
-    Bdd_print_available_BddOregJusticeEmptinessBddAlgorithms(nusmv_stderr);
+    fprintf(errstream,"\t\t\t ");
+    Bdd_print_available_BddOregJusticeEmptinessBddAlgorithms(errstream);
   }
-  fprintf(stderr, "\t input-file\t the file both the model and \n");
-  fprintf(stderr, "\t\t\t the spec were read from\n");
+  fprintf(errstream, "\t input-file\t the file both the model and \n");
+  fprintf(errstream, "\t\t\t the spec were read from\n");
 
   exit(2);
 }
@@ -455,6 +462,9 @@ static void BannerPrint(NuSMVEnv_ptr env,FILE * file)
 ******************************************************************************/
 static void sm_ParseLineOptions(const NuSMVEnv_ptr env,int argc, char ** argv, OptsHandler_ptr options)
 {
+  const StreamMgr_ptr streams = STREAM_MGR(NuSMVEnv_get_value(env, ENV_STREAM_MANAGER));
+  FILE* errstream = StreamMgr_get_error_stream(streams);
+
   /* parses the Program Name */
   argc--;
   set_pgm_path(options, *(argv++));
@@ -479,9 +489,9 @@ static void sm_ParseLineOptions(const NuSMVEnv_ptr env,int argc, char ** argv, O
 
 #if HAVE_SETVBUF
 # if SETVBUF_REVERSED
-      setvbuf(stdout, _IOLBF, (char *) NULL, 0);
+      setvbuf(outstream, _IOLBF, (char *) NULL, 0);
 # else
-      setvbuf(stdout, (char *) NULL, _IOLBF, 0);
+      setvbuf(outstream, (char *) NULL, _IOLBF, 0);
 # endif
 #endif
 
@@ -490,13 +500,13 @@ static void sm_ParseLineOptions(const NuSMVEnv_ptr env,int argc, char ** argv, O
     else if ((0 == strcmp(*argv, "-source")) || (strcmp(*argv,"-load") == 0)) {
       argc--;
       if (argc == 0) {
-        fprintf(stderr,
+        fprintf(errstream,
                 "The \"%s\" command line options requires an argument.\n",
                 (*argv));
         exit(1);
       }
       if (0 == strcmp(*argv, "-load")) {
-        fprintf(stderr,
+        fprintf(errstream,
                 "WARNING: -load is deprecated, use -source instead.\n");
       }
       argv++;
@@ -541,7 +551,7 @@ static void sm_ParseLineOptions(const NuSMVEnv_ptr env,int argc, char ** argv, O
     }
     else if (strcmp(*argv,"-n") == 0){
       if (argc < 2) {
-        fprintf(stderr, "The \"-n\" command line option requires an argument.\n");
+        fprintf(errstream, "The \"-n\" command line option requires an argument.\n");
         exit(1);
       }
       {
@@ -552,11 +562,11 @@ static void sm_ParseLineOptions(const NuSMVEnv_ptr env,int argc, char ** argv, O
         argv++; argc -= 2;
         prop_no = strtol(*(argv++),err_occ, 10);
         if (strcmp(err_occ[0], "") != 0) {
-          fprintf(stderr, "Error: \"%s\" is not a valid value for the \"-n\" command line option.\n", err_occ[0]);
+          fprintf(errstream, "Error: \"%s\" is not a valid value for the \"-n\" command line option.\n", err_occ[0]);
           exit(1);
         }
         if (prop_no < 0) {
-          fprintf(stderr, "Error: \"%d\" is not a valid value for the \"-n\" command line option.\n", prop_no);
+          fprintf(errstream, "Error: \"%d\" is not a valid value for the \"-n\" command line option.\n", prop_no);
           exit(1);
         }
         set_prop_no(options, prop_no);
@@ -565,7 +575,7 @@ static void sm_ParseLineOptions(const NuSMVEnv_ptr env,int argc, char ** argv, O
     }
     else if (strcmp(*argv,"-v") == 0){
       if (argc < 2) {
-        fprintf(stderr, "The \"-v\" command line option requires an argument.\n");
+        fprintf(errstream, "The \"-v\" command line option requires an argument.\n");
         exit(1);
       }
       {
@@ -576,16 +586,16 @@ static void sm_ParseLineOptions(const NuSMVEnv_ptr env,int argc, char ** argv, O
         argv++; argc -= 2;
         cur_verbose = strtol(*(argv++),err_occ, 10);
         if (strcmp(err_occ[0], "") != 0) {
-          fprintf(stderr, "Error: \"%s\" is not a valid value for the \"-v\" command line option.\n", err_occ[0]);
+          fprintf(errstream, "Error: \"%s\" is not a valid value for the \"-v\" command line option.\n", err_occ[0]);
           exit(1);
         }
         set_verbose_level(options, cur_verbose);
       }
 #if HAVE_SETVBUF
 # if SETVBUF_REVERSED
-      setvbuf(stdout, _IOLBF, (char *) NULL, 0);
+      setvbuf(outstream, _IOLBF, (char *) NULL, 0);
 # else
-      setvbuf(stdout, (char *)NULL, _IOLBF, 0);
+      setvbuf(outstream, (char *)NULL, _IOLBF, 0);
 # endif
 #endif
       continue;
@@ -615,7 +625,7 @@ static void sm_ParseLineOptions(const NuSMVEnv_ptr env,int argc, char ** argv, O
       char * preprocessors;
       char * pp_list;
       if (argc-- < 2) {
-        fprintf(stderr, "The \"-pre\" command line option requires an argument.\n");
+        fprintf(errstream, "The \"-pre\" command line option requires an argument.\n");
         exit(1);
       }
         argv++; argc--;
@@ -722,14 +732,14 @@ static void sm_ParseLineOptions(const NuSMVEnv_ptr env,int argc, char ** argv, O
     }
     else if (strcmp(*argv, "-m") == 0){
       if (argc < 2) {
-        fprintf(stderr, "The \"-m\" command line option requires an argument.\n");
+        fprintf(errstream, "The \"-m\" command line option requires an argument.\n");
         exit(1);
       }
       argv++; argc -= 2;
       {
         unsigned int reorder_method = StringConvertToDynOrderType(*argv);
         if ( reorder_method == REORDER_NONE) {
-          fprintf(stderr, "The method \"%s\" is not a valid reorder method.\n",
+          fprintf(errstream, "The method \"%s\" is not a valid reorder method.\n",
                          *argv);
           exit(1);
         }
@@ -745,14 +755,14 @@ static void sm_ParseLineOptions(const NuSMVEnv_ptr env,int argc, char ** argv, O
     }
     else if (strcmp(*argv, "-bdd_soh") == 0){
       if (argc < 2) {
-        fprintf(stderr, "The \"-bdd_soh\" command line option requires an argument.\n");
+        fprintf(errstream, "The \"-bdd_soh\" command line option requires an argument.\n");
         exit(1);
       }
       argv++; argc -= 2;
       {
         BddSohEnum value = Enc_string_to_bdd_static_order_heuristics(*argv);
         if (value == BDD_STATIC_ORDER_HEURISTICS_ERROR) {
-          fprintf(stderr, "The heuristics \"%s\" is not a valid static vars ordering heuristics.\n"
+          fprintf(errstream, "The heuristics \"%s\" is not a valid static vars ordering heuristics.\n"
                   "Valid values are: %s\n",
                   *argv, Enc_get_valid_bdd_static_order_heuristics());
           exit(1);
@@ -770,7 +780,7 @@ static void sm_ParseLineOptions(const NuSMVEnv_ptr env,int argc, char ** argv, O
     }
     else if((strcmp(*argv, "-cp") == 0) || (strcmp(*argv, "-thresh") == 0)){
       if (argc < 2) {
-        fprintf(stderr, "The \"-thresh\" (or \"-cp\") command line option requires an argument.\n");
+        fprintf(errstream, "The \"-thresh\" (or \"-cp\") command line option requires an argument.\n");
         exit(1);
       }
       {
@@ -791,7 +801,7 @@ static void sm_ParseLineOptions(const NuSMVEnv_ptr env,int argc, char ** argv, O
     }
     else if(strcmp(*argv, "-iwls95") == 0){
       if (argc < 2) {
-        fprintf(stderr, "The \"-iwls95\" command line option requires an argument.\n");
+        fprintf(errstream, "The \"-iwls95\" command line option requires an argument.\n");
         exit(1);
       }
       {
@@ -833,7 +843,7 @@ static void sm_ParseLineOptions(const NuSMVEnv_ptr env,int argc, char ** argv, O
     }
     else if (strcmp(*argv,"-sat_solver") == 0) {
       if (argc < 2) {
-        fprintf(stderr, "The \"-sat_solver\" command line option requires an argument.\n");
+        fprintf(errstream, "The \"-sat_solver\" command line option requires an argument.\n");
         exit(1);
       }
       argv++; argc--;
@@ -842,10 +852,10 @@ static void sm_ParseLineOptions(const NuSMVEnv_ptr env,int argc, char ** argv, O
         const char* normalizedSatSolver = Sat_NormalizeSatSolverName(satSolver);
         argv++; argc--;
         if (normalizedSatSolver == (const char*) NULL) {
-          fprintf(stderr,
+          fprintf(errstream,
                   "Error: \"%s\" is not a valid value for the \"-sat_solver\" command line option.\n",
                   satSolver);
-          Sat_PrintAvailableSolvers(nusmv_stderr);
+          Sat_PrintAvailableSolvers(errstream);
           exit(1);
         }
 
@@ -855,7 +865,7 @@ static void sm_ParseLineOptions(const NuSMVEnv_ptr env,int argc, char ** argv, O
     }
     else if (strcmp(*argv,"-bmc_length") == 0){
       if (argc < 2) {
-        fprintf(stderr, "The \"-bmc_length\" command line option requires an argument.\n");
+        fprintf(errstream, "The \"-bmc_length\" command line option requires an argument.\n");
         exit(1);
       }
       {
@@ -866,11 +876,11 @@ static void sm_ParseLineOptions(const NuSMVEnv_ptr env,int argc, char ** argv, O
         argv++; argc -= 2;
         bmc_length = strtol(*(argv++),err_occ, 10);
         if (strcmp(err_occ[0], "") != 0) {
-          fprintf(stderr, "Error: \"%s\" is not a valid value for the \"-bmc_length\" command line option.\n", err_occ[0]);
+          fprintf(errstream, "Error: \"%s\" is not a valid value for the \"-bmc_length\" command line option.\n", err_occ[0]);
           exit(1);
         }
         if (bmc_length < 0) {
-          fprintf(stderr, "Error: \"%d\" is not a valid value for the \"-bmc_length\" command line option.\n", bmc_length);
+          fprintf(errstream, "Error: \"%d\" is not a valid value for the \"-bmc_length\" command line option.\n", bmc_length);
           exit(1);
         }
         set_bmc_pb_length(options, bmc_length);
@@ -891,7 +901,7 @@ static void sm_ParseLineOptions(const NuSMVEnv_ptr env,int argc, char ** argv, O
     else if (strcmp(*argv, "-sin") == 0) {
       char* val;
       if (argc < 2) {
-        fprintf(stderr, "The \"-sin\" command line option requires an argument.\n");
+        fprintf(errstream, "The \"-sin\" command line option requires an argument.\n");
         exit(1);
       }
       argv++; argc -= 2;
@@ -899,7 +909,7 @@ static void sm_ParseLineOptions(const NuSMVEnv_ptr env,int argc, char ** argv, O
       if (strcmp(val , "off") == 0) unset_symb_inlining(options);
       else if (strcmp(val, "on") == 0) set_symb_inlining(options);
       else {
-        fprintf(stderr, "Error: \"%s\" is not a valid value for the \"-sin\" command line option.\n", val);
+        fprintf(errstream, "Error: \"%s\" is not a valid value for the \"-sin\" command line option.\n", val);
         exit(1);
       }
       continue;
@@ -907,7 +917,7 @@ static void sm_ParseLineOptions(const NuSMVEnv_ptr env,int argc, char ** argv, O
     else if (strcmp(*argv, "-rin") == 0) {
       char* val;
       if (argc < 2) {
-        fprintf(stderr, "The \"-rin\" command line option requires an argument.\n");
+        fprintf(errstream, "The \"-rin\" command line option requires an argument.\n");
         exit(1);
       }
       argv++; argc -= 2;
@@ -915,14 +925,14 @@ static void sm_ParseLineOptions(const NuSMVEnv_ptr env,int argc, char ** argv, O
       if (strcmp(val, "off") == 0) unset_rbc_inlining(options);
       else if (strcmp(val, "on") == 0) set_rbc_inlining(options);
       else {
-        fprintf(stderr, "Error: \"%s\" is not a valid value for the \"-rin\" command line option.\n", val);
+        fprintf(errstream, "Error: \"%s\" is not a valid value for the \"-rin\" command line option.\n", val);
         exit(1);
       }
       continue;
     }
     else if (strcmp(*argv, "-ojeba") == 0){
       if (argc < 2) {
-        fprintf(stderr,
+        fprintf(errstream,
                 "The \"-ojeba\" command line option requires an argument.\n");
         exit(1);
       }
@@ -931,12 +941,12 @@ static void sm_ParseLineOptions(const NuSMVEnv_ptr env,int argc, char ** argv, O
         BddOregJusticeEmptinessBddAlgorithmType alg =
           Bdd_BddOregJusticeEmptinessBddAlgorithmType_from_string(*argv);
         if (alg == BDD_OREG_JUSTICE_EMPTINESS_BDD_ALGORITHM_INVALID) {
-          fprintf(stderr,
+          fprintf(errstream,
                   "The algorithm \"%s\" is not a valid BDD-based "\
                   "algorithm to check language emptiness for omega-"\
                   "regular properties.\n",
                   *argv);
-          Bdd_print_available_BddOregJusticeEmptinessBddAlgorithms(nusmv_stderr);
+          Bdd_print_available_BddOregJusticeEmptinessBddAlgorithms(errstream);
           exit(1);
         }
         argv++;

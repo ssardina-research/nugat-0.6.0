@@ -66,7 +66,7 @@ static char rcsid[] UTIL_UNUSED = "$Id: TypeChecker.c,v 1.1.2.56.4.14 2010-01-11
 /*---------------------------------------------------------------------------*/
 /* Variable declarations                                                     */
 /*---------------------------------------------------------------------------*/
-EXTERN FILE* nusmv_stderr;
+
 extern int nusmv_yylineno;
 
 /*---------------------------------------------------------------------------*/
@@ -115,6 +115,8 @@ boolean TypeCheckerGame_check_property(TypeChecker_ptr self,
   const NuSMVEnv_ptr env = EnvObject_get_environment(ENV_OBJECT(self));
   const NodeMgr_ptr nodemgr = NODE_MGR(NuSMVEnv_get_value(env, ENV_NODE_MGR));
   OptsHandler_ptr opts = OPTS_HANDLER(NuSMVEnv_get_value(env, ENV_OPTS_HANDLER));
+  StreamMgr_ptr streams = STREAM_MGR(NuSMVEnv_get_value(env, ENV_STREAM_MANAGER));
+  FILE* errstream = StreamMgr_get_error_stream(streams);
 
   TYPE_CHECKER_CHECK_INSTANCE(self);
 
@@ -143,7 +145,7 @@ boolean TypeCheckerGame_check_property(TypeChecker_ptr self,
   if (opt_verbose_level_gt(opts, 3)) {
     if (isOK) {
       /* the property is not yet inserted to database => there is no index */
-      fprintf(stderr, "Successful type-checking of a property\n");
+      fprintf(errstream, "Successful type-checking of a property\n");
     }
   }
 

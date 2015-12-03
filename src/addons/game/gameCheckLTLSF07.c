@@ -281,8 +281,8 @@ typedef struct Game_SF07_StructCheckLTLGameSF07_TAG {
 /* Variable declarations                                                     */
 /*---------------------------------------------------------------------------*/
 
-EXTERN FILE* nusmv_stdout;
-EXTERN FILE* nusmv_stderr;
+
+
 /*---------------------------------------------------------------------------*/
 /* Macro declarations                                                        */
 /*---------------------------------------------------------------------------*/
@@ -416,6 +416,11 @@ void Game_CheckLtlGameSpecSF07(PropGame_ptr prop,
   NuSMVEnv_ptr env = EnvObject_get_environment(ENV_OBJECT(prop));
   const NodeMgr_ptr nodemgr = NODE_MGR(NuSMVEnv_get_value(env, ENV_NODE_MGR));
   OptsHandler_ptr opts = OPTS_HANDLER(NuSMVEnv_get_value(env, ENV_OPTS_HANDLER));
+  StreamMgr_ptr streams = STREAM_MGR(NuSMVEnv_get_value(env, ENV_STREAM_MANAGER));
+  FILE* outstream = StreamMgr_get_output_stream(streams);
+  FILE* errstream = StreamMgr_get_error_stream(streams);
+  OStream_ptr outostream = StreamMgr_get_output_ostream(streams);
+  OStream_ptr errostream = StreamMgr_get_error_ostream(streams);
 
   PROP_GAME_CHECK_INSTANCE(prop);
   nusmv_assert(Prop_get_status(PROP(prop)) == Prop_Unchecked);
@@ -433,15 +438,15 @@ void Game_CheckLtlGameSpecSF07(PropGame_ptr prop,
 
   /* As in gameGeneral.c::Game_BeforeCheckingSpec. */
   if (opt_verbose_level_ge(opts, 1)) {
-    fprintf(stderr, "computing ");
-    fprintf(stderr, " ");
-    Prop_print(PROP(cls->prop), (OStream_ptr)nusmv_stderr, PROP_PRINT_FMT_FORMULA);
-    fprintf(stderr, "\n");
+    fprintf(errstream, "computing ");
+    fprintf(errstream, " ");
+    Prop_print(PROP(cls->prop), errostream, PROP_PRINT_FMT_FORMULA);
+    fprintf(errstream, "\n");
   }
 
   /* Some additional info. */
   if (opt_verbose_level_ge(opts, 2)) {
-    fprintf(stderr,
+    fprintf(errstream,
        "\nwith Game_CheckLtlGameSpecSF07 using kmin = %d, kmax = %d, w = %s.\n",
             cls->kmin,
             cls->kmax,
@@ -488,19 +493,19 @@ void Game_CheckLtlGameSpecSF07(PropGame_ptr prop,
 
   /* Announce result. */
   {
-    fprintf(stdout, "-- ");
-    fprintf(stdout, " ");
-    Prop_print(PROP(prop), (OStream_ptr)stdout, PROP_PRINT_FMT_FORMULA);
+    fprintf(outstream, "-- ");
+    fprintf(outstream, " ");
+    Prop_print(PROP(prop), outostream, PROP_PRINT_FMT_FORMULA);
 
     switch (Prop_get_status(PROP(cls->prop))) {
     case Prop_True:
-      fprintf(stdout, " : the strategy has been found\n");
+      fprintf(outstream, " : the strategy has been found\n");
       break;
     case Prop_False:
-      fprintf(stdout, " : no strategy exists\n");
+      fprintf(outstream, " : no strategy exists\n");
       break;
     case Prop_Unchecked:
-      fprintf(stdout, " : existence of a strategy is unknown\n");
+      fprintf(outstream, " : existence of a strategy is unknown\n");
       nusmv_assert(cls->strategy == GAME_STRATEGY(NULL));
       break;
     default:
@@ -523,7 +528,7 @@ void Game_CheckLtlGameSpecSF07(PropGame_ptr prop,
     }
   }
 
-  fprintf(stdout, "\n");
+  fprintf(outstream, "\n");
 
   /* Clean up. */
   if (Prop_get_status(PROP(cls->prop)) == Prop_True ||
@@ -835,6 +840,9 @@ static void Game_SF07_StructCheckLTLGameSF07_run_iteration
   const ErrorMgr_ptr errmgr = ERROR_MGR(NuSMVEnv_get_value(env, ENV_ERROR_MANAGER));
   const NodeMgr_ptr nodemgr = NODE_MGR(NuSMVEnv_get_value(env, ENV_NODE_MGR));
   OptsHandler_ptr opts = OPTS_HANDLER(NuSMVEnv_get_value(env, ENV_OPTS_HANDLER));
+  StreamMgr_ptr streams = STREAM_MGR(NuSMVEnv_get_value(env, ENV_STREAM_MANAGER));
+  FILE* errstream = StreamMgr_get_error_stream(streams);
+
   /* Increase counter. */
   nusmv_assert(ltlgame_sf07_unique_number < 999999999);
   ltlgame_sf07_unique_number++;
@@ -845,7 +853,7 @@ static void Game_SF07_StructCheckLTLGameSF07_run_iteration
                                                     ltlgame_sf07_unique_number);
 
   if (opt_verbose_level_ge(opts, 2)) {
-    fprintf(stderr,
+    fprintf(errstream,
             "\nGame_CheckLtlGameSpecSF07: performing iteration with curr_k = "
             "%d, curr_player = %d.\n\n",
             curr_k,
@@ -868,13 +876,13 @@ static void Game_SF07_StructCheckLTLGameSF07_run_iteration
     }
   }
   FAIL(errmgr) {
-    fprintf(stderr,
+    fprintf(errstream,
             "Error executing an iteration of the sf07 algorithm.\n");
     ErrorMgr_nusmv_exit(errmgr,1);
   }
 
   if (opt_verbose_level_ge(opts, 2)) {
-    fprintf(stderr,
+    fprintf(errstream,
             "\nGame_CheckLtlGameSpecSF07: finished iteration. Sub game is %s.\n",
             ((self->curr_goal_realizability == GAME_REALIZABLE) ?
              "realizable" :
@@ -922,6 +930,8 @@ static void Game_SF07_StructCheckLTLGameSF07_construct_ba
   const ErrorMgr_ptr  errmgr = ERROR_MGR(NuSMVEnv_get_value(env, ENV_ERROR_MANAGER));
   const MasterPrinter_ptr wffprint = MASTER_PRINTER(NuSMVEnv_get_value(env, ENV_WFF_PRINTER));
   OptsHandler_ptr opts = OPTS_HANDLER(NuSMVEnv_get_value(env, ENV_OPTS_HANDLER));
+  StreamMgr_ptr streams = STREAM_MGR(NuSMVEnv_get_value(env, ENV_STREAM_MANAGER));
+  FILE* errstream = StreamMgr_get_error_stream(streams);
 
   /* Has the ba already been constructed? */
   if (((self->curr_player == PLAYER_1) &&
@@ -959,7 +969,7 @@ static void Game_SF07_StructCheckLTLGameSF07_construct_ba
     if (NodeList_get_length(/*SymbLayer_get_all_symbols(det_layer)*/syms) != 0) {
       char* tmp;
       tmp = sprint_node(wffprint,formula);
-      fprintf(stderr,
+      fprintf(errstream,
               "Error generating B\"uchi automaton for formula %s: "
               "booleanization introduced determinization variables.\n",
               tmp);
@@ -973,11 +983,11 @@ static void Game_SF07_StructCheckLTLGameSF07_construct_ba
 
     /* Log result. */
     if (opt_verbose_level_ge(opts, 4)) {
-      fprintf(stderr,
+      fprintf(errstream,
               "\nGame_SF07_StructCheckLTLGameSF07_construct_ba: booleanized, "
               "nnfed formula is:\n");
-      print_node(wffprint,nusmv_stderr, nnfed);
-      fprintf(stderr,
+      print_node(wffprint,errstream, nnfed);
+      fprintf(errstream,
               "\nGame_SF07_StructCheckLTLGameSF07_construct_ba: end "
               "booleanized, nnfed formula\n");
     }
@@ -988,7 +998,7 @@ static void Game_SF07_StructCheckLTLGameSF07_construct_ba
   if (ba == GAME_SF07_GBA(NULL)) {
     char* tmp;
     tmp = sprint_node(wffprint,formula);
-    fprintf(stderr,
+    fprintf(errstream,
             "Error generating B\"uchi automaton for formula %s.\n",
             tmp);
     FREE(tmp);
@@ -997,7 +1007,7 @@ static void Game_SF07_StructCheckLTLGameSF07_construct_ba
   if (Game_SF07_gba_get_fairness_constraints_count(ba) > 1) {
     char* tmp;
     tmp = sprint_node(wffprint,formula);
-    fprintf(stderr,
+    fprintf(errstream,
             "Error generating B\"uchi automaton for formula %s: result has "
             "more than 1 fairness constraints.\n",
             tmp);
@@ -1134,6 +1144,8 @@ static void Game_SF07_StructCheckLTLGameSF07_construct_monitor_sexp
     MasterPrinter_ptr wffprint = MASTER_PRINTER(NuSMVEnv_get_value(env, ENV_WFF_PRINTER));
     const UStringMgr_ptr strings = USTRING_MGR(NuSMVEnv_get_value(env, ENV_STRING_MGR));
     OptsHandler_ptr opts = OPTS_HANDLER(NuSMVEnv_get_value(env, ENV_OPTS_HANDLER));
+    StreamMgr_ptr streams = STREAM_MGR(NuSMVEnv_get_value(env, ENV_STREAM_MANAGER));
+    FILE* errstream = StreamMgr_get_error_stream(streams);
 
   GAME_SF07_STRUCT_CHECK_LTL_GAME_SF07_CHECK_INSTANCE(self);
   if (self->curr_player == PLAYER_1) {
@@ -1181,14 +1193,14 @@ static void Game_SF07_StructCheckLTLGameSF07_construct_monitor_sexp
                        monitor);
 
     if (opt_verbose_level_ge(opts, 4)) {
-      fprintf(stderr,
+      fprintf(errstream,
               "\nGame_SF07_StructCheckLTLGameSF07_construct_monitor_sexp: "
               "player 2 monitor is:\n");
       Game_SF07_StructCheckLTLGameSF07_print_monitor(wffprint,
-                                                     nusmv_stderr,
+                                                     errstream,
                                                      monitor,
                                                      false);
-      fprintf(stderr,
+      fprintf(errstream,
               "\nGame_SF07_StructCheckLTLGameSF07_construct_monitor_sexp: end "
               "player 2 monitor\n");
     }
@@ -1223,14 +1235,14 @@ static void Game_SF07_StructCheckLTLGameSF07_construct_monitor_sexp
                        Nil);
 
     if (opt_verbose_level_ge(opts, 4)) {
-      fprintf(stderr,
+      fprintf(errstream,
               "\nGame_SF07_StructCheckLTLGameSF07_construct_monitor_sexp: "
               "player 1 monitor is:\n");
       Game_SF07_StructCheckLTLGameSF07_print_monitor(wffprint,
-                                                     nusmv_stderr,
+                                                     errstream,
                                                      monitor,
                                                      false);
-      fprintf(stderr,
+      fprintf(errstream,
               "\nGame_SF07_StructCheckLTLGameSF07_construct_monitor_sexp: end "
               "player 1 monitor\n");
     }
@@ -2074,6 +2086,9 @@ static void Game_SF07_StructCheckLTLGameSF07_check
 
   const NodeMgr_ptr nodemgr = NODE_MGR(NuSMVEnv_get_value(env, ENV_NODE_MGR));
   OptsHandler_ptr opts = OPTS_HANDLER(NuSMVEnv_get_value(env, ENV_OPTS_HANDLER));
+  StreamMgr_ptr streams = STREAM_MGR(NuSMVEnv_get_value(env, ENV_STREAM_MANAGER));
+  FILE* errstream = StreamMgr_get_error_stream(streams);
+  OStream_ptr errostream = StreamMgr_get_error_ostream(streams);
 
   GAME_SF07_STRUCT_CHECK_LTL_GAME_SF07_CHECK_INSTANCE(self);
   GAME_BDD_FSM_CHECK_INSTANCE(self->curr_product_game_bdd_fsm);
@@ -2096,10 +2111,10 @@ static void Game_SF07_StructCheckLTLGameSF07_check
 
   /* Log property. */
   if (opt_verbose_level_ge(opts, 4)) {
-    fprintf(stderr,
+    fprintf(errstream,
             "\nGame_SF07_StructCheckLTLGameSF07_check: sub game goal is:\n");
-    Prop_print(PROP(prop), (OStream_ptr)nusmv_stderr, PROP_PRINT_FMT_FORMULA);
-    fprintf(stderr,
+    Prop_print(PROP(prop), errostream, PROP_PRINT_FMT_FORMULA);
+    fprintf(errstream,
             "\nGame_SF07_StructCheckLTLGameSF07_check: end sub game goal\n");
   }
 
@@ -2310,6 +2325,8 @@ static void Game_SF07_StructCheckLTLGameSF07_print_strategy_monitor_sexp
   const NuSMVEnv_ptr env = EnvObject_get_environment(ENV_OBJECT(self));
   MasterPrinter_ptr wffprint = MASTER_PRINTER(NuSMVEnv_get_value(env, ENV_WFF_PRINTER));
   OptsHandler_ptr opts = OPTS_HANDLER(NuSMVEnv_get_value(env, ENV_OPTS_HANDLER));
+  const StreamMgr_ptr streams = STREAM_MGR(NuSMVEnv_get_value(env, ENV_STREAM_MANAGER));
+  FILE* outstream = StreamMgr_get_output_stream(streams);
 
   GAME_STRATEGY_CHECK_INSTANCE(self->strategy);
   {
@@ -2374,7 +2391,7 @@ static void Game_SF07_StructCheckLTLGameSF07_print_strategy_monitor_sexp
     out = (((self->params != (gameParams_ptr) NULL) &&
             (self->params)->strategy_stream != (FILE *) NULL)
            ? (self->params)->strategy_stream
-           : stdout);
+           : outstream);
     monitor_body =
       cdr(self->curr_player2_monitor_sexp_copy);
     Game_SF07_StructCheckLTLGameSF07_print_monitor(wffprint, out,  monitor_body, true);
@@ -2426,6 +2443,8 @@ static void Game_SF07_StructCheckLTLGameSF07_print_strategy_monitor_bdd
 
   MasterPrinter_ptr wffprint = MASTER_PRINTER(NuSMVEnv_get_value(env, ENV_WFF_PRINTER));
   OptsHandler_ptr opts = OPTS_HANDLER(NuSMVEnv_get_value(env, ENV_OPTS_HANDLER));
+  StreamMgr_ptr streams = STREAM_MGR(NuSMVEnv_get_value(env, ENV_STREAM_MANAGER));
+  FILE* outstream = StreamMgr_get_output_stream(streams);
 
   GAME_SF07_STRUCT_CHECK_LTL_GAME_SF07_CHECK_INSTANCE(self);
   GAME_STRATEGY_CHECK_INSTANCE(self->strategy);
@@ -2442,7 +2461,7 @@ static void Game_SF07_StructCheckLTLGameSF07_print_strategy_monitor_bdd
   out = ((self->params != (gameParams_ptr) NULL) &&
          (self->params)->strategy_stream != (FILE *) NULL)
     ? (self->params)->strategy_stream
-    : stdout;
+    : outstream;
   do_sharing = (self->params != (gameParams_ptr) NULL) &&
     self->params->printout_as_dag;
   do_indentation = (self->params != (gameParams_ptr) NULL) &&

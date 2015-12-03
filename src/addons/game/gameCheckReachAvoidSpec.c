@@ -76,8 +76,8 @@ static char rcsid[] UTIL_UNUSED = "$Id: gameCheckReachAvoidSpec.c,v 1.1.2.5 2010
 /*---------------------------------------------------------------------------*/
 /* Variable declarations                                                     */
 /*---------------------------------------------------------------------------*/
-EXTERN FILE* nusmv_stdout;
-EXTERN FILE* nusmv_stderr;
+
+
 EXTERN options_ptr options;
 ;
 
@@ -320,6 +320,9 @@ Game_RealizabilityStatus Game_UseStrongReachabilityAlgorithm(PropGame_ptr prop,
   const ErrorMgr_ptr errmgr = ERROR_MGR(NuSMVEnv_get_value(env, ENV_ERROR_MANAGER));
 
   OptsHandler_ptr oh = OPTS_HANDLER(NuSMVEnv_get_value(env, ENV_OPTS_HANDLER));
+  StreamMgr_ptr streams = STREAM_MGR(NuSMVEnv_get_value(env, ENV_STREAM_MANAGER));
+  FILE* outstream = StreamMgr_get_output_stream(streams);
+  FILE* errstream = StreamMgr_get_error_stream(streams);
 
   PROP_GAME_CHECK_INSTANCE(prop);
   nusmv_assert(PropGame_ReachTarget == Prop_get_type(PROP(prop)) ||
@@ -397,7 +400,7 @@ Game_RealizabilityStatus Game_UseStrongReachabilityAlgorithm(PropGame_ptr prop,
   {
     /* init is zero */
     if (bdd_is_false(dd_manager, init_1) || bdd_is_false(dd_manager, init_2)) {
-      fprintf(stderr, "\n********   WARNING   ********\n"
+      fprintf(errstream, "\n********   WARNING   ********\n"
               "Initial states set for %s is empty.\n"
               "******** END WARNING ********\n",
               bdd_is_false(dd_manager, init_1) ? PLAYER_NAME_1 : PLAYER_NAME_2);
@@ -408,14 +411,14 @@ Game_RealizabilityStatus Game_UseStrongReachabilityAlgorithm(PropGame_ptr prop,
     if ((PropGame_ReachTarget == Prop_get_type(PROP(prop))
          || PropGame_AvoidTarget == Prop_get_type(PROP(prop)))
         && bdd_is_false(dd_manager, originalTarget)) {
-      fprintf(stderr, "\n********   WARNING   ********\n"
+      fprintf(errstream, "\n********   WARNING   ********\n"
               "The target states set is empty.\n"
               "******** END WARNING ********\n");
       /* continue the check because deadlock state may allow to win */
     }
     /* target is reached at step zero */
     if (isTargetReached) {
-      fprintf(stderr, "\n********   WARNING   ********\n"
+      fprintf(errstream, "\n********   WARNING   ********\n"
               "The target states are reached at step 0.\n"
               "Probably this is not what was intended.\n"
               "******** END WARNING ********\n");
@@ -430,7 +433,7 @@ Game_RealizabilityStatus Game_UseStrongReachabilityAlgorithm(PropGame_ptr prop,
     bdd_ptr previousReachStates = bdd_dup(allReachStates);
 
     if(opt_verbose_level_gt(oh, 0)) {
-      fprintf(stdout, "\n-----------------------------\n"
+      fprintf(outstream, "\n-----------------------------\n"
               "Reach-target algorithm: iteration %d\n", pathLength);
     }
 
@@ -464,7 +467,7 @@ Game_RealizabilityStatus Game_UseStrongReachabilityAlgorithm(PropGame_ptr prop,
 
   /* auxiliary info */
   if(opt_verbose_level_gt(oh, 0)) {
-    fprintf(stdout,
+    fprintf(outstream,
             "The number of iterations for strategy computation is %d.\n",
             pathLength);
   }

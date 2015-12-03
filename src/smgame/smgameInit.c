@@ -53,7 +53,7 @@ static char rcsid[] UTIL_UNUSED = "$Id: smInit.c,v 1.4.2.22.2.3.2.20.4.18 2009-1
 /*---------------------------------------------------------------------------*/
 /* Variable declarations                                                     */
 /*---------------------------------------------------------------------------*/
-EXTERN FILE* nusmv_stderr;
+
 
 /*---------------------------------------------------------------------------*/
 /* Definition of exported functions                                          */
@@ -74,28 +74,30 @@ EXTERN FILE* nusmv_stderr;
 void Smgame_Reset(NuSMVEnv_ptr env)
 {
   OptsHandler_ptr opts = OPTS_HANDLER(NuSMVEnv_get_value(env, ENV_OPTS_HANDLER));
+  StreamMgr_ptr streams = STREAM_MGR(NuSMVEnv_get_value(env, ENV_STREAM_MANAGER));
+  FILE* errstream = StreamMgr_get_error_stream(streams);
 
   if (opt_verbose_level_gt(opts, 1)) {
-    fprintf(stderr, "Shutting down the game part...\n");
+    fprintf(errstream, "Shutting down the game part...\n");
   }
   NuGaTAddons_Quit(env);
   if (opt_verbose_level_gt(opts, 2)) {
-    fprintf(stderr, "Done\n");
+    fprintf(errstream, "Done\n");
   }
 
   CInit_reset_first(env);
   CInit_reset_last(env);
 
   if (opt_verbose_level_gt(opts, 1)) {
-    fprintf(stderr, "Starting the game part...\n");
+    fprintf(errstream, "Starting the game part...\n");
   }
   NuGaTAddons_Init(env);
   if (opt_verbose_level_gt(opts, 2)) {
-    fprintf(stderr, "Done\n");
+    fprintf(errstream, "Done\n");
   }
 
   if (opt_verbose_level_gt(opts, 1)) {
-    fprintf(stderr, "The game part is now up and ready\n");
+    fprintf(errstream, "The game part is now up and ready\n");
   }
 }
 

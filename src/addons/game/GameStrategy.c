@@ -308,7 +308,7 @@ typedef struct GameStrategy_TAG GameStrategy;
 /* Variable declarations                                                     */
 /*---------------------------------------------------------------------------*/
 
-EXTERN FILE* nusmv_stdout;
+
 
 /*---------------------------------------------------------------------------*/
 /* Macro declarations                                                        */
@@ -978,7 +978,10 @@ void GameStrategy_print_module(GameStrategy_ptr self,
   FILE* out;
   boolean do_sharing;
   boolean do_indentation;
-  NuSMVEnv_ptr env;
+  NuSMVEnv_ptr env = EnvObject_get_environment(ENV_OBJECT(self));
+  MasterPrinter_ptr wffprint = MASTER_PRINTER(NuSMVEnv_get_value(env, ENV_WFF_PRINTER));
+  StreamMgr_ptr streams = STREAM_MGR(NuSMVEnv_get_value(env, ENV_STREAM_MANAGER));
+  FILE* outstream = StreamMgr_get_output_stream(streams);
 
   GAME_STRATEGY_CHECK_INSTANCE(self);
   NODE_LIST_CHECK_INSTANCE(vars);
@@ -988,16 +991,11 @@ void GameStrategy_print_module(GameStrategy_ptr self,
   out = ((params != (gameParams_ptr) NULL) &&
          (params->strategy_stream != (FILE*) NULL)) ?
     params->strategy_stream :
-    stdout;
+    outstream;
   do_sharing = ((params != (gameParams_ptr) NULL) &&
                 params->printout_as_dag);
   do_indentation = ((params != (gameParams_ptr) NULL) &&
                     params->indented_printout);
-
-  env = EnvObject_get_environment(ENV_OBJECT(st));
-
-  MasterPrinter_ptr wffprint =
-            MASTER_PRINTER(NuSMVEnv_get_value(env, ENV_WFF_PRINTER));
 
   fprintf(out, "MODULE STRATEGY_MODULE%d\n\n", ++module_incr_number);
 

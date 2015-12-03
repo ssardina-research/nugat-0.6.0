@@ -66,8 +66,8 @@ static char rcsid[] UTIL_UNUSED = "$Id: smMisc.c,v 1.26.2.26.2.3.2.26.4.14 2010-
 /*---------------------------------------------------------------------------*/
 /* Variable declarations                                                     */
 /*---------------------------------------------------------------------------*/
-EXTERN FILE* nusmv_stderr;
-EXTERN FILE* nusmv_stdout;
+
+
 EXTERN DDMgr_ptr dd_manager;
 
 /*---------------------------------------------------------------------------*/
@@ -99,6 +99,9 @@ void Smgame_BatchMain(NuSMVEnv_ptr env)
   PropDb_ptr  prop_db = PROP_DB(NuSMVEnv_get_value(env, ENV_PROP_DB));
   OptsHandler_ptr oh = OPTS_HANDLER(NuSMVEnv_get_value(env, ENV_OPTS_HANDLER));
   const ErrorMgr_ptr errmgr = ERROR_MGR(NuSMVEnv_get_value(env, ENV_ERROR_MANAGER));
+  StreamMgr_ptr streams = STREAM_MGR(NuSMVEnv_get_value(env, ENV_STREAM_MANAGER));
+  FILE* outstream = StreamMgr_get_output_stream(streams);
+  FILE* errstream = StreamMgr_get_error_stream(streams);
 
   /* Necessary to have standard behavior in the batch mode */
   ErrorMgr_reset_long_jmp(errmgr);
@@ -150,7 +153,7 @@ void Smgame_BatchMain(NuSMVEnv_ptr env)
   /* ================================================== */
   if (opt_bmc_mode(oh) == true) {
     if (opt_verbose_level_gt(oh, 0)) {
-      fprintf(stderr, "Entering BMC mode...\n");
+      fprintf(errstream, "Entering BMC mode...\n");
     }
 
     /* games cannot be checked with BMC */
@@ -173,12 +176,12 @@ void Smgame_BatchMain(NuSMVEnv_ptr env)
       Prop_ptr prop;
 
       if (opt_verbose_level_gt(oh, 0)) {
-        fprintf(stderr, "Verifying property %d...\n", prop_no);
+        fprintf(errstream, "Verifying property %d...\n", prop_no);
       }
 
       if ((prop_no < 0) ||
           (prop_no >= PropDb_get_size(prop_db))) {
-        fprintf(stderr,
+        fprintf(errstream,
                 "Error: \"%d\" is not a valid property index\n",
                 prop_no);
         ErrorMgr_nusmv_exit(errmgr,1);
@@ -229,7 +232,7 @@ void Smgame_BatchMain(NuSMVEnv_ptr env)
         break;
 
       default:
-        fprintf(stderr,
+        fprintf(errstream,
                 "Error: only LTL, PSL and INVAR properties can be checked in "
                 "BMC mode\n");
         ErrorMgr_nusmv_exit(errmgr,1);
@@ -246,7 +249,7 @@ void Smgame_BatchMain(NuSMVEnv_ptr env)
         int rel_loop;
 
         if (opt_verbose_level_gt(oh, 0)) {
-          fprintf(stderr, "Verifying the LTL properties...\n");
+          fprintf(errstream, "Verifying the LTL properties...\n");
         }
 
 
@@ -277,7 +280,7 @@ void Smgame_BatchMain(NuSMVEnv_ptr env)
           Bmc_Utils_ConvertLoopFromString(get_bmc_pb_loop(oh), NULL);
 
         if (opt_verbose_level_gt(oh, 0)) {
-          fprintf(stderr, "Verifying the PSL properties...\n");
+          fprintf(errstream, "Verifying the PSL properties...\n");
         }
 
         props = PropDb_get_props_of_type(prop_db, Prop_Psl);
@@ -303,7 +306,7 @@ void Smgame_BatchMain(NuSMVEnv_ptr env)
         Prop_ptr prop;
 
         if (opt_verbose_level_gt(oh, 0)) {
-          fprintf(stderr, "Verifying the INVAR properties...\n");
+          fprintf(errstream, "Verifying the INVAR properties...\n");
         }
 
         props = PropDb_get_props_of_type(prop_db,
@@ -337,7 +340,7 @@ void Smgame_BatchMain(NuSMVEnv_ptr env)
   /* checks the fsm if required */
   if (opt_check_fsm(oh) == true) {
     if (opt_cone_of_influence(oh)) {
-      fprintf(stderr,
+      fprintf(errstream,
               "WARNING: Check for totality of the transition relation cannot "
               "currently\n"
               "performed in batch mode if the cone of influence reduction has "
@@ -348,7 +351,7 @@ void Smgame_BatchMain(NuSMVEnv_ptr env)
 
     /* The Game FSM cannot be checked */
     if (opt_game_game(oh)) {
-      fprintf(stderr,
+      fprintf(errstream,
       "WARNING: Check for totality of the Game transition relations cannot \n"
               "currently performed.\n");
       ErrorMgr_nusmv_exit(errmgr,1);
@@ -443,9 +446,9 @@ void Smgame_BatchMain(NuSMVEnv_ptr env)
 
   /* Computing and Reporting of the Effect of Reordering */
   if (opt_reorder(oh)) {
-    fprintf(stdout, "\n========= starting reordering ============\n");
+    fprintf(outstream, "\n========= starting reordering ============\n");
     dd_reorder(dd_manager, get_reorder_method(oh), DEFAULT_MINSIZE);
-    fprintf(stdout, "\n========= after reordering ============\n");
+    fprintf(outstream, "\n========= after reordering ============\n");
     if (opt_verbose_level_gt(oh, 0)) {
       if (Cmd_CommandExecute(env,"print_usage")) ErrorMgr_nusmv_exit(errmgr,1);
     }
@@ -456,7 +459,7 @@ void Smgame_BatchMain(NuSMVEnv_ptr env)
   /* Reporting of Reachable States */
   if (opt_print_reachable(oh) == true) {
     if (opt_cone_of_influence(oh)) {
-      fprintf(stderr,
+      fprintf(errstream,
               "WARNING: Statistics of reachable states is not currently "
               "available\n"
               "in batch mode if cone of influence reduction has been "
@@ -466,7 +469,7 @@ void Smgame_BatchMain(NuSMVEnv_ptr env)
 #if HAVE_GAME
     /* The Game FSM cannot be checked */
     if (opt_game_game(oh)) {
-      fprintf(stderr,
+      fprintf(errstream,
       "WARNING: Statistics of reachable states is not currently available\n"
               "for Game transition relations.\n");
       ErrorMgr_nusmv_exit(errmgr,1);
@@ -477,11 +480,11 @@ void Smgame_BatchMain(NuSMVEnv_ptr env)
                                        false, /* do not print states */
                                        false, /* do not print defines */
                                        false, /* do not print formula */
-                                       OSTREAM(stdout));
+                                       OSTREAM(outstream));
   }
 
   } FAIL(errmgr) {
-    fprintf(stderr, "\nNuGaT terminated by a signal\n");
+    fprintf(errstream, "\nNuGaT terminated by a signal\n");
     ErrorMgr_nusmv_exit(errmgr,1);
   }
 }

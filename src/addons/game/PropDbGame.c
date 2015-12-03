@@ -81,8 +81,8 @@ static char rcsid[] UTIL_UNUSED = "$Id$";
 /*---------------------------------------------------------------------------*/
 /* Variable declarations                                                     */
 /*---------------------------------------------------------------------------*/
-EXTERN FILE* nusmv_stdout;
-EXTERN FILE* nusmv_stderr;
+
+
 
 /*---------------------------------------------------------------------------*/
 /* Macro declarations                                                        */
@@ -575,6 +575,10 @@ int prop_db_game_prop_create_and_add(PropDbGame_ptr self,
 
   const NuSMVEnv_ptr env = EnvObject_get_environment(ENV_OBJECT(self));
   OptsHandler_ptr opts = OPTS_HANDLER(NuSMVEnv_get_value(env, ENV_OPTS_HANDLER));
+  const StreamMgr_ptr streams = STREAM_MGR(NuSMVEnv_get_value(env, ENV_STREAM_MANAGER));
+  OStream_ptr errostream = StreamMgr_get_error_ostream(streams);
+  FILE* outstream = StreamMgr_get_output_stream(streams);
+  FILE* errstream = StreamMgr_get_error_stream(streams);
 
   PROP_DB_GAME_CHECK_INSTANCE(self);
   SYMB_TABLE_CHECK_INSTANCE(symb_table);
@@ -588,27 +592,27 @@ int prop_db_game_prop_create_and_add(PropDbGame_ptr self,
 
   if (!TypeCheckerGame_check_property(SymbTable_get_type_checker(symb_table),
                                       PROP(prop))) {
-    fprintf(stderr, "ERROR: Property \"");
-    Prop_print(PROP(prop), (OStream_ptr)nusmv_stderr, PROP_PRINT_FMT_FORMULA);
-    fprintf(stderr, "\b\" is not correct or not well typed.\n");
+    fprintf(errstream, "ERROR: Property \"");
+    Prop_print(PROP(prop), errostream, PROP_PRINT_FMT_FORMULA);
+    fprintf(errstream, "\b\" is not correct or not well typed.\n");
     return -1; /* type violation */
   }
 
   /* Add property to database */
   if (opt_verbose_level_gt(opts, 3)) {
-    fprintf(stdout,
+    fprintf(outstream,
             "Attempting to add %s property (index %d) to property list.\n",
             Prop_get_type_as_string(PROP(prop)), index);
   }
   retval = PropDb_add(PROP_DB(self), PROP(prop));
   if (opt_verbose_level_gt(opts, 3)) {
     if (retval == 1) {
-      fprintf(stdout, \
+      fprintf(outstream, \
               "Failing to add %s property (index %d) to property list.\n", \
               Prop_get_type_as_string(PROP(prop)), index);
     }
     else {
-      fprintf(stdout, \
+      fprintf(outstream, \
               "%s property (index %d) successfully added to property list.\n",\
               Prop_get_type_as_string(PROP(prop)), index);
     }

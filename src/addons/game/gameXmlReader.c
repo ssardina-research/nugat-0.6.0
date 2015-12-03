@@ -188,7 +188,7 @@ enum XmlTags {
 /*---------------------------------------------------------------------------*/
 EXTERN cmp_struct_ptr cmps;
 
-EXTERN FILE* nusmv_stderr;
+
 
 
 EXTERN node_ptr parsed_tree;
@@ -298,9 +298,11 @@ int Game_RatFileToGame(NuSMVEnv_ptr env,const char *filename)
   const UStringMgr_ptr strings =  USTRING_MGR(NuSMVEnv_get_value(env, ENV_STRING_MGR));
   const ErrorMgr_ptr errmgr = ERROR_MGR(NuSMVEnv_get_value(env, ENV_ERROR_MANAGER));
   OptsHandler_ptr opts = OPTS_HANDLER(NuSMVEnv_get_value(env, ENV_OPTS_HANDLER));
+  StreamMgr_ptr streams = STREAM_MGR(NuSMVEnv_get_value(env, ENV_STREAM_MANAGER));
+  FILE* errstream = StreamMgr_get_error_stream(streams);
 
-  if (cmp_struct_get_read_model(cmps)) {
-    fprintf(stderr,
+    if (cmp_struct_get_read_model(cmps)) {
+    fprintf(errstream,
             "A model appears to be already read from file: %s.\n",
             get_input_file(opts));
     return(1);
@@ -377,12 +379,12 @@ int Game_RatFileToGame(NuSMVEnv_ptr env,const char *filename)
     module1 = module2 = Nil;
 
 //     /* debugging printing */
-//   fprintf(stderr, "\n--PARSED XML FILE:\n");
-//   fprintf(stderr, "\n--ASSUMPTION:\n--");
+//   fprintf(errstream, "\n--PARSED XML FILE:\n");
+//   fprintf(errstream, "\n--ASSUMPTION:\n--");
 //   print_node(nusmv_stderr, parseResult->assumptions);
-//   fprintf(stderr, "\n\n--GUARANTEES:\n--");
+//   fprintf(errstream, "\n\n--GUARANTEES:\n--");
 //   print_node(nusmv_stderr, parseResult->guarantees);
-//   fprintf(stderr, "\n\n");
+//   fprintf(errstream, "\n\n");
 
     /* Divide each of the assumptions and guarantees on 3 sets, i.e.,
        initial condition (no temporal operators), transitions relation
@@ -446,22 +448,22 @@ int Game_RatFileToGame(NuSMVEnv_ptr env,const char *filename)
                                      Nil /*module list is empty*/)));
 
 //     /* debugging printing */
-//   fprintf(stderr, "PARSED XML FILE:\nGAME\n\n");
-//   fprintf(stderr, "PLAYER_1\nVAR ");
+//   fprintf(errstream, "PARSED XML FILE:\nGAME\n\n");
+//   fprintf(errstream, "PLAYER_1\nVAR ");
 //   print_sexp(nusmv_stderr, parseResult->input_vars);
-//   fprintf(stderr, "\nINIT :\n");
+//   fprintf(errstream, "\nINIT :\n");
 //   print_node(nusmv_stderr, init1);
-//   fprintf(stderr, "\nTRANS :\n");
+//   fprintf(errstream, "\nTRANS :\n");
 //   print_node(nusmv_stderr, trans1);
-//   fprintf(stderr, "\n\nPLAYER_2\nVAR :\n");
+//   fprintf(errstream, "\n\nPLAYER_2\nVAR :\n");
 //   print_sexp(nusmv_stderr, parseResult->output_vars);
-//   fprintf(stderr, "\nINIT:\n");
+//   fprintf(errstream, "\nINIT:\n");
 //   print_node(nusmv_stderr, init2);
-//   fprintf(stderr, "\nTRANS:\n");
+//   fprintf(errstream, "\nTRANS:\n");
 //   print_node(nusmv_stderr, trans2);
-//   fprintf(stderr, "\nPROPERTY:\n");
+//   fprintf(errstream, "\nPROPERTY:\n");
 //   print_node(nusmv_stderr, property);
-//   fprintf(stderr, "\n\n");
+//   fprintf(errstream, "\n\n");
   }
 
 

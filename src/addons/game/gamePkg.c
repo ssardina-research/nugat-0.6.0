@@ -99,8 +99,8 @@ static char rcsid[] UTIL_UNUSED = "$Id: gameGeneral.c,v 1.1.2.9 2010-02-05 17:19
 static NodeList_ptr stored_dependent = NODE_LIST(NULL);
 static NodeList_ptr stored_specific = NODE_LIST(NULL);
 
-EXTERN FILE* nusmv_stderr;
-EXTERN FILE* nusmv_stdout;
+
+
 
 /*---------------------------------------------------------------------------*/
 /* Macro declarations                                                        */
@@ -143,11 +143,12 @@ void Game_Init(NuSMVEnv_ptr env)
 {
     ErrorMgr_ptr const errmgr = ERROR_MGR(NuSMVEnv_get_value(env, ENV_ERROR_MANAGER));
     OptsHandler_ptr opts = OPTS_HANDLER(NuSMVEnv_get_value(env, ENV_OPTS_HANDLER));
-
     SymbTable_ptr symb_table = SYMB_TABLE(NuSMVEnv_get_value(env, ENV_SYMB_TABLE));
+    StreamMgr_ptr streams = STREAM_MGR(NuSMVEnv_get_value(env, ENV_STREAM_MANAGER));
+    FILE* errstream = StreamMgr_get_error_stream(streams);
 
-  if (opt_verbose_level_gt(opts, 0)) {
-    fprintf(stderr, "Initializing the Game package... \n");
+    if (opt_verbose_level_gt(opts, 0)) {
+    fprintf(errstream, "Initializing the Game package... \n");
   }
 
   nusmv_assert(GAME_HIERARCHY(NULL) == mainGameHierarchy);
@@ -198,9 +199,11 @@ void Game_Init(NuSMVEnv_ptr env)
 void Game_Quit(NuSMVEnv_ptr env)
 {
     OptsHandler_ptr opts = OPTS_HANDLER(NuSMVEnv_get_value(env, ENV_OPTS_HANDLER));
+    StreamMgr_ptr streams = STREAM_MGR(NuSMVEnv_get_value(env, ENV_STREAM_MANAGER));
+    FILE* errstream = StreamMgr_get_error_stream(streams);
 
-  if (opt_verbose_level_gt(opts, 0)) {
-    fprintf(stderr, "Quitting the Game package... \n");
+    if (opt_verbose_level_gt(opts, 0)) {
+    fprintf(errstream, "Quitting the Game package... \n");
   }
 
   if (opt_game_game(opts)) {
@@ -231,11 +234,13 @@ void Game_Quit(NuSMVEnv_ptr env)
 void Game_Mode_Enter(NuSMVEnv_ptr env)
 {
     OptsHandler_ptr opts = OPTS_HANDLER(NuSMVEnv_get_value(env, ENV_OPTS_HANDLER));
+    StreamMgr_ptr streams = STREAM_MGR(NuSMVEnv_get_value(env, ENV_STREAM_MANAGER));
+    FILE* errstream = StreamMgr_get_error_stream(streams);
 
-  nusmv_assert(!opt_game_game(opts));
+    nusmv_assert(!opt_game_game(opts));
 
   if (!opt_batch(opts)) {
-    fprintf(stderr, "Entering game mode...\n");
+    fprintf(errstream, "Entering game mode...\n");
   }
 
   game_pkg_switch_to_prop_db_game(env);
@@ -246,7 +251,7 @@ void Game_Mode_Enter(NuSMVEnv_ptr env)
   set_game_game(opts);
 
   if (!opt_batch(opts)) {
-    fprintf(stderr,
+    fprintf(errstream,
             "Done entering game mode.\n"
             "Note that now game commands apply.\n");
   }
@@ -269,11 +274,13 @@ void Game_Mode_Enter(NuSMVEnv_ptr env)
 void Game_Mode_Exit(NuSMVEnv_ptr env)
 {
     OptsHandler_ptr opts = OPTS_HANDLER(NuSMVEnv_get_value(env, ENV_OPTS_HANDLER));
+    StreamMgr_ptr streams = STREAM_MGR(NuSMVEnv_get_value(env, ENV_STREAM_MANAGER));
+    FILE* errstream = StreamMgr_get_error_stream(streams);
 
-  assert(opt_game_game(opts));
+    assert(opt_game_game(opts));
 
   if (!opt_batch(opts)) {
-    fprintf(stderr, "Exiting game mode...\n");
+    fprintf(errstream, "Exiting game mode...\n");
   }
 
   if (GAME_HIERARCHY(NULL) != mainGameHierarchy) {
@@ -294,7 +301,7 @@ void Game_Mode_Exit(NuSMVEnv_ptr env)
   NuSMVEnv_remove_value(env, ENV_BE_FSM);
 
     if (!opt_batch(opts)) {
-    fprintf(stderr,
+    fprintf(errstream,
             "Done exiting game mode.\n"
             "Note that now the commands from before entering game mode "
             "apply.\n");
