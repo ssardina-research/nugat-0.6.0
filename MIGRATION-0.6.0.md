@@ -763,14 +763,12 @@ Lorenzo Dibenedetto - lorenzodibenedetto90@gmail.com , Sebastian Sardina - ssard
     
     8.dd.c Program received signal SIGSEGV, Segmentation fault. 0x00000000006a3faa in Cudd_RecursiveDeref () for Compile_quit(env) -> BddFsm_destroy(bdd_fsm)
     
-    *   removed all master property variables from Environment
+    *   removed all master property variables from environment
     
                 NuSMVEnv_remove_value(env, ENV_SEXP_FSM); NuSMVEnv_remove_value(env, ENV_BOOL_FSM);
                 NuSMVEnv_remove_value(env, ENV_BDD_FSM); NuSMVEnv_remove_value(env, ENV_BE_FSM);
------------------------------------------------------------------------------------------------------------------   
- 
 
-
+.
 
 ================================================================================
 EOF
@@ -778,8 +776,8 @@ EOF
 
 FUTURE TODO
 
-    REMOVE ALL COMMENTED LINES
+    - MIGRATION FROM fprintf to [ StreamMgr_print_error(streams , OStream_printf , ... ]
+    - REMOVE ALL COMMENTED LINES
     
-    MIGRATION FROM fprintf to [ StreamMgr_print_error(streams , OStream_printf , ... ]
-
-    RECONVERT LOG IN A SMART WAY (like a list, remove all rendundant words)
+----
+    - RECONVERT LOG IN A SMART WAY (like a list, remove all rendundant words)
