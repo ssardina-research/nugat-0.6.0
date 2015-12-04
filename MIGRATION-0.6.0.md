@@ -92,12 +92,7 @@ Lorenzo Dibenedetto - lorenzodibenedetto90@gmail.com , Sebastian Sardina - ssard
             
                     #include "nusmv/core/utils/StreamMgr.h"
                     #include "nusmv/core/cinit/NuSMVEnv.h"
-                   
-13.error: GamePlayer.c : ‘USTRING_MGR’ undeclared (first use in this function)
-
-    *   'USTRING_MGR' has been replaced by 'USTRING_MGR(NuSMVEnv_get_value(env, ENV_STRING_MGR))'
-    *   added 'env' parameter 
-    
+        
 14.warning: GameStrategy.c : passing argument 1 of ‘bdd_free’ from incompatible pointer type
 
     *   replaced 'DdManager*'/'DdManager *' with 'DDMgr_ptr' in all files
@@ -163,7 +158,7 @@ Lorenzo Dibenedetto - lorenzodibenedetto90@gmail.com , Sebastian Sardina - ssard
 
 19.error: gameCmd.c:  ‘nusmv_stderr’ undeclared (first use in this function) 
 
-    *   replaced 'nusmv_stdout' with 'outstream' and 'nusmv_stderr' with 'errstream'
+    *   replaced in all the project all the 'nusmv_stdout' with 'outstream' and all 'nusmv_stderr' with 'errstream'
         *   added declaration 
                 StreamMgr_ptr streams = STREAM_MGR(NuSMVEnv_get_value(env, ENV_STREAM_MANAGER));
                 FILE* outstream = StreamMgr_get_output_stream(streams);
@@ -171,7 +166,7 @@ Lorenzo Dibenedetto - lorenzodibenedetto90@gmail.com , Sebastian Sardina - ssard
     
 20.warning: gameCmd.c:  implicit declaration of function ‘nusmv_exit’ 
 
-    *   replaced all 'nusmv_exit' with 'exit'
+    *   replaced all 'nusmv_exit(' with 'ErrorMgr_nusmv_exit(errmgr,'
     *   added this line in head where 'env' is added
     
             const NuSMVEnv_ptr env = EnvObject_get_environment(ENV_OBJECT(...));
@@ -198,11 +193,7 @@ Lorenzo Dibenedetto - lorenzodibenedetto90@gmail.com , Sebastian Sardina - ssard
     *   replaced with variable "prop_db" and declaration
     
             PropDb_ptr prop_db  = PROP_DB(NuSMVEnv_get_value(env, ENV_PROP_DB));
-            
-23.error: gameCmd.c: ‘USTRING_MGR’ undeclared (first use in this function)
-
-    *   *   'USTRING_MGR' has been replaced by 'USTRING_MGR(NuSMVEnv_get_value(env, ENV_STRING_MGR))'
-            
+           
 25.error: gameCmd.c:  ‘dd_manager’ undeclared (first use in this function)
 
     *   added declaration "DDMgr_ptr dd_manager = (DDMgr_ptr )NuSMVEnv_get_value(env, ENV_DD_MGR);"
