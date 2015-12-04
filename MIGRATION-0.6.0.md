@@ -707,6 +707,7 @@ TODO
     *   there are 4 stderr in smgameMain.c from the old version of NuGaT ( need to replace with errstream? )
     *   check 'expand_bounded_arrays' overall implementation
     *   REMOVE ALL COMMENTED LINES, OPTIMIZE IMPORTS, AUTOINDENT ALL THE CODE
+    *   check all versions for cmake, autoconf, gcc, g++ ...
 
 FUTURE TODO
 
