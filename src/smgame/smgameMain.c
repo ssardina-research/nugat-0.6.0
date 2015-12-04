@@ -131,7 +131,7 @@ int main(int  argc, char ** argv)
   NuSMVCore_init_data();
 
   /* Customize the library data. */
-  NuSMVCore_set_tool_name("NuGAT-0.5.4");
+  NuSMVCore_set_tool_name("NuGAT-0.6.0");
 
   /* Initializes all packages, having the list of init/quit mfunctions */
   NuSMVCore_init(env,iq_fns, sizeof(iq_fns)/sizeof(iq_fns[0]));

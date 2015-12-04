@@ -1,24 +1,53 @@
-================================================================================
 
-MIGRATION FROM NuGAT 0.5.4 (NuSMV 2.5.4)to NuGAT 0.6.0 (NuGAT 2.6.0)
+MIGRATION FROM NuGAT 0.5.4(NuSMV 2.5.4) to NuGAT 0.6.0 (NuGAT 2.6.0)
 
 October 2015
 
-Lorenzo Dibenedetto - lorenzodibenedetto90@gmail.com , Sebastian Sardina - ssardina@gmail.com , Nitin Yadav - nitin.yadav@rmit.edu.au
+Lorenzo Dibenedetto - lorenzodibenedetto90@gmail.com 
+Sebastian Sardina - ssardina@gmail.com
+Nitin Yadav - nitin.yadav@rmit.edu.au
 
 ================================================================================
 
-1.Fatal Error: nusmv-2.pc: No such file or directory
+**Summary**
+
+- changed **libraries paths** in Makefile.in/.am
+
+- replaced old **.la** files with **.a** files (with imports)
+
+- replaced old **.lo** files with **.c.o** files
+
+- replaced **nusmv\_std(out/err)** with **(out/err)stream** with stream declarations
+
+- replaced **Master Property handling** with **4 enviroment variables ENV\_(SEXP/BOOL/BDD/BE)\_FSM**
+
+- replaced **global variable/functions** with **Enviroment handling** with getter and setter variables
+
+- replaced utility **make* with **cmake**
+
+- usage of **new Manager library** (**for strings, errors, nodes, expressions, ...**)
+
+- added **Yacc/Lex prefix flag 'nusmv\_yy'**
+
+- added new variable **'expand\_bounded\_arrays**
+
+
+================================================================================
+
+**Fatal Errors, Errors, Warnings, Runtime Errors for NuGaT-2.5.4 with NuSMV-2.6.0**
+
+1.fatal error: nusmv- 2.pc: No such file or directory
 
     *   added new folder 'nusmv-config' with  'nusmv-config/nusmv-2.pc' file
     *   modified 'configure' and 'configure.ac' file with 'nusmv_config_dir=nusmv-config' for nusmv-2.pc and removed the helper -> "$nusmv_dir/libnusmv.la"
 
-2.Fatal Error: {several files} : No such file or directory 
+2.fatal error: {several files} : No such file or directory 
 
     *   replaced all path "$(NUSMV_DIR)/src" with "$(NUSMV_DIR)/code/nusmv/core" and "$(nusmv_dir)/src" with "$(nusmv_dir)/code/nusmv/core"
-    *   added all path in all Makefile(.am and .in) that contain $(NUSMV_DIR) with $(NUSMV_DIR)/code/nusmv/core $(NUSMV_DIR)/code/nusmv/shell -I$(NUSMV_DIR)/code/nusmv -I$(NUSMV_DIR)/code -I$(NUSMV_DIR)/build/code -I$(NUSMV_DIR)/build
+    *   added all path in all Makefile(.am/.in) that contain $(NUSMV_DIR) with 
+        $(NUSMV_DIR)/code/nusmv/core $(NUSMV_DIR)/code/nusmv/shell -I$(NUSMV_DIR)/code/nusmv -I$(NUSMV_DIR)/code -I$(NUSMV_DIR)/build/code -I$(NUSMV_DIR)/build
 
-3.Fatal Error: cudd/util.h: No such file or directory
+3.fatal error: cudd/util.h: No such file or directory
 
     *   check if exists the directory "include" into 'NuSMV-2.6.0/cudd-2.4.1.1', if not present execute 'setup.sh' into NuSMV-2.6.0/cudd-2.4.1.1 directory
 
@@ -30,9 +59,9 @@ Lorenzo Dibenedetto - lorenzodibenedetto90@gmail.com , Sebastian Sardina - ssard
                         if (!opt_game_game(OptsHandler_get_instance())) {...
 
     *   replace 'OptsHandler_get_instance' with 'OptsHandler_ptr opts = OPTS_HANDLER(NuSMVEnv_get_value(env, ENV_OPTS_HANDLER));' in NuGat code.
-
-        
+   
 6.warning: macro ...  
+
     .1 "new_node" requires 4 arguments, but only 3 given -> added 'nodemgr' parameter
     .2 "cons" requires 3 arguments, but only 2 given -> added 'nodemgr' parameter
     .3 "new_lined_node" requires 5 arguments, but only 4 given -> added 'nodemgr' parameter
@@ -63,10 +92,8 @@ Lorenzo Dibenedetto - lorenzodibenedetto90@gmail.com , Sebastian Sardina - ssard
     *   'find_string(' has been replaced 
     
             by 'UStringMgr_find_string(strings,' with 'strings' declaration 'UStringMgr_ptr strings = USTRING_MGR(NuSMVEnv_get_value(env, ENV_STRING_MGR));'
-            
             and in grammar.y.2.55 with 'UStringMgr_find_string(USTRING_MGR(NuSMVEnv_get_value(__nusmv_parser_env__, ENV_STRING_MGR)),'
-            
-        
+             
 9.error : input.l: ‘nusmv_yytext’ undeclared (first use in this function) ------------- ^"#"" "[0-9]+.*\n       sscanf(nusmv_yytext,"# %d",&nusmv_yylineno); 
             
     *   added this variable after 'AM_LFLAGS' in the parser/Makefile(.am and .in)
@@ -90,8 +117,7 @@ Lorenzo Dibenedetto - lorenzodibenedetto90@gmail.com , Sebastian Sardina - ssard
             -added in head 'NuSMVEnv_ptr env = NuSMVEnv_create();' and update 'Game_init_opt();' with 'Game_init_opt(env);' in 'void Game_Init(void)'
             -append these 2 libraries
             
-                    #include "nusmv/core/utils/StreamMgr.h"
-                    #include "nusmv/core/cinit/NuSMVEnv.h"
+                    #include "nusmv/core/utils/StreamMgr.h", #include "nusmv/core/cinit/NuSMVEnv.h"
         
 14.warning: GameStrategy.c : passing argument 1 of ‘bdd_free’ from incompatible pointer type
 
@@ -104,95 +130,78 @@ Lorenzo Dibenedetto - lorenzodibenedetto90@gmail.com , Sebastian Sardina - ssard
                 
 16.warning: GameStrategy.c: passing argument 1 of ‘print_node’ from incompatible pointer type
    
-    *   replace print_node(...) with print_node(wffprint,...)
-        replaced SymbType_print(...) with SymbType_print(... , wffprint , ...)
+    *   replaced print_node(...) with print_node(wffprint,...)
+    *   replaced SymbType_print(...) with SymbType_print(... , wffprint , ...)
            
-        changed this functions in GameStrategy.c and gameCheckLTLSF07.c
+    *   changed this functions in GameStrategy.c and gameCheckLTLSF07.c
               
            -added this lines in head of GameStrategy_print_module() 
                    
                    env = EnvObject_get_environment(ENV_OBJECT(st));
                    MasterPrinter_ptr wffprint = MASTER_PRINTER(NuSMVEnv_get_value(env, ENV_WFF_PRINTER));
    
-   
-        changed this functions in smgameMain.c
+    *   changed this functions in smgameMain.c
    
            main()
-                   -insert in head
-                           
-                           NuSMVEnv_ptr env = NuSMVEnv_create();
-                       
-                   -added first parameter 'env'
-   
-                          NuSMVCore_init(env,...)
-                          NuSMVCore_init_cmd_options(env)
-                          sm_ParseLineOptions(env,...)
-                          Cmd_CommandExecute(env,...)
+               -added in head 'NuSMVEnv_ptr env = NuSMVEnv_create();'
+                   
+               -added first parameter 'env'
+
+                      NuSMVCore_init , NuSMVCore_init_cmd_options, sm_ParseLineOptions, Cmd_CommandExecute
           
            UsagePrint()
    
-                   -added first parameter 'env'
-                   
-                           UsagePrint(const NuSMVEnv_ptr env,...)
-                           get_preprocessors_num(env,...)
-                           get_preprocessor_names(env,...)
+               -added 'env' parameter for : UsagePrint, get_preprocessors_num, get_preprocessor_names
                            
            sm_ParseLineOptions()
            
-                   -added parameter 'env'
-                           
-                           sm_ParseLineOptions(const NuSMVEnv_ptr env,...)
-                           set_pp_list(...,env)
-                           UsagePrint(env,...)
+               -added 'env' parameter for : sm_ParseLineOptions, set_pp_list, UsagePrint
                            
 
 17.warning: GameStrategy.c: passing argument 7 of ‘BddEnc_print_bdd_wff’ from incompatible pointer type
 
     *   replaced the parameter "out" with "OSTREAM(out)"
 
-18.warning: gameCmd.c:  initialization from incompatible pointer type {"read_rat_file",        CommandReadRatFile, 0, true},
+18.warning: gameCmd.c:  initialization from incompatible pointer type {"read_rat_file", CommandReadRatFile, 0, true},
 
     *   added the "NuSMVEnv_ptr env" parameter in functions declaration
         
-            static int Command...(NuSMVEnv_ptr env,...)
+        static int Command...(NuSMVEnv_ptr env,...)
 
 19.error: gameCmd.c:  ‘nusmv_stderr’ undeclared (first use in this function) 
 
     *   replaced in all the project all the 'nusmv_stdout' with 'outstream' and all 'nusmv_stderr' with 'errstream'
-        *   added declaration 
-                StreamMgr_ptr streams = STREAM_MGR(NuSMVEnv_get_value(env, ENV_STREAM_MANAGER));
-                FILE* outstream = StreamMgr_get_output_stream(streams);
-                FILE* errstream = StreamMgr_get_error_stream(streams);
+    
+    *   added declaration 
+        
+        StreamMgr_ptr streams = STREAM_MGR(NuSMVEnv_get_value(env, ENV_STREAM_MANAGER));
+        FILE* outstream = StreamMgr_get_output_stream(streams);
+        FILE* errstream = StreamMgr_get_error_stream(streams);
     
 20.warning: gameCmd.c:  implicit declaration of function ‘nusmv_exit’ 
 
     *   replaced all 'nusmv_exit(' with 'ErrorMgr_nusmv_exit(errmgr,'
     *   added this line in head where 'env' is added
     
-            const NuSMVEnv_ptr env = EnvObject_get_environment(ENV_OBJECT(...));
+        const NuSMVEnv_ptr env = EnvObject_get_environment(ENV_OBJECT(...));
                     
     *   added as first parameter "env" to :
             
-            Compile_check_if_flattening_was_built
-            Compile_check_if_encoding_was_built
-            Compile_check_if_model_was_built
-            Compile_check_if_bool_model_was_built
-            Compile_check_if_flattening_was_built
-            CmdOpenPipe
-            CmdOpenFile
+        Compile_check_if_flattening_was_built, Compile_check_if_encoding_was_built, Compile_check_if_model_was_built, 
+        Compile_check_if_bool_model_was_built, Compile_check_if_flattening_was_built, CmdOpenPipe, CmdOpenFile
 
 21.error: gameCmd.c:  ‘CATCH’ undeclared (first use in this function)
                          
     *   replaced "CATCH" with "CATCH(errmgr)" and "FAIL" with "FAIL(errmgr)" and added this lines of declaration
     
-            NuSMVEnv_ptr const env = EnvObject_get_environment(ENV_OBJECT(self->symb_table));  ( ONLY IF 'env' IS NOT DECLARED )
-            ErrorMgr_ptr const errmgr = ERROR_MGR(NuSMVEnv_get_value(env, ENV_ERROR_MANAGER));
+        NuSMVEnv_ptr const env = EnvObject_get_environment(ENV_OBJECT(self->symb_table));  ( ONLY IF 'env' IS NOT DECLARED )
+        ErrorMgr_ptr const errmgr = ERROR_MGR(NuSMVEnv_get_value(env, ENV_ERROR_MANAGER));
                         
 22.warning: gameCmd.c: implicit declaration of function ‘PropPkg_get_prop_database’
 
     *   replaced with variable "prop_db" and declaration
     
-            PropDb_ptr prop_db  = PROP_DB(NuSMVEnv_get_value(env, ENV_PROP_DB));
+        PropDb_ptr prop_db  = PROP_DB(NuSMVEnv_get_value(env, ENV_PROP_DB));
            
 25.error: gameCmd.c:  ‘dd_manager’ undeclared (first use in this function)
 
@@ -202,52 +211,35 @@ Lorenzo Dibenedetto - lorenzodibenedetto90@gmail.com , Sebastian Sardina - ssard
 
     *   all this functions are replaced
     
-            ‘node_pkg_get_global_master_wff_printer’ with 'MASTER_PRINTER(NuSMVEnv_get_value(env, ENV_WFF_PRINTER))'
-            ‘node_pkg_get_global_master_sexp_printer’ with 'MASTER_PRINTER(NuSMVEnv_get_value(env, ENV_SEXP_PRINTER));'
-            ‘Compile_get_global_symb_table’ with 'SYMB_TABLE(NuSMVEnv_get_value(env, ENV_SYMB_TABLE))'
-            ‘PropPkg_get_prop_database’ with 'PROP_DB(NuSMVEnv_get_value(env, ENV_PROP_DB));'
-            'PropPkg_set_prop_database(PROP_DB(dbg))' with 'NuSMVEnv_set_value(env, ENV_PROP_DB, PROP_DB(dbg))'
-            
-                added 'env' parameter for :
-                    'game_pkg_switch_to_prop_db_game'
-                    'Game_Mode_Enter'
-                    'Game_Mode_Exit'
-                    'Game_Init'
-                    'Game_Quit'
-                    'Game_CommandWriteBooleanModel'
-                    'Game_CommandFlattenHierarchy'
-                    'Game_CommandBuildFlatModel'
-                    'Game_CommandBuildBooleanModel'
-                    'Game_CommandBuildBddModel'
-                    'Game_CommandWriteFlatModel'
-                    'Game_CommandWriteBooleanModel'
-                    'PropDb_create'
-                    'CompileFlatten_quit_flattener'
-                    'Game_CheckGenReactivitySpec'
-                    'command_function_ptr'
+        ‘node_pkg_get_global_master_wff_printer’ with 'MASTER_PRINTER(NuSMVEnv_get_value(env, ENV_WFF_PRINTER))'
+        ‘node_pkg_get_global_master_sexp_printer’ with 'MASTER_PRINTER(NuSMVEnv_get_value(env, ENV_SEXP_PRINTER));'
+        ‘Compile_get_global_symb_table’ with 'SYMB_TABLE(NuSMVEnv_get_value(env, ENV_SYMB_TABLE))'
+        ‘PropPkg_get_prop_database’ with 'NuSMVEnv_get_value(env, ENV_PROP_DB)'
+        'PropPkg_set_prop_database(PROP_DB(dbg))' with 'NuSMVEnv_set_value(env, ENV_PROP_DB, PROP_DB(dbg))'
+        
+    *   added 'env' parameter for :
+        
+        game_pkg_switch_to_prop_db_game, Game_Mode_Enter, Game_Mode_Exit, Game_Init, Game_Quit, Game_CommandWriteBooleanModel
+        Game_CommandFlattenHierarchy, Game_CommandBuildFlatModel, Game_CommandBuildBooleanModel, Game_CommandBuildBddModel
+        Game_CommandWriteFlatModel, Game_CommandWriteBooleanModel, PropDb_create, CompileFlatten_quit_flattener
+        Game_CheckGenReactivitySpec, command_function_ptr
                     
 27.error: gamePkg.c: ‘cmdCommandTable’ undeclared (first use in this function)
-    
-        *   replaced with 'commandTable' and added declaration 'avl_tree* commandTable = (avl_tree*)NuSMVEnv_get_value(env, ENV_CMD_COMMAND_TABLE);'
+
+    *   replaced with 'commandTable' and added declaration 'avl_tree* commandTable = (avl_tree*)NuSMVEnv_get_value(env, ENV_CMD_COMMAND_TABLE);'
         
 28.warning: gamePkg.c: implicit declaration of function ‘get_text(’
 
-        *   replaced with '(char*)UStringMgr_get_string_text('
-        *   replaced with 'UStringMgr_get_string_text(' in 'gameUnrealCore.c' for condition statements
+    *   replaced with '(char*)UStringMgr_get_string_text('
+    *   replaced with 'UStringMgr_get_string_text(' in 'gameUnrealCore.c' for condition statements
 
 29.warning: gamePkg.c: passing argument 1 of ‘Cmd_CommandDefined’ from incompatible pointer type
 
-        *   added 'env' parameter for : 
-        
-                'Cmd_CommandDefined', 'Cmd_CommandAdd', 'Cmd_CommandRemove' ,'Cmd_CommandGet' 
-                
-                'NuGaTAddons_Init', 'NuGaTAddons_Quit'
-                
-                'game_pkg_switch_from_game_cmds', 'game_pkg_add_cmds', 'game_pkg_remove_cmds', 'game_pkg_store_remove_cmd', 'game_pkg_restore_cmds'
-                
-                'CommandGameReset'
-                
-                'Smgame_Init', 'Smgame_AddCmd', 'Smgame_Reset', 'Smgame_End','Smgame_BatchMain'
+    *   added 'env' parameter for : 
+    
+        Cmd_CommandDefined, Cmd_CommandAdd, Cmd_CommandRemove ,Cmd_CommandGet, NuGaTAddons_Init, NuGaTAddons_Quit
+        game_pkg_switch_from_game_cmds, game_pkg_add_cmds, game_pkg_remove_cmds, game_pkg_store_remove_cmd, game_pkg_restore_cmds
+        CommandGameReset, Smgame_Init, Smgame_AddCmd, Smgame_Reset, Smgame_End,Smgame_BatchMain
             
 30.warning: gameGeneral.c: implicit declaration of function ‘PropDb_set_fsm_to_master’
 
@@ -267,7 +259,7 @@ Lorenzo Dibenedetto - lorenzodibenedetto90@gmail.com , Sebastian Sardina - ssard
     
 33.warning: gameGeneral.c:  passing argument 2 of ‘Prop_print’ from incompatible pointer type
 
-    *   added cast of the second argument with '(OStream_ptr)...'      
+    *   replaced parameter type from 'FILE*' to 'OStream_ptr'
             
 34.warning: gameFlatten.c: implicit declaration of function ‘Compile_get_global_symb_table’
 
@@ -287,33 +279,34 @@ Lorenzo Dibenedetto - lorenzodibenedetto90@gmail.com , Sebastian Sardina - ssard
 
     gameCmd.c -> CommandGameFlattenHierarchy()
     
-        *   added declaration 'boolean expand_bounded_arrays = false;'  because NuSMV2.6.0 uses this new variable 
-            which is present is same functions that are used by NuGaT
-            
-        *   added 'e' option
-         
-             while( ..."he")) != EOF) {
-               ...
-                case 'e': expand_bounded_arrays = true; break;
-               ...
-               }
+    *   added declaration 'boolean expand_bounded_arrays = false;'  because NuSMV2.6.0 uses this new variable 
+        which is present is same functions that are used by NuGaT
         
-        *   added 'expand_bounded_arrays' parameter for 'Game_CommandFlattenHierarchy()', 'game_flatten_game_hierarchy()'
-               
+    *   added 'e' option
+     
+         while( ..."he")) != EOF) {
+           ...
+            case 'e': expand_bounded_arrays = true; break;
+           ...
+           }
+    
+    *   added 'expand_bounded_arrays' parameter for 'Game_CommandFlattenHierarchy()', 'game_flatten_game_hierarchy()'
+           
 37.warning: implicit declaration of function ‘rpterr’
 
-    *   replaced with 'ErrorMgr_rpterr(errmgr,' and added declaration when required 'const ErrorMgr_ptr errmgr = ERROR_MGR(NuSMVEnv_get_value(env, ENV_ERROR_MANAGER));'
+    *   replaced with 'ErrorMgr_rpterr(errmgr,'
+    *   added declaration 'const ErrorMgr_ptr errmgr = ERROR_MGR(NuSMVEnv_get_value(env, ENV_ERROR_MANAGER));'
     *   added 'env' parameter for:
-            'GameSexpFsm_create', 'game_construct_game_fsms', 'game_is_opponent_constraint_minimal', 'game_compute_core_using_parameters'
+            
+        GameSexpFsm_create, game_construct_game_fsms, game_is_opponent_constraint_minimal, game_compute_core_using_parameters
             
 38.warning: implicit declaration of function ‘error_game_definition_contains_input_vars’
 
     *   replaced with 'ErrorMgr_error_game_definition_contains_input_vars(errmgr,' 
-    *   added 
-            declaration when required 'const ErrorMgr_ptr errmgr = ERROR_MGR(NuSMVEnv_get_value(env, ENV_ERROR_MANAGER));'
-            parameter 
-                'env'  for 'Compile_ProcessHierarchy'
-                'nodemgr' for 'PslNode_new_context'
+    *   added declaration 'const ErrorMgr_ptr errmgr = ERROR_MGR(NuSMVEnv_get_value(env, ENV_ERROR_MANAGER));'
+    *   added parameter 
+            'env'  for 'Compile_ProcessHierarchy'
+            'nodemgr' for 'PslNode_new_context'
     
 39.warning: comparison between pointer and integer 'sym_intern(env,((car(spec)) == 1 ?'
 
@@ -321,30 +314,26 @@ Lorenzo Dibenedetto - lorenzodibenedetto90@gmail.com , Sebastian Sardina - ssard
     
 40.warning: implicit declaration of function ‘error_second_player_next_var’
 
-    *   replaced 
-            with 'ErrorMgr_error_second_player_next_var (errmgr,'
-            'error_second_player_var' with 'ErrorMgr_error_second_player_var(errmgr,'
-    *   added declaration when required 'const ErrorMgr_ptr errmgr = ERROR_MGR(NuSMVEnv_get_value(env, ENV_ERROR_MANAGER));'
+    *   replaced with 'ErrorMgr_error_second_player_next_var (errmgr,'
+    *   replaced 'error_second_player_var' with 'ErrorMgr_error_second_player_var(errmgr,'
+    *   added declaration 'const ErrorMgr_ptr errmgr = ERROR_MGR(NuSMVEnv_get_value(env, ENV_ERROR_MANAGER));'
     
 41.error: gameFlatten.c: ‘yylineno’  undeclared (first use in this function)
 
     *   replaced with 'nusmv_yylineno'
 
-42.error: gameVarEncoding.c:111:65: ‘self’ undeclared (first use in this function) [ #TOSOLVE the env before ]
+42.error: gameVarEncoding.c:111:65: ‘self’ undeclared (first use in this function)
 
     *   added 'env' parameter for 'Game_CommandEncodeVariables'
-    *   removed 'env' declaration inside the function 
 
 43.error: too few arguments to function ‘Enc_init_bool_encoding’
 
-    *   added 'env' parameter for :
-            
-            'Enc_init_bool_encoding', 'Enc_init_bdd_encoding'
+    *   added 'env' parameter for 'Enc_init_bool_encoding' and 'Enc_init_bdd_encoding'
             
 44.warning: implicit declaration of function ‘Enc_get_bool_encoding()’  [ #CHECK AT RUNTIME ]
 
     *   replaced with 'NuSMVEnv_get_value(env, ENV_BOOL_ENCODER);'
-        ARG is replaced with : 
+    *   the parameter is replaced with : 
         
             'enc' in gameBuildModel.c   
             'NULL' in gameCheckGenReactivityBuchiSpec.c and gameUnrealCore.c 
@@ -352,7 +341,7 @@ Lorenzo Dibenedetto - lorenzodibenedetto90@gmail.com , Sebastian Sardina - ssard
             
 45.error: too few arguments to function ‘Enc_init_bdd_encoding’
 
-    *   added second parameter 'input_order_file_name'
+    *   added 'input_order_file_name' parameter
 
 46.warning: passing argument 1 of ‘Compile_WriteFlattenFsm’ from incompatible pointer type
    warning: passing argument 1 of ‘Compile_WriteBoolFsm’ from incompatible pointer type
@@ -361,7 +350,8 @@ Lorenzo Dibenedetto - lorenzodibenedetto90@gmail.com , Sebastian Sardina - ssard
         
 47.warning: passing argument 1 of ‘BoolEnc_scalar_layer_to_bool_layer’ from incompatible pointer type
 
-    *   added first parameter 'BoolEnc_ptr bool_enc = BOOL_ENC(NuSMVEnv_get_value(env, ENV_BOOL_ENCODER));'
+    *   added 'bool_enc' 
+    *   added declaration 'BoolEnc_ptr bool_enc = BOOL_ENC(NuSMVEnv_get_value(env, ENV_BOOL_ENCODER));'
 
 48.gameXmlReader.c 
     
@@ -369,46 +359,39 @@ Lorenzo Dibenedetto - lorenzodibenedetto90@gmail.com , Sebastian Sardina - ssard
     
         *   replaced with 'ErrorMgr_error_out_of_memory(errmgr,'
         *   added 'errmgr' parameter to 'gameXmlReader_XmlParseResult_create'
-    
-    error: 317:9 : assignment of read-only variable ‘env’
-    
-        *   passed as parameter and changed declaration 
         
-49.warning: gameXmlReader.c: passing argument 2 of ‘XML_SetElementHandler’ from incompatible pointer type [#TOSOLVE]
+49.warning: gameXmlReader.c: passing argument 2 of ‘XML_SetElementHandler’ from incompatible pointer type
 
-    *   remove 'env' parameter and added inside each function
-    *   added 'env; parameter for :
-            'Parser_read_psl_from_string'
-            'PslNode_convert_psl_to_core'
+    *   added 'env' parameter for Game_RatFileToGame, Parser_read_psl_from_string, PslNode_convert_psl_to_core
             
 50.gameUnrealCore.c
 
-    1.warning: passing argument 1 of ‘SymbType_create’ makes pointer from integer without a cast
+    warning: passing argument 1 of ‘SymbType_create’ makes pointer from integer without a cast
     
         *   added 'env' parameter
     
-    2.error: macro "find_atom" requires 2 arguments
+    error: macro "find_atom" requires 2 arguments
             
         *   added 'nodemgr' parameter
     
-    3.warning: passing argument 7 of ‘BddEnc_print_bdd_wff’ from incompatible pointer type
+    warning: passing argument 7 of ‘BddEnc_print_bdd_wff’ from incompatible pointer type
     
         *   added parameter 'outostream'
                 StreamMgr_ptr streams = STREAM_MGR(NuSMVEnv_get_value(env, ENV_STREAM_MANAGER));
                 FILE* outostream = StreamMgr_get_output_ostream(streams);
                 
-    4.warning: passing argument 8 of ‘game_minimize_players_constraints’ from incompatible pointer type
+    warning: passing argument 8 of ‘game_minimize_players_constraints’ from incompatible pointer type
     
         *   add cast '(game_is_game_still_correct)' to 'game_is_opponent_constraint_minimal' parameter
         
 51.gameCheckLTLSF07.c  
 
-    1.warning: implicit declaration of function ‘w2w_init_wff2nnf()’ and ‘w2w_quit_wff2nnf()’
+    warning: implicit declaration of function ‘w2w_init_wff2nnf()’ and ‘w2w_quit_wff2nnf()’
     
         *   replaced with 'NuSMVEnv_get_handled_hash_ptr(env, ENV_W2W_WFF2NNF_HASH);' and 'clear_assoc(NuSMVEnv_get_handled_hash_ptr(env, ENV_W2W_WFF2NNF_HASH));'
             Note: the 'NuSMVEnv_get_handled_hash_ptr' have inside a setter
         
-    2.warning: passing argument 1 of ‘Compile_FlattenHierarchy’ from incompatible pointer type
+    warning: passing argument 1 of ‘Compile_FlattenHierarchy’ from incompatible pointer type
     
         *   added 'env' and new parameter 'expand_bounded_arrays' with 'false' (default value)
 
@@ -417,30 +400,22 @@ Lorenzo Dibenedetto - lorenzodibenedetto90@gmail.com , Sebastian Sardina - ssard
     error: too few arguments to function ‘prop_init’
     
         *   added env parameter for all the function until 'prop_db_game_prop_create_and_add' 
-                that is the highest level with 'env' declaration inside
+                that is the top level with 'env' declaration inside
         
     warning: implicit declaration of function ‘indent(file)’ and ‘indent_node(file)’
     
-        *   replaced
-        
-                'indent(file)'  with 
-                
-                        for(i=0; i < OStream_get_indent_size(OSTREAM(file)); i++) fprintf(file, "  ");
-            
-                'indent_node(file, "", p, " ");'  with 
-                        
-                        for(i=0; i < OStream_get_indent_size(OSTREAM(file)); i++) fprintf(file, "  ");
-                        fprintf(file, "%s", "");
-                        print_node(wffprint,file, p);
-                        fprintf(file, "%s", " ");
+        *   removed all 'indent(file)'  
+        *   replaced 
+                'indent_node(file, "", p, " ");'  with  'OStream_nprintf(file, wffprint, "%N ", p);'
+                'fprintf('  with 'OStream_printf'
                         
 53.PropDbGame.c [ #CHECK .2.3 AT RUNTIME ]
     
-    1.warning: passing argument 2 of ‘Prop_print_db’ from incompatible pointer type
+    warning: passing argument 2 of ‘Prop_print_db’ from incompatible pointer type
     
         *   add cast with 'OSTREAM(file)'
         
-    2.error: ‘struct PropDb_TAG’ has no member named ‘master’ "prop = PROP_GAME(PROP_DB(self)->master);" 
+    error: ‘struct PropDb_TAG’ has no member named ‘master’ "prop = PROP_GAME(PROP_DB(self)->master);" 
     
         *   removed 
                 all lines with 'PROP_DB(self)->master' and added 
@@ -454,19 +429,19 @@ Lorenzo Dibenedetto - lorenzodibenedetto90@gmail.com , Sebastian Sardina - ssard
                 'PropDbGame_master_set_game_scalar_sexp_fsm(PROP_DB_GAME(NuSMVEnv_get_value(env, ENV_PROP_DB)), scalar_fsm);'   
                     with 'NuSMVEnv_set_value(env, ENV_SEXP_FSM, scalar_fsm);'
                 
-    3.missing parameter
+    missing parameter
         
-        *   added 'env' parameter for 'PropDbGame_create' , 'PropDbGame_clean' , 'prop_db_game_init' , 'prop_db_init'
+        *   added 'env' parameter for : PropDbGame_create, PropDbGame_clean, prop_db_game_init, prop_db_init
     
 54.walkers/CheckerGame.c
 
     warning: passing argument 2 of ‘checker_base_init’ from incompatible pointer type 
     
-        *   added 'env' parameter for : 'checker_game_init' , 'CheckerGame_create'
+        *   added 'env' parameter for : checker_game_init , CheckerGame_create
         
     error: too few arguments to function ‘SymbTablePkg_error_type’
     
-        *   added 'env' parameter for 'SymbTablePkg_error_type'
+        *   added 'env' parameter for SymbTablePkg_error_type
         
 55.src/addons/addons.h
     
@@ -476,23 +451,23 @@ Lorenzo Dibenedetto - lorenzodibenedetto90@gmail.com , Sebastian Sardina - ssard
         
 56.smgameMisc.c [ #CHECK .3 AT RUNTIME ] 
 
-    1.warning: implicit declaration of function ‘util_resetlongjmp()’
+    warning: implicit declaration of function ‘util_resetlongjmp()’
     
         *   replaced with 'ErrorMgr_reset_long_jmp(errmgr)'
         
-    2.warning: passing argument 1 of ‘Cmd_CommandExecute’ from incompatible pointer type
+    warning: passing argument 1 of ‘Cmd_CommandExecute’ from incompatible pointer type
     
         *   added 'env' parameter
         
-    3.warning: implicit declaration of function ‘PropDb_master_get_bdd_fsm(PropPkg_get_prop_database())’ 
+    warning: implicit declaration of function ‘PropDb_master_get_bdd_fsm(PropPkg_get_prop_database())’ 
     
         *   replaced with 'BDD_FSM(NuSMVEnv_get_value(env, ENV_BDD_FSM))'
         
-    4.warning: passing argument 5 of ‘BddFsm_print_reachable_states_info’ from incompatible pointer type
+    warning: passing argument 5 of ‘BddFsm_print_reachable_states_info’ from incompatible pointer type
     
         *   added parameter 'outostream'
-                        StreamMgr_ptr streams = STREAM_MGR(NuSMVEnv_get_value(env, ENV_STREAM_MANAGER));
-                        FILE* outostream = StreamMgr_get_output_ostream(streams);
+                StreamMgr_ptr streams = STREAM_MGR(NuSMVEnv_get_value(env, ENV_STREAM_MANAGER));
+                FILE* outostream = StreamMgr_get_output_ostream(streams);
         
 57.gameCheckLTLSF07_gba_wring.c
 
@@ -506,7 +481,9 @@ Lorenzo Dibenedetto - lorenzodibenedetto90@gmail.com , Sebastian Sardina - ssard
     
         *   added cast 'OSTREAM(file)'
         
-59.make[3]: *** No rule to make target `/home/lorenzo/Documents/software/ClionProjects/NuSMV-2.6.0/NuSMV/code/nusmv/core/cinit/cinitCmd.lo', needed by `libsmgame.la' 
+59.errors
+
+    make[3]: *** No rule to make target `/home/lorenzo/Documents/software/ClionProjects/NuSMV-2.6.0/NuSMV/code/nusmv/core/cinit/cinitCmd.lo', needed by `libsmgame.la' 
 
     *   replaced all 'cinit....lo' with 'cinit....c.o' with a new path
             
@@ -533,18 +510,16 @@ Lorenzo Dibenedetto - lorenzodibenedetto90@gmail.com , Sebastian Sardina - ssard
     warning: implicit declaration of function ‘CInit_NusmvrcSource’
     
         *   replaced with 'Cmd_Misc_NusmvrcSource(env)'
-
------------------------------------------------------------------------------------------------------------------      
-61.make[2]: *** No rule to make target `/home/lorenzo/Documents/software/ClionProjects/NuSMV-2.6.0/NuSMV/libnusmvcore.la', needed by `NuGaT'.  Stop. 
-   make[2]: *** No rule to make target `/home/lorenzo/Documents/software/ClionProjects/NuSMV-2.6.0/NuSMV/librbcdag.la', needed by `NuGaT'.  Stop.
    
-   *   replaced with "*.a" files with a new path
-
-            $(NUSMV_DIR)/build/lib/libnusmvshell.a \
-            $(NUSMV_DIR)/build/lib/libnusmvaddonscore.a \
-            $(NUSMV_DIR)/build/lib/libnusmvcore.a  \
-            $(NUSMV_DIR)/build/lib/libnusmvgrammar.a \
-            $(NUSMV_DIR)/build/lib/libnusmvrbc.a
+61.errors 
+     
+    make[2]: *** No rule to make target `/home/lorenzo/Documents/software/ClionProjects/NuSMV-2.6.0/NuSMV/libnusmvcore.la', needed by `NuGaT'.  Stop. 
+    make[2]: *** No rule to make target `/home/lorenzo/Documents/software/ClionProjects/NuSMV-2.6.0/NuSMV/librbcdag.la', needed by `NuGaT'.  Stop.
+   
+    *   replaced with "*.a" files with a new path
+    
+            $(NUSMV_DIR)/build/lib/libnusmvshell.a $(NUSMV_DIR)/build/lib/libnusmvaddonscore.a $(NUSMV_DIR)/build/lib/libnusmvcore.a  \
+            $(NUSMV_DIR)/build/lib/libnusmvgrammar.a $(NUSMV_DIR)/build/lib/libnusmvrbc.a
 
 62.smgameMain.c  [ TODO : find a solution for variable LIBS ( include in Makefile.am/.in or configure.ac ) ]
 
@@ -593,16 +568,16 @@ Lorenzo Dibenedetto - lorenzodibenedetto90@gmail.com , Sebastian Sardina - ssard
     warning: implicit declaration of function ‘set_bmc_mode’,‘set_bmc_pb_length’
   
         *   included library '#include "bmc/bmc.h"'
-     
-             
+        
 65.gameCheckLTLSF07.c : warning: undefined reference to `global_fsm_builder' for :  [ #CHECK AT RUNTIME, ANOTHER DECLARATION ] 
              
      *  replaced 'global_fsm_builder'  with 'FsmBuilder_ptr builder = FSM_BUILDER(NuSMVEnv_get_value(env, ENV_FSM_BUILDER));'
      *  removed all 'global_fsm_builder' declarations
      
-66.gameUnrealCore.c : warning: undefined reference to `boolean_range' , 'zero_number' , 'one_number' [ #TODO CHANGE DESCRIPTION ] 
+66.gameUnrealCore.c : warning: undefined reference to `boolean_range' , 'zero_number' , 'one_number'
     
-    *   replaced with Mgr functions ....
+    *   replaced with 'ExprMgr_boolean_range(exprs)' , 'ExprMgr_number(exprs, 0)' , 'ExprMgr_number(exprs, 1)'
+    *   added declaration 'const ExprMgr_ptr exprs = EXPR_MGR(NuSMVEnv_get_value(env, ENV_EXPR_MANAGER));'
 
 67.grammar.c: warning: implicit declaration of function ‘rpl_malloc’ [ #pending ]
 
@@ -610,60 +585,49 @@ Lorenzo Dibenedetto - lorenzodibenedetto90@gmail.com , Sebastian Sardina - ssard
 
 68.TraceXmlLoader.c : warning: undefined reference to
 
-     `xmlParseChunk' , `xmlCtxtGetLastError' , `xmlCreatePushParserCtxt' , `xmlFreeParserCtxt'
+    `xmlParseChunk' , `xmlCtxtGetLastError' , `xmlCreatePushParserCtxt' , `xmlFreeParserCtxt'
 
     *   added '-lxml2' in LIBS variable <configure.ac>
     
 69.SatMinisat.c warning: undefined reference to :
 
-       `MiniSat_New_Variable' , `MiniSat_Add_Clause' , `MiniSat_Add_Clause' , `MiniSat_Add_Clause'
-       `MiniSat_Add_Clause' , `MiniSat_Add_Clause' , ...
-   
+    `MiniSat_New_Variable' , `MiniSat_Add_Clause' , `MiniSat_Add_Clause' , `MiniSat_Add_Clause'
+    `MiniSat_Add_Clause' , `MiniSat_Add_Clause' , ...
+    
     *   added '-lMiniSat' in LIBS variable <configure.ac>
     
 70.warning: undefined reference to
 
-    Solver_C.cc for :
-
-        `operator new(unsigned long)' , `operator delete(void*)' , `__cxa_allocate_exception'
-        `__cxa_throw' , `operator delete(void*)' , `__cxa_guard_acquire' , `__cxa_guard_release'
-  
-    SimpSolver.cc for :
-      
-       `__cxa_allocate_exception' , `__cxa_throw' , `operator delete(void*)'
+    Solver_C.cc for : `operator new(unsigned long)' , `operator delete(void*)' , `__cxa_allocate_exception'
+                    `__cxa_throw' , `operator delete(void*)' , `__cxa_guard_acquire' , `__cxa_guard_release'
+    SimpSolver.cc for : `__cxa_allocate_exception' , `__cxa_throw' , `operator delete(void*)'
    
-    *   included '-lstdc++' library in LIBS variable <configure.ac>
+    *   added '-lstdc++' in LIBS variable <configure.ac>
    
 71.warning: aclocal.m4:16: this file was generated for autoconf 2.65.
-   You have another version of autoconf.  It may work, but is not guaranteed to.
-   If you have problems, you may need to regenerate the build system entirely.
-   
-   * install autoconf-2.65
-   
-       $ wget http://ftp.gnu.org/gnu/autoconf/autoconf-2.65.tar.gz
-       $ tar xvfvz autoconf-2.65.tar.gz
-       $ cd autoconf-2.65
-       $ ./configure
-       $ make
-       $ sudo make install
+
+       You have another version of autoconf.  It may work, but is not guaranteed to.
+       If you have problems, you may need to regenerate the build system entirely.
+       
+       * install autoconf-2.65
+       
+           $ wget http://ftp.gnu.org/gnu/autoconf/autoconf-2.65.tar.gz
+           $ tar xvfvz autoconf-2.65.tar.gz
+           $ cd autoconf-2.65
+           $ ./configure
+           $ make
+           $ sudo make install
     
 72.PropDbGame.c
     Inspection Warning : 
     
-        Called object is not a function (at line 357)
-    
-            *   removed macro ARGS()
-                
-                'prop_game_set_game_scalar_sexp_fsm' , 'prop_game_set_game_bool_sexp_fsm'
-                'prop_game_set_game_bdd_fsm' , 'prop_game_set_game_be_fsm'
-                
         Can't resolve type 'bool'
         
-            *   included '#include <stdbool.h>' library
+        *   included '#include <stdbool.h>' library
             
         Instantiating an unknown structure without a reference at line
         
-            *   added bracket for single value enum types
+        *   added bracket for single value enum types
             
                 typedef enum { Game_Who_TAG } Game_Who;
                 typedef enum { Game_UnrealizableCore_Algorithm_TAG } Game_UnrealizableCore_Algorithm;
@@ -672,32 +636,32 @@ Lorenzo Dibenedetto - lorenzodibenedetto90@gmail.com , Sebastian Sardina - ssard
 
 73.Runtime Errors
 
-    2.smgameCmd.c in 'Smgame_AddCmd' :  Assertion `res' failed.
+    smgameCmd.c in 'Smgame_AddCmd' :  Assertion `res' failed.
     
     *   replace NuSMV reset with NuGaT reset
     
-    3.unknown command 'read_model'
+    unknown command 'read_model'
     
     *   included this code in main() of NuGaT after 'FP_V_E iq_fns[][2] = {{NuGaTAddons_Init, NuGaTAddons_Quit}' declaration
     
-            #if NUSMV_HAVE_INTERACTIVE_SHELL
-                /* these are for the interactive shell */
-                {CInit_init_cmd, CInit_quit_cmd},
-                {Compass_init_cmd, Compass_Cmd_quit},
-            #endif
-    
+        #if NUSMV_HAVE_INTERACTIVE_SHELL
+            /* these are for the interactive shell */
+            {CInit_init_cmd, CInit_quit_cmd},
+            {Compass_init_cmd, Compass_Cmd_quit},
+        #endif
+        
 74.CMake Partial Migration for Debug Purpose
 
-    1.undefined reference to `MMalloc' ...
+    undefined reference to `MMalloc' ...
     
-    *   added in CMakeLists.txt
+        *   added in CMakeLists.txt
     
             target_link_libraries(NuGaT
                     ${NUSMV_DIR}/build/build-cudd/lib/libst.a
                     ${NUSMV_DIR}/build/build-cudd/lib/libcudd.a
                     ...)
                     
-    2.libxml2.a : 
+    libxml2.a : 
     
         in `xmlFreeZMemBuff': undefined reference to `deflateEnd' ...
     
@@ -709,34 +673,27 @@ Lorenzo Dibenedetto - lorenzodibenedetto90@gmail.com , Sebastian Sardina - ssard
         
 75.Runtime Error
 
-    1.NuGaT: /home/lorenzo/Desktop/NuSMV-2.6.0/NuSMV/code/nusmv/core/cinit/NuSMVEnv.c:174: NuSMVEnv_get_value: Assertion `(void*)((void *)0) != res' failed.
+    NuGaT: /home/lorenzo/Desktop/NuSMV-2.6.0/NuSMV/code/nusmv/core/cinit/NuSMVEnv.c:174: 
+        NuSMVEnv_get_value: Assertion `(void*)((void *)0) != res' failed.
 
         grammar.y.2.55
         
         *   replaced  
-                'NuSMVEnv_get_value(__nusmv_parser_env__, ENV_STRING_MGR)' with '__nusmv_parser_env__' for Game_Mode_Enter() and Game_Mode_Exit() functions
+                'NuSMVEnv_get_value(__nusmv_parser_env__, ENV_STRING_MGR)' 
+                    with '__nusmv_parser_env__' for Game_Mode_Enter() and Game_Mode_Exit() functions
                 'OptsHandler_create()' with 'GET_OPTS' macro
         
-    3.gamePkg.c:322 : game_pkg_switch_to_prop_db_game (env=0x907ce0)
-    
-    *   replaced 
-            'dbg = PROP_DB_GAME(NuSMVEnv_get_value(env, ENV_PROP_DB));' with 'dbg = PROP_DB_GAME(NuSMVEnv_remove_value(env, ENV_PROP_DB));'
-            'db = PROP_DB_GAME(NuSMVEnv_get_value(env, ENV_PROP_DB));' with 'db = PROP_DB_GAME(NuSMVEnv_remove_value(env, ENV_PROP_DB));'
+    gameFlatten.c:227  fprintf (__fmt=0x6892d8 "*** WARNING: Game addon does not support properties COI size sorting  
        
-    4.gameFlatten.c:227  fprintf (__fmt=0x6892d8 "*** WARNING: Game addon does not support properties COI size sorting.  ***\n", __stream=<optimized out>)
-    
-    *   replaced 'nusmv_stderr' with 'stderr' in Game_CommandFlattenHierarchy()
+        *   replaced 'nusmv_stderr' with 'stderr' in Game_CommandFlattenHierarchy()
 
-    5.PropDbGame.c:330: PropDbGame_master_get_game_scalar_sexp_fsm: Assertion `PropGame_type_is_game_or_notype(Prop_get_type(((Prop_ptr) prop)))'
+    dd.c Program received signal SIGSEGV, Segmentation fault. 0x00000000006a3faa in Cudd_RecursiveDeref () for ...
+        ...Compile_quit(env) -> BddFsm_destroy(bdd_fsm)
     
-    *   replaced 'PropPkg_get_prop_database' with NuSMVEnv_get_value(env, ENV_PROP_DB)
-    
-    8.dd.c Program received signal SIGSEGV, Segmentation fault. 0x00000000006a3faa in Cudd_RecursiveDeref () for Compile_quit(env) -> BddFsm_destroy(bdd_fsm)
-    
-    *   removed all master property variables from environment
-    
-                NuSMVEnv_remove_value(env, ENV_SEXP_FSM); NuSMVEnv_remove_value(env, ENV_BOOL_FSM);
-                NuSMVEnv_remove_value(env, ENV_BDD_FSM); NuSMVEnv_remove_value(env, ENV_BE_FSM);
+        *   removed all master property variables from environment
+        
+            NuSMVEnv_remove_value(env, ENV_SEXP_FSM); NuSMVEnv_remove_value(env, ENV_BOOL_FSM);
+            NuSMVEnv_remove_value(env, ENV_BDD_FSM); NuSMVEnv_remove_value(env, ENV_BE_FSM);
 
 
 
@@ -744,12 +701,13 @@ Lorenzo Dibenedetto - lorenzodibenedetto90@gmail.com , Sebastian Sardina - ssard
 EOF
 ================================================================================
 
-FUTURE TODO
+TODO
 
-    *   REMOVE ALL COMMENTED LINES
-    *   check outstream usage in "CommandGameShowProperty()" for gameCmd.c file
-    *   there are 4 stderr in smgameMain.c ( replace in errstream ??? )
-    
-----
+    *   check outstream usage in "CommandGameShowProperty()" for gameCmd.c file (usage of setter?)
+    *   there are 4 stderr in smgameMain.c from the old version of NuGaT ( need to replace with errstream? )
+    *   check 'expand_bounded_arrays' overall implementation
+    *   REMOVE ALL COMMENTED LINES, OPTIMIZE IMPORTS, AUTOINDENT ALL THE CODE
+
+FUTURE TODO
 
     *   RECONVERT LOG IN A SMART WAY (like a list, remove all rendundant words)

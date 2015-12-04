@@ -56,7 +56,7 @@ static char rcsid[] UTIL_UNUSED = "$Id: smVers.c,v 1.3.6.2.4.2.6.1 2007-12-20 17
 #endif
 
 #ifndef PACKAGE_STRING
-#define PACKAGE_STRING "NuGaT 0.5.0"
+#define PACKAGE_STRING "NuGaT 0.6.0"
 #endif
 
 
