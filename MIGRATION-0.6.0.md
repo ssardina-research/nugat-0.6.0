@@ -9,7 +9,7 @@ Nitin Yadav - nitin.yadav@rmit.edu.au
 
 ================================================================================
 
-**Summary**
+**Summary** (Draft)
 
 - changed **libraries paths** in Makefile.in/.am
 
@@ -25,7 +25,7 @@ Nitin Yadav - nitin.yadav@rmit.edu.au
 
 - replaced utility **make* with **cmake**
 
-- usage of **new Manager library** (**for strings, errors, nodes, expressions, ...**)
+- usage of **new Manager library ( for strings, errors, nodes, expressions )**
 
 - added **Yacc/Lex prefix flag 'nusmv_yy'**
 
