@@ -17,9 +17,9 @@ Nitin Yadav - nitin.yadav@rmit.edu.au
 
 - replaced old **.lo** files with **.c.o** files
 
-- replaced **nusmv\_std(out/err)** with **(out/err)stream** with stream declarations
+- replaced **nusmv_std(out/err)** with **(out/err)stream** with stream declarations
 
-- replaced **Master Property handling** with **4 enviroment variables ENV\_(SEXP/BOOL/BDD/BE)\_FSM**
+- replaced **Master Property handling** with **4 enviroment variables ENV_(SEXP/BOOL/BDD/BE)_FSM**
 
 - replaced **global variable/functions** with **Enviroment handling** with getter and setter variables
 
@@ -27,9 +27,9 @@ Nitin Yadav - nitin.yadav@rmit.edu.au
 
 - usage of **new Manager library** (**for strings, errors, nodes, expressions, ...**)
 
-- added **Yacc/Lex prefix flag 'nusmv\_yy'**
+- added **Yacc/Lex prefix flag 'nusmv_yy'**
 
-- added new variable **'expand\_bounded\_arrays**
+- added new variable **'expand_bounded_arrays**
 
 
 ================================================================================
