@@ -1,7 +1,9 @@
 cmake_minimum_required(VERSION 3.2)
-project(NuGaT_0_6_0)
 
-set(NUGAT_DIR  /home/lorenzo/Documents/software/ClionProjects/nugat-0.5.4)
+project(NuGaT)
+set(PROJECT_VERSION "0.6.0")
+
+set(NUGAT_DIR  .)
 set(NUSMV_DIR /home/lorenzo/Documents/software/ClionProjects/NuSMV-2.6.0/NuSMV)
 
 include_directories("${NUGAT_DIR}")
