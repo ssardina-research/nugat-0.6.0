@@ -3,45 +3,38 @@ cmake_minimum_required(VERSION 3.2)
 project(NuGaT)
 set(PROJECT_VERSION "0.6.0")
 
-set(NUGAT_DIR  .)
 
-set(NUSMV_DIR /home/ssardina/src/NuSMV/NuSMV-2.6.0/NuSMV)
+set(NUGAT_SOURCE_DIR .)
 
-#set(NUSMV_SOURCE_DIR "/home/ssardina/src/NuSMV/NuSMV-2.6.0/NuSMV"
-#    CACHE PATH "Source directory of NuSMV")
+set(NUSMV_SOURCE_DIR "/home/ssardina/src/NuSMV/NuSMV-2.6.0/NuSMV"
+    CACHE PATH "Source directory of NuSMV")
 
 set(NUSMV_BUILD_DIR "/opt/NuSMV-2.6.0/"
     CACHE PATH "Build directory of NuSMV")
 
+
+include_directories(${NUSMV_BUILD_DIR}/include)
+include_directories(${NUSMV_BUILD_DIR}/include/code)
+include_directories(${NUSMV_BUILD_DIR}/include/code/nusmv/core)
+include_directories(${NUSMV_BUILD_DIR}/include/code/nusmv/shell)
+
+## Somehow some .h files are not copied to the install directory and remain only in the source tree of NuSMV
+## so we need to include those source dirs. shouldn't they be copied to the install dir too?
 #
-#set(CUDD_SOURCE_DIR "${NUSMV_SOURCE_DIR}/../cudd-2.4.1.1"
-#    CACHE PATH "Source directory of CuDD")
+# for nusmv/core/parser/grammar.y
+include_directories(${NUSMV_SOURCE_DIR}/build/code/)
+# for nusmv/core/compile/type_checking/checkers/checkersInt.h
+include_directories("${NUSMV_SOURCE_DIR}/code")
+# for compile/type_checking/checkers/CheckerBase_private.h
+include_directories("${NUSMV_SOURCE_DIR}/code/nusmv/core")
 
 
+#include_directories("${NUSMV_SOURCE_DIR}/build/build-MiniSat/minisat-37dc6c67e2af26379d88ce349eb9c4c6160e8543")
 
-#add_subdirectory(${CUDD_SOURCE_DIR} ${CUDD_BUILD_DIR})
-#include_directories("${NUSMV_DIR}/../cudd-2.4.1.1")
+include_directories(${NUGAT_SOURCE_DIR})
+include_directories("${NUGAT_SOURCE_DIR}/src")
+include_directories("${NUGAT_SOURCE_DIR}/src/parser")
 
-#add_subdirectory(${NUSMV_SOURCE_DIR} ${NUSMV_BUILD_DIR})
-
-#include_directories("${NUSMV_BUILD_DIR}/include/")
-
-
-
-include_directories("${NUGAT_DIR}")
-include_directories("${NUGAT_DIR}/src")
-include_directories("${NUGAT_DIR}/src/parser")
-
-include_directories("${NUSMV_DIR}")
-include_directories("${NUSMV_DIR}/../cudd-2.4.1.1/include")
-include_directories("${NUSMV_DIR}/build")
-include_directories("${NUSMV_DIR}/build/code")
-include_directories("${NUSMV_DIR}/build/build-cudd/lib")
-include_directories("${NUSMV_DIR}/build/build-MiniSat/minisat-37dc6c67e2af26379d88ce349eb9c4c6160e8543")
-include_directories("${NUSMV_DIR}/code")
-include_directories("${NUSMV_DIR}/code/nusmv")
-include_directories("${NUSMV_DIR}/code/nusmv/core")
-include_directories("${NUSMV_DIR}/code/nusmv/shell")
 
 set(SOURCE_FILES
         src/addons/game/fsm/GameBddFsm.c
@@ -106,14 +99,11 @@ set(SOURCE_FILES
         src/smgame/smgameMain.c
         src/smgame/smgameMisc.c
         src/smgame/smgameVers.c
-
         )
 
 
-
 file(GLOB_RECURSE NUSMV_SRC
-
-        "${NUGAT_DIR}/src/parser/*.c"
+        "${NUGAT_SOURCE_DIR}/src/parser/*.c"
         "${NUSMV_DIR}/code/*.c"
         )
 
@@ -170,7 +160,6 @@ endforeach()
 
 # Link to system libraries (these should be found automatically in standard dirs)
 target_link_libraries(NuGaT
-
             libstdc++.a
             libxml2.a
             libreadline.a
