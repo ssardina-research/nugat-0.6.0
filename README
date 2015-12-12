@@ -128,7 +128,7 @@ Basic building steps:
 
 Actually I am running this now with NuSMV 2.6:
 
-./configure --with-nusmv-dir=/home/ssardina/src/NuSMV/source/NuSMV-2.6.0/NuSMV --with-cudd-dir=/home/ssardina/src/NuSMV/source/NuSMV-2.6.0/cudd-2.4.1.1
+./configure --prefix=/opt/NuGAT-0.6.0/ --with-nusmv-dir=/home/ssardina/src/NuSMV/NuSMV-2.6.0/NuSMV --with-cudd-dir=/home/ssardina/src/NuSMV/NuSMV-2.6.0/cudd-2.4.1.1/
 
 3. Run setup.sh in /home/ssardina/src/NuSMV/source/NuSMV-2.6.0/cudd-2.4.1.1
 
@@ -146,6 +146,15 @@ and run sudo make install
 	% make
 
    This builds an executable "NuGaT" in the current directory.
+
+If you get this error:
+
+	mv: cannot stat ‘.deps/grammar.Tpo’: No such file or directory
+
+then the file aclocal.m4 was re-generated and may brake the system. Just replace it with the original one as follows:
+	
+	# cp aclocal.mp4.orig aclocal.mp4
+
 
 5. Checking LTLGAME properties currently requires a slightly modified
    version of the LTL to B\"uchi translator available in Lily.
