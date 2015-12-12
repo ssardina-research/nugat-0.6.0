@@ -4,14 +4,36 @@ project(NuGaT)
 set(PROJECT_VERSION "0.6.0")
 
 set(NUGAT_DIR  .)
-set(NUSMV_DIR /home/lorenzo/Documents/software/ClionProjects/NuSMV-2.6.0/NuSMV)
+
+set(NUSMV_DIR /home/ssardina/src/NuSMV/NuSMV-2.6.0/NuSMV)
+
+#set(NUSMV_SOURCE_DIR "/home/ssardina/src/NuSMV/NuSMV-2.6.0/NuSMV"
+#    CACHE PATH "Source directory of NuSMV")
+
+set(NUSMV_BUILD_DIR "/opt/NuSMV-2.6.0/"
+    CACHE PATH "Build directory of NuSMV")
+
+#
+#set(CUDD_SOURCE_DIR "${NUSMV_SOURCE_DIR}/../cudd-2.4.1.1"
+#    CACHE PATH "Source directory of CuDD")
+
+
+
+#add_subdirectory(${CUDD_SOURCE_DIR} ${CUDD_BUILD_DIR})
+#include_directories("${NUSMV_DIR}/../cudd-2.4.1.1")
+
+#add_subdirectory(${NUSMV_SOURCE_DIR} ${NUSMV_BUILD_DIR})
+
+#include_directories("${NUSMV_BUILD_DIR}/include/")
+
+
 
 include_directories("${NUGAT_DIR}")
 include_directories("${NUGAT_DIR}/src")
 include_directories("${NUGAT_DIR}/src/parser")
 
 include_directories("${NUSMV_DIR}")
-include_directories("${NUSMV_DIR}/cudd-2.4.1.1/include")
+include_directories("${NUSMV_DIR}/../cudd-2.4.1.1/include")
 include_directories("${NUSMV_DIR}/build")
 include_directories("${NUSMV_DIR}/build/code")
 include_directories("${NUSMV_DIR}/build/build-cudd/lib")
@@ -118,20 +140,47 @@ list(REMOVE_ITEM NUSMV_SRC
 
         )
 
+
 add_executable(NuGaT ${SOURCE_FILES} ${NUSMV_SRC} )
 
+# ALL THIS DOES NOT WORK, WE NEED TO LINK AGAINST MANY FILES .a
+#FIND_LIBRARY(NUSMV_LIBRARY NAMES nusmv /opt/NuSMV-2.6.0/lib/libnusmvshell.a)
+#find_library(NUSMV_LIBRARY NAMES nusmvshell.a nusmvaddonscore.a nusmvcore nusmvgrammar  nusmvrbc MiniSat
+#        HITNS /opt/NuSMV-2.6.0/lib/ NO_DEFAULT_PATH)
+##find_library(NUSMV_LIBRARY NAMES nusmvshell.a nusmvaddonscore.a
+#        PATHS ${NUSMV_BUILD_DIR}/lib/ NO_DEFAULT_PATH)
+#find_library(NUSMV_LIBRARY NAMES nusmvaddonscore.a
+#        PATHS /opt/NuSMV-2.6.0/lib/ NO_DEFAULT_PATH)
+
+
+
+# Link to NUSMV libraries
+foreach(X nusmvshell nusmvaddonscore nusmvcore nusmvgrammar nusmvrbc MiniSat)
+        find_library(NUSMV_${X}_LIBRARY NAMES ${X}
+            PATHS ${NUSMV_BUILD_DIR}/lib/ NO_DEFAULT_PATH)
+        target_link_libraries(NuGaT ${NUSMV_${X}_LIBRARY})
+endforeach()
+
+# Link to CUDD libraries
+foreach(X libst.a libcudd.a libepd.a libmtr.a libutil.a)
+    find_library(CUDD_${X}_LIBRARY NAMES ${X}
+            PATHS ${NUSMV_DIR}/build/build-cudd/lib/ NO_DEFAULT_PATH)
+    target_link_libraries(NuGaT ${CUDD_${X}_LIBRARY})
+endforeach()
+
+# Link to system libraries (these should be found automatically in standard dirs)
 target_link_libraries(NuGaT
 
-            libnusmvshell.a libnusmvaddonscore.a libnusmvcore.a libnusmvgrammar.a libnusmvrbc.a
-
-            libst.a libcudd.a libepd.a libmtr.a
-
-            ${NUSMV_DIR}/build/build-cudd/lib/libutil.a
-
-            libMiniSat.a libstdc++.a libxml2.a libreadline.a libtermcap.a libexpat.a libz.a liblzma.a libm.a
-
+            libstdc++.a
+            libxml2.a
+            libreadline.a
+            libtermcap.a
+            libexpat.a
+            libz.a
+            liblzma.a
+            libm.a
             )
-
+#
 
 add_definitions(-DHAVE_EXTERN_ARGS_MACROS)
 add_definitions(-DHAVE_CONFIG_H)
