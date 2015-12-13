@@ -13,16 +13,16 @@ set(NUSMV_BUILD_DIR "/opt/NuSMV-2.6.0/"
     CACHE PATH "Build directory of NuSMV")
 
 
-include_directories(${NUSMV_BUILD_DIR}/include)
-include_directories(${NUSMV_BUILD_DIR}/include/code)
-include_directories(${NUSMV_BUILD_DIR}/include/code/nusmv/core)
-include_directories(${NUSMV_BUILD_DIR}/include/code/nusmv/shell)
+include_directories("${NUSMV_BUILD_DIR}/include")
+include_directories("${NUSMV_BUILD_DIR}/include/code")
+include_directories("${NUSMV_BUILD_DIR}/include/code/nusmv/core")
+include_directories("${NUSMV_BUILD_DIR}/include/code/nusmv/shell")
 
 ## Somehow some .h files are not copied to the install directory and remain only in the source tree of NuSMV
 ## so we need to include those source dirs. shouldn't they be copied to the install dir too?
 #
 # for nusmv/core/parser/grammar.y
-include_directories(${NUSMV_SOURCE_DIR}/build/code/)
+include_directories("${NUSMV_SOURCE_DIR}/build/code/")
 # for nusmv/core/compile/type_checking/checkers/checkersInt.h
 include_directories("${NUSMV_SOURCE_DIR}/code")
 # for compile/type_checking/checkers/CheckerBase_private.h
@@ -31,7 +31,7 @@ include_directories("${NUSMV_SOURCE_DIR}/code/nusmv/core")
 
 #include_directories("${NUSMV_SOURCE_DIR}/build/build-MiniSat/minisat-37dc6c67e2af26379d88ce349eb9c4c6160e8543")
 
-include_directories(${NUGAT_SOURCE_DIR})
+include_directories("${NUGAT_SOURCE_DIR}")
 include_directories("${NUGAT_SOURCE_DIR}/src")
 include_directories("${NUGAT_SOURCE_DIR}/src/parser")
 
@@ -104,28 +104,28 @@ set(SOURCE_FILES
 
 file(GLOB_RECURSE NUSMV_SRC
         "${NUGAT_SOURCE_DIR}/src/parser/*.c"
-        "${NUSMV_DIR}/code/*.c"
+        "${NUSMV_SOURCE_DIR}/code/*.c"
         )
 
 list(REMOVE_ITEM NUSMV_SRC
-        "${NUSMV_DIR}/code/nusmv/core/dag/dagEn.c"
-        "${NUSMV_DIR}/code/nusmv/core/sat/solvers/SatZchaff.c"
-        "${NUSMV_DIR}/code/nusmv/core/trace/loaders/TraceXmlLoader.c"
-        "${NUSMV_DIR}/code/nusmv/core/utils/utils_msvc.c"
-        "${NUSMV_DIR}/code/nusmv/core/utils/BigWordNumberMgr.c"
-        "${NUSMV_DIR}/code/nusmv/core/utils/BigWordNumberInt.c"
-        "${NUSMV_DIR}/code/nusmv/core/utils/bignumbers/bignumbers.c"
-        ${NUSMV_DIR}/code/nusmv/core/utils/bignumbers/numbers.c
-        "${NUSMV_DIR}/code/nusmv/core/utils/BigWordNumber.c"
-        "${NUSMV_DIR}/code/nusmv/core/parser/psl/psl.c"
-        "${NUSMV_DIR}/code/wtest/src/main.c"
-        "${NUSMV_DIR}/code/nusmv/core/bmc/bmcPkg.c"
-        "${NUSMV_DIR}/code/nusmv/core/compile/compileBEval.c"
-        "${NUSMV_DIR}/code/nusmv/core/trace/pkg_trace.c"
+        "${NUSMV_SOURCE_DIR}/code/nusmv/core/dag/dagEn.c"
+        "${NUSMV_SOURCE_DIR}/code/nusmv/core/sat/solvers/SatZchaff.c"
+        "${NUSMV_SOURCE_DIR}/code/nusmv/core/trace/loaders/TraceXmlLoader.c"
+        "${NUSMV_SOURCE_DIR}/code/nusmv/core/utils/utils_msvc.c"
+        "${NUSMV_SOURCE_DIR}/code/nusmv/core/utils/BigWordNumberMgr.c"
+        "${NUSMV_SOURCE_DIR}/code/nusmv/core/utils/BigWordNumberInt.c"
+        "${NUSMV_SOURCE_DIR}/code/nusmv/core/utils/bignumbers/bignumbers.c"
+        "${NUSMV_SOURCE_DIR}/code/nusmv/core/utils/bignumbers/numbers.c"
+        "${NUSMV_SOURCE_DIR}/code/nusmv/core/utils/BigWordNumber.c"
+        "${NUSMV_SOURCE_DIR}/code/nusmv/core/parser/psl/psl.c"
+        "${NUSMV_SOURCE_DIR}/code/wtest/src/main.c"
+        "${NUSMV_SOURCE_DIR}/code/nusmv/core/bmc/bmcPkg.c"
+        "${NUSMV_SOURCE_DIR}/code/nusmv/core/compile/compileBEval.c"
+        "${NUSMV_SOURCE_DIR}/code/nusmv/core/trace/pkg_trace.c"
 
-        "${NUSMV_DIR}/code/nusmv/ltl2smvMain.c"
-        "${NUSMV_DIR}/code/nusmv/main.c"
-        "${NUSMV_DIR}/build/build-MiniSat/minisat-37dc6c67e2af26379d88ce349eb9c4c6160e8543/CMakeFiles/3.2.2/CompilerIdC/CMakeCCompilerId.c"
+        "${NUSMV_SOURCE_DIR}/code/nusmv/ltl2smvMain.c"
+        "${NUSMV_SOURCE_DIR}/code/nusmv/main.c"
+        "${NUSMV_SOURCE_DIR}/build/build-MiniSat/minisat-37dc6c67e2af26379d88ce349eb9c4c6160e8543/CMakeFiles/3.2.2/CompilerIdC/CMakeCCompilerId.c"
 
 
         )
@@ -154,7 +154,7 @@ endforeach()
 # Link to CUDD libraries
 foreach(X libst.a libcudd.a libepd.a libmtr.a libutil.a)
     find_library(CUDD_${X}_LIBRARY NAMES ${X}
-            PATHS ${NUSMV_DIR}/build/build-cudd/lib/ NO_DEFAULT_PATH)
+            PATHS ${NUSMV_SOURCE_DIR}/build/build-cudd/lib/ NO_DEFAULT_PATH)
     target_link_libraries(NuGaT ${CUDD_${X}_LIBRARY})
 endforeach()
 
