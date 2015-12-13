@@ -479,7 +479,7 @@ Nitin Yadav - nitin.yadav@rmit.edu.au
 
     warning: passing argument 2 of ‘BddFsm_print_info’ from incompatible pointer type
     
-        *   added cast 'OSTREAM(file)'
+        *   changed parameter in OStream_ptr
         
 59.errors
 
@@ -712,3 +712,4 @@ TODO
 FUTURE TODO
 
     *   RECONVERT LOG IN A SMART WAY (like a list, remove all rendundant words)
+    *   USE 'CODE NAVIGATION' AS UML DIAGRAMS FOR EASY UNDERSTANDING

@@ -203,7 +203,7 @@ GameBddFsm_player_satisfies_from ARGS((const GameBddFsm_ptr self,
                                        GamePlayer player,
                                        char quantifiers));
 
-EXTERN void GameBddFsm_print_info ARGS((const GameBddFsm_ptr self, FILE* file));
+EXTERN void GameBddFsm_print_info ARGS((const GameBddFsm_ptr self, OStream_ptr file));
 
 EXTERN void GameBddFsm_apply_synchronous_product ARGS((GameBddFsm_ptr self,
                                                   const GameBddFsm_ptr other));
