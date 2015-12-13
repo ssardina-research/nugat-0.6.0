@@ -6,7 +6,7 @@ set(PROJECT_VERSION "0.6.0")
 
 set(NUGAT_SOURCE_DIR .)
 
-set(NUSMV_SOURCE_DIR "/home/ssardina/src/NuSMV/NuSMV-2.6.0/NuSMV"
+set(NUSMV_SOURCE_DIR "/home/lorenzo/Documents/software/ClionProjects/NuSMV-2.6.0/NuSMV"
     CACHE PATH "Source directory of NuSMV")
 
 set(NUSMV_BUILD_DIR "/opt/NuSMV-2.6.0/"
