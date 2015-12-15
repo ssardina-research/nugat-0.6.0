@@ -3,15 +3,30 @@ cmake_minimum_required(VERSION 3.2)
 project(NuGaT)
 set(PROJECT_VERSION "0.6.0")
 
-set(NUGAT_DIR  .)
 
 set(NUGAT_SOURCE_DIR .)
 
 #set(NUSMV_SOURCE_DIR "/home/ssardina/src/NuSMV/NuSMV-2.6.0/NuSMV"
 #    CACHE PATH "Source directory of NuSMV")
+#set(NUSMV_BUILD_DIR "/opt/NuSMV-2.6.0/"
+#    CACHE PATH "Build directory of NuSMV")
 
-set(NUSMV_BUILD_DIR "/opt/NuSMV-2.6.0/"
-    CACHE PATH "Build directory of NuSMV")
+# User has to set up environment variables NUSMV_SOURCE_DIR and NUSMV_BUILD_DIR
+if(NOT EXISTS "$ENV{NUSMV_SOURCE_DIR}")
+    message(FATAL_ERROR "Could not find NUSMV_SOURCE_DIR environment variable")
+else()
+    set(NUSMV_SOURCE_DIR $ENV{NUSMV_SOURCE_DIR}
+           CACHE PATH "Source directory of NuSMV")
+endif(NOT EXISTS "$ENV{NUSMV_SOURCE_DIR}")
+
+if(NOT EXISTS "$ENV{NUSMV_BUILD_DIR}")
+    message(FATAL_ERROR "Could not find NUSMV_BUILD_DIR environment variable")
+else()
+    set(NUSMV_BUILD_DIR $ENV{NUSMV_BUILD_DIR}
+            CACHE PATH "Build directory of NuSMV")
+endif(NOT EXISTS "$ENV{NUSMV_BUILD_DIR}")
+
+
 
 
 include_directories("${NUSMV_BUILD_DIR}/include")
@@ -32,6 +47,7 @@ include_directories(${NUSMV_SOURCE_DIR}/code/nusmv/core)
 
 #include_directories("${NUSMV_SOURCE_DIR}/build/build-MiniSat/minisat-37dc6c67e2af26379d88ce349eb9c4c6160e8543")
 
+# Include some dirs from NUGAT itself
 include_directories(${NUGAT_SOURCE_DIR})
 include_directories(${NUGAT_SOURCE_DIR}/src)
 include_directories(${NUGAT_SOURCE_DIR}/src/parser)
@@ -135,15 +151,6 @@ list(REMOVE_ITEM NUSMV_SRC
 
 
 add_executable(NuGaT ${SOURCE_FILES} ${NUSMV_SRC} )
-
-# ALL THIS DOES NOT WORK, WE NEED TO LINK AGAINST MANY FILES .a
-#FIND_LIBRARY(NUSMV_LIBRARY NAMES nusmv /opt/NuSMV-2.6.0/lib/libnusmvshell.a)
-#find_library(NUSMV_LIBRARY NAMES nusmvshell.a nusmvaddonscore.a nusmvcore nusmvgrammar  nusmvrbc MiniSat
-#        HITNS /opt/NuSMV-2.6.0/lib/ NO_DEFAULT_PATH)
-##find_library(NUSMV_LIBRARY NAMES nusmvshell.a nusmvaddonscore.a
-#        PATHS ${NUSMV_BUILD_DIR}/lib/ NO_DEFAULT_PATH)
-#find_library(NUSMV_LIBRARY NAMES nusmvaddonscore.a
-#        PATHS /opt/NuSMV-2.6.0/lib/ NO_DEFAULT_PATH)
 
 
 
