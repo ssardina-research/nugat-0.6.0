@@ -1273,16 +1273,16 @@ EXTERN BddStates GameBddFsm_player_satisfies_from(const GameBddFsm_ptr self,
   SeeAlso     [ ]
 
 ******************************************************************************/
-void GameBddFsm_print_info(const GameBddFsm_ptr self, FILE* file)
+void GameBddFsm_print_info(const GameBddFsm_ptr self, OStream_ptr file)
 {
   GAME_BDD_FSM_CHECK_INSTANCE(self);
-  nusmv_assert((FILE *) NULL != file);
+  nusmv_assert((OStream_ptr) NULL != file);
 
-  fprintf(file, "Statistics on Game BDD FSM.\n");
-  fprintf(file, "Statistics on player 1 :\n");
-  BddFsm_print_info(self->player_1, OSTREAM(file));
-  fprintf(file, "Statistics on player 2 :\n");
-  BddFsm_print_info(self->player_2, OSTREAM(file));
+  OStream_printf(file, "Statistics on Game BDD FSM.\n");
+  OStream_printf(file, "Statistics on player 1 :\n");
+  BddFsm_print_info(self->player_1, file);
+  OStream_printf(file, "Statistics on player 2 :\n");
+  BddFsm_print_info(self->player_2, file);
 }
 
 /**Function********************************************************************

@@ -1931,6 +1931,7 @@ static int CommandGamePrintUsage(NuSMVEnv_ptr env,int argc, char **argv)
     StreamMgr_ptr streams = STREAM_MGR(NuSMVEnv_get_value(env, ENV_STREAM_MANAGER));
     FILE* outstream = StreamMgr_get_output_stream(streams);
     FILE* errstream = StreamMgr_get_error_stream(streams);
+    OStream_ptr outostream = StreamMgr_get_output_ostream(streams);
 
     nusmv_assert(opt_game_game(opts));
     nusmv_assert(opt_cone_of_influence(opts) == false);
@@ -1963,7 +1964,7 @@ static int CommandGamePrintUsage(NuSMVEnv_ptr env,int argc, char **argv)
     pdb = PROP_DB_GAME(prop_db);
     if (NuSMVEnv_has_value(env, ENV_BDD_FSM)) {
 
-        GameBddFsm_print_info(GAME_BDD_FSM(NuSMVEnv_get_value(env, ENV_BDD_FSM)), outstream);
+        GameBddFsm_print_info(GAME_BDD_FSM(NuSMVEnv_get_value(env, ENV_BDD_FSM)), outostream);
     }
 
     return 0;
