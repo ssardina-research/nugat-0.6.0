@@ -1,0 +1,23 @@
+utoconf # create "configure" file
+
+./configure --with-nusmv-dir=$(nusmv_source_dir)
+
+___(make part)
+
+automake        # this generate the Makefiles
+
+make            # this generate NuGAT executable
+
+
+___(cmake part) TODO
+
+export NUSMV_BUILD_DIR=/opt/NuSMV-2.6.0/
+export NUSMV_SOURCE_DIR=~/src/NuSMV/NuSMV-2.6.0/NuSMV/
+
+cd build
+
+rm -rf *
+
+cmake ..        # this generate the Makefiles
+
+cmake --build . # this generate NuGAT executable
