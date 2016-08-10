@@ -1,14 +1,14 @@
 ----------------------------------------------------------------------
 NuGAT is a game solver on top of NuSMV model checker
 
-This is version 0.5.4 of NuGaT.
+This is version 0.6.0 of NuGaT.
 
-by Nitin Yadav (<kyadav.nitin@gmail.com>) and 
-Sebastian Sardina (ssardina@gmail.com) @ 2015
-
+Lorenzo Dibenedetto - lorenzodibenedetto90@gmail.com
+Nitin Yadav - kyadav.nitin@gmail.com
+Sebastian Sardina - ssardina@gmail.com
 
 VERSION TRACKING:
-
+0.6.0 (October 2015): ported NuGAT to NuGAT 2.6.0 (see MIGRATION-0.6.0)
 0.5.4 (June 2015): ported NuGAT to NuGAT 2.5.4 (see MIGRATION-0.5.4)
 0.5.0: from from http://es.fbk.eu/technologies/nugat-game-solver
        (only works with NuSMV 2.5.0; does not compile with newer versions)
@@ -88,8 +88,9 @@ NuGaT uses NuSMV 2.5 as its backend. Hence, in order to build and use
 NuGaT you should first obtain and build NuSMV 2.5. For this we refer
 to the NuSMV 2.5 documentation.
 
-We refer to INSTALL for detail instructions for 0.5.4. What follows are
-the original instructions for 0.5.0:
+We refer to INSTALL-0.5.4 for detail instructions for 0.5.4. 
+
+What follows are the original instructions for 0.5.0:
 
 Below we assume that your have successfully compiled NuSMV 2.5. We
 further denote the full path of the "nusmv" directory of that
@@ -126,11 +127,35 @@ Basic building steps:
    a default you do not want. In this case, simply edit the Makefile
    at this point.
 
+Actually I am running this now with NuSMV 2.6:
+
+./configure --prefix=/opt/NuGAT-0.6.0/ --with-nusmv-dir=/home/ssardina/src/NuSMV/NuSMV-2.6.0/NuSMV --with-cudd-dir=/home/ssardina/src/NuSMV/NuSMV-2.6.0/cudd-2.4.1.1/
+
+3. Run setup.sh in /home/ssardina/src/NuSMV/source/NuSMV-2.6.0/cudd-2.4.1.1
+
+Need to install libMiniSAT library into the system:
+
+Go here:
+
+/home/ssardina/src/NuSMV/source/NuSMV-2.6.0/NuSMV/build/build-MiniSat
+
+
+and run sudo make install
+
 4. Build NuGaT by running GNU's make utility:
 
 	% make
 
    This builds an executable "NuGaT" in the current directory.
+
+If you get this error:
+
+	mv: cannot stat ‘.deps/grammar.Tpo’: No such file or directory
+
+then the file aclocal.m4 was re-generated and may brake the system. Just replace it with the original one as follows:
+	
+	# cp aclocal.mp4.orig aclocal.mp4
+
 
 5. Checking LTLGAME properties currently requires a slightly modified
    version of the LTL to B\"uchi translator available in Lily.
@@ -241,7 +266,7 @@ then please apply the patch provided in NuGaT-0.5.0/contrib to
 $(nusmv_dir)/nusmv/src/enc/bdd/BddEnc.c and recompile first NuSMV and
 then NuGaT:
 
-        % cd $(nusmv_dir)/src/enc/bdd/
+        % cd $(nusmv_dir)/code/nusmv/core/enc/bdd/
         % patch BddEnc.c < $(nugat_dir)/contrib/BddEnc.c.patch
         % cd ../../..
         % make
