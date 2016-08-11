@@ -975,13 +975,14 @@ void GameStrategy_print_module(GameStrategy_ptr self,
   /* an internal static autoincrement variable */
   static int module_incr_number = 0;
   SymbTable_ptr st;
-  FILE* out;
+  OStream_ptr out;
   boolean do_sharing;
   boolean do_indentation;
-  NuSMVEnv_ptr env = EnvObject_get_environment(ENV_OBJECT(self));
+  NuSMVEnv_ptr env = EnvObject_get_environment(ENV_OBJECT(self->bdd_enc));
   MasterPrinter_ptr wffprint = MASTER_PRINTER(NuSMVEnv_get_value(env, ENV_WFF_PRINTER));
   StreamMgr_ptr streams = STREAM_MGR(NuSMVEnv_get_value(env, ENV_STREAM_MANAGER));
   FILE* outstream = StreamMgr_get_output_stream(streams);
+  OStream_ptr outostream = StreamMgr_get_output_ostream(streams);
 
   GAME_STRATEGY_CHECK_INSTANCE(self);
   NODE_LIST_CHECK_INSTANCE(vars);
@@ -989,34 +990,34 @@ void GameStrategy_print_module(GameStrategy_ptr self,
 
   st = BaseEnc_get_symb_table(BASE_ENC(self->bdd_enc));
   out = ((params != (gameParams_ptr) NULL) &&
-         (params->strategy_stream != (FILE*) NULL)) ?
+         (params->strategy_stream != (OStream_ptr) NULL)) ?
     params->strategy_stream :
-    outstream;
+    outostream;
   do_sharing = ((params != (gameParams_ptr) NULL) &&
                 params->printout_as_dag);
   do_indentation = ((params != (gameParams_ptr) NULL) &&
                     params->indented_printout);
 
-  fprintf(out, "MODULE STRATEGY_MODULE%d\n\n", ++module_incr_number);
+  OStream_printf(out, "MODULE STRATEGY_MODULE%d\n\n", ++module_incr_number);
 
   /* declare variables */
   if (NodeList_get_length(vars_to_decl) != 0) {
     ListIter_ptr iter;
 
-    fprintf(out, "VAR\n");
+    OStream_printf(out, "VAR\n");
     NODE_LIST_FOREACH(vars_to_decl, iter) {
       node_ptr var_name;
       SymbType_ptr var_type;
 
       var_name = NodeList_get_elem_at(vars_to_decl, iter);
       var_type = SymbTable_get_var_type(st, var_name);
-      fprintf(out, "  ");
-      print_node(wffprint,out, var_name);
-      fprintf(out, ": ");
-      SymbType_print(var_type,wffprint, out);
-      fprintf(out, ";\n");
+      OStream_printf(out, "  ");
+      print_node(wffprint,outstream,var_name);
+      OStream_printf(out, ": ");
+      SymbType_print(var_type,wffprint,outstream);
+      OStream_printf(out, ";\n");
     }
-    fprintf(out, "\n");
+    OStream_printf(out, "\n");
   }
 
   /* Print initial moves. */
@@ -1030,15 +1031,15 @@ void GameStrategy_print_module(GameStrategy_ptr self,
 
     /* print'em out */
     const char *init_str = "INIT ";
-    fprintf(out, "%s", init_str);
+    OStream_printf(out, "%s", init_str);
     BddEnc_print_bdd_wff(self->bdd_enc,
                          init_bdd,
                          vars,
                          do_sharing,
                          do_indentation,
                          strlen(init_str),
-                         OSTREAM(out));
-    fprintf(out, "\n");
+                         out);
+    OStream_printf(out, "\n");
 
     bdd_free(self->dd_manager, init_bdd);
   }
@@ -1052,15 +1053,15 @@ void GameStrategy_print_module(GameStrategy_ptr self,
 
     /* print'em out */
     const char *trans_str = "TRANS ";
-    fprintf(out, "%s", trans_str);
+    OStream_printf(out, "%s", trans_str);
     BddEnc_print_bdd_wff(self->bdd_enc,
                          trans_bdd,
                          vars,
                          do_sharing,
                          do_indentation,
                          strlen(trans_str),
-                         OSTREAM(out));
-    fprintf(out, "\n");
+                         out);
+    OStream_printf(out, "\n");
 
     bdd_free(self->dd_manager, trans_bdd);
   }

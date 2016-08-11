@@ -148,12 +148,12 @@ int Game_CommandFlattenHierarchy(NuSMVEnv_ptr env,boolean expand_bounded_arrays)
   SymbTable_ptr st = SYMB_TABLE(NuSMVEnv_get_value(env, ENV_SYMB_TABLE));
   OptsHandler_ptr opts = OPTS_HANDLER(NuSMVEnv_get_value(env, ENV_OPTS_HANDLER));
   const StreamMgr_ptr streams = STREAM_MGR(NuSMVEnv_get_value(env, ENV_STREAM_MANAGER));
-  FILE* errstream = StreamMgr_get_error_stream(streams);
+  OStream_ptr errostream = StreamMgr_get_error_ostream(streams);
 
   int propErr;
 
   if (opt_verbose_level_gt(opts, 0)) {
-    fprintf(errstream, "Flattening hierarchy...\n");
+    OStream_printf(errostream, "Flattening hierarchy...\n");
   }
 
   /* Initializes the flattener, that must be initialized *after* the
@@ -227,10 +227,10 @@ int Game_CommandFlattenHierarchy(NuSMVEnv_ptr env,boolean expand_bounded_arrays)
                                   BDD_STATIC_ORDER_HEURISTICS_NONE);
 
   if (opt_use_coi_size_sorting(opts)) {
-    fprintf(errstream,
+    OStream_printf(errostream,
             "*** WARNING: "
             "Game addon does not support properties COI size sorting.  ***\n");
-    fprintf(errstream,
+    OStream_printf(errostream,
             "*** WARNING: "
             "Properties COI size sorting will be disabled.             ***\n");
     unset_use_coi_size_sorting(opts);
@@ -238,7 +238,7 @@ int Game_CommandFlattenHierarchy(NuSMVEnv_ptr env,boolean expand_bounded_arrays)
 
   cmp_struct_set_flatten_hrc(cmps);
   if (opt_verbose_level_gt(opts, 0)) {
-    fprintf(errstream, "...done\n");
+    OStream_printf(errostream, "...done\n");
   }
 
   return 0;
@@ -300,7 +300,7 @@ game_flatten_game_hierarchy(NuSMVEnv_ptr env,
   const NodeMgr_ptr nodemgr = NODE_MGR(NuSMVEnv_get_value(env, ENV_NODE_MGR));
   const ErrorMgr_ptr errmgr = ERROR_MGR(NuSMVEnv_get_value(env, ENV_ERROR_MANAGER));
   StreamMgr_ptr streams = STREAM_MGR(NuSMVEnv_get_value(env, ENV_STREAM_MANAGER));
-  FILE* outstream = StreamMgr_get_output_stream(streams);
+  OStream_ptr outostream = StreamMgr_get_output_ostream(streams);
 
   FlatHierarchy_ptr player_1 = FlatHierarchy_create(symbol_table);
   FlatHierarchy_ptr player_2 = FlatHierarchy_create(symbol_table);
@@ -437,7 +437,7 @@ game_flatten_game_hierarchy(NuSMVEnv_ptr env,
 
   if (FlatHierarchy_get_compassion(player_1) != Nil ||
       FlatHierarchy_get_compassion(player_2) != Nil) {
-    fprintf(outstream,
+    OStream_printf(outostream,
          "WARNING *** The model contains COMPASSION declarations.        ***\n"
          "WARNING *** Full fairness is not yet fully supported in NuGaT. ***\n"
          "WARNING *** Currently, COMPASSION declarations are only        ***\n"

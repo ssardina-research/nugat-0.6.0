@@ -93,7 +93,7 @@ static boolean checker_game_viol_handler ARGS((CheckerBase_ptr self,
                                                TypeSystemViolation violation,
                                                node_ptr expression));
 
-static void print_operator ARGS((CheckerBase_ptr self, FILE* output_stream, node_ptr expr));
+static void print_operator ARGS((CheckerBase_ptr self, OStream_ptr output_stream, node_ptr expr));
 
 /*---------------------------------------------------------------------------*/
 /* Definition of exported functions                                          */
@@ -351,7 +351,7 @@ static boolean checker_game_viol_handler(CheckerBase_ptr self,
 {
   NuSMVEnv_ptr env = EnvObject_get_environment(ENV_OBJECT(self));
   const StreamMgr_ptr streams = STREAM_MGR(NuSMVEnv_get_value(env, ENV_STREAM_MANAGER));
-  FILE* errstream = StreamMgr_get_error_stream(streams);
+  OStream_ptr errostream = StreamMgr_get_error_ostream(streams);
 
   /* get rid of the context the expression may be wrapped in */
   node_ptr context = Nil;
@@ -368,7 +368,7 @@ static boolean checker_game_viol_handler(CheckerBase_ptr self,
   */
   nusmv_assert(TC_VIOLATION_TYPE_MANDATORY == violation);
 
-  fprintf(errstream, "illegal ");
+  OStream_printf(errostream, "illegal ");
 
   switch (node_get_type(expr)) {
   case GAME:
@@ -381,10 +381,10 @@ static boolean checker_game_viol_handler(CheckerBase_ptr self,
   case BUCHIGAME:
   case LTLGAME:
   case GENREACTIVITY:
-    fprintf(errstream,"type of ");
-    print_operator(self,errstream, expr);
-    fprintf(errstream," expression : ");
-    checker_base_print_type(self, errstream, car(expr), context);
+    OStream_printf(errostream,"type of ");
+    print_operator(self,errostream, expr);
+    OStream_printf(errostream," expression : ");
+    checker_base_print_type(self, (FILE*)errostream, car(expr), context);
     break;
 
   case GAME_SPEC_WRAPPER:
@@ -392,12 +392,12 @@ static boolean checker_game_viol_handler(CheckerBase_ptr self,
     nusmv_assert(false);    /* this node cannot generate an error */
 
   case GAME_TWO_EXP_LISTS: /* two exp lists */
-    fprintf(errstream, "operand types of \"");
-    print_operator(self,errstream, expr);
-    fprintf(errstream,"\" : ");
-    checker_base_print_type(self, errstream, car(expr), context);
-    fprintf(errstream," and ");
-    checker_base_print_type(self, errstream, cdr(expr), context);
+    OStream_printf(errostream, "operand types of \"");
+    print_operator(self,errostream, expr);
+    OStream_printf(errostream,"\" : ");
+    checker_base_print_type(self, (FILE*)errostream, car(expr), context);
+    OStream_printf(errostream," and ");
+    checker_base_print_type(self, (FILE*)errostream, cdr(expr), context);
     break;
 
   default:
@@ -423,31 +423,31 @@ static boolean checker_game_viol_handler(CheckerBase_ptr self,
   SeeAlso     [ print_sexp ]
 
 ******************************************************************************/
-static void print_operator(CheckerBase_ptr self, FILE* output_stream, node_ptr expr)
+static void print_operator(CheckerBase_ptr self, OStream_ptr output_stream, node_ptr expr)
 {
   NuSMVEnv_ptr env = EnvObject_get_environment(ENV_OBJECT(self));
   StreamMgr_ptr streams = STREAM_MGR(NuSMVEnv_get_value(env, ENV_STREAM_MANAGER));
-  FILE* errstream = StreamMgr_get_error_stream(streams);
+  OStream_ptr errostream = StreamMgr_get_error_ostream(streams);
 
-  nusmv_assert((FILE *) NULL != output_stream);
+  nusmv_assert((OStream_ptr) NULL != output_stream);
   nusmv_assert(expr != Nil);
 
   switch (node_get_type(expr)) {
-  case GAME:               fprintf(output_stream, "\n(GAME "); return;
+  case GAME:               OStream_printf(output_stream, "\n(GAME "); return;
 
-  case REACHTARGET:        fprintf(output_stream, "REACHTARGET"); return;
-  case AVOIDTARGET:        fprintf(output_stream, "AVOIDTARGET"); return;
-  case REACHDEADLOCK:      fprintf(output_stream, "REACHDEADLOCK"); return;
-  case AVOIDDEADLOCK:      fprintf(output_stream, "AVOIDDEADLOCK"); return;
-  case BUCHIGAME:          fprintf(output_stream, "BUCHIGAME"); return;
-  case LTLGAME:            fprintf(output_stream, "LTLGAME"); return;
-  case GENREACTIVITY:      fprintf(output_stream, "GENREACTIVITY"); return;
-  case GAME_SPEC_WRAPPER:  fprintf(output_stream, "GAME_SPEC_WRAPPER"); return;
-  case GAME_EXP_LIST:      fprintf(output_stream, "GAME_EXP_LIST"); return;
-  case GAME_TWO_EXP_LISTS: fprintf(output_stream, "->"); return;
+  case REACHTARGET:        OStream_printf(output_stream, "REACHTARGET"); return;
+  case AVOIDTARGET:        OStream_printf(output_stream, "AVOIDTARGET"); return;
+  case REACHDEADLOCK:      OStream_printf(output_stream, "REACHDEADLOCK"); return;
+  case AVOIDDEADLOCK:      OStream_printf(output_stream, "AVOIDDEADLOCK"); return;
+  case BUCHIGAME:          OStream_printf(output_stream, "BUCHIGAME"); return;
+  case LTLGAME:            OStream_printf(output_stream, "LTLGAME"); return;
+  case GENREACTIVITY:      OStream_printf(output_stream, "GENREACTIVITY"); return;
+  case GAME_SPEC_WRAPPER:  OStream_printf(output_stream, "GAME_SPEC_WRAPPER"); return;
+  case GAME_EXP_LIST:      OStream_printf(output_stream, "GAME_EXP_LIST"); return;
+  case GAME_TWO_EXP_LISTS: OStream_printf(output_stream, "->"); return;
 
   default:
-    fprintf(errstream, "\n%d\n", node_get_type(expr));
+    OStream_printf(errostream, "\n%d\n", node_get_type(expr));
     nusmv_assert(false);
   }
 }

@@ -392,7 +392,7 @@ void Game_SF07_gba_wring_destroy(NuSMVEnv_ptr env,Game_SF07_gba_wring_ptr self)
 
   OptsHandler_ptr opts = OPTS_HANDLER(NuSMVEnv_get_value(env, ENV_OPTS_HANDLER));
   StreamMgr_ptr streams = STREAM_MGR(NuSMVEnv_get_value(env, ENV_STREAM_MANAGER));
-  FILE* errstream = StreamMgr_get_error_stream(streams);
+  OStream_ptr errostream = StreamMgr_get_error_ostream(streams);
 
   GAME_SF07_GBA_WRING_CHECK_INSTANCE(self);
 
@@ -406,7 +406,7 @@ void Game_SF07_gba_wring_destroy(NuSMVEnv_ptr env,Game_SF07_gba_wring_ptr self)
     /* Try to remove input file if required. */
     if ((!opt_game_sf07_gba_wring_input_keep(opts)) &&
         remove(self->input_file_name) == -1) {
-      fprintf(errstream,
+      OStream_printf(errostream,
               "Warning: error deleting file %s (errno = %d).\n",
               self->input_file_name,
               errno);
@@ -421,7 +421,7 @@ void Game_SF07_gba_wring_destroy(NuSMVEnv_ptr env,Game_SF07_gba_wring_ptr self)
     /* Try to remove output file if required. */
     if ((!opt_game_sf07_gba_wring_output_keep(opts)) &&
         remove(self->output_file_name) == -1) {
-      fprintf(errstream,
+      OStream_printf(errostream,
               "Warning: error deleting file %s (errno = %d).\n",
               self->output_file_name,
               errno);
@@ -485,7 +485,7 @@ void Game_SF07_gba_wring_set_binary_file_name(NuSMVEnv_ptr env,
 
   OptsHandler_ptr opts = OPTS_HANDLER(NuSMVEnv_get_value(env, ENV_OPTS_HANDLER));
   StreamMgr_ptr streams = STREAM_MGR(NuSMVEnv_get_value(env, ENV_STREAM_MANAGER));
-  FILE* errstream = StreamMgr_get_error_stream(streams);
+  OStream_ptr errostream = StreamMgr_get_error_ostream(streams);
 
   GAME_SF07_GBA_WRING_CHECK_INSTANCE(self);
   nusmv_assert(self->binary_file_name == (char*) NULL);
@@ -496,7 +496,7 @@ void Game_SF07_gba_wring_set_binary_file_name(NuSMVEnv_ptr env,
              NULL) {
     tmp = get_game_sf07_gba_wring_binary(opts);
   } else {
-    fprintf(errstream,
+    OStream_printf(errostream,
             "Warning: option game_sf07_gba_wring_binary was NULL, reverting "
             "to default %s.\n",
             DEFAULT_GAME_SF07_GBA_WRING_BINARY);
@@ -534,7 +534,7 @@ void Game_SF07_gba_wring_set_input_file_name(NuSMVEnv_ptr env,
 
   OptsHandler_ptr opts = OPTS_HANDLER(NuSMVEnv_get_value(env, ENV_OPTS_HANDLER));
   StreamMgr_ptr streams = STREAM_MGR(NuSMVEnv_get_value(env, ENV_STREAM_MANAGER));
-  FILE* errstream = StreamMgr_get_error_stream(streams);
+  OStream_ptr errostream = StreamMgr_get_error_ostream(streams);
 
   nusmv_assert(self->input_file_name == (char*) NULL);
 
@@ -551,7 +551,7 @@ void Game_SF07_gba_wring_set_input_file_name(NuSMVEnv_ptr env,
     input_templ =
       get_game_sf07_gba_wring_input_templ(opts);
     if (input_templ == (char*) NULL) {
-      fprintf(errstream,
+      OStream_printf(errostream,
               "Warning: option game_sf07_gba_wring_input_templ was NULL, "
               "reverting to default %s.\n",
               DEFAULT_GAME_SF07_GBA_WRING_INPUT_TEMPL);
@@ -560,7 +560,7 @@ void Game_SF07_gba_wring_set_input_file_name(NuSMVEnv_ptr env,
     self->input_file_name =
       Utils_get_temp_filename_in_dir(input_dir, input_templ);
     if (self->input_file_name == (char*) NULL) {
-      fprintf(errstream,
+      OStream_printf(errostream,
               "Warning: unable to obtain temporary file name, reverting to "
               "default %s.\n",
               DEFAULT_GAME_SF07_GBA_WRING_INPUT_FILE_NAME);
@@ -601,7 +601,7 @@ void Game_SF07_gba_wring_set_output_file_name(NuSMVEnv_ptr env,
 
   OptsHandler_ptr opts = OPTS_HANDLER(NuSMVEnv_get_value(env, ENV_OPTS_HANDLER));
   StreamMgr_ptr streams = STREAM_MGR(NuSMVEnv_get_value(env, ENV_STREAM_MANAGER));
-  FILE* errstream = StreamMgr_get_error_stream(streams);
+  OStream_ptr errostream = StreamMgr_get_error_ostream(streams);
 
   nusmv_assert(self->output_file_name == (char*) NULL);
 
@@ -618,7 +618,7 @@ void Game_SF07_gba_wring_set_output_file_name(NuSMVEnv_ptr env,
     output_templ =
       get_game_sf07_gba_wring_output_templ(opts);
     if (output_templ == (char*) NULL) {
-      fprintf(errstream,
+      OStream_printf(errostream,
               "Warning: option game_sf07_gba_wring_output_templ was NULL, "
               "reverting to default %s.\n",
               DEFAULT_GAME_SF07_GBA_WRING_OUTPUT_TEMPL);
@@ -627,7 +627,7 @@ void Game_SF07_gba_wring_set_output_file_name(NuSMVEnv_ptr env,
     self->output_file_name =
       Utils_get_temp_filename_in_dir(output_dir, output_templ);
     if (self->output_file_name == (char*) NULL) {
-      fprintf(errstream,
+      OStream_printf(errostream,
               "Warning: unable to obtain temporary file name, reverting to "
               "default %s.\n",
               DEFAULT_GAME_SF07_GBA_WRING_OUTPUT_FILE_NAME);
@@ -716,7 +716,7 @@ void Game_SF07_gba_wring_write_input_file(NuSMVEnv_ptr env,Game_SF07_gba_wring_p
 
   const ErrorMgr_ptr errmgr = ERROR_MGR(NuSMVEnv_get_value(env, ENV_ERROR_MANAGER));
   StreamMgr_ptr streams = STREAM_MGR(NuSMVEnv_get_value(env, ENV_STREAM_MANAGER));
-  FILE* errstream = StreamMgr_get_error_stream(streams);
+  OStream_ptr errostream = StreamMgr_get_error_ostream(streams);
 
   /* Write translated formula into self->iw_s. */
   game_sf07_gba_wring_ensure_size_iw_s(self,
@@ -729,7 +729,7 @@ void Game_SF07_gba_wring_write_input_file(NuSMVEnv_ptr env,Game_SF07_gba_wring_p
   /* Write self->iw_s to self->input_file. */
   self->input_file = fopen(self->input_file_name, "w");
   if (self->input_file == (FILE*) NULL) {
-    fprintf(errstream,
+    OStream_printf(errostream,
             "Error opening file %s for writing (errno = %d).\n",
             self->input_file_name,
             errno);
@@ -737,7 +737,7 @@ void Game_SF07_gba_wring_write_input_file(NuSMVEnv_ptr env,Game_SF07_gba_wring_p
   }
   fprintf(self->input_file, "%s\n", self->iw_s);
   if (fclose(self->input_file) != 0) {
-    fprintf(errstream,
+    OStream_printf(errostream,
             "Error closing file %s (errno = %d).\n",
             self->input_file_name,
             errno);
@@ -771,7 +771,7 @@ int Game_SF07_gba_wring_execute(NuSMVEnv_ptr env,Game_SF07_gba_wring_ptr self)
 
   OptsHandler_ptr opts = OPTS_HANDLER(NuSMVEnv_get_value(env, ENV_OPTS_HANDLER));
   StreamMgr_ptr streams = STREAM_MGR(NuSMVEnv_get_value(env, ENV_STREAM_MANAGER));
-  FILE* errstream = StreamMgr_get_error_stream(streams);
+  OStream_ptr errostream = StreamMgr_get_error_ostream(streams);
 
   GAME_SF07_GBA_WRING_CHECK_INSTANCE(self);
   nusmv_assert(self->binary_file_name != (char*) NULL);
@@ -816,17 +816,17 @@ int Game_SF07_gba_wring_execute(NuSMVEnv_ptr env,Game_SF07_gba_wring_ptr self)
   }
 
   if (opt_verbose_level_ge(opts, 3)) {
-    fprintf(errstream, "Executing %s\n", cmdline);
+    OStream_printf(errostream, "Executing %s\n", cmdline);
   }
   status = system(cmdline);
   if (opt_verbose_level_ge(opts, 3)) {
-    fprintf(errstream,
+    OStream_printf(errostream,
             "Done executing %s. Return value: %d.\n",
             cmdline,
             status);
   }
   if (status != 0) {
-    fprintf(errstream,
+    OStream_printf(errostream,
             "Error executing %s on %s.\n",
             self->binary_file_name,
             self->input_file_name);
@@ -867,12 +867,12 @@ void Game_SF07_gba_wring_parse_output_file(NuSMVEnv_ptr env,Game_SF07_gba_wring_
   const NodeMgr_ptr nodemgr = NODE_MGR(NuSMVEnv_get_value(env, ENV_NODE_MGR));
   const UStringMgr_ptr strings = USTRING_MGR(NuSMVEnv_get_value(env, ENV_STRING_MGR));
   StreamMgr_ptr streams = STREAM_MGR(NuSMVEnv_get_value(env, ENV_STREAM_MANAGER));
-  FILE* errstream = StreamMgr_get_error_stream(streams);
+  OStream_ptr errostream = StreamMgr_get_error_ostream(streams);
 
   /* Open output file. */
   self->output_file = fopen(self->output_file_name, "r");
   if (self->output_file == (FILE*) NULL) {
-    fprintf(errstream,
+    OStream_printf(errostream,
             "Error opening file %s for reading (errno = %d).\n",
             self->output_file_name,
             errno);
@@ -1254,7 +1254,7 @@ void Game_SF07_gba_wring_parse_output_file(NuSMVEnv_ptr env,Game_SF07_gba_wring_
     self->po_size_s = 0;
   }
   if (fclose(self->output_file) != 0) {
-    fprintf(errstream,
+    OStream_printf(errostream,
             "Error closing file %s (errno = %d).\n",
             self->output_file_name,
             errno);
@@ -1265,29 +1265,29 @@ void Game_SF07_gba_wring_parse_output_file(NuSMVEnv_ptr env,Game_SF07_gba_wring_
 
   /* Error exits. */
  ERROR_UNEXPECTED_EOF:
-  fprintf(errstream,
+  OStream_printf(errostream,
           "Error parsing file %s: unexpected end of file.\n",
           self->output_file_name);
   goto CLEAN_UP_AND_EXIT;
 
  ERROR_EXPECTED_EOF:
-  fprintf(errstream,
+  OStream_printf(errostream,
           "Error parsing file %s: expected end of file.\n",
           self->output_file_name);
   goto CLEAN_UP_AND_EXIT;
 
  ERROR_PARSER:
-  fprintf(errstream,
+  OStream_printf(errostream,
           "Error parsing file %s:\n",
           self->output_file_name);
-  fprintf(errstream, "%s\n", self->po_line);
+  OStream_printf(errostream, "%s\n", self->po_line);
   {
     int i;
     for (i = 1; i < self->po_pos; i++) {
-      fprintf(errstream, " ");
+      OStream_printf(errostream, " ");
     }
   }
-  fprintf(errstream, "^\n");
+  OStream_printf(errostream, "^\n");
   goto CLEAN_UP_AND_EXIT;
 
  CLEAN_UP_AND_EXIT:
@@ -1302,7 +1302,7 @@ void Game_SF07_gba_wring_parse_output_file(NuSMVEnv_ptr env,Game_SF07_gba_wring_
     self->po_size_s = 0;
   }
   if (fclose(self->output_file) != 0) {
-    fprintf(errstream,
+    OStream_printf(errostream,
             "Error closing file %s (errno = %d).\n",
             self->output_file_name,
             errno);
@@ -1804,7 +1804,7 @@ game_sf07_gba_wring_write_input_file_rec(NuSMVEnv_ptr env,Game_SF07_gba_wring_pt
 {
   int type;
   StreamMgr_ptr streams = STREAM_MGR(NuSMVEnv_get_value(env, ENV_STREAM_MANAGER));
-  FILE* errstream = StreamMgr_get_error_stream(streams);
+  OStream_ptr errostream = StreamMgr_get_error_ostream(streams);
 
   GAME_SF07_GBA_WRING_CHECK_INSTANCE(self);
   nusmv_assert(curr != Nil);
@@ -1863,7 +1863,7 @@ game_sf07_gba_wring_write_input_file_rec(NuSMVEnv_ptr env,Game_SF07_gba_wring_pt
     game_sf07_gba_wring_wif_rec_bin_op(env,self, "R", car(curr), cdr(curr));
     break;
   default:
-    fprintf(errstream,
+    OStream_printf(errostream,
             "Error: unexpected operator %d when writing %s.\n",
             type,
             self->input_file_name);

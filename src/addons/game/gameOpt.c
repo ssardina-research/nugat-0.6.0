@@ -434,14 +434,14 @@ static boolean game_opt_check_initial_condition(OptsHandler_ptr opt,
   char* val = (char*)game_opt_get_string(opt, value);
   NuSMVEnv_ptr env = EnvObject_get_environment(ENV_OBJECT(opt));
   StreamMgr_ptr streams = STREAM_MGR(NuSMVEnv_get_value(env, ENV_STREAM_MANAGER));
-  FILE* errstream = StreamMgr_get_error_stream(streams);
+  OStream_ptr errostream = StreamMgr_get_error_ostream(streams);
 
   if (strlen(val) == 1 && (val[0] == 'N' || val[0] == 'A' || val[0] == 'E')) {
     return true;
   }
 
   FREE(val);
-  fprintf(errstream,
+  OStream_printf(errostream,
           "Error: supplied an invalid interpretation of game initial "
           "conditions.\n"
           "Possible values: N, A and E.\n"

@@ -342,7 +342,7 @@ static bool game_split_and_print_spec(FILE* out,
                                       SymbLayer_ptr det_layer)
 {
 
-  const NuSMVEnv_ptr env = EnvObject_get_environment(ENV_OBJECT(specs));
+  const NuSMVEnv_ptr env = EnvObject_get_environment(ENV_OBJECT(enc));
   const NodeMgr_ptr nodemgr = NODE_MGR(NuSMVEnv_get_value(env, ENV_NODE_MGR));
   MasterPrinter_ptr wffprint = MASTER_PRINTER(NuSMVEnv_get_value(env, ENV_WFF_PRINTER));
 

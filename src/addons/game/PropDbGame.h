@@ -128,7 +128,7 @@ EXTERN void PropDbGame_verify_all_type_player ARGS((PropDbGame_ptr self,
                                                     PropGame_Type type,
                                                     string_ptr player));
 EXTERN void PropDbGame_print_all_type_player_status ARGS((PropDbGame_ptr self,
-                                                          FILE* file,
+                                                          OStream_ptr file,
                                                           PropGame_Type type,
                                                           string_ptr player,
                                                           Prop_Status status));

@@ -104,15 +104,14 @@ void Game_BeforeCheckingSpec(PropGame_ptr prop)
   NuSMVEnv_ptr env = EnvObject_get_environment(ENV_OBJECT(prop));
   OptsHandler_ptr opts = OPTS_HANDLER(NuSMVEnv_get_value(env, ENV_OPTS_HANDLER));
   StreamMgr_ptr streams = STREAM_MGR(NuSMVEnv_get_value(env, ENV_STREAM_MANAGER));
-  FILE* errstream = StreamMgr_get_error_stream(streams);
   OStream_ptr errostream = StreamMgr_get_error_ostream(streams);
 
   PROP_GAME_CHECK_INSTANCE(prop);
 
   if (opt_verbose_level_gt(opts, 0)) {
-    fprintf(errstream, "computing ");
+    OStream_printf(errostream, "computing ");
     game_print_prop_exp(errostream, prop);
-    fprintf(errstream, "\n");
+    OStream_printf(errostream, "\n");
   }
 
   if (opt_cone_of_influence(opts) == true) {
@@ -181,8 +180,7 @@ void Game_AfterCheckingSpec(PropGame_ptr prop,
   const ErrorMgr_ptr errmgr = ERROR_MGR(NuSMVEnv_get_value(env, ENV_ERROR_MANAGER));
   OptsHandler_ptr opts = OPTS_HANDLER(NuSMVEnv_get_value(env, ENV_OPTS_HANDLER));
   StreamMgr_ptr streams = STREAM_MGR(NuSMVEnv_get_value(env, ENV_STREAM_MANAGER));
-  FILE* outstream = StreamMgr_get_output_stream(streams);
-  FILE* errstream = StreamMgr_get_error_stream(streams);
+  OStream_ptr errostream = StreamMgr_get_error_ostream(streams);
   OStream_ptr outostream = StreamMgr_get_output_ostream(streams);
 
   PROP_GAME_CHECK_INSTANCE(prop);
@@ -190,23 +188,23 @@ void Game_AfterCheckingSpec(PropGame_ptr prop,
   has_params = ((gameParams_ptr) NULL != params);
 
   /* ----------  Print the result ----------- */
-  fprintf(outstream, "-- ");
+  OStream_printf(outostream, "-- ");
   game_print_prop_exp(outostream, prop);
 
   /* strategy reached */
   switch (status) {
   case GAME_REALIZABLE:
     Prop_set_status(PROP(prop), Prop_True);
-    fprintf(outstream, " : the strategy has been found\n");
+    OStream_printf(outostream, " : the strategy has been found\n");
     break;
   case GAME_UNREALIZABLE:
     Prop_set_status(PROP(prop), Prop_False);
-    fprintf(outstream, " : no strategy exists\n");
+    OStream_printf(outostream, " : no strategy exists\n");
     break;
   case GAME_UNKNOWN:
     /* status should remain unknown */
     nusmv_assert(Prop_Unchecked == Prop_get_status(PROP(prop)));
-    fprintf(outstream, " : existence of a strategy is unknown\n");
+    OStream_printf(outostream, " : existence of a strategy is unknown\n");
     break;
   default: ErrorMgr_internal_error(errmgr,"unknown status of a problem");
   }
@@ -252,14 +250,14 @@ void Game_AfterCheckingSpec(PropGame_ptr prop,
         /**NEW_CODE_START**/
         SymbLayerIter iter1;
         NodeList_ptr syms1;
-        SymbLayer_gen_iter(dl1, &iter1, STT_ALL);
-        syms1 = SymbLayer_iter_to_list(dl1, iter1);
+        SymbLayer_gen_iter(&dl1, &iter1, STT_ALL);
+        syms1 = SymbLayer_iter_to_list(&dl1, iter1);
 
         SymbLayerIter iter2;
         NodeList_ptr syms2;
-        SymbLayer_gen_iter(dl2, &iter2, STT_ALL);
-        syms2 = SymbLayer_iter_to_list(dl2, iter2);
-        fprintf(outstream,"Hi\n");
+        SymbLayer_gen_iter(&dl2, &iter2, STT_ALL);
+        syms2 = SymbLayer_iter_to_list(&dl2, iter2);
+
         nusmv_assert((dl1 == SYMB_LAYER(NULL)) ||
                      (NodeList_get_length(syms1) ==
                       0));
@@ -291,12 +289,12 @@ void Game_AfterCheckingSpec(PropGame_ptr prop,
       /* free strategy */
       GameStrategy_destroy(strategy);
     } else {
-      fprintf(errstream,
+      OStream_printf(errostream,
               "\nWarning: strategy printing requested, but strategy = NULL.\n");
     }
   }
 
-  fprintf(outstream,"\n");
+  OStream_printf(outostream,"\n");
   return;
 }
 

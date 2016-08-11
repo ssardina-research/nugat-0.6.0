@@ -171,9 +171,9 @@ static int CommandGameReset(NuSMVEnv_ptr env,int argc, char ** argv)
 static int UsageGameReset(NuSMVEnv_ptr env)
 {
   StreamMgr_ptr streams = STREAM_MGR(NuSMVEnv_get_value(env, ENV_STREAM_MANAGER));
-  FILE* errstream = StreamMgr_get_error_stream(streams);
+  OStream_ptr errostream = StreamMgr_get_error_ostream(streams);
 
-  fprintf(errstream, "usage: reset [-h]\n");
-  fprintf(errstream, "   -h \t\tPrints the command usage.\n");
+  OStream_printf(errostream, "usage: reset [-h]\n");
+  OStream_printf(errostream, "   -h \t\tPrints the command usage.\n");
   return 1;
 }

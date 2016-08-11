@@ -448,7 +448,7 @@ static void game_declare_special_var(NuSMVEnv_ptr env,
 
   OptsHandler_ptr opts = OPTS_HANDLER(NuSMVEnv_get_value(env, ENV_OPTS_HANDLER));
   StreamMgr_ptr streams = STREAM_MGR(NuSMVEnv_get_value(env, ENV_STREAM_MANAGER));
-  FILE* outstream = StreamMgr_get_output_stream(streams);
+  OStream_ptr outostream = StreamMgr_get_output_ostream(streams);
 
   /* Create a new temporal layer (with arbitrary name). */
   layer = SymbTable_create_layer(SYMB_TABLE(NuSMVEnv_get_value(env, ENV_SYMB_TABLE)),
@@ -468,7 +468,7 @@ static void game_declare_special_var(NuSMVEnv_ptr env,
   } while (!SymbLayer_can_declare_var(layer, var));
 
   /* Create a list of values. */
-  values = CompileFlatten_expand_range(0,0, guaranteeNumber - 1);
+  values = CompileFlatten_expand_range(env,0, guaranteeNumber - 1);
   /* We don't declare constants here since there are just numbers. */
   symbolicType = SymbType_create(env,SYMB_TYPE_ENUM, values);
   SymbLayer_declare_state_var(layer, var, symbolicType);
@@ -483,7 +483,7 @@ static void game_declare_special_var(NuSMVEnv_ptr env,
   *new_layer = layer;
 
   if(opt_verbose_level_gt(opts, 0)) {
-    fprintf(outstream, "\n -- VAR %s : 0 .. %d;", name, guaranteeNumber - 1);
+    OStream_printf(outostream, "\n -- VAR %s : 0 .. %d;", name, guaranteeNumber - 1);
   }
 
   return;
@@ -608,8 +608,8 @@ static boolean game_compute_gen_reactivity(NuSMVEnv_ptr env,
   const NodeMgr_ptr nodemgr = NODE_MGR(NuSMVEnv_get_value(env, ENV_NODE_MGR));
   OptsHandler_ptr oh = OPTS_HANDLER(NuSMVEnv_get_value(env, ENV_OPTS_HANDLER));
   StreamMgr_ptr streams = STREAM_MGR(NuSMVEnv_get_value(env, ENV_STREAM_MANAGER));
-  FILE* outstream = StreamMgr_get_output_stream(streams);
-  FILE* errstream = StreamMgr_get_error_stream(streams);
+  OStream_ptr outostream = StreamMgr_get_output_ostream(streams);
+  OStream_ptr errostream = StreamMgr_get_error_ostream(streams);
 
   bdd_ptr init_1, init_2, invar_1, invar_2;
   bdd_ptr Z;
@@ -678,7 +678,7 @@ static boolean game_compute_gen_reactivity(NuSMVEnv_ptr env,
         bdd_and_accumulate(dd_manager, &((*constraints)[i]), invar_2);
 
         if (bdd_is_false(dd_manager, (*constraints)[i])) {
-          fprintf(errstream,
+          OStream_printf(errostream,
                   "\n********   WARNING   ********\n"
                   "An %s condition is false.\n"
                   "Probably this is not what was intended.\n",
@@ -695,7 +695,7 @@ static boolean game_compute_gen_reactivity(NuSMVEnv_ptr env,
           i = 1; /* to terminate internal loop */
         }
         else if (bdd_is_true(dd_manager, (*constraints)[i])) {
-          fprintf(errstream,
+          OStream_printf(errostream,
                   "\n********   WARNING   ********\n"
                   "An %s condition is true.\n"
                   "Probably this is not what was intended.\n",
@@ -731,7 +731,7 @@ static boolean game_compute_gen_reactivity(NuSMVEnv_ptr env,
   /* Check whether an initial condition is zero and print a
      corresponding warning. */
   if (bdd_is_false(dd_manager, init_1) || bdd_is_false(dd_manager, init_2)) {
-    fprintf(errstream,
+    OStream_printf(errostream,
             "\n********   WARNING   ********\n"
             "Initial states set for %s is empty.\n"
             "******** END WARNING ********\n",
@@ -753,7 +753,7 @@ static boolean game_compute_gen_reactivity(NuSMVEnv_ptr env,
   */
   Z = bdd_dup(overapproxWinStates);
 
-//fprintf(errstream,
+//OStream_printf(errostream,
 //        "Init Time : %f\n", (util_cpu_time() - time_tmp)/(double)1000);
 //time_init_check = util_cpu_time();
   /* Earlier termination.  earlierTermination controls how the check
@@ -795,14 +795,14 @@ static boolean game_compute_gen_reactivity(NuSMVEnv_ptr env,
   while (!isZFixpointReached && isRealizable) {
     /* --- Z least fix point loop */
     if (opt_verbose_level_gt(oh, 0)) {
-      fprintf(errstream, "Z loop begin\n\n");
+      OStream_printf(errostream, "Z loop begin\n\n");
     }
     int j;
     bdd_ptr previousZ = bdd_dup(Z);
 
     for (j = 0; j < guaranteesN; ++j) {/* --- loop over guarantees */
       if (opt_verbose_level_gt(oh, 0)) {
-        fprintf(errstream, "  guarantee number %d \n", j);
+        OStream_printf(errostream, "  guarantee number %d \n", j);
       }
 
       /* It may be worth to make initial value of Y = initial value of
@@ -867,7 +867,7 @@ static boolean game_compute_gen_reactivity(NuSMVEnv_ptr env,
             ++xIterations;
           } /* while !isXFixpointReached */
           if (opt_verbose_level_gt(oh, 0)) {
-            fprintf(errstream,
+            OStream_printf(errostream,
                     "X fixpoint for assumption %d required %d iterations\n",
                     i,
                     xIterations);
@@ -895,7 +895,7 @@ static boolean game_compute_gen_reactivity(NuSMVEnv_ptr env,
         if (previousY == Y) {
           isYFixpointReached = true; /* fixpoint is reached */
           if (opt_verbose_level_gt(oh, 0)) {
-            fprintf(errstream, "FIXpoint on Y\n");
+            OStream_printf(errostream, "FIXpoint on Y\n");
           }
         }
         /* additional check -- earlier termination. Y cannot be > Z.
@@ -909,7 +909,7 @@ static boolean game_compute_gen_reactivity(NuSMVEnv_ptr env,
         */
         else if (Y == Z) {
           if (opt_verbose_level_gt(oh, 0)) {
-            fprintf(errstream, "Y reached Z\n");
+            OStream_printf(errostream, "Y reached Z\n");
           }
           bdd_ptr* newXArray;
           int i;
@@ -937,7 +937,7 @@ static boolean game_compute_gen_reactivity(NuSMVEnv_ptr env,
     } /* for j = 1 ... */
 
     if(opt_verbose_level_gt(oh, 3)) {
-      fprintf(outstream,
+      OStream_printf(outostream,
               "\n --- Gen-Reactive. end of external loop interation\n");
     }
 
@@ -997,7 +997,7 @@ static boolean game_compute_gen_reactivity(NuSMVEnv_ptr env,
   } /* while !zFixpointReached && isRealizable) */
 
   if (opt_verbose_level_gt(oh, 0)) {
-    fprintf(errstream,
+    OStream_printf(errostream,
             "\nNUMBER OF ITERATIONS. Z = %d, Y = %d, X = %d\n\n",
             totalZIterations,
             totalYIterations,
@@ -1016,13 +1016,13 @@ static boolean game_compute_gen_reactivity(NuSMVEnv_ptr env,
                                      opt_game_game_initial_condition(oh));
    }
    //time_init_check = util_cpu_time() - time_init_check;
-   //fprintf(errstream, "Loop Time : %f\n",
+   //OStream_printf(errostream, "Loop Time : %f\n",
    //        (util_cpu_time() - time_tmp - time_init_check)/(double)1000);
-   //fprintf(errstream,
+   //OStream_printf(errostream,
    //        "Init-check Time : %f\n", time_init_check/(double)1000);
 
   if(opt_verbose_level_gt(oh, 1)) {
-    fprintf(outstream, "\n --- Gen-Reactive spec has been computed\n");
+    OStream_printf(outostream, "\n --- Gen-Reactive spec has been computed\n");
   }
 
   {
@@ -1202,7 +1202,7 @@ static boolean game_compute_gen_reactivity(NuSMVEnv_ptr env,
          GR(1) games see, e.g.: R. Koenighofer, G. Hofferek, R. Bloem:
          Debugging Formal Specifications Using Simple
          Counterstrategies. FMCAD'09 */
-      fprintf(errstream,
+      OStream_printf(errostream,
               "\n********   WARNING   ********\n"
               "Computation of a strategy for an opponent in an unrealizable "
               "Reactivity(1) Game\n"
@@ -1288,8 +1288,8 @@ static boolean game_compute_buchi_game(NuSMVEnv_ptr env,
 
   OptsHandler_ptr opt = OPTS_HANDLER(NuSMVEnv_get_value(env, ENV_OPTS_HANDLER));
   StreamMgr_ptr streams = STREAM_MGR(NuSMVEnv_get_value(env, ENV_STREAM_MANAGER));
-  FILE* outstream = StreamMgr_get_output_stream(streams);
-  FILE* errstream = StreamMgr_get_error_stream(streams);
+  OStream_ptr outostream = StreamMgr_get_output_ostream(streams);
+  OStream_ptr errostream = StreamMgr_get_error_ostream(streams);
 
   /* flag which player this game is for */
   GamePlayer player =
@@ -1355,7 +1355,7 @@ static boolean game_compute_buchi_game(NuSMVEnv_ptr env,
     int i;
     /* init is zero */
     if (bdd_is_false(dd_manager, init_1) || bdd_is_false(dd_manager, init_2)) {
-      fprintf(errstream, "\n********   WARNING   ********\n"
+      OStream_printf(errostream, "\n********   WARNING   ********\n"
               "Initial states set for %s is empty.\n"
               "******** END WARNING ********\n",
               bdd_is_false(dd_manager, init_1) ? PLAYER_NAME_1 : PLAYER_NAME_2);
@@ -1367,7 +1367,7 @@ static boolean game_compute_buchi_game(NuSMVEnv_ptr env,
     for (i = 0; i < buchiConditionsN; ++i) {
       if (bdd_is_false(dd_manager, buchiConditions[i]) ||
           bdd_is_false(dd_manager, buchiConditions[i])) {
-        fprintf(errstream, "\n********   WARNING   ********\n"
+        OStream_printf(errostream, "\n********   WARNING   ********\n"
                 "A Buchi condition is %s.\n"
                 "Probably this is not what was intended.\n"
                 "******** END WARNING ********\n",
@@ -1465,7 +1465,7 @@ static boolean game_compute_buchi_game(NuSMVEnv_ptr env,
     } /* for j = 1 ... */
 
     if(opt_verbose_level_gt(opt, 3)) {
-      fprintf(outstream,
+      OStream_printf(outostream,
               "\n --- Buchi-Game. end of external loop interation\n");
     }
 
@@ -1487,7 +1487,7 @@ static boolean game_compute_buchi_game(NuSMVEnv_ptr env,
   } /* while !zFixpointReached && isRealizable */
 
   if(opt_verbose_level_gt(opt, 1)) {
-    fprintf(outstream, "\n --- Buchi-Game spec has been computed\n");
+    OStream_printf(outostream, "\n --- Buchi-Game spec has been computed\n");
   }
 
   /*-----------------------------------------------------------------------*/
@@ -1591,7 +1591,7 @@ static boolean game_compute_buchi_game(NuSMVEnv_ptr env,
 
     /* the game is unrealizable => compute the strategy for the opponent */
     else {
-      fprintf(errstream, "\n********   WARNING   ********\n"
+      OStream_printf(errostream, "\n********   WARNING   ********\n"
               "Computation of a strategy for an opponent in an unrealizable "
               "Buchi Game\n"
               "is not implemented yet.\n"

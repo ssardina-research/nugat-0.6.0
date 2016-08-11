@@ -478,7 +478,7 @@ int Game_CheckGameSpecAndComputeCores(NuSMVEnv_ptr env,
 
   OptsHandler_ptr opts = OPTS_HANDLER(NuSMVEnv_get_value(env, ENV_OPTS_HANDLER));
   StreamMgr_ptr streams = STREAM_MGR(NuSMVEnv_get_value(env, ENV_STREAM_MANAGER));
-  FILE* errstream = StreamMgr_get_error_stream(streams);
+  OStream_ptr errostream = StreamMgr_get_error_ostream(streams);
 
     PROP_GAME_CHECK_INSTANCE(prop);
   nusmv_assert(Prop_get_type(PROP(prop)) == PropGame_GenReactivity);
@@ -497,7 +497,7 @@ int Game_CheckGameSpecAndComputeCores(NuSMVEnv_ptr env,
                 (N == -1)));
 
   if (opt_game_print_strategy(opts)) {
-    fprintf(errstream,
+    OStream_printf(errostream,
             "Strategy computation is not implemented when "
             "realizability/unrealizability core computation is enabled.\n");
     return 1;
@@ -1854,8 +1854,9 @@ void game_process_unrealizable_core_with_params(
     const ExprMgr_ptr exprs = EXPR_MGR(NuSMVEnv_get_value(env, ENV_EXPR_MANAGER));
     MasterPrinter_ptr wffprint = MASTER_PRINTER(NuSMVEnv_get_value(env, ENV_WFF_PRINTER));
     StreamMgr_ptr streams = STREAM_MGR(NuSMVEnv_get_value(env, ENV_STREAM_MANAGER));
-    FILE* outstream = StreamMgr_get_output_stream(streams);
-    FILE* errstream = StreamMgr_get_error_stream(streams);
+    FILE *outstream = StreamMgr_get_output_stream(streams);
+    OStream_ptr outostream = StreamMgr_get_output_ostream(streams);
+    OStream_ptr errostream = StreamMgr_get_error_ostream(streams);
 
   nusmv_assert(PropGame_PropGame_Type_First < Prop_get_type(PROP(self->prop)) &&
                PropGame_PropGame_Type_Last > Prop_get_type(PROP(self->prop)));
@@ -1882,16 +1883,16 @@ void game_process_unrealizable_core_with_params(
 
   /* Output the specification and whether it is realizable or not. */
   {
-    fprintf(outstream, "--   ");
+    OStream_printf(outostream, "--   ");
     game_output_spec_without_params(self, wffprint, outstream);
-    fprintf(outstream,
+    OStream_printf(outostream,
             is_realizable ?
             " : the strategy has been found\n" :
             " : no strategy exists\n");
   }
 
-  fprintf(outstream, "\nThere are:\n");
-  fprintf(outstream,
+  OStream_printf(outostream, "\nThere are:\n");
+  OStream_printf(outostream,
           " %d assumptions\n"
           " %d assumptions are guarded\n"
           " %d assumption unique activation vars\n",
@@ -1904,7 +1905,7 @@ void game_process_unrealizable_core_with_params(
           (self->player == PLAYER_1 ?
            self->constraints_2_unique_num :
            self->constraints_1_unique_num));
-  fprintf(outstream,
+  OStream_printf(outostream,
           " %d guarantees in total \n"
           " %d guarantees are guarded\n"
           " %d guarantee unique activation vars\n",
@@ -1923,7 +1924,7 @@ void game_process_unrealizable_core_with_params(
     ListIter_ptr iter;
     const char* player_names[3] = {PLAYER_NAME_1, PLAYER_NAME_2, (char*) NULL};
     const char** player_name;
-    fprintf(outstream, "\nLabels of Expressions (label, kind, expression)\n");
+    OStream_printf(outostream, "\nLabels of Expressions (label, kind, expression)\n");
 
     for (player_name = player_names; *player_name != NULL; ++player_name) {
       NodeList_ptr parameters =
@@ -1934,7 +1935,7 @@ void game_process_unrealizable_core_with_params(
       /* Skip the player if it does not have any guarded expressions. */
       if (NodeList_get_length(parameters) == 0) continue;
 
-      fprintf(outstream, "\n%s labels:\n", *player_name);
+      OStream_printf(outostream, "\n%s labels:\n", *player_name);
 
       for (iter = NodeList_get_first_iter(parameters);
            !ListIter_is_end(iter);
@@ -1953,22 +1954,22 @@ void game_process_unrealizable_core_with_params(
           node_ptr exp = car(car(exp_list));
 
           print_node(wffprint,outstream, param);
-          fprintf(outstream, " \t");
+          OStream_printf(outostream, " \t");
           switch (kind) {
           case INIT:
-            fprintf(outstream, " INIT\t");
+            OStream_printf(outostream, " INIT\t");
             break;
           case TRANS:
-            fprintf(outstream, " TRANS\t");
+            OStream_printf(outostream, " TRANS\t");
             break;
           case INVAR:
-            fprintf(outstream, " INVAR\t");
+            OStream_printf(outostream, " INVAR\t");
             break;
           case REACHTARGET:
-            fprintf(outstream, " REACHTARGET\t");
+            OStream_printf(outostream, " REACHTARGET\t");
             break;
           case AVOIDTARGET:
-            fprintf(outstream, " AVOIDTARGET\t");
+            OStream_printf(outostream, " AVOIDTARGET\t");
             break;
           case REACHDEADLOCK:
           case AVOIDDEADLOCK:
@@ -1976,19 +1977,19 @@ void game_process_unrealizable_core_with_params(
                                     these. */
             break;
           case BUCHIGAME:
-            fprintf(outstream, " part of BUCHIGAME\t");
+            OStream_printf(outostream, " part of BUCHIGAME\t");
             break;
           case LTLGAME:
-            fprintf(outstream, " LTLGAME\t");
+            OStream_printf(outostream, " LTLGAME\t");
             break;
           case GENREACTIVITY:
-            fprintf(outstream, " part of GENREACTIVITY\t");
+            OStream_printf(outostream, " part of GENREACTIVITY\t");
             break;
           default: nusmv_assert(false); /* unsupported kind */
           }
 
           print_node(wffprint,outstream, exp);
-          fprintf(outstream, "\n");
+          OStream_printf(outostream, "\n");
         } /* for (exp_list) */
       } /* for (activation vars)*/
     } /* for (player) */
@@ -1999,7 +2000,7 @@ void game_process_unrealizable_core_with_params(
      example). */
   if (bdd_is_true(self->dd_manager, winningCore) ||
       bdd_is_false(self->dd_manager, winningCore)) {
-    fprintf(outstream,
+    OStream_printf(outostream,
             "\nThe problem is found to be %s "
             "independent of the guarded high-level constraints\n",
             is_realizable ? "realizable" : "unrealizable");
@@ -2015,7 +2016,7 @@ void game_process_unrealizable_core_with_params(
 
     switch (self->ct) {
     case GAME_UNREALIZABLE_CORE_CORE_TYPE_CORE:
-      fprintf(outstream,
+      OStream_printf(outostream,
               "\n To keep the specification %s "
               "it is necessary to do one of the following :\n",
               is_realizable ? "realizable" : "unrealizable");
@@ -2029,7 +2030,7 @@ void game_process_unrealizable_core_with_params(
       }
       break;
     case GAME_UNREALIZABLE_CORE_CORE_TYPE_FIX:
-      fprintf(outstream,
+      OStream_printf(outostream,
               "\n To make the specification %s "
               "it is necessary to do one of the following :\n",
               is_realizable ? "unrealizable" : "realizable");
@@ -2051,7 +2052,7 @@ void game_process_unrealizable_core_with_params(
 
 
     if (opt_verbose_level_ge(self->oh, 4)) {
-      fprintf(errstream,
+      OStream_printf(errostream,
               "\ngame_process_unrealizable_core_with_params: the set of cores "
               "is:\n");
       BddEnc_print_bdd_wff(self->bdd_enc,
@@ -2061,14 +2062,14 @@ void game_process_unrealizable_core_with_params(
                            false,
                            false,
                            0,
-                           (OStream_ptr)outstream);
-      fprintf(errstream,
+                           outostream);
+      OStream_printf(errostream,
               "\ngame_process_unrealizable_core_with_params: end set of "
               "cores\n");
     }
-    ///* debug */ fprintf(outstream, "debugging: the core is \n");
+    ///* debug */ OStream_printf(outostream, "debugging: the core is \n");
     ///* debug */ dd_printminterm(self->dd_manager, core);
-    ///* debug */ fprintf(outstream, "\n");
+    ///* debug */ OStream_printf(outostream, "\n");
 
     while (!bdd_is_false(self->dd_manager, core)) {
       node_ptr assignments;
@@ -2089,7 +2090,7 @@ void game_process_unrealizable_core_with_params(
       boolean remove = player_to_remove == PLAYER_1;
       boolean something_printed = false;
 
-      fprintf(outstream, remove ? "remove [" : "keep [");
+      OStream_printf(outostream, remove ? "remove [" : "keep [");
 
       for (iter = assignments; iter; iter = cdr(iter)) {
         /* a list of EQUALS connected by ANDS */
@@ -2104,7 +2105,7 @@ void game_process_unrealizable_core_with_params(
             NodeList_belongs_to(self->parameterList_2, var)) {
           remove = !remove;
           something_printed = false;
-          fprintf(outstream, " ] and %s", remove ? "remove [" : "keep [");
+          OStream_printf(outostream, " ] and %s", remove ? "remove [" : "keep [");
         }
 
         /* only 0 and 1 can be assigned */
@@ -2112,7 +2113,7 @@ void game_process_unrealizable_core_with_params(
         /* Do not keep constraints of the player and do not remove the
            constraints of the opponent. */
         if ((remove && ExprMgr_number(exprs, 0) == exp) || (!remove && ExprMgr_number(exprs, 1) == exp))  {
-          if (something_printed) fprintf(outstream, ",");
+          if (something_printed) OStream_printf(outostream, ",");
           print_node(wffprint,outstream, var);
           something_printed = true;
 
@@ -2123,7 +2124,7 @@ void game_process_unrealizable_core_with_params(
         }
 
       }; /* for (assignments) */
-      fprintf(outstream, " ]\n");
+      OStream_printf(outostream, " ]\n");
 
       free_list(0,assignments);
 
@@ -2139,12 +2140,12 @@ void game_process_unrealizable_core_with_params(
 
     } /* while (core) */
 
-    fprintf(outstream,
+    OStream_printf(outostream,
             "\nExpressions not mentioned do not influence "
             "the realizability/unrealizablity of the specification");
   }
 
-  fprintf(outstream,
+  OStream_printf(outostream,
           "\n\nEnd of Realizability/Unrealizability Core computation\n");
 }
 
@@ -2482,6 +2483,7 @@ static boolean game_minimize_players_constraints(
   MasterPrinter_ptr wffprint = MASTER_PRINTER(NuSMVEnv_get_value(env, ENV_WFF_PRINTER));
   const StreamMgr_ptr streams = STREAM_MGR(NuSMVEnv_get_value(env, ENV_STREAM_MANAGER));
   FILE* errstream = StreamMgr_get_error_stream(streams);
+  OStream_ptr errostream = StreamMgr_get_error_ostream(streams);
 
   node_ptr trueConst = find_node(nodemgr,TRUEEXP, Nil, Nil);
 
@@ -2610,9 +2612,9 @@ static boolean game_minimize_players_constraints(
           }
 
           if (opt_verbose_level_ge(self->oh, 2)) {
-            fprintf(errstream, "\nINIT ");
+            OStream_printf(errostream, "\nINIT ");
             print_node(wffprint,errstream, exp);
-            fprintf(errstream, " is removed\n");
+            OStream_printf(errostream, " is removed\n");
           }
         }
         else { /* realizability changed => restore the constraint and
@@ -2715,7 +2717,7 @@ static boolean game_minimize_players_constraints(
         */
         if (exp != trueConst) {
           if (opt_verbose_level_ge(self->oh, 2)) {
-            fprintf(errstream,
+            OStream_printf(errostream,
                     "\n.... %s is CHECKED .... \n",
                     function[i].name);
           }
@@ -2765,9 +2767,9 @@ static boolean game_minimize_players_constraints(
             }
 
             if (opt_verbose_level_ge(self->oh, 2)) {
-              fprintf(errstream, "\n%s ", function[i].name);
+              OStream_printf(errostream, "\n%s ", function[i].name);
               print_node(wffprint,errstream, exp);
-              fprintf(errstream, " is removed\n");
+              OStream_printf(errostream, " is removed\n");
             }
           }
           else {
@@ -2888,6 +2890,7 @@ static void game_output_game_after_minimization(
   const NuSMVEnv_ptr env = EnvObject_get_environment(ENV_OBJECT(self));
   StreamMgr_ptr streams = STREAM_MGR(NuSMVEnv_get_value(env, ENV_STREAM_MANAGER));
   FILE* outstream = StreamMgr_get_output_stream(streams);
+  OStream_ptr outostream = StreamMgr_get_output_ostream(streams);
 
   /* a list consisting of the player in explanation and the other
      player */
@@ -2952,7 +2955,7 @@ static void game_output_game_after_minimization(
   };
 
   /* --- output the results ---- */
-  fprintf(outstream,
+  OStream_printf(outostream,
           "\nThe specification is %s.\n\n",
           realizable ? "REALIZABLE" : "UNREALIZABLE");
 
@@ -2965,14 +2968,14 @@ static void game_output_game_after_minimization(
     int remainedConstr = 0, removedConstr = 0;
 
     /* --- output the results ---- */
-    fprintf(outstream, "Below is a list of %s:\n", messages[plr]);
+    OStream_printf(outostream, "Below is a list of %s:\n", messages[plr]);
 
     boolean something_was_printed = false;
     int i;
     for (i = 0; i < 4; ++i) {
       node_ptr iter;
       if (!(function[i].doMinimize)) {
-        fprintf(outstream,
+        OStream_printf(outostream,
                 "NOTE : All %s constraints are left in by command line option\n",
                 function[i].name);
       }
@@ -2983,9 +2986,9 @@ static void game_output_game_after_minimization(
         node_ptr exp = function[i].elmnt(iter);
         if (node_get_type(exp) != TRUEEXP ||
             !function[i].doMinimize) { /* this exp has not been removed */
-          fprintf(outstream, "%s ", function[i].name);
+          OStream_printf(outostream, "%s ", function[i].name);
           print_node(wffprint,outstream, exp);
-          fprintf(outstream, "\n");
+          OStream_printf(outostream, "\n");
           something_was_printed = true;
           ++remainedConstr;
         }
@@ -2996,15 +2999,15 @@ static void game_output_game_after_minimization(
     } /* for */
 
     if (!something_was_printed) {
-      fprintf(outstream, "No constraints are required\n");
+      OStream_printf(outostream, "No constraints are required\n");
     }
-    fprintf(outstream,
+    OStream_printf(outostream,
             "%d constraints remained (%d of %d, i.e., %.1f%%, were removed)\n",
             remainedConstr,
             removedConstr,
             removedConstr + remainedConstr,
             ((double) removedConstr*100/(removedConstr + remainedConstr)));
-    fprintf(outstream, "\n");
+    OStream_printf(outostream, "\n");
   } /* for (plr) */
 }
 
@@ -3037,7 +3040,7 @@ static void game_compute_core_switching_constraints(
   const NodeMgr_ptr nodemgr = NODE_MGR(NuSMVEnv_get_value(env, ENV_NODE_MGR));
   MasterPrinter_ptr wffprint = MASTER_PRINTER(NuSMVEnv_get_value(env, ENV_WFF_PRINTER));
   StreamMgr_ptr streams = STREAM_MGR(NuSMVEnv_get_value(env, ENV_STREAM_MANAGER));
-  FILE* errstream = StreamMgr_get_error_stream(streams);
+  OStream_ptr errostream = StreamMgr_get_error_ostream(streams);
 
   node_ptr spec = Prop_get_expr_core(PROP(self->prop));
   /* the prop has not been used yet */
@@ -3131,7 +3134,7 @@ static void game_compute_core_switching_constraints(
   }
 
   minim_1_time = util_cpu_time() - minim_1_time;
-  fprintf(errstream, "Minimization time of 1th player (preliminary): %f\n",
+  OStream_printf(errostream, "Minimization time of 1th player (preliminary): %f\n",
           minim_1_time/(double)1000);
   minim_2_time = util_cpu_time();
 
@@ -3198,7 +3201,7 @@ static void game_compute_core_switching_constraints(
   free_node(nodemgr,spec);
 
   init_time = util_cpu_time() - init_time;
-  fprintf(errstream, "Initialization time: %f\n"
+  OStream_printf(errostream, "Initialization time: %f\n"
           "Minimization time of 1th player: %f\n"
           "Minimization time of 2nd player: %f\n"
           "Total time: %f\n",

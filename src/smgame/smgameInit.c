@@ -75,29 +75,29 @@ void Smgame_Reset(NuSMVEnv_ptr env)
 {
   OptsHandler_ptr opts = OPTS_HANDLER(NuSMVEnv_get_value(env, ENV_OPTS_HANDLER));
   StreamMgr_ptr streams = STREAM_MGR(NuSMVEnv_get_value(env, ENV_STREAM_MANAGER));
-  FILE* errstream = StreamMgr_get_error_stream(streams);
+  OStream_ptr errostream = StreamMgr_get_error_ostream(streams);
 
   if (opt_verbose_level_gt(opts, 1)) {
-    fprintf(errstream, "Shutting down the game part...\n");
+    OStream_printf(errostream, "Shutting down the game part...\n");
   }
   NuGaTAddons_Quit(env);
   if (opt_verbose_level_gt(opts, 2)) {
-    fprintf(errstream, "Done\n");
+    OStream_printf(errostream, "Done\n");
   }
 
   CInit_reset_first(env);
   CInit_reset_last(env);
 
   if (opt_verbose_level_gt(opts, 1)) {
-    fprintf(errstream, "Starting the game part...\n");
+    OStream_printf(errostream, "Starting the game part...\n");
   }
   NuGaTAddons_Init(env);
   if (opt_verbose_level_gt(opts, 2)) {
-    fprintf(errstream, "Done\n");
+    OStream_printf(errostream, "Done\n");
   }
 
   if (opt_verbose_level_gt(opts, 1)) {
-    fprintf(errstream, "The game part is now up and ready\n");
+    OStream_printf(errostream, "The game part is now up and ready\n");
   }
 }
 

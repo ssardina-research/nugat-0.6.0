@@ -97,11 +97,11 @@ EXTERN DDMgr_ptr dd_manager;
 void Smgame_BatchMain(NuSMVEnv_ptr env)
 {
   PropDb_ptr  prop_db = PROP_DB(NuSMVEnv_get_value(env, ENV_PROP_DB));
-  OptsHandler_ptr oh = OPTS_HANDLER(NuSMVEnv_get_value(env, ENV_OPTS_HANDLER));
+  OptsHandler_ptr opts = OPTS_HANDLER(NuSMVEnv_get_value(env, ENV_OPTS_HANDLER));
   const ErrorMgr_ptr errmgr = ERROR_MGR(NuSMVEnv_get_value(env, ENV_ERROR_MANAGER));
   StreamMgr_ptr streams = STREAM_MGR(NuSMVEnv_get_value(env, ENV_STREAM_MANAGER));
   FILE* outstream = StreamMgr_get_output_stream(streams);
-  FILE* errstream = StreamMgr_get_error_stream(streams);
+  OStream_ptr errostream = StreamMgr_get_error_ostream(streams);
 
   /* Necessary to have standard behavior in the batch mode */
   ErrorMgr_reset_long_jmp(errmgr);
@@ -118,7 +118,7 @@ void Smgame_BatchMain(NuSMVEnv_ptr env)
   if (Cmd_CommandExecute(env,"flatten_hierarchy")) ErrorMgr_nusmv_exit(errmgr,1);
 
   /* If the -lp option is used, list the properties and exit */
-  if (opt_list_properties(oh) == true) {
+  if (opt_list_properties(opts) == true) {
     if (Cmd_CommandExecute(env,"show_property")) ErrorMgr_nusmv_exit(errmgr,1);
     return;
   }
@@ -138,11 +138,11 @@ void Smgame_BatchMain(NuSMVEnv_ptr env)
   /* --------------------------------------------------- */
   /*  Write the flat and bool FSMs (if required)         */
   /* ----------------------------------------------------*/
-  if (get_output_flatten_model_file(oh) != NIL(char)) {
+  if (get_output_flatten_model_file(opts) != NIL(char)) {
     if (Cmd_CommandExecute(env,"write_flat_model")) ErrorMgr_nusmv_exit(errmgr,1);
   }
 
-  if (get_output_boolean_model_file(oh) != NIL(char)) {
+  if (get_output_boolean_model_file(opts) != NIL(char)) {
     if (Cmd_CommandExecute(env,"build_boolean_model")) ErrorMgr_nusmv_exit(errmgr,1);
     if (Cmd_CommandExecute(env,"write_boolean_model")) ErrorMgr_nusmv_exit(errmgr,1);
   }
@@ -151,14 +151,14 @@ void Smgame_BatchMain(NuSMVEnv_ptr env)
   /* ================================================== */
   /*  5.1 BMC starts                                    */
   /* ================================================== */
-  if (opt_bmc_mode(oh) == true) {
-    if (opt_verbose_level_gt(oh, 0)) {
-      fprintf(errstream, "Entering BMC mode...\n");
+  if (opt_bmc_mode(opts) == true) {
+    if (opt_verbose_level_gt(opts, 0)) {
+      OStream_printf(errostream, "Entering BMC mode...\n");
     }
 
     /* games cannot be checked with BMC */
 #if HAVE_GAME
-    if (opt_game_game(oh)) nusmv_assert(false);
+    if (opt_game_game(opts)) nusmv_assert(false);
 #endif
 
     /* build_boolean_model may have been already called if the output
@@ -171,17 +171,17 @@ void Smgame_BatchMain(NuSMVEnv_ptr env)
        determinization layers: */
     if (Cmd_CommandExecute(env,"bmc_setup")) ErrorMgr_nusmv_exit(errmgr,1);
 
-    if (get_prop_no(oh) != -1) {
-      int prop_no = get_prop_no(oh);
+    if (get_prop_no(opts) != -1) {
+      int prop_no = get_prop_no(opts);
       Prop_ptr prop;
 
-      if (opt_verbose_level_gt(oh, 0)) {
-        fprintf(errstream, "Verifying property %d...\n", prop_no);
+      if (opt_verbose_level_gt(opts, 0)) {
+        OStream_printf(errostream, "Verifying property %d...\n", prop_no);
       }
 
       if ((prop_no < 0) ||
           (prop_no >= PropDb_get_size(prop_db))) {
-        fprintf(errstream,
+        OStream_printf(errostream,
                 "Error: \"%d\" is not a valid property index\n",
                 prop_no);
         ErrorMgr_nusmv_exit(errmgr,1);
@@ -195,11 +195,11 @@ void Smgame_BatchMain(NuSMVEnv_ptr env)
           int rel_loop;
 
           /* skip if -ils option is given */
-          if (opt_ignore_ltlspec(oh)) break;
+          if (opt_ignore_ltlspec(opts)) break;
 
-          rel_loop = Bmc_Utils_ConvertLoopFromString(get_bmc_pb_loop(oh),
+          rel_loop = Bmc_Utils_ConvertLoopFromString(get_bmc_pb_loop(opts),
                                                      NULL);
-          Bmc_GenSolveLtl(env,prop, get_bmc_pb_length(oh),
+          Bmc_GenSolveLtl(env,prop, get_bmc_pb_length(opts),
                           rel_loop,
                           /*increasing length*/ TRUE ,
                           TRUE,
@@ -210,29 +210,29 @@ void Smgame_BatchMain(NuSMVEnv_ptr env)
 
       case Prop_Psl:
         {
-          int rel_loop = Bmc_Utils_ConvertLoopFromString(get_bmc_pb_loop(oh),
+          int rel_loop = Bmc_Utils_ConvertLoopFromString(get_bmc_pb_loop(opts),
                                                          NULL);
           /* skip if -ips option is given */
-          if (opt_ignore_pslspec(oh)) break;
+          if (opt_ignore_pslspec(opts)) break;
 
           Bmc_Gen_check_psl_property(env,prop,
                                  false,
                                  false,
                                  false,
-                                 get_bmc_pb_length(oh),
+                                 get_bmc_pb_length(opts),
                                  rel_loop);
           break;
         }
 
       case Prop_Invar:
         /* skip if -ii option is given */
-        if (opt_ignore_invar(oh)) break;
+        if (opt_ignore_invar(opts)) break;
 
         Bmc_GenSolveInvar(env,prop, TRUE, BMC_DUMP_NONE, NULL);
         break;
 
       default:
-        fprintf(errstream,
+        OStream_printf(errostream,
                 "Error: only LTL, PSL and INVAR properties can be checked in "
                 "BMC mode\n");
         ErrorMgr_nusmv_exit(errmgr,1);
@@ -242,14 +242,14 @@ void Smgame_BatchMain(NuSMVEnv_ptr env)
     else {
       /* Checks all ltlspecs, invarspecs and pslspecs */
 
-      if (! opt_ignore_ltlspec(oh)) {
+      if (! opt_ignore_ltlspec(opts)) {
         lsList props;
         lsGen  iterator;
         Prop_ptr prop;
         int rel_loop;
 
-        if (opt_verbose_level_gt(oh, 0)) {
-          fprintf(errstream, "Verifying the LTL properties...\n");
+        if (opt_verbose_level_gt(opts, 0)) {
+          OStream_printf(errostream, "Verifying the LTL properties...\n");
         }
 
 
@@ -257,11 +257,11 @@ void Smgame_BatchMain(NuSMVEnv_ptr env)
         nusmv_assert(props != LS_NIL);
 
         lsForEachItem(props, iterator, prop) {
-          rel_loop = Bmc_Utils_ConvertLoopFromString(get_bmc_pb_loop(oh),
+          rel_loop = Bmc_Utils_ConvertLoopFromString(get_bmc_pb_loop(opts),
                                                      NULL);
 
           Bmc_GenSolveLtl(env,prop,
-                          get_bmc_pb_length(oh),
+                          get_bmc_pb_length(opts),
                           rel_loop,
                           /*increasing length*/ TRUE,
                           TRUE,
@@ -272,15 +272,15 @@ void Smgame_BatchMain(NuSMVEnv_ptr env)
         lsDestroy(props, NULL); /* the list is no longer needed */
       }
 
-      if (! opt_ignore_pslspec(oh)) {
+      if (! opt_ignore_pslspec(opts)) {
         lsList props;
         lsGen  iterator;
         Prop_ptr prop;
         int rel_loop =
-          Bmc_Utils_ConvertLoopFromString(get_bmc_pb_loop(oh), NULL);
+          Bmc_Utils_ConvertLoopFromString(get_bmc_pb_loop(opts), NULL);
 
-        if (opt_verbose_level_gt(oh, 0)) {
-          fprintf(errstream, "Verifying the PSL properties...\n");
+        if (opt_verbose_level_gt(opts, 0)) {
+          OStream_printf(errostream, "Verifying the PSL properties...\n");
         }
 
         props = PropDb_get_props_of_type(prop_db, Prop_Psl);
@@ -292,7 +292,7 @@ void Smgame_BatchMain(NuSMVEnv_ptr env)
                                    false,
                                    false,
                                    false,
-                                   get_bmc_pb_length(oh),
+                                   get_bmc_pb_length(opts),
                                    rel_loop);
           }
         }
@@ -300,13 +300,13 @@ void Smgame_BatchMain(NuSMVEnv_ptr env)
         lsDestroy(props, NULL); /* the list is no longer needed */
       }
 
-      if (! opt_ignore_invar(oh)) {
+      if (! opt_ignore_invar(opts)) {
         lsList props;
         lsGen iterator;
         Prop_ptr prop;
 
-        if (opt_verbose_level_gt(oh, 0)) {
-          fprintf(errstream, "Verifying the INVAR properties...\n");
+        if (opt_verbose_level_gt(opts, 0)) {
+          OStream_printf(errostream, "Verifying the INVAR properties...\n");
         }
 
         props = PropDb_get_props_of_type(prop_db,
@@ -333,14 +333,14 @@ void Smgame_BatchMain(NuSMVEnv_ptr env)
      If COI is enabled there is no reason to create global BDD FSM since
      every property will have its one instance of a BDD FSM.
   */
-  if (opt_cone_of_influence(oh) == false) {
+  if (opt_cone_of_influence(opts) == false) {
     if (Cmd_CommandExecute(env,"build_model")) ErrorMgr_nusmv_exit(errmgr,1);
   }
 
   /* checks the fsm if required */
-  if (opt_check_fsm(oh) == true) {
-    if (opt_cone_of_influence(oh)) {
-      fprintf(errstream,
+  if (opt_check_fsm(opts) == true) {
+    if (opt_cone_of_influence(opts)) {
+      OStream_printf(errostream,
               "WARNING: Check for totality of the transition relation cannot "
               "currently\n"
               "performed in batch mode if the cone of influence reduction has "
@@ -350,8 +350,8 @@ void Smgame_BatchMain(NuSMVEnv_ptr env)
 #if HAVE_GAME
 
     /* The Game FSM cannot be checked */
-    if (opt_game_game(oh)) {
-      fprintf(errstream,
+    if (opt_game_game(opts)) {
+      OStream_printf(errostream,
       "WARNING: Check for totality of the Game transition relations cannot \n"
               "currently performed.\n");
       ErrorMgr_nusmv_exit(errmgr,1);
@@ -360,7 +360,7 @@ void Smgame_BatchMain(NuSMVEnv_ptr env)
     BddFsm_check_machine(BDD_FSM(NuSMVEnv_get_value(env, ENV_BDD_FSM)));
   }
 
-  if (get_prop_no(oh) != -1) {
+  if (get_prop_no(opts) != -1) {
 
     char command[20 + sizeof(long)];
 
@@ -369,7 +369,7 @@ void Smgame_BatchMain(NuSMVEnv_ptr env)
       /* If this is PropGame_LtlGame, then build Boolean model. */
       Prop_ptr prop;
       prop = PropDb_get_prop_at_index(prop_db,
-                                      get_prop_no(oh));
+                                      get_prop_no(opts));
       if (Prop_get_type(prop) == PropGame_LtlGame) {
         if (Compile_check_if_bool_model_was_built(env,NULL, false)) {
           if (Cmd_CommandExecute(env,"build_boolean_model")) ErrorMgr_nusmv_exit(errmgr,1);
@@ -378,33 +378,33 @@ void Smgame_BatchMain(NuSMVEnv_ptr env)
     }
 #endif
 
-    sprintf(command, "check_property -n %d", get_prop_no(oh));
+    sprintf(command, "check_property -n %d", get_prop_no(opts));
 
     if (Cmd_CommandExecute(env,command)) ErrorMgr_nusmv_exit(errmgr,1);
   }
   else {
 
     /* Evaluates the Specifications */
-    if (!opt_ignore_spec(oh)) {
+    if (!opt_ignore_spec(opts)) {
       PropDb_verify_all_type(prop_db, Prop_Ctl);
     }
 
-    if (!opt_ignore_compute(oh)) {
+    if (!opt_ignore_compute(opts)) {
       PropDb_verify_all_type(prop_db, Prop_Compute);
     }
 
     /* Evaluates the LTL specifications */
-    if (!opt_ignore_ltlspec(oh)) {
+    if (!opt_ignore_ltlspec(opts)) {
       PropDb_verify_all_type(prop_db, Prop_Ltl);
     }
 
     /* Evaluates the PSL specifications */
-    if (!opt_ignore_pslspec(oh)) {
+    if (!opt_ignore_pslspec(opts)) {
       PropDb_verify_all_type(prop_db, Prop_Psl);
     }
 
     /* Evaluates CHECKINVARIANTS */
-    if (!opt_ignore_invar(oh)) {
+    if (!opt_ignore_invar(opts)) {
       PropDb_verify_all_type(prop_db, Prop_Invar);
     }
 
@@ -440,16 +440,16 @@ void Smgame_BatchMain(NuSMVEnv_ptr env)
 
 
   /* Reporting of statistical information. */
-  if (opt_verbose_level_gt(oh, 0)) {
+  if (opt_verbose_level_gt(opts, 0)) {
     if (Cmd_CommandExecute(env,"print_usage")) ErrorMgr_nusmv_exit(errmgr,1);
   }
 
   /* Computing and Reporting of the Effect of Reordering */
-  if (opt_reorder(oh)) {
+  if (opt_reorder(opts)) {
     fprintf(outstream, "\n========= starting reordering ============\n");
-    dd_reorder(dd_manager, get_reorder_method(oh), DEFAULT_MINSIZE);
+    dd_reorder(dd_manager, get_reorder_method(opts), DEFAULT_MINSIZE);
     fprintf(outstream, "\n========= after reordering ============\n");
-    if (opt_verbose_level_gt(oh, 0)) {
+    if (opt_verbose_level_gt(opts, 0)) {
       if (Cmd_CommandExecute(env,"print_usage")) ErrorMgr_nusmv_exit(errmgr,1);
     }
 
@@ -457,9 +457,9 @@ void Smgame_BatchMain(NuSMVEnv_ptr env)
   }
 
   /* Reporting of Reachable States */
-  if (opt_print_reachable(oh) == true) {
-    if (opt_cone_of_influence(oh)) {
-      fprintf(errstream,
+  if (opt_print_reachable(opts) == true) {
+    if (opt_cone_of_influence(opts)) {
+      OStream_printf(errostream,
               "WARNING: Statistics of reachable states is not currently "
               "available\n"
               "in batch mode if cone of influence reduction has been "
@@ -468,8 +468,8 @@ void Smgame_BatchMain(NuSMVEnv_ptr env)
     }
 #if HAVE_GAME
     /* The Game FSM cannot be checked */
-    if (opt_game_game(oh)) {
-      fprintf(errstream,
+    if (opt_game_game(opts)) {
+      OStream_printf(errostream,
       "WARNING: Statistics of reachable states is not currently available\n"
               "for Game transition relations.\n");
       ErrorMgr_nusmv_exit(errmgr,1);
@@ -484,7 +484,7 @@ void Smgame_BatchMain(NuSMVEnv_ptr env)
   }
 
   } FAIL(errmgr) {
-    fprintf(errstream, "\nNuGaT terminated by a signal\n");
+    OStream_printf(errostream, "\nNuGaT terminated by a signal\n");
     ErrorMgr_nusmv_exit(errmgr,1);
   }
 }
