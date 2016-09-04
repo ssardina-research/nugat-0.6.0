@@ -408,6 +408,10 @@ NodeList_ptr Game_cmd_get_specific_commands()
 ******************************************************************************/
 static int CommandReadRatFile(NuSMVEnv_ptr env,int argc, char** argv)
 {
+    const StreamMgr_ptr streams = STREAM_MGR(NuSMVEnv_get_value(env, ENV_STREAM_MANAGER));
+    FILE* errstream = StreamMgr_get_error_stream(streams);
+    OStream_ptr errostream = StreamMgr_get_error_ostream(streams);
+
 #if ! HAVE_LIBEXPAT
     OStream_printf(errostream,
             "The Expat XML library seems not to be avialable.\n"
@@ -419,9 +423,7 @@ static int CommandReadRatFile(NuSMVEnv_ptr env,int argc, char** argv)
   const ErrorMgr_ptr errmgr =
                     ERROR_MGR(NuSMVEnv_get_value(env, ENV_ERROR_MANAGER));
   OptsHandler_ptr opts = OPTS_HANDLER(NuSMVEnv_get_value(env, ENV_OPTS_HANDLER));
-  const StreamMgr_ptr streams = STREAM_MGR(NuSMVEnv_get_value(env, ENV_STREAM_MANAGER));
-  FILE* errstream = StreamMgr_get_error_stream(streams);
-  OStream_ptr errostream = StreamMgr_get_error_ostream(streams);
+
 
   util_getopt_reset();
   while((c = util_getopt(argc, argv, "hi:")) != EOF) {
@@ -825,14 +827,14 @@ static int CommandGameBuildModel(NuSMVEnv_ptr env,int argc, char** argv)
 
 static int UsageGameBuildModel(FILE* errstream)
 {
-    printf(errstream, "usage: build_model [-h] [-f] [-m Method]\n");
-    printf(errstream, "   -h \t\tPrints the command usage\n");
-    printf(errstream, "   -m Method \tUses \"Method\" as partitioning method, "
+    fprintf(errstream, "usage: build_model [-h] [-f] [-m Method]\n");
+    fprintf(errstream, "   -h \t\tPrints the command usage\n");
+    fprintf(errstream, "   -m Method \tUses \"Method\" as partitioning method, "
             "and set it as default method\n");
-    printf(errstream, "\t\tto be used in the following image computations.\n");
-    printf(errstream, "\t\tThe currently available methods are:\n\t\t");
+    fprintf(errstream, "\t\tto be used in the following image computations.\n");
+    fprintf(errstream, "\t\tThe currently available methods are:\n\t\t");
     print_partition_method(errstream);
-    printf(errstream, "\n   -f \t\tForces the model re-construction, even if "
+    fprintf(errstream, "\n   -f \t\tForces the model re-construction, even if "
             "a model has already been built\n");
     return 1;
 }

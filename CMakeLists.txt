@@ -1,10 +1,13 @@
-cmake_minimum_required(VERSION 3.2)
+cmake_minimum_required(VERSION 2.8) #3.2
 
 project(NuGaT)
 set(PROJECT_VERSION "0.6.0")
 
 
 set(NUGAT_SOURCE_DIR .)
+
+set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
+include(NuGATUtils)
 
 #set(NUSMV_SOURCE_DIR "/home/ssardina/src/NuSMV/NuSMV-2.6.0/NuSMV"
 #    CACHE PATH "Source directory of NuSMV")
@@ -39,11 +42,12 @@ include_directories("${NUSMV_BUILD_DIR}/include/code/nusmv/shell")
 #
 # for nusmv/core/parser/grammar.y
 include_directories(${NUSMV_SOURCE_DIR}/build/code/)
+# for config.h
+include_directories(${NUSMV_SOURCE_DIR}/build/CMakeFiles/)
 # for nusmv/core/compile/type_checking/checkers/checkersInt.h
 include_directories(${NUSMV_SOURCE_DIR}/code)
 # for compile/type_checking/checkers/CheckerBase_private.h
 include_directories(${NUSMV_SOURCE_DIR}/code/nusmv/core)
-
 
 #include_directories("${NUSMV_SOURCE_DIR}/build/build-MiniSat/minisat-37dc6c67e2af26379d88ce349eb9c4c6160e8543")
 
@@ -184,3 +188,14 @@ target_link_libraries(NuGaT
 
 add_definitions(-DHAVE_EXTERN_ARGS_MACROS)
 add_definitions(-DHAVE_CONFIG_H)
+add_definitions(-DHAVE_GAME)
+
+
+
+set(SUBDIRS
+        src
+        )
+
+foreach(d ${SUBDIRS})
+    add_subdirectory(${d})
+endforeach()

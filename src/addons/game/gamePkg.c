@@ -154,7 +154,7 @@ void Game_Init(NuSMVEnv_ptr env)
   nusmv_assert(GAME_HIERARCHY(NULL) == mainGameHierarchy);
   nusmv_assert(NODE_LIST(NULL) == stored_dependent);
   nusmv_assert(NODE_LIST(NULL) == stored_specific);
-  set_pgm_name(opts, PACKAGE_NAME); //NEW
+  set_pgm_name(opts, NUSMV_PACKAGE_NAME); //NEW
   Game_init_opt(env);
   Game_init_cmd();
   game_pkg_add_cmds(env,Game_cmd_get_generic_commands());
