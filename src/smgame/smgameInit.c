@@ -121,7 +121,7 @@ void Smgame_Init(NuSMVEnv_ptr env)
 {
   OptsHandler_ptr opts = OPTS_HANDLER(NuSMVEnv_get_value(env, ENV_OPTS_HANDLER));
   //CInit_init(); //this is already called by NuSMVCore init
-  set_pgm_name(opts, NUSMV_PACKAGE_NAME);
+  set_pgm_name(opts, PACKAGE_NAME);
   //NuGaTAddons_Init();
   Smgame_AddCmd(env);
 }

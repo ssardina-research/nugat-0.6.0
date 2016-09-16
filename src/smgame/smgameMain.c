@@ -417,7 +417,7 @@ static void BannerPrint(NuSMVEnv_ptr env,OStream_ptr file)
   OStream_printf(file,
           "*** For more information on NuGaT see <http://es.fbk.eu/tools/nugat>\n");
   OStream_printf(file, "*** or email to <nugat-users@list.fbk.eu>.\n");
-  OStream_printf(file, "*** Please report bugs to <%s>.\n", NUSMV_PACKAGE_BUGREPORT);
+  OStream_printf(file, "*** Please report bugs to <%s>.\n", PACKAGE_BUGREPORT);
   OStream_printf(file, "*** Copyright (c) 2010, Fondazione Bruno Kessler\n\n");
 
   CInit_BannerPrint_nusmv_library(OStream_get_stream(file));

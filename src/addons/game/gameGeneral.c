@@ -250,13 +250,13 @@ void Game_AfterCheckingSpec(PropGame_ptr prop,
         /**NEW_CODE_START**/
         SymbLayerIter iter1;
         NodeList_ptr syms1;
-        SymbLayer_gen_iter(&dl1, &iter1, STT_ALL);
-        syms1 = SymbLayer_iter_to_list(&dl1, iter1);
+        SymbLayer_gen_iter(dl1, &iter1, STT_ALL);
+        syms1 = SymbLayer_iter_to_list(dl1, iter1);
 
         SymbLayerIter iter2;
         NodeList_ptr syms2;
-        SymbLayer_gen_iter(&dl2, &iter2, STT_ALL);
-        syms2 = SymbLayer_iter_to_list(&dl2, iter2);
+        SymbLayer_gen_iter(dl2, &iter2, STT_ALL);
+        syms2 = SymbLayer_iter_to_list(dl2, iter2);
 
         nusmv_assert((dl1 == SYMB_LAYER(NULL)) ||
                      (NodeList_get_length(syms1) ==
