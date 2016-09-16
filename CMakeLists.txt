@@ -136,7 +136,7 @@ nugat_set_config_h_str(SIZEOF_VOID_P 8)
 nugat_set_config_h_str(VERSION "0.6.0")
 nugat_set_config_h_01(YYTEXT_POINTER 1)
 
-# TODO : find a solution
+# not commented originally
 #nugat_add_config_h_val(realloc rpl_realloc)
 
 nugat_write_config_h(config.h)
@@ -304,9 +304,11 @@ set(SOURCE_FILES
         src/smgame/smgameVers.c
         )
 
-# TODO: TMP COMMENTED, CHECK IF IT USEFUL
+# ------------------
+# END : SOURCE FILES
+# ------------------
+
 #file(GLOB_RECURSE NUSMV_SRC
-#        "${NUGAT_SOURCE_DIR}/src/parser/*.c"
 #        "${NUSMV_SOURCE_DIR}/code/*.c"
 #        )
 #
@@ -330,17 +332,14 @@ set(SOURCE_FILES
 #        "${NUSMV_SOURCE_DIR}/code/nusmv/ltl2smvMain.c"
 #        "${NUSMV_SOURCE_DIR}/code/nusmv/main.c"
 #        "${NUSMV_SOURCE_DIR}/build/build-MiniSat/minisat-37dc6c67e2af26379d88ce349eb9c4c6160e8543/CMakeFiles/3.2.2/CompilerIdC/CMakeCCompilerId.c"
-#
 #        )
 
-add_executable(NuGaT ${SOURCE_FILES} ${NUSMV_SRC} )
-# ------------------
-# END : SOURCE FILES
-# ------------------
 
 # ------------------
 # LINK TO LIBS
 # ------------------
+
+add_executable(NuGaT ${SOURCE_FILES}) # ${NUSMV_SRC}
 
 # Link to NUSMV libraries
 foreach(X nusmvshell nusmvaddonscore nusmvcore nusmvgrammar nusmvrbc MiniSat)
