@@ -142,8 +142,10 @@ void Smgame_BatchMain(NuSMVEnv_ptr env)
     if (Cmd_CommandExecute(env,"write_flat_model")) ErrorMgr_nusmv_exit(errmgr,1);
   }
 
+  if (opt_game_print_strategy(opts) || get_output_boolean_model_file(opts) != NIL(char))
+      if (Cmd_CommandExecute(env,"build_boolean_model")) ErrorMgr_nusmv_exit(errmgr,1);
+
   if (get_output_boolean_model_file(opts) != NIL(char)) {
-    if (Cmd_CommandExecute(env,"build_boolean_model")) ErrorMgr_nusmv_exit(errmgr,1);
     if (Cmd_CommandExecute(env,"write_boolean_model")) ErrorMgr_nusmv_exit(errmgr,1);
   }
 

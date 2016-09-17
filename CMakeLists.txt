@@ -1,13 +1,13 @@
-cmake_minimum_required(VERSION 3.2)
+cmake_minimum_required(VERSION 2.8.8)
+cmake_policy(VERSION 2.8)
 
 project(NuGaT)
 set(PROJECT_VERSION "0.6.0")
 
-set(NUGAT_SOURCE_DIR .)
-
 set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
-
 include(NuGATUtils)
+
+set(NUGAT_SOURCE_DIR .)
 
 #------------------------------------------------------------------------------
 # User has to set up environment variables NUSMV_SOURCE_DIR and NUSMV_BUILD_DIR
@@ -356,7 +356,10 @@ foreach(X libst.a libcudd.a libepd.a libmtr.a libutil.a)
 endforeach()
 
 # Link to system libraries (these should be found automatically in standard dirs)
-target_link_libraries(NuGaT libstdc++.a libxml2.a libreadline.a libtermcap.a libexpat.a libz.a liblzma.a libm.a )
+foreach(X libstdc++.a libxml2.a libm.a libreadline.a libtermcap.a libexpat.a libz.a liblzma.a)
+    find_library(${X} /usr/lib/x86_64-linux-gnu/)
+    target_link_libraries(NuGaT ${X})
+endforeach()
 
 # ------------------
 # END : LINK TO LIBS

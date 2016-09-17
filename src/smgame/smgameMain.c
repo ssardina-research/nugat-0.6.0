@@ -461,8 +461,7 @@ static void BannerPrint(NuSMVEnv_ptr env,OStream_ptr file)
 static void sm_ParseLineOptions(const NuSMVEnv_ptr env,int argc, char ** argv, OptsHandler_ptr options)
 {
 
-
-
+  OptsHandler_ptr opts = OPTS_HANDLER(NuSMVEnv_get_value(env, ENV_OPTS_HANDLER));
   const StreamMgr_ptr streams = STREAM_MGR(NuSMVEnv_get_value(env, ENV_STREAM_MANAGER));
   OStream_ptr errostream = StreamMgr_get_error_ostream(streams);
   OStream_ptr outostream = StreamMgr_get_output_ostream(streams);
@@ -965,6 +964,7 @@ static void sm_ParseLineOptions(const NuSMVEnv_ptr env,int argc, char ** argv, O
       /* printing strategy options */
     else if(strcmp(*argv, "-e") == 0){
       argv++; argc--;
+      set_game_print_strategy(opts);
       /* -e implies -s */
       gameParams.strategy_printout = 1;
       gameParams.indented_printout = 1;
