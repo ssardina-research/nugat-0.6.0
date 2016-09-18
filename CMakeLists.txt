@@ -356,10 +356,7 @@ foreach(X libst.a libcudd.a libepd.a libmtr.a libutil.a)
 endforeach()
 
 # Link to system libraries (these should be found automatically in standard dirs)
-foreach(X libstdc++.a libxml2.a libm.a libreadline.a libtermcap.a libexpat.a libz.a liblzma.a)
-    find_library(${X} /usr/lib/x86_64-linux-gnu/)
-    target_link_libraries(NuGaT ${X})
-endforeach()
+target_link_libraries(NuGaT libstdc++.a libxml2.a libm.a libreadline.a libtermcap.a libexpat.a libz.a liblzma.a)
 
 # ------------------
 # END : LINK TO LIBS
