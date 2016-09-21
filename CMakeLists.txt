@@ -6,7 +6,7 @@ set(PROJECT_VERSION "0.6.0")
 
 set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
 include(NuGATUtils)
-
+include(FindICU)
 set(NUGAT_SOURCE_DIR .)
 
 #------------------------------------------------------------------------------
@@ -356,7 +356,7 @@ foreach(X libst.a libcudd.a libepd.a libmtr.a libutil.a)
 endforeach()
 
 # Link to system libraries (these should be found automatically in standard dirs)
-target_link_libraries(NuGaT libstdc++.a libxml2.a libm.a libreadline.a libtermcap.a libexpat.a libz.a liblzma.a)
+target_link_libraries(NuGaT libstdc++.a libxml2.a libm.a libreadline.a libtermcap.a libexpat.a libz.a liblzma.a libicuuc.a)
 
 # ------------------
 # END : LINK TO LIBS
