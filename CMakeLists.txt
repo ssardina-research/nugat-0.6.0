@@ -357,7 +357,7 @@ endforeach()
 
 # Link to system libraries (these should be found automatically in standard dirs)
 target_link_libraries(NuGaT libstdc++.a libxml2.a libreadline.a libtermcap.a libexpat.a libz.a liblzma.a  libicuuc.a libicudata.a)
-target_link_libraries(NuGaT m dl)
+target_link_libraries(NuGaT m dl) # libm.a/libdl.a for dynamic link
 # ------------------
 # END : LINK TO LIBS
 # ------------------

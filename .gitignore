@@ -172,3 +172,4 @@ libtool
 build/
 configure
 
+/.project
