@@ -1,0 +1,116 @@
+===================================================================
+INSTRUCTIONS TO INSTALL NUGAT 0.6.0
+
+LORENZO + SEBASTIAN
+
+SEPTEMBER 2016
+===================================================================
+
+1. INSTALL THE FOLLOWING PACKAGES
+
+doxygen  : sudo apt-get install doxygen
+readline : sudo apt-get install libreadline6 libreadline6-dev
+latex    : sudo apt-get install texlive texstudio texlive-latex-base
+flex    : sudo apt-get install flex
+bison   : sudo apt-get install bison
+libxml2 : sudo apt-get install libxml2-dev
+cmake   : sudo apt-get install cmake
+make   : sudo apt-get install make
+cmake c compiler   : sudo apt-get install gcc-4.8
+cmake c++ compiler : sudo apt-get install g++-4.8
+python : sudo apt-get install 
+ps2pdf : sudo apt install ghostscript
+
+
+
+3. SETUP CUDD:
+
+	cd cudd-2.4.1.1
+	./setup.sh
+
+4. COMPILE NUSMV:
+
+	cd NuSMV
+	mkdir build
+	cd build
+	cmake .. -Wno-dev
+	make
+	sudo make install
+	sudo chmod +777 /opt/NuSMV-2.6.0/
+
+5. NEW SETP COMPILE:
+
+	cmake -D CMAKE_C_COMPILER=gcc -D CMAKE_CXX_COMPILER=c++ .. -DCMAKE_INSTALL_PREFIX=/opt/NuSMV-2.6.0 -Wno-dev
+	make
+	sudo make install
+
+	touch /home/nugat/src/NuSMV-2.6.0/NuSMV/build/doc/prog-man/html
+	sudo make install
+
+
+
+===================================================================
+ISSUES
+===================================================================
+
+===========================
+ISSUE : Warning
+perl: warning: Setting locale failed.
+perl: warning: Please check that your locale settings:
+	LANGUAGE = (unset),
+	LC_ALL = (unset),
+	LC_MONETARY = "it_IT.UTF-8",
+	LC_ADDRESS = "it_IT.UTF-8",
+	LC_TELEPHONE = "it_IT.UTF-8",
+	LC_NAME = "it_IT.UTF-8",
+	LC_MEASUREMENT = "it_IT.UTF-8",
+	LC_IDENTIFICATION = "it_IT.UTF-8",
+	LC_NUMERIC = "it_IT.UTF-8",
+	LC_PAPER = "it_IT.UTF-8",
+	LANG = "en_US.UTF-8"
+    are supported and installed on your system.
+perl: warning: Falling back to a fallback locale ("en_US.UTF-8").
+locale: Cannot set LC_ALL to default locale: No such file or directory
+
+SOLVED LIKE THIS:
+
+	sudo locale-gen "en_US.UTF-8"
+	sudo dpkg-reconfigure locales
+
+
+===========================
+ISSUES (cmake .. -Wno-dev)
+-- Looking for ndir.h - not found
+-- Looking for sys/ndir.h - not found
+-- Looking for floor - not found
+-- Looking for pow - not found
+
+SOLVED LIKE THIS:
+	(to be solved)
+
+
+===========================
+ISSUE (make install)
+CMake Error at doc/prog-man/cmake_install.cmake:44 (file):
+  file INSTALL cannot find
+  "/home/nugat/src/NuSMV-2.6.0/NuSMV/build/doc/prog-man/html".
+Call Stack (most recent call first):
+  doc/cmake_install.cmake:40 (include)
+  cmake_install.cmake:110 (include)
+
+SOLVED LIKE THIS:
+	
+	touch doc/prog-man/html
+
+
+
+===========================
+	ISSUE (make install)
+	...permissions...
+
+SOLVED LIKE THIS (TMP):
+	sudo chmod +777 /usr/local/include
+	sudo chmod +777 /usr/local/lib
+	sudo chmod +777 /usr/local/bin
+	sudo chmod +777 /usr/local/share
+
