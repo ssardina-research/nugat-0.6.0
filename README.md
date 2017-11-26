@@ -101,7 +101,7 @@ Note:
 
 
 
-## USAGE ##
+## USAGE
 
 It is assumed that the reader is familiar with concepts of two player games.
 
@@ -113,13 +113,9 @@ is used in the NuGAT shell. While in game mode the NuGAT shell command
 help provides an overview of the available commands. Calling a NuGAT
 shell command with argument "-h" prints a brief usage message.
 
-NuGAT 0.6.0 uses the same language as NuGAT 0.5.0. See examples.
+NuGAT 0.6.0 uses the same language as NuGAT 0.5.0. See examples in examples/
 
-Try some examples in examples/
-
-### TWO PLAYER AGENT ONES (as in original NuGAT): ###
-
-    The port of the original NuGAT example (gets same results):
+The port of the original NuGAT example (gets same results):
     
     ./NuGAT ../examples/NuGAT/simple.smv
 
@@ -135,9 +131,7 @@ Try some examples in examples/
     *** WARNING: Properties COI size sorting will be disabled.             ***
     --   GenReactivity PLAYER_2 (i0.v) -> (o0.v, i1)  : the strategy has been found
 
-There are more examples in examples/ subdir
-
-or interactively:
+... or interactively:
 
     [ssardina@Thinkpad-X1 build]$ ./NuGAT -int
     *** This is NuGaT 0.6.0 (compiled on Sun Nov 26 14:34:01 2017)
@@ -180,6 +174,79 @@ or interactively:
     Note that now the commands from before entering game mode apply.
 
 
+
+##### USEFUL INFO
+
+A file that has useful information on what NuGAT can do is:
+
+src/addons/game/gameCmd.c
+
+
+
+One can run NuGAT directly from the command line or via a script file. In both
+cases, the most improtant option seems to be "--dynamic", which speeds up NuGAT
+by a lot.
+
+1) Command line run:
+
+        $ NuGaT -dynamic <smv file>
+
+2) Script run:
+
+        $ NuGaT -source <.script file>
+
+The script should do some steps before solving the game and can do other extra
+things that cannot be done with the command line (like simulating or printing
+the strategy). My script contains this:
+
+        set on_failure_script_quits 1
+        read_model -i flip-coin-NUGAT-v01.smv
+        flatten_hierarchy
+        set dynamic_reorder 1
+        encode_variables
+        set conj_part_threshold 10000
+        set partition_method Threshold
+        build_model
+        check_gen_reactivity -e
+        check_reach_target  -e
+        quit
+        
+        compute_reachable
+        print_reachable_states
+        check_fsm
+        check_ctlspec
+        pick_state
+        simulate -v -r
+        quit
+ 
+
+The -e option in the check statements states to print the controller that solves
+the problem (if any).
+
+
+##### EXAMPLES
+
+I provide three file examples on how to use NuGat for planning.
+
+- flip-coin-NUGAT-v01.smv: 
+		flip is deterministic; strong planning has solution
+- flip-coin-NUGAT-v02.smv: 
+		flip is non-deterministic; no strong plan; cannot express fairness
+- flip-coin-NUGAT-v03.smv: 
+		same as 02 but with modules for Player 1
+
+File flip-coin-NUGAT-v01.script is a script file for runnig v01 smv file
+
+	$ NuGaT -source flip-coin-NUGAT-v01.script 
+
+
+You will see that because the script has -e in the checking steps:
+
+check_gen_reactivity -e
+check_reach_target  -e
+
+
+the strategy found, if any, will be printed.
 
 
 ## CONTACT ##
