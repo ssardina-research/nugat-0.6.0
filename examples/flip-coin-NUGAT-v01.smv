@@ -1,0 +1,76 @@
+--- FOND planning using NuGAT (NuSMV 2.5.0)
+--- Sebastian Sardina  - ssardina@gmail.com
+--- October 2014
+---
+--- Version 1 - First version of flip coing game. Look for STRONG plan only
+--- 		STRONG PLAN WORKS VIA RECHABILITY SYNTHESIS
+--- 	We can use reachability goal or GR(1) with an empty assumption. 
+
+--- Env plays first, then plays controller thus completing a game state
+--- 	controller needs to pick and then flip. Goal is to get heads
+--- 	pick is deterministic (but needed, or otherwise flip is mandatory)
+--- 	flip is non-deterministic: environment chooses heads or tails
+--- 	action exec is modelled in two game transitions (3 game states):
+--- 		1) controller chooses new action and env updates world wrt last effect
+--- 		2) controller plays sync and env selects a legal non-det effect
+
+GAME
+
+--- NON-DETERMINISTIC ENVIRONMENT PLAYER
+PLAYER_1
+VAR
+	coin_heads : boolean;
+	holding : boolean;
+	effect : {pick0, pick1, heads, tails, none};
+INIT
+	!coin_heads & effect = none & !holding;
+TRANS -- 3-step dynamics: 1) action; 2) effect; and 3) updated fluents 
+  case
+    action = pick : next(effect) in {pick0};
+    action = flip : next(effect) in {heads};
+    TRUE : next(effect) = none;
+  esac
+TRANS
+  case
+    effect = heads : next(coin_heads);
+    effect = tails : next(!coin_heads);
+    TRUE  : next(coin_heads) = coin_heads;
+  esac
+TRANS
+  case
+    effect in {heads, tails} : next(!holding);
+    effect = pick0 : next(holding);
+    effect = pick1 : next(!holding);
+    TRUE  : next(holding) = holding;
+  esac
+
+
+--- CONTROLLER PLAYER ENVIRONMENT
+PLAYER_2
+VAR
+  action : {pick, wait, flip, sync};
+  last_action : {pick, wait, flip};
+INIT
+  action != sync
+TRANS --- remember last domain action
+  case
+      action != sync : next(last_action) = action;
+      TRUE : next(last_action) = last_action;
+  esac
+TRANS --- sync is a non-op action to do the 3-step update: action-effect-update
+  action = sync <-> next(action) != sync
+TRANS --- action precondition: to flip, one has to be holding the coin
+  action = flip -> holding
+
+
+-- check for a strong plan -- reachability goal
+-- 	No strategy exists: flip can return tails forever
+--	RESULT IS AS INTENDED
+REACHTARGET PLAYER_2 (coin_heads)
+
+-- same as strong plan reachability target, check strong plan, no assumption whatsoever
+-- 	No strategy exists: flip can return tails forever
+--	RESULT IS AS INTENDED
+GENREACTIVITY PLAYER_2 (TRUE) -> (coin_heads)
+
+
