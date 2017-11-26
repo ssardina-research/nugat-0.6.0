@@ -1,6 +1,8 @@
-# NuGAT Game Solver #
+# NuGAT Game Solver (for NuSMV 2.6.0+) #
 
 This is the NuGAT game solver compatible with new NuSMV 2.6.0.
+
+Develped as part of Lorenzo Dibenedetto Master's thesis at RMIT University, supervised by A/Prof. Sebastian Sardina and Dr. Nitin Yadav.
 
 ## BACKGROUND ##
 
