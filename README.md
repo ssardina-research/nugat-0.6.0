@@ -248,11 +248,15 @@ check_reach_target  -e
 
 the strategy found, if any, will be printed.
 
+## COPYRIGHT ##
+
+NuGaT version is licensed under the GNU Lesser General Public License (LGPL in short) as published by the Free Software Foundation; either version 2.1 of the License, or (at your option) any later version. File LGPL-2.1 contains a copy of the License.
+For license information on Lily see its documentation.
 
 ## CONTACT ##
+
+This port of NuGAT compatible with NuSMV 2.6.0 was done by:  
 
 * Sebastian Sardina - ssardina@gmail.com 
 * Lorenzo Dibenedetto - lorenzodibenedetto90@gmail.com
 * Nitin Yadav - nitin.yadav@rmit.edu.au
-
-
