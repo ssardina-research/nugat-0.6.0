@@ -2,13 +2,13 @@
 
 This is the NuGAT game solver compatible with new NuSMV 2.6.0.
 
-Develped as part of Lorenzo Dibenedetto Master's thesis at RMIT University, supervised by A/Prof. Sebastian Sardina and Dr. Nitin Yadav.
+Develped as part of Lorenzo Dibenedetto Master's thesis, supervised by 
+A/Prof. Sebastian Sardina and Dr. Nitin Yadav  (at RMIT University).
 
 ## BACKGROUND ##
 
-NuGAT (https://es.fbk.eu/technologies/NuGAT-game-solver) was developed at FBK-ES
-group. The last version was 0.5.0 which worked with NuSMV 2.5.0, but not newer
-versions. 
+NuGAT (https://es.fbk.eu/technologies/NuGAT-game-solver) was developed at [FBK-ES](https://es.fbk.eu/)
+group. The last version was 0.5.0 which worked with NuSMV 2.5.0  (but not with newer versions). 
 
 NuSMV had an important upgrade to 2.5.4.
 
