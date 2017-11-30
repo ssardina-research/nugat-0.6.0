@@ -20,9 +20,7 @@ architecture: [NuSMV 2.6.0 release news](http://nusmv.fbk.eu/announce-NuSMV-2.6.
 
 Then, NuGAT was upgraded, in October 2015, to version 0.6.0 to work with this 
 new NuSMV 2.6.0 as part of Lorenzo Dibenedetto Master's thesis, supervised by
-Sebastian Sardina and Nitin Yadav. 
-
-This is the distribution for this
+Sebastian Sardina and Nitin Yadav.  This is such version.
 
 ### LOG OF MAJOR CHANGES ###
 
