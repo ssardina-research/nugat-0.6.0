@@ -5,7 +5,7 @@ This is the NuGAT game solver compatible with new NuSMV 2.6.0.
 Develped as part of Lorenzo Dibenedetto Master's thesis, supervised by 
 A/Prof. Sebastian Sardina and Dr. Nitin Yadav  (at RMIT University).
 
-## BACKGROUND ##
+## OVERVIEW ##
 
 NuGAT (https://es.fbk.eu/technologies/NuGAT-game-solver) was developed at [FBK-ES](https://es.fbk.eu/)
 group. The last version was 0.5.0 which worked with NuSMV 2.5.0  (but not with newer versions). 
@@ -245,8 +245,11 @@ For license information on Lily see its documentation.
 
 ## CONTACT ##
 
-This port of NuGAT compatible with NuSMV 2.6.0 was done by:  
+This port of NuGAT compatible with NuSMV 2.6.0 was carried out by:  
 
-* Sebastian Sardina - ssardina@gmail.com 
-* Lorenzo Dibenedetto - lorenzodibenedetto90@gmail.com
-* Nitin Yadav - nitin.yadav@rmit.edu.au
+* Lorenzo Dibenedetto <lorenzodibenedetto90@gmail.com>
+* [Sebastian Sardina](http://goanna.cs.rmit.edu.au/~ssardina/) <ssardina@gmail.com> 
+* Nitin Yadav <kyadav.nitin@gmail.com>
+
+For the original authors of NuGAT refer to the [AUTHORS](https://bitbucket.org/nugaton/nugat-0.6.0/src/4952282ef994ae7c721a3089f85cb2a948bfc2b0/AUTHORS?at=master&fileviewer=file-view-default) file in the distribution.
+
