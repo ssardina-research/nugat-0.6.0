@@ -22,14 +22,6 @@ Then, NuGAT was upgraded, in October 2015, to version 0.6.0 to work with this
 new NuSMV 2.6.0 as part of Lorenzo Dibenedetto Master's thesis, supervised by
 Sebastian Sardina and Nitin Yadav.  This is such version.
 
-### LOG OF MAJOR CHANGES ###
-
-These are the instructions to make NuGAT work under Linux.
-
-* October 2015 - Version 0.6.0 based on 0.5.4 to work with NuSMV 2.6.0
-* June 2015 - Version 0.5.4 based on 0.5.0 to work with NuSMV 2.5.4
-* March 2015 - Version 0.5.0 (for NuSMV 2.5.0)
-* October 2012 - First install for NuSMV 2.5.0
 
 ## INSTALLATION INSTRUCTIONS ##
 
