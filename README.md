@@ -37,6 +37,7 @@ the following environmet variables:
         make
         make install
 
+    See extras/NuSMV-2.6.0/ for NuSMV package and install instructions for this version.
 
 2. Some of the packages needed:
 
@@ -248,7 +249,7 @@ For license information on Lily see its documentation.
 This port of NuGAT compatible with NuSMV 2.6.0 was carried out by:  
 
 * Lorenzo Dibenedetto <lorenzodibenedetto90@gmail.com>
-* [Sebastian Sardina](http://goanna.cs.rmit.edu.au/~ssardina/) <ssardina@gmail.com> 
+* [Sebastian Sardina](https://sites.google.com/site/ssardina/) <ssardina@gmail.com> 
 * Nitin Yadav <kyadav.nitin@gmail.com>
 
 For the original authors of NuGAT refer to the [AUTHORS](https://bitbucket.org/nugaton/nugat-0.6.0/src/4952282ef994ae7c721a3089f85cb2a948bfc2b0/AUTHORS?at=master&fileviewer=file-view-default) file in the distribution.
