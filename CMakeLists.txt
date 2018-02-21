@@ -9,28 +9,40 @@ include(NuGATUtils)
 include(FindICU)
 set(NUGAT_SOURCE_DIR .)
 
+
+
 #------------------------------------------------------------------------------
 # User has to set up environment variables NUSMV_SOURCE_DIR and NUSMV_BUILD_DIR
 #------------------------------------------------------------------------------
 
 #set(NUSMV_SOURCE_DIR "/home/ssardina/src/NuSMV/NuSMV-2.6.0/NuSMV"
 #    CACHE PATH "Source directory of NuSMV")
-#set(NUSMV_BUILD_DIR "/opt/NuSMV-2.6.0/"
+#set(NUSMV_BUILD_DIR "/home/ssardina/opt/nusmv-2.6.0"
 #    CACHE PATH "Build directory of NuSMV")
 
 if(NOT EXISTS "$ENV{NUSMV_SOURCE_DIR}")
-    message(FATAL_ERROR "Could not find NUSMV_SOURCE_DIR environment variable")
+    message(WARNING "Searching NUSMV_SOURCE_DIR environment variable in cache")
 else()
     set(NUSMV_SOURCE_DIR $ENV{NUSMV_SOURCE_DIR}
-           CACHE PATH "Source directory of NuSMV")
+            CACHE PATH "Source directory of NuSMV")
 endif(NOT EXISTS "$ENV{NUSMV_SOURCE_DIR}")
 
 if(NOT EXISTS "$ENV{NUSMV_BUILD_DIR}")
-    message(FATAL_ERROR "Could not find NUSMV_BUILD_DIR environment variable")
+    message(WARNING "Searching NUSMV_BUILD_DIR environment variable in cache")
 else()
     set(NUSMV_BUILD_DIR $ENV{NUSMV_BUILD_DIR}
             CACHE PATH "Build directory of NuSMV")
 endif(NOT EXISTS "$ENV{NUSMV_BUILD_DIR}")
+
+
+if(NOT EXISTS "$ENV{NUSMV_BUILD_DIR}" OR NOT EXISTS "$ENV{NUSMV_BUILD_DIR}")
+    message(FATAL_ERROR "Could not find NUSMV_SOURCE_DIR or NUSMV_BUILD_DIR environment variable. ABORTING!")
+else()
+    MESSAGE(STATUS "Using NUSMV SOURCE DIR:" ${NUSMV_SOURCE_DIR})
+    MESSAGE(STATUS "Using NUSMV BUILD DIR:" ${NUSMV_BUILD_DIR})
+endif(NOT EXISTS "$ENV{NUSMV_BUILD_DIR}" OR NOT EXISTS "$ENV{NUSMV_BUILD_DIR}")
+
+
 
 
 #-------------------
@@ -158,14 +170,14 @@ include_directories("${NUSMV_BUILD_DIR}/include/code/nusmv/shell")
 
 ## Somehow some .h files are not copied to the install directory and remain only in the source tree of NuSMV
 ## so we need to include those source dirs. shouldn't they be copied to the install dir too?
-include_directories(${NUSMV_SOURCE_DIR}/build/code/) # for nusmv/core/parser/grammar.y
+#include_directories(${NUSMV_SOURCE_DIR}/build/code/) # for nusmv/core/parser/grammar.y
 include_directories(${NUSMV_SOURCE_DIR}/code) # for nusmv/core/compile/type_checking/checkers/checkersInt.h
 include_directories(${NUSMV_SOURCE_DIR}/code/nusmv/core) # for compile/type_checking/checkers/CheckerBase_private.h
 #include_directories("${NUSMV_SOURCE_DIR}/build/build-MiniSat/minisat-37dc6c67e2af26379d88ce349eb9c4c6160e8543")
 
 # NuGAT
 include_directories(${NUGAT_SOURCE_DIR})
-include_directories(${NUGAT_SOURCE_DIR}/build)
+#include_directories(${NUGAT_SOURCE_DIR}/build)
 include_directories(${NUGAT_SOURCE_DIR}/src)
 include_directories(${NUGAT_SOURCE_DIR}/src/parser)
 
@@ -176,7 +188,7 @@ include_directories(${NUGAT_SOURCE_DIR}/src/parser)
 # ------------------
 # PARSER
 # ------------------
-file(MAKE_DIRECTORY build/nusmv/core/parser)
+file(MAKE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/nusmv/core/parser")
 
 nugat_combine_scanner("${CMAKE_CURRENT_BINARY_DIR}/input.l"
 
@@ -231,10 +243,10 @@ nugat_add_pkg(${_curpkg}_grammar grammar ${GRAMMAR_SRCS})
 # ------------------
 set(SOURCE_FILES
 
-        build/config.h
+        ${CMAKE_CURRENT_BINARY_DIR}/config.h
 
-        build/nusmv/core/parser/grammar.c
-        build/input.c
+        ${CMAKE_CURRENT_BINARY_DIR}/nusmv/core/parser/grammar.c
+        ${CMAKE_CURRENT_BINARY_DIR}/input.c
 
         src/addons/game/fsm/GameBddFsm.c
         src/addons/game/fsm/GameBddFsm.h
@@ -351,7 +363,7 @@ endforeach()
 # Link to CUDD libraries
 foreach(X libst.a libcudd.a libepd.a libmtr.a libutil.a)
     find_library(CUDD_${X}_LIBRARY NAMES ${X}
-            PATHS ${NUSMV_SOURCE_DIR}/build/build-cudd/lib/ NO_DEFAULT_PATH)
+            PATHS ${NUSMV_BUILD_DIR}/lib/ NO_DEFAULT_PATH)
     target_link_libraries(NuGaT ${CUDD_${X}_LIBRARY})
 endforeach()
 

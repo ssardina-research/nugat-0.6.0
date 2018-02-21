@@ -174,3 +174,4 @@ configure
 
 /.project
 cmake-build-debug
+cmake-*
