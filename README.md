@@ -7,7 +7,7 @@ Developed as part of Lorenzo Dibenedetto Master's thesis, supervised by A/Prof. 
 ## OVERVIEW ##
 
 NuGAT (https://es.fbk.eu/technologies/NuGAT-game-solver) was developed at [FBK-ES](https://es.fbk.eu/)
-group. The last version was 0.5.0 which worked with NuSMV 2.5.0  (but not with newer versions). 
+group. The last version was 0.5.0 which worked with NuSMV 2.5.0  (but not with newer versions).
 
 NuSMV had an important upgrade to 2.5.4.
 
@@ -16,7 +16,6 @@ Then, in June 2015, NuGAT 0.5.0 was ported 0.5.4 to work with NuSMV 2.5.4 by Nit
 After that, NuSMV had a major upgrade to version 2.6.0 that changed the whole architecture: [NuSMV 2.6.0 release news](http://nusmv.fbk.eu/announce-NuSMV-2.6.0.txt)
 
 Then, NuGAT was upgraded, in October 2015, to version 0.6.0 to work with this new NuSMV 2.6.0 as part of Lorenzo Dibenedetto Master's thesis, supervised by Sebastian Sardina and Nitin Yadav.  This is such version.
-
 
 ## INSTALLATION INSTRUCTIONS ##
 
@@ -27,7 +26,7 @@ the following environment variables:
         export NUSMV_BUILD_DIR=/opt/NuSMV-2.6.0/
         export NUSMV_SOURCE_DIR=~/src/NuSMV/NuSMV-2.6.0/NuSMV/
         ```
-        
+
     Remember you can install NuSMV in your own directory:
 
         ```bash
@@ -49,10 +48,10 @@ the following environment variables:
         sudo apt-get install libncurses5:amd64 libncurses5:i386 libncurses5-dev:amd64 libncurses5-dev:i386
         ```
 
-Note: 
+Note:
 
 - `pkgconf` is a program which helps to configure compiler and linker flags for development frameworks. It is similar to pkg-config from `freedesktop.org`. `libpkgconf` is a library which provides access to most of `pkgconf`'s functionality, to allow other tooling such as compilers and IDEs to discover and use frameworks configured by `pkgconf`.
- 
+
 - `icu-config` simplifies the task of building and linking against ICU as compared to manually configuring user `makefiles` or equivalent. Because `icu-config` is an executable script, it also solves the problem of locating the ICU libraries and headers, by allowing the system PATH to locate it.
 
 
@@ -67,16 +66,16 @@ Note:
         ```
 
     This should finish a ./NuGAT executable:
-        
+
         ```bash
-        [ssardina@Thinkpad-X1 build]$ ./NuGAT 
+        [ssardina@Thinkpad-X1 build]$ ./NuGAT
         *** This is NuGaT 0.6.0 (compiled on Sun Nov 26 14:34:01 2017)
-        *** Enabled addons are: game 
+        *** Enabled addons are: game
         *** For more information on NuGaT see <http://es.fbk.eu/tools/nugat>
         *** or email to <nugat-users@list.fbk.eu>.
         *** Please report bugs to <Please report bugs to <nusmv-users@fbk.eu>>.
         *** Copyright (c) 2010, Fondazione Bruno Kessler
-        
+
         *** This version of NuGAT-0.6.0 is linked to NuSMV 2.6.0.
         *** For more information on NuSMV see <http://nusmv.fbk.eu>
         *** or email to <nusmv-users@list.fbk.eu>.
@@ -92,7 +91,7 @@ Note:
         ```
         
         
-4. Install binary NuGAT wherever you would like to be in your system.
+4. Install binary `NuGAT` wherever you would like to be in your system.
 
 ## USAGE
 
@@ -103,22 +102,22 @@ Games are implemented as a special mode of NuGAT which is entered when a source 
 NuGAT 0.6.0 uses the same language as NuGAT 0.5.0. See examples in `examples/`
 
 The port of the original NuGAT example (gets same results):
-    
+
 ```bash
-./NuGAT ../examples/NuGAT/simple.smv
+../build/NuGAT simple.smv
 ```
 
 An example to solve a planning program:
 
 ```bash
-./NuGAT -dynamic ../examples/NuGAT/test-NuGAT.smv
+../build/NuGAT -dynamic test-app.smv
 ```
 
 An example of GR(1) formula:
-    
+
 ```bash
-./NuGaT ../examples/simple-genreac.smv
-    
+../build/NuGAT simple-genreac.smv
+
 *** WARNING: Game addon does not support properties COI size sorting.  ***
 *** WARNING: Properties COI size sorting will be disabled.             ***
 --   GenReactivity PLAYER_2 (i0.v) -> (o0.v, i1)  : the strategy has been found
@@ -127,7 +126,7 @@ An example of GR(1) formula:
 ... or interactively:
 
 ```bash
-[ssardina@Thinkpad-X1 build]$ ./NuGAT -int
+[ssardina@Thinkpad-X1 build]$ ../build/NuGAT -int
 *** This is NuGaT 0.6.0 (compiled on Sun Nov 26 14:34:01 2017)
 *** Enabled addons are: game 
 *** For more information on NuGaT see <http://es.fbk.eu/tools/nugat>
@@ -148,7 +147,7 @@ An example of GR(1) formula:
 *** Copyright (c) 2003-2006, Niklas Een, Niklas Sorensson
 *** Copyright (c) 2007-2010, Niklas Sorensson
 
-NuSMV > read_model -i ../examples/simple-genreac.smv
+NuSMV > read_model -i simple-genreac.smv
 Entering game mode...
 Done entering game mode.
 Note that now game commands apply.
@@ -168,8 +167,6 @@ Done exiting game mode.
 Note that now the commands from before entering game mode apply.
 ```
 
-
-
 ##### USEFUL INFO
 
 A file that has useful information on what NuGAT can do is:
@@ -178,8 +175,8 @@ A file that has useful information on what NuGAT can do is:
 
 One can run NuGAT directly from the command line or via a script file. In both cases, the most important option  seems to be "`--dynamic`", which speeds up NuGAT by a lot.
 
-1. Command line run: `NuGaT -dynamic <smv file>`
-2. Script run: `NuGaT -source <.script file>`
+1. Command line run: `NuGAT -dynamic <smv file>`
+2. Script run: `NuGAT -source <.script file>`
 
 The script should do some steps before solving the game and can do other extra things that cannot be done with the command line (like simulating or printing the strategy). 
 
@@ -209,7 +206,6 @@ quit
 
 The `-e` option in the check statements states to print the controller that solves the problem (if any).
 
-
 ## EXAMPLES
 
 I provide three file examples on how to use NuGAT for planning.
@@ -218,10 +214,10 @@ I provide three file examples on how to use NuGAT for planning.
 2. `flip-coin-NUGAT-v02.smv`:  flip is non-deterministic; no strong plan; cannot express fairness
 3. `flip-coin-NUGAT-v03.smv`:  same as 02 but with modules for Player 1
 
-File `flip-coin-NUGAT-v01.script` is a script file for runnig v01 smv file
+File `flip-coin-NUGAT-v01.script` is a script file for running v01 smv file
 
 ```bash
-$ NuGaT -source flip-coin-NUGAT-v01.script 
+$ NuGAT -source flip-coin-NUGAT-v01.script 
 ```
 
 You will see that because the script has `-e` in the checking steps:
@@ -232,7 +228,6 @@ check_reach_target  -e
 ```
 
 The strategy found, if any, will be printed.
-
 
 ## COPYRIGHT ##
 
@@ -247,5 +242,4 @@ This port of NuGAT compatible with NuSMV 2.6.0 was carried out by:
 * [Sebastian Sardina](https://bit.ly/seb-sardina) <ssardina@gmail.com> 
 * Nitin Yadav <kyadav.nitin@gmail.com>
 
-For the original authors of NuGAT refer to the [AUTHORS](https://bitbucket.org/nugaton/nugat-0.6.0/src/4952282ef994ae7c721a3089f85cb2a948bfc2b0/AUTHORS?at=master&fileviewer=file-view-default) file in the distribution.
-
+For the original authors of NuGAT refer to the [AUTHORS](https://github.com/ssardina-planning/nugat-0.6.0/blob/master/AUTHORS) file in the distribution.

@@ -175,3 +175,4 @@ configure
 /.project
 cmake-build-debug
 cmake-*
+.vscode/settings.json
