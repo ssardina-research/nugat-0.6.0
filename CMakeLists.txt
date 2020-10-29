@@ -10,7 +10,6 @@ include(FindICU)
 set(NUGAT_SOURCE_DIR .)
 
 
-
 #------------------------------------------------------------------------------
 # User has to set up environment variables NUSMV_SOURCE_DIR and NUSMV_BUILD_DIR
 #------------------------------------------------------------------------------
@@ -346,30 +345,29 @@ set(SOURCE_FILES
 #        "${NUSMV_SOURCE_DIR}/build/build-MiniSat/minisat-37dc6c67e2af26379d88ce349eb9c4c6160e8543/CMakeFiles/3.2.2/CompilerIdC/CMakeCCompilerId.c"
 #        )
 
-
 # ------------------
 # LINK TO LIBS
 # ------------------
 
-add_executable(NuGaT ${SOURCE_FILES}) # ${NUSMV_SRC}
+add_executable(NuGAT ${SOURCE_FILES}) # ${NUSMV_SRC}
 
 # Link to NUSMV libraries
 foreach(X nusmvshell nusmvaddonscore nusmvcore nusmvgrammar nusmvrbc MiniSat)
         find_library(NUSMV_${X}_LIBRARY NAMES ${X}
             PATHS ${NUSMV_BUILD_DIR}/lib/ NO_DEFAULT_PATH)
-        target_link_libraries(NuGaT ${NUSMV_${X}_LIBRARY})
+        target_link_libraries(NuGAT ${NUSMV_${X}_LIBRARY})
 endforeach()
 
 # Link to CUDD libraries
 foreach(X libst.a libcudd.a libepd.a libmtr.a libutil.a)
     find_library(CUDD_${X}_LIBRARY NAMES ${X}
             PATHS ${NUSMV_BUILD_DIR}/lib/ NO_DEFAULT_PATH)
-    target_link_libraries(NuGaT ${CUDD_${X}_LIBRARY})
+    target_link_libraries(NuGAT ${CUDD_${X}_LIBRARY})
 endforeach()
 
 # Link to system libraries (these should be found automatically in standard dirs)
-target_link_libraries(NuGaT libstdc++.a libxml2.a libreadline.a libtermcap.a libexpat.a libz.a liblzma.a  libicuuc.a libicudata.a)
-target_link_libraries(NuGaT m dl) # libm.a/libdl.a for dynamic link
+target_link_libraries(NuGAT libstdc++.a libxml2.a libreadline.a libtermcap.a libexpat.a libz.a liblzma.a  libicuuc.a libicudata.a)
+target_link_libraries(NuGAT m dl) # libm.a/libdl.a for dynamic link
 # ------------------
 # END : LINK TO LIBS
 # ------------------
