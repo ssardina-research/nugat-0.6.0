@@ -4,9 +4,9 @@ This is the NuGAT game solver compatible with new NuSMV 2.6.0.
 
 Developed as part of Lorenzo Dibenedetto Master's thesis, supervised by A/Prof. Sebastian Sardina and Dr. Nitin Yadav (at RMIT University).
 
-## OVERVIEW ##
+## OVERVIEW
 
-NuGAT (https://es.fbk.eu/technologies/NuGAT-game-solver) was developed at [FBK-ES](https://es.fbk.eu/)
+[NuGAT](https://es.fbk.eu/technologies/NuGAT-game-solver) was developed at [FBK-ES](https://es.fbk.eu/)
 group. The last version was 0.5.0 which worked with NuSMV 2.5.0  (but not with newer versions).
 
 NuSMV had an important upgrade to 2.5.4.
@@ -17,7 +17,17 @@ After that, NuSMV had a major upgrade to version 2.6.0 that changed the whole ar
 
 Then, NuGAT was upgraded, in October 2015, to version 0.6.0 to work with this new NuSMV 2.6.0 as part of Lorenzo Dibenedetto Master's thesis, supervised by Sebastian Sardina and Nitin Yadav.  This is such version.
 
-## INSTALLATION INSTRUCTIONS ##
+## GAME OVERVIEW
+
+There are two players: `PLAYER_1` (`P1`) and `PLAYER_2` (`P2`).
+
+The next move is a state that is constructed by `PLAYER_1` move first, and then `PLAYER_2` move.
+
+So, in a move, `PLAYER_1` moves first, and has access to all the full previous state that was just finished playing, say `S`. So, it builds state `S_1`, which is `PLAYER_1` part of the next state after `S`. This means that `PLAYER_1` can only refer to `next(X)` if `X` is a property of `PLAYER_1`.
+
+At this point, the system has `S * (S_1)` and `PLAYER_2` must play its move `S_2`. To do so, it has access to both `S` (the previous state), as well as what `PLAYER_1` has just played, namely, `S_1` (via `next()`). So, if `PLAYER_2` refers to a property `X`, it is on state `S`, but `next(X)` is either about `S_1` or about its move `S_2` to set it.
+
+## INSTALLATION INSTRUCTIONS
 
 1. Make sure you have compiled and installed NuSMV 2.6.0 and then set
 the following environment variables:
@@ -167,6 +177,13 @@ Done exiting game mode.
 Note that now the commands from before entering game mode apply.
 ```
 
+To print the controller, use `-e` option:
+
+```bash
+$ NuGaT-0.6.0 -dynamic -e flip.smv 
+```
+
+
 ##### USEFUL INFO
 
 A file that has useful information on what NuGAT can do is:
@@ -229,12 +246,12 @@ check_reach_target  -e
 
 The strategy found, if any, will be printed.
 
-## COPYRIGHT ##
+## COPYRIGHT
 
 NuGaT version is licensed under the GNU Lesser General Public License (LGPL in short) as published by the Free Software Foundation; either version 2.1 of the License, or (at your option) any later version. File LGPL-2.1 contains a copy of the License.
 For license information on Lily see its documentation.
 
-## CONTACT ##
+## CONTACT
 
 This port of NuGAT compatible with NuSMV 2.6.0 was carried out by:  
 

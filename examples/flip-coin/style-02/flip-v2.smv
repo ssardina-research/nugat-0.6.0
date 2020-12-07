@@ -1,0 +1,131 @@
+--------------------------------------------
+-- 1) AGENT SYSTEM CONTROLLER DEFINITION
+--
+-- This has the encoding of a FOND strong cyclic
+-- into a Buchi game as per JAIR19 encoding
+--------------------------------------------
+-- AGENT SYSTEM: decision making on what action to do
+MODULE system_module(env)
+  VAR
+    action : {
+      start_action,
+      flip,
+      pick,
+      nop
+    };
+  INIT
+    action = start_action
+  TRANS
+    next(action) != start_action &
+    -- Action preconditions
+    case
+      -- must use next(env.X) because the controller plays after the env has played
+      next(action) = flip : next(env.holding); 
+      next(action) = pick : !next(env.holding);
+      TRUE : TRUE;
+    esac
+ -- end of system_module
+
+-- AGENT SYSTEM: decision of what effect the agent wants for the action if given to choose
+MODULE system_effect(action, dom)
+  VAR
+    --domain fluents
+      holding : boolean;
+      coin : {heads, tails, none};
+  INIT
+    -- all predicates initially set to false, they are correctly initialized by start_action
+      !holding &
+      coin = none
+  TRANS
+    -- block for fluent holding
+    case
+      action = pick : holding;
+      action = flip : !holding;
+      action = nop : holding = dom.holding;
+      TRUE : TRUE;
+    esac
+    &    -- block for fluent coin
+    case
+      action = flip : coin in {heads, tails};
+      action = pick : coin = none;
+      action = nop : coin = dom.coin;
+      TRUE : TRUE;
+    esac
+-- end of environment_module
+
+
+
+--------------------------------------------
+-- 1) PLANNING DOMAIN - ENVIRONMENT
+--------------------------------------------
+MODULE environment_module(action, sys_eff, env_choice)
+  -- action is the action that will be performed now
+  -- sys_eff are the effect that the agent system wanted
+  -- env_choice: whether env will decide effect or we take what sys_eff says
+  VAR
+      holding : boolean;
+      coin : {heads, tails, none};
+  INIT
+    -- all predicates initially set to false, they are correctly initialized by start_action
+      !holding &
+      coin = none
+  TRANS
+    -- block for fluent holding
+    case
+      action = start_action : !next(holding);
+      !env_choice : next(holding) = sys_eff.holding;
+      action = pick : next(holding);
+      action = flip : !next(holding);
+      TRUE : next(holding) = holding;
+    esac
+    &    -- block for fluent coin
+    case
+      action = start_action : next(coin) = none;
+      !env_choice : next(coin) = sys_eff.coin;
+      action = flip : next(coin) in {heads, tails};
+      action = pick : next(coin) = none;
+      TRUE : next(coin) = coin;
+    esac
+-- end of environment_module
+
+--------------------------------------------
+-- GAME DEFINITION
+--------------------------------------------
+GAME
+-- A game run is (PLAYER_1 starts): (P10.P20) (P11.P21) (P12.P22) ... (P1n.P2n) 
+-- So, let's suppose we have just finished (P11.P21)
+-- First, PLAYER_1 (environment) builds P12.
+--     If it refers to property X, it is on (P11.P21), the previous state.
+--     If it refers to prperty next(X), it is on P12 (its own variables) to set its' decision on what to play.
+--     It cannot talk about next(Y), where Y is of PLAYER_2 as it has no yet played.
+-- Second, PLAYER_2 (controller) completes with P22
+--     If X is a property of PLAYER_1, then X is on P11 and next(X) is on P12.
+--     It Y is a property of PLAYER_2, then next(Y) is on P22, to et its decision on what to play.
+
+--- NON-DETERMINISTIC ENVIRONMENT PLAYER 
+--- Plays first, so current state is the full previous stated.
+PLAYER_1
+  VAR
+    dom : environment_module(agent.action, eff_agent, env_choice);
+    env_choice : boolean;
+  INIT
+    !dom.holding & dom.coin = none & env_choice
+
+--- CONTROLLER PLAYER ENVIRONMENT
+--- Plays second, so current state is the full previous state, and next() is the one build built
+PLAYER_2
+  VAR
+    agent : system_module(dom);
+    eff_agent : system_effect(agent.action, dom);
+  INIT
+    agent.action = start_action
+
+
+-- check for a strong plan -- reachability goal
+-- 	No strategy exists: flip can return tails forever
+--	RESULT IS AS INTENDED
+--REACHTARGET PLAYER_2 (dom.coin = heads)
+
+
+BUCHIGAME PLAYER_2 (dom.coin = heads | (env_choice & agent.action = flip))
+-- end of NuGAT planning program encoding

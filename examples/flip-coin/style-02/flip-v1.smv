@@ -1,0 +1,74 @@
+-- AGENT SYSTEM
+MODULE system_module(env)
+  VAR
+    action : {
+      start_action,
+      flip,
+      pick,
+      nop
+    };
+
+  INIT
+    action = start_action
+  TRANS
+    next(action) != start_action &
+    -- Action preconditions
+    case
+      next(action) = flip : next(env.holding);
+      next(action) = pick : !next(env.holding);
+      TRUE : TRUE;
+    esac
+ -- end of system_module
+
+
+-- PLANNING DOMAIN
+MODULE environment_module(sys)
+  VAR
+    --domain fluents
+      holding : boolean;
+      coin : {heads, tails, none};
+  INIT
+    -- all predicates initially set to false, they are correctly initialized by start_action
+      !holding & 
+      coin = none 
+  TRANS
+    -- block for fluent holding
+    case
+      sys.action = start_action : !next(holding);
+      sys.action = pick : next(holding);
+      sys.action = flip : !next(holding);
+      TRUE : next(holding) = holding;
+    esac
+    &    -- block for fluent coin
+    case
+      sys.action = start_action : next(coin) = none;
+      sys.action = flip : next(coin) in {heads, tails};
+      sys.action = pick : next(coin) = none;
+      TRUE : next(coin) = coin;
+    esac
+-- end of environment_module
+
+GAME
+--- NON-DETERMINISTIC ENVIRONMENT PLAYER
+PLAYER_1
+  VAR
+    dom : environment_module(agent);
+  INIT
+    !dom.holding & dom.coin = none
+
+--- CONTROLLER PLAYER ENVIRONMENT
+PLAYER_2
+  VAR
+    agent : system_module(dom);
+  INIT
+    agent.action = start_action
+
+-- check for a strong plan -- reachability goal
+-- 	No strategy exists: flip can return tails forever
+--	RESULT IS AS INTENDED
+REACHTARGET PLAYER_2 (dom.coin = heads)
+
+
+--BUCHIGAME PLAYER_2 (agent.last)
+-- end of NuGAT planning program encoding
+
